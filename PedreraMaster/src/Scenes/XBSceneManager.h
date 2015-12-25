@@ -7,18 +7,21 @@
 
 #include "XBBaseScene.h"
 
+#ifdef OF_DEBUG
+#include "ofxUI.h"
+#endif
+
 typedef enum
 {
-    STM_Direct = 0,
-    STM_Fade = 1
+    SCENETRANSITION_Direct = 0,
+    SCENETRANSITION_Fade = 1
 } SceneTransitionMode;
 
 typedef enum
 {
-    SMS_None = 0,
-    SMS_OnScene = 1,
-    SMS_Transitioning = 2
-} SceneManagerState;
+    SCENESTATE_OnScene = 0,
+    SCENESTATE_Transitioning = 1
+} SceneTransitionState;
 
 class XBSceneManager
 {
@@ -28,20 +31,33 @@ public:
 
     void addScene(XBBaseScene *scene);
 
+    void setup();
     void update();
     void draw();
-    void drawWhileTransitioning();
 
-    void goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode = STM_Direct, unsigned int timeInMillis = 0);
-    void goToNextScene(SceneTransitionMode transitionMode = STM_Direct, unsigned int timeInMillis = 0);
-    void goToPrevScene(SceneTransitionMode transitionMode = STM_Direct, unsigned int timeInMillis = 0);
+    void exit();
+
+    void goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
+    void goToNextScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
+    void goToPrevScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
+    void showAllScenes();
     int getCurrentSceneIndex() const { return currentSceneIndex; };
 
 private:
 
+    void drawSceneAtIndex(int sceneIndex);
+    void onFadeComplete(float* arg);
+
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;
-    SceneManagerState state;
+    SceneTransitionState state;
+    bool showAll;
+    SceneTransitionMode transitionMode;
+
+#ifdef OF_DEBUG
+    ofxUISuperCanvas *gui;
+    void handleGUIEvents(ofxUIEventArgs &e);
+#endif
 };
 
 

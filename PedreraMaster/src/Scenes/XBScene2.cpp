@@ -16,11 +16,13 @@ void XBScene2::update()
 
 void XBScene2::drawIntoFBO()
 {
-    mainFBO.begin();
+    fbo.begin();
     {
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofSetColor(ofColor::darkGreen);
-        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+        ofSetColor(ofColor::green);
+        ofSetCircleResolution(64);
+        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 150);
+
+        drawFadeRectangle();
     }
-    mainFBO.end();
+    fbo.end();
 }

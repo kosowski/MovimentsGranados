@@ -18,11 +18,17 @@ public:
     virtual void drawIntoFBO() = 0;
 
     const string &getName() const { return name; }
-    const ofFbo &getMainFBO() const { return mainFBO; }
+    const ofFbo &getMainFBO() const { return fbo; }
+
+    void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
+    float *getFBOAlpha() { return &fboAlpha; }
 
 protected:
 
-    ofFbo mainFBO;
+    void drawFadeRectangle();
+
+    ofFbo fbo;
+    float fboAlpha;
 
 private:
 

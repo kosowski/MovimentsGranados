@@ -5,6 +5,9 @@
 
 void ofApp::setup()
 {
+    ofSetFrameRate(60);
+    ofSetVerticalSync(true);
+
     ofBackground(0, 0, 0);
 
     XBScene1 *scene1 = new XBScene1("Scene 1");
@@ -17,7 +20,9 @@ void ofApp::setup()
     scene3->setup();
     sceneManager.addScene(scene3);
 
-    sceneManager.goToScene(0);
+    sceneManager.setup();
+
+//    sceneManager.showAllScenes();
 }
 
 void ofApp::update()
@@ -30,8 +35,9 @@ void ofApp::draw()
     sceneManager.draw();
 }
 
-void ofApp::keyPressed(int key)
+void ofApp::exit()
 {
+    sceneManager.exit();
 }
 
 void ofApp::keyReleased(int key)
@@ -41,10 +47,12 @@ void ofApp::keyReleased(int key)
         case OF_KEY_LEFT:
         case OF_KEY_DOWN:
             sceneManager.goToPrevScene();
+//            sceneManager.goToPrevScene(SCENETRANSITION_Fade, 2.0f);
             break;
         case OF_KEY_RIGHT:
         case OF_KEY_UP:
             sceneManager.goToNextScene();
+//            sceneManager.goToNextScene(SCENETRANSITION_Fade, 2.0f);
             break;
         case '1':
             sceneManager.goToScene(0);
