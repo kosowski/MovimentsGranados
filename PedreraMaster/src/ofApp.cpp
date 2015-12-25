@@ -5,9 +5,15 @@
 
 void ofApp::setup()
 {
-    sceneManager.addScene(new XBScene1("Scene 1"));
-    sceneManager.addScene(new XBScene2("Scene 2"));
-    sceneManager.addScene(new XBScene3("Scene 3"));
+    XBScene1 *scene1 = new XBScene1("Scene 1");
+    scene1->setup();
+    sceneManager.addScene(scene1);
+    XBScene2 *scene2 = new XBScene2("Scene 2");
+    scene2->setup();
+    sceneManager.addScene(scene2);
+    XBScene3 *scene3 = new XBScene3("Scene 3");
+    scene3->setup();
+    sceneManager.addScene(scene3);
 
     sceneManager.goToScene(0);
 }
