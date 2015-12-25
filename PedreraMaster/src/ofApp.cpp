@@ -5,6 +5,8 @@
 
 void ofApp::setup()
 {
+    ofBackground(0, 0, 0);
+
     XBScene1 *scene1 = new XBScene1("Scene 1");
     scene1->setup();
     sceneManager.addScene(scene1);
