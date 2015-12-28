@@ -20,7 +20,7 @@ void ofApp::setup()
     scene3->setup();
     sceneManager.addScene(scene3);
 
-    sceneManager.setup();
+    sceneManager.setup(0);
 
 //    sceneManager.showAllScenes();
 }
@@ -46,13 +46,11 @@ void ofApp::keyReleased(int key)
     {
         case OF_KEY_LEFT:
         case OF_KEY_DOWN:
-            sceneManager.goToPrevScene();
-//            sceneManager.goToPrevScene(SCENETRANSITION_Fade, 2.0f);
+            sceneManager.goToPrevScene(SCENETRANSITION_Fade, 0.5f);
             break;
         case OF_KEY_RIGHT:
         case OF_KEY_UP:
-            sceneManager.goToNextScene();
-//            sceneManager.goToNextScene(SCENETRANSITION_Fade, 2.0f);
+            sceneManager.goToNextScene(SCENETRANSITION_Fade, 0.5f);
             break;
         case '1':
             sceneManager.goToScene(0);

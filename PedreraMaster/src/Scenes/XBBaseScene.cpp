@@ -9,7 +9,6 @@ XBBaseScene::XBBaseScene(string _name)
     name = _name;
 
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
-    fboAlpha = 0.0f;
 }
 
 void XBBaseScene::setup()
@@ -21,6 +20,8 @@ void XBBaseScene::setup()
         ofClear(0, 0, 0, 0);
     }
     fbo.end();
+
+    fboAlpha = 255.0f;
 }
 
 void XBBaseScene::update()
@@ -30,6 +31,9 @@ void XBBaseScene::update()
 
 void XBBaseScene::drawFadeRectangle()
 {
-    ofSetColor(0, 0, 0, (int)fboAlpha);
-    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+    if (int(fboAlpha) == 255) return;
+
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
+    ofClear(0, 0, 0, (int)fboAlpha);
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 }

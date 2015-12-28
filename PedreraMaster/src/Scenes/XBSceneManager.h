@@ -31,7 +31,7 @@ public:
 
     void addScene(XBBaseScene *scene);
 
-    void setup();
+    void setup(int initialScene);
     void update();
     void draw();
 
@@ -51,8 +51,8 @@ private:
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;
     SceneTransitionState state;
+
     bool showAll;
-    SceneTransitionMode transitionMode;
 
 #ifdef OF_DEBUG
     ofxUISuperCanvas *gui;
