@@ -5,10 +5,6 @@
 #include "XBSceneManager.h"
 #include "ofxTweenzor.h"
 
-#ifdef OF_DEBUG
-const string GUI_FILENAME = "Settings/guiSettings.xml";
-#endif
-
 XBSceneManager::XBSceneManager()
 {
     state = SCENESTATE_OnScene;
