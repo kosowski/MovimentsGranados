@@ -20,9 +20,8 @@ void ofApp::setup()
     scene3->setup();
     sceneManager.addScene(scene3);
 
+    // Start with scene 0
     sceneManager.setup(0);
-
-//    sceneManager.showAllScenes();
 }
 
 void ofApp::update()

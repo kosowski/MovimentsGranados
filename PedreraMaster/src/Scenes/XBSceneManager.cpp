@@ -14,7 +14,6 @@ XBSceneManager::XBSceneManager()
     state = SCENESTATE_OnScene;
     currentSceneIndex = -1;
     nextSceneIndex = -1;
-    showAll = false;
 }
 
 void XBSceneManager::addScene(XBBaseScene *scene)
@@ -33,32 +32,23 @@ void XBSceneManager::update()
     if (scenes.size() == 0) return;
     if (currentSceneIndex < 0) return;
 
-    if (!showAll)
+    switch(state)
     {
-        switch(state)
+        case SCENESTATE_OnScene:
         {
-            case SCENESTATE_OnScene:
-            {
-                scenes[currentSceneIndex]->update();
-                break;
-            }
-            case SCENESTATE_Transitioning:
-            {
-                scenes[currentSceneIndex]->update();
-                scenes[nextSceneIndex]->update();
-                Tweenzor::update(ofGetElapsedTimeMillis());
-                break;
-            }
-            default: break;
+            scenes[currentSceneIndex]->update();
+            break;
         }
-//        cout << "State: " << state << endl;
+        case SCENESTATE_Transitioning:
+        {
+            scenes[currentSceneIndex]->update();
+            scenes[nextSceneIndex]->update();
+            Tweenzor::update(ofGetElapsedTimeMillis());
+            break;
+        }
+        default: break;
     }
-    else
-    {
-        for (int i=0; i<scenes.size(); ++i)
-            scenes[i]->update();
-    }
-
+//    cout << "State: " << state << endl;
 }
 
 void XBSceneManager::draw()
@@ -68,29 +58,21 @@ void XBSceneManager::draw()
 
 //    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-    if (!showAll)
+    switch(state)
     {
-        switch(state)
+        case SCENESTATE_OnScene:
         {
-            case SCENESTATE_OnScene:
-            {
-                drawSceneAtIndex(currentSceneIndex);
-                break;
-            }
-            case SCENESTATE_Transitioning:
-            {
-//                cout << "SrcAlpha: " << scenes[currentSceneIndex]->fboAlpha << " - DstAlpha: " << scenes[nextSceneIndex]->fboAlpha << endl;
-                drawSceneAtIndex(currentSceneIndex);
-                drawSceneAtIndex(nextSceneIndex);
-                break;
-            }
-            default: break;
+            drawSceneAtIndex(currentSceneIndex);
+            break;
         }
-    }
-    else
-    {
-        for (int i=0; i<scenes.size(); ++i)
-            drawSceneAtIndex(i);
+        case SCENESTATE_Transitioning:
+        {
+//            cout << "SrcAlpha: " << scenes[currentSceneIndex]->fboAlpha << " - DstAlpha: " << scenes[nextSceneIndex]->fboAlpha << endl;
+            drawSceneAtIndex(currentSceneIndex);
+            drawSceneAtIndex(nextSceneIndex);
+            break;
+        }
+        default: break;
     }
 
 //    ofDisableBlendMode();
@@ -98,11 +80,6 @@ void XBSceneManager::draw()
 
 void XBSceneManager::exit()
 {
-#ifdef OF_DEBUG
-    if (!showAll) return;
-
-    gui->saveSettings(GUI_FILENAME);
-#endif
 }
 
 void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode, float timeInSeconds)
@@ -115,14 +92,13 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
         return;
     }
 
-    showAll = false;
-
     switch(transitionMode)
     {
         case SCENETRANSITION_Direct:
         {
             state = SCENESTATE_OnScene;
             currentSceneIndex = sceneIndex;
+            scenes[currentSceneIndex]->setFBOAlpha(255.0f);
             break;
         }
         case SCENETRANSITION_Fade:
@@ -135,11 +111,11 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
 
             float tweenDelay = 0.0f;
 
-            Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), *(scenes[currentSceneIndex]->getFBOAlpha()), 0.f, tweenDelay, timeInSeconds);
+            Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), *(scenes[currentSceneIndex]->getFBOAlpha()), 0.0f, tweenDelay, timeInSeconds);
             Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
             srcTween->setRepeat(1, false);
 
-            Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), *(scenes[nextSceneIndex]->getFBOAlpha()), 255.f, tweenDelay, timeInSeconds);
+            Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), *(scenes[nextSceneIndex]->getFBOAlpha()), 255.0f, tweenDelay, timeInSeconds);
             Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
             dstTween->setRepeat(1, false);
             Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);
@@ -182,35 +158,28 @@ void XBSceneManager::onFadeComplete(float *arg)
     currentSceneIndex = nextSceneIndex;
 }
 
-void XBSceneManager::showAllScenes()
-{
-    showAll = true;
-#ifndef OF_DEBUG
-    for (int i=0; i<scenes.size(); ++i)
-        scenes[i]->setFBOAlpha(127.0f);
-#else
-    gui = new ofxUISuperCanvas("SCENES", OFX_UI_FONT_MEDIUM);
-
-    gui->setColorBack(ofColor(0, 100, 127, 127));
-
-    gui->addSpacer();
-    for (int i=0; i<scenes.size(); ++i)
-    {
-        ofxUISlider *alphaSlider = gui->addSlider(scenes[i]->getName() + " alpha", 0.0, 255.0, scenes[i]->getFBOAlpha());
-        alphaSlider->setID(i);
-    }
-
-    gui->autoSizeToFitWidgets();
-
-    ofAddListener(gui->newGUIEvent, this, &XBSceneManager::handleGUIEvents);
-    gui->loadSettings(GUI_FILENAME);
-
-    gui->setVisible(true);
-#endif
-}
-
-#ifdef OF_DEBUG
-void XBSceneManager::handleGUIEvents(ofxUIEventArgs &e)
-{
-}
-#endif
+// The code below is kept just as a reminder on how to create a GUI with ofxUI:
+//void XBSceneManager::showAllScenes()
+//{
+//    gui = new ofxUISuperCanvas("SCENES", OFX_UI_FONT_MEDIUM);
+//
+//    gui->setColorBack(ofColor(0, 100, 127, 127));
+//
+//    gui->addSpacer();
+//    for (int i=0; i<scenes.size(); ++i)
+//    {
+//        ofxUISlider *alphaSlider = gui->addSlider(scenes[i]->getName() + " alpha", 0.0, 255.0, scenes[i]->getFBOAlpha());
+//        alphaSlider->setID(i);
+//    }
+//
+//    gui->autoSizeToFitWidgets();
+//
+//    ofAddListener(gui->newGUIEvent, this, &XBSceneManager::handleGUIEvents);
+//    gui->loadSettings(GUI_FILENAME);
+//
+//    gui->setVisible(true);
+//}
+//
+//void XBSceneManager::handleGUIEvents(ofxUIEventArgs &e)
+//{
+//}

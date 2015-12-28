@@ -40,8 +40,6 @@ public:
     void goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
     void goToNextScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
     void goToPrevScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
-    void showAllScenes();
-    int getCurrentSceneIndex() const { return currentSceneIndex; };
 
 private:
 
@@ -51,13 +49,6 @@ private:
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;
     SceneTransitionState state;
-
-    bool showAll;
-
-#ifdef OF_DEBUG
-    ofxUISuperCanvas *gui;
-    void handleGUIEvents(ofxUIEventArgs &e);
-#endif
 };
 
 
