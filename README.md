@@ -26,4 +26,5 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - ofxOSC (already part of OF)
 
 ### PedreraGUIController
+- ofxGUI (already part of OF)
 - ofxOSC (already part of OF)
