@@ -415,9 +415,9 @@
 			isa = PBXGroup;
 			children = (
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
+				2A1C6E481C2CDAA00068B7CD /* ofxTweenzor */,
 				A492CE86424AB8905550BFD8 /* ofxUI */,
 				1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */,
-				2A1C6E481C2CDAA00068B7CD /* ofxTweenzor */,
 			);
 			name = addons;
 			sourceTree = "<group>";

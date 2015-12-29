@@ -155,27 +155,29 @@ void XBSceneManager::onFadeComplete(float *arg)
 }
 
 // The code below is kept just as a reminder on how to create a GUI with ofxUI:
-//void XBSceneManager::showAllScenes()
-//{
-//    gui = new ofxUISuperCanvas("SCENES", OFX_UI_FONT_MEDIUM);
-//
-//    gui->setColorBack(ofColor(0, 100, 127, 127));
-//
-//    gui->addSpacer();
-//    for (int i=0; i<scenes.size(); ++i)
-//    {
-//        ofxUISlider *alphaSlider = gui->addSlider(scenes[i]->getName() + " alpha", 0.0, 255.0, scenes[i]->getFBOAlpha());
-//        alphaSlider->setID(i);
-//    }
-//
-//    gui->autoSizeToFitWidgets();
-//
-//    ofAddListener(gui->newGUIEvent, this, &XBSceneManager::handleGUIEvents);
-//    gui->loadSettings(GUI_FILENAME);
-//
-//    gui->setVisible(true);
-//}
-//
-//void XBSceneManager::handleGUIEvents(ofxUIEventArgs &e)
-//{
-//}
+/*
+void XBSceneManager::showAllScenes()
+{
+    gui = new ofxUISuperCanvas("SCENES", OFX_UI_FONT_MEDIUM);
+
+    gui->setColorBack(ofColor(0, 100, 127, 127));
+
+    gui->addSpacer();
+    for (int i=0; i<scenes.size(); ++i)
+    {
+        ofxUISlider *alphaSlider = gui->addSlider(scenes[i]->getName() + " alpha", 0.0, 255.0, scenes[i]->getFBOAlpha());
+        alphaSlider->setID(i);
+    }
+
+    gui->autoSizeToFitWidgets();
+
+    ofAddListener(gui->newGUIEvent, this, &XBSceneManager::handleGUIEvents);
+    gui->loadSettings(GUI_FILENAME);
+
+    gui->setVisible(true);
+}
+
+void XBSceneManager::handleGUIEvents(ofxUIEventArgs &e)
+{
+}
+*/
