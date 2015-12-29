@@ -14,14 +14,16 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - ofxXmlSettings (already part of OF)
 
 ### PedreraKinectSender
-(Not yet available)
+- [ofxKinectFeatures-PM](https://github.com/eduardfrigola/ofxKinectFeatures-PM)
+- ofxOSC (already part of OF)
 
 ### PedreraMIDISender
-(Not yet available)
+- [ofxMidi](https://github.com/danomatika/ofxMidi)
+- ofxOSC (already part of OF)
 
 ### PedreraAudioAnalyzerSender
-(Not yet available)
+- [ofxAubio](https://github.com/aubio/ofxAubio)
+- ofxOSC (already part of OF)
 
 ### PedreraGUIController
-(Not yet available)
-
+- ofxOSC (already part of OF)
