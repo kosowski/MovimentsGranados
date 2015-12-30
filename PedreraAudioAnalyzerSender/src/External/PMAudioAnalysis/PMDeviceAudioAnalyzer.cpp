@@ -7,8 +7,12 @@
 //
 
 #include "PMDeviceAudioAnalyzer.hpp"
-#include "PMRecorder.hpp"
 
+#define USE_RECORDER false
+
+#if USE_RECORDER == true
+#include "PMRecorder.hpp"
+#endif
 
 // TODO: Should be able to change to a custom number
 static const int NUM_MELBANDS = 40;
@@ -184,12 +188,14 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         }
     }
 
+#if USE_RECORDER == true
     //Call to the Recorder
     // FIXME: Això no hauria d'estar a l'analitzador d'àudio, sino fora!!!
     // FIXME: Now records all channels, better to chose how many chanels to record
     if (PMRecorder::getInstance().isRecording()) {
         PMRecorder::getInstance().addAudioBuffer(input, bufferSize, inChannels);
     }
+#endif
 }
 
 float PMDeviceAudioAnalyzer::getEnergy()
