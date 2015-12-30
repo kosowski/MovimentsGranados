@@ -27,6 +27,7 @@ void ofApp::setup()
     guiAudioDevices.loadFromFile(SETTINGS_FILENAME);
 
     guiAudioDevices.add(lblStatus.setup(STR_STATUS, STR_STATUS_OFF));
+    lblStatus.setBackgroundColor(ofColor::darkRed);
     guiAudioDevices.add(btnStartAnalysis.setup("START"));
     guiAudioDevices.add(btnStopAnalysis.setup("STOP"));
 
@@ -70,10 +71,15 @@ void ofApp::startButtonPressed()
         if (found) enabledChannels = deviceParams[i].getEnabledChannels();
     }
 
-    if (found) lblStatus.setup(STR_STATUS, STR_STATUS_ON);
+    if (found)
+    {
+        lblStatus.setup(STR_STATUS, STR_STATUS_ON);
+        lblStatus.setBackgroundColor(ofColor::darkGreen);
+    }
 }
 
 void ofApp::stopButtonPressed()
 {
     lblStatus.setup(STR_STATUS, STR_STATUS_OFF);
+    lblStatus.setBackgroundColor(ofColor::darkRed);
 }
