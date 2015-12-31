@@ -96,7 +96,7 @@
 		214760EF437A5C56A4C927F2 /* XBDeviceParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBDeviceParams.cpp; sourceTree = "<group>"; };
 		214761762A45D089417F7975 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 		2147646067EE68187BB70802 /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
-		2147656389D1550C462411D3 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
+		2147656389D1550C462411D3 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Defaults.h; path = src/Defaults.h; sourceTree = "<group>"; };
 		2147675F708B779A576AF730 /* PMAudioInParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAudioInParams.h; sourceTree = "<group>"; };
 		21476B7D5C8562443149488D /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
 		21476E705E64397B61C31772 /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
@@ -120,6 +120,7 @@
 		2A35FDBB1C3554DD003CBEB4 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../../../../../../../System/Library/Frameworks/QuickTime.framework; sourceTree = "<group>"; };
 		2A35FDBC1C3554DD003CBEB4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = ../../../../../../../System/Library/Frameworks/CoreVideo.framework; sourceTree = "<group>"; };
 		2A35FDBD1C3554DD003CBEB4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
+		2A50DB651C35628A00FC87F9 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2AB739FF1C33C9B0009C0C1E /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
 		2AB73A001C33C9B0009C0C1E /* ofxBaseGui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
 		2AB73A011C33C9B0009C0C1E /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
@@ -292,6 +293,14 @@
 			name = "3rd party frameworks";
 			sourceTree = "<group>";
 		};
+		2A50DB641C35628A00FC87F9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2A50DB651C35628A00FC87F9 /* MathUtils.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		2AB739FD1C33C9B0009C0C1E /* ofxGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +445,7 @@
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
+				2147656389D1550C462411D3 /* Defaults.h */,
 				2AD2C5CE1C33E97A00AC31EA /* data */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -451,10 +461,10 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				2147656389D1550C462411D3 /* Defaults.h */,
-				214765E6D4944DF4D753FBC5 /* External */,
-				214760EF437A5C56A4C927F2 /* XBDeviceParams.cpp */,
 				21476F1D36ABE47561A2695F /* XBDeviceParams.h */,
+				214760EF437A5C56A4C927F2 /* XBDeviceParams.cpp */,
+				2A50DB641C35628A00FC87F9 /* Utils */,
+				214765E6D4944DF4D753FBC5 /* External */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

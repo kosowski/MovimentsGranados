@@ -1,5 +1,5 @@
 #include "ofApp.h"
-
+#include "MathUtils.h"
 
 static const int DEFAULT_SAMPLERATE = 44100;
 static const int DEFAULT_BUFFERSIZE = 512;
@@ -206,12 +206,12 @@ void ofApp::stopButtonPressed()
 
 void ofApp::pitchChanged(pitchParams &pitchParams)
 {
-    pitchMidiNote = pitchParams.midiNote;
+    pitchMidiNote = truncateFloat(pitchParams.midiNote, 2);
 }
 
 void ofApp::energyChanged(energyParams &energyParams)
 {
-    energyEnergy = energyParams.energy * energyGain;
+    energyEnergy = truncateFloat(energyParams.energy * energyGain, 2);
 }
 
 void ofApp::silenceStateChanged(silenceParams &silenceParams)
