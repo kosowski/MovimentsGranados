@@ -39,15 +39,12 @@ private:
     ofParameterGroup        paramsSilence;
     ofParameter<float>      silenceThreshold;
     ofParameter<float>      silenceLength;
-//    ofxLabel                silenceOn;
     ofParameter<bool>       silenceOn;
     ofParameterGroup        paramsPause;
     ofParameter<float>      pauseLength;
-//    ofxLabel                pauseOn;
     ofParameter<bool>       pauseOn;
     ofParameterGroup        paramsOnsets;
     ofParameter<float>      onsetsThreshold;
-//    ofxLabel                onsetsOn;
     ofParameter<bool>       onsetsOn;
 
     void buildDevicesPanel();

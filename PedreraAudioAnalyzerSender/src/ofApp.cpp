@@ -174,14 +174,29 @@ void ofApp::startButtonPressed()
             if (deviceFound) deviceIndex = i;
         }
 
+        // Create audio analyzers
+        for (unsigned int i=0; i<1; ++i)
+        {
+            vector<unsigned int> analyzerEnabledChannels;
+            analyzerEnabledChannels.push_back(enabledChannels[i]);
+
+            unsigned int audioInputIndex = i;
+            PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(i,
+                    devices[deviceIndex].deviceID,
+                    devices[deviceIndex].inputChannels,
+                    devices[deviceIndex].outputChannels,
+                    DEFAULT_SAMPLERATE,
+                    DEFAULT_BUFFERSIZE,
+                    analyzerEnabledChannels);
+
+            ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::pitchChanged);
+            ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::energyChanged);
+            ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::silenceStateChanged);
+            ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::pauseStateChanged);
+            ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::onsetDetected);
+        }
+
         unsigned int audioInputIndex = 0;
-        PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
-                devices[deviceIndex].deviceID,
-                devices[deviceIndex].inputChannels,
-                devices[deviceIndex].outputChannels,
-                DEFAULT_SAMPLERATE,
-                DEFAULT_BUFFERSIZE,
-                enabledChannels);
 
         audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
 
@@ -203,15 +218,6 @@ void ofApp::startButtonPressed()
             pauseLengthChanged(tmpPauseLength);
             float tmpOnsetsThrshld = onsetsThreshold.get();
             onsetsThresholdChanged(tmpOnsetsThrshld);
-        }
-
-        // Register audio events
-        {
-            ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::pitchChanged);
-            ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::energyChanged);
-            ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::silenceStateChanged);
-            ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::pauseStateChanged);
-            ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::onsetDetected);
         }
 
         PMAudioAnalyzer::getInstance().start();
