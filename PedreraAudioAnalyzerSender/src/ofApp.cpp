@@ -1,62 +1,60 @@
 #include "ofApp.h"
 
-#include "PMAudioAnalyzer.hpp"
 
-const int GUI_DEV_WIDTH = 300;
-const int GUI_AN_WIDTH = 200;
-const int GUI_MARGIN = 10;
+static const int DEFAULT_SAMPLERATE = 44100;
+static const int DEFAULT_BUFFERSIZE = 512;
 
-const string DEVICE_SETTINGS_FILENAME   = "deviceSettings.xml";
-const string STR_DEV_TITLE              = "DEVICE SELECTOR";
-const string STR_DEV_STATUS             = "CURRENT STATUS";
-const string STR_DEV_STATUS_ON          = "ON";
-const string STR_DEV_STATUS_OFF         = "OFF";
-const string STR_DEV_START              = "START";
-const string STR_DEV_STOP               = "STOP";
+static const int GUI_DEV_WIDTH  = 300;
+static const int GUI_AN_WIDTH   = 200;
+static const int GUI_MARGIN     = 10;
 
-const string ANALYSIS_FILENAME          = "audioAnalyzer.xml";
-const string STR_AN_TITLE               = "AUDIO ANALYZER";
-const string STR_PITCH                  = "Pitch";
-const string STR_PITCH_MIDINOTE         = "Midi Note";
-const string STR_ENERGY                 = "Energy";
-const string STR_ENERGY_VALUE           = "Energy";
-const string STR_ENERGY_GAIN            = "Gain";
-const string STR_SILENCE                = "Silence";
-const string STR_SILENCE_THRESHOLD      = "Threshold";
-const string STR_SILENCE_LENGTH         = "Length (ms)";
-const string STR_SILENCE_STATUS         = "Current Status";
-const string STR_SILENCE_STATUS_ON      = "ON";
-const string STR_SILENCE_STATUS_OFF     = "OFF";
-const string STR_PAUSE                  = "Pause";
-const string STR_PAUSE_LENGTH           = "Length (ms)";
-const string STR_PAUSE_STATUS           = "Current Status";
-const string STR_PAUSE_STATUS_ON        = "ON";
-const string STR_PAUSE_STATUS_OFF       = "OFF";
-const string STR_ONSETS                 = "Onsets";
-const string STR_ONSETS_THRESHOLD       = "Threshold";
-const string STR_ONSETS_STATUS          = "Current Status";
-const string STR_ONSETS_STATUS_ON       = "ON";
-const string STR_ONSETS_STATUS_OFF      = "OFF";
+static const string DEVICE_SETTINGS_FILENAME   = "deviceSettings.xml";
+static const string STR_DEV_TITLE              = "DEVICE SELECTOR";
+static const string STR_DEV_STATUS             = "CURRENT STATUS";
+static const string STR_DEV_STATUS_ON          = "ON";
+static const string STR_DEV_STATUS_OFF         = "OFF";
+static const string STR_DEV_START              = "START";
+static const string STR_DEV_STOP               = "STOP";
 
-const float PITCH_MIN = 0;
-const float PITCH_MAX = 127;
-const float ENERGY_MIN = 0;
-const float ENERGY_MAX = 1;
-const float GAIN_MIN = 1;
-const float GAIN_MAX = 10;
-const float SILENCE_THRSHLD_MIN = 0;
-const float SILENCE_THRSHLD_MAX = 0.5;
-const float SILENCE_LENGTH_MIN = 0;
-const float SILENCE_LENGTH_MAX = 1000;
-const float PAUSE_LENGTH_MIN = 0;
-const float PAUSE_LENGTH_MAX = 10000;
-const float ONSET_THRSHLD_MIN = 0;
-const float ONSET_THRSHLD_MAX = 1;
+static const string ANALYSIS_FILENAME          = "audioAnalyzer.xml";
+static const string STR_AN_TITLE               = "AUDIO ANALYZER";
+static const string STR_PITCH                  = "Pitch";
+static const string STR_PITCH_MIDINOTE         = "Midi Note";
+static const string STR_ENERGY                 = "Energy";
+static const string STR_ENERGY_VALUE           = "Energy";
+static const string STR_ENERGY_GAIN            = "Gain";
+static const string STR_SILENCE                = "Silence";
+static const string STR_SILENCE_THRESHOLD      = "Threshold";
+static const string STR_SILENCE_LENGTH         = "Length (ms)";
+static const string STR_SILENCE_STATUS         = "Current Status";
+static const string STR_SILENCE_STATUS_ON      = "ON";
+static const string STR_SILENCE_STATUS_OFF     = "OFF";
+static const string STR_PAUSE                  = "Pause";
+static const string STR_PAUSE_LENGTH           = "Length (ms)";
+static const string STR_PAUSE_STATUS           = "Current Status";
+static const string STR_PAUSE_STATUS_ON        = "ON";
+static const string STR_PAUSE_STATUS_OFF       = "OFF";
+static const string STR_ONSETS                 = "Onsets";
+static const string STR_ONSETS_THRESHOLD       = "Threshold";
+static const string STR_ONSETS_STATUS          = "Current Status";
+static const string STR_ONSETS_STATUS_ON       = "ON";
+static const string STR_ONSETS_STATUS_OFF      = "OFF";
+
+static const float PITCH_MIN = 0, PITCH_MAX = 127;
+static const float ENERGY_MIN = 0, ENERGY_MAX = 1;
+static const float GAIN_MIN = 1, GAIN_MAX = 10;
+static const float SILENCE_THRSHLD_MIN = 0, SILENCE_THRSHLD_MAX = 0.5;
+static const float SILENCE_LENGTH_MIN = 0, SILENCE_LENGTH_MAX = 1000;
+static const float PAUSE_LENGTH_MIN = 0, PAUSE_LENGTH_MAX = 10000;
+static const float ONSET_THRSHLD_MIN = 0, ONSET_THRSHLD_MAX = 1;
 
 void ofApp::setup()
 {
     ofSetWindowTitle("AUDIO ANALYZER");
     ofBackground(81, 88, 111);
+
+    int ascDescAnalysisSize = 20;
+    PMAudioAnalyzer::getInstance().init(silenceThreshold, (unsigned int)silenceLength, onsetsThreshold, ascDescAnalysisSize);
 
     buildDevicesPanel();
     buildAnalysisPanel();
@@ -130,7 +128,7 @@ void ofApp::buildAnalysisPanel()
     guiAnalysis.add(paramsEnergy);
 
     paramsSilence.setName(STR_SILENCE);
-    paramsSilence.add(silenceThreshold.set(STR_SILENCE_THRESHOLD, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MAX));
+    paramsSilence.add(silenceThreshold.set(STR_SILENCE_THRESHOLD, 0.23, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MAX));
     paramsSilence.add(silenceLength.set(STR_SILENCE_LENGTH, SILENCE_LENGTH_MIN, SILENCE_LENGTH_MIN, SILENCE_LENGTH_MAX));
     paramsSilence.add(silenceOn.set(STR_SILENCE_STATUS, false));
     guiAnalysis.add(paramsSilence);
@@ -156,16 +154,43 @@ void ofApp::startButtonPressed()
     unsigned int deviceID;
     vector<unsigned int> enabledChannels;
 
-    bool found = false;
-    for (int i=0; i<deviceParams.size() && !found; ++i)
+    bool deviceIsValid = false;
+    for (int i=0; i<deviceParams.size() && !deviceIsValid; ++i)
     {
         deviceID = deviceParams[i].getDeviceID();
-        found = (deviceParams[i].getIsEnabled()) && (deviceParams[i].getEnabledChannels().size() == 2);
-        if (found) enabledChannels = deviceParams[i].getEnabledChannels();
+        deviceIsValid = (deviceParams[i].getIsEnabled()) && (deviceParams[i].getEnabledChannels().size() == 2);
+        if (deviceIsValid) enabledChannels = deviceParams[i].getEnabledChannels();
     }
 
-    if (found)
+    if (deviceIsValid)
     {
+        vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
+        bool deviceFound = false;
+        int deviceIndex = 0;
+
+        for (int i=0; i<devices.size() && !deviceFound; ++i)
+        {
+            deviceFound = (devices[i].deviceID == deviceID);
+            if (deviceFound) deviceIndex = i;
+        }
+
+        int audioInputIndex = 0;
+        PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
+                devices[deviceIndex].deviceID,
+                devices[deviceIndex].inputChannels,
+                devices[deviceIndex].outputChannels,
+                DEFAULT_SAMPLERATE,
+                DEFAULT_BUFFERSIZE,
+                enabledChannels);
+
+        ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::pitchChanged);
+        ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::energyChanged);
+        ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::silenceStateChanged);
+        ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::pauseStateChanged);
+        ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::onsetDetected);
+
+        PMAudioAnalyzer::getInstance().start();
+
         lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_ON);
         lblStatus.setBackgroundColor(ofColor::darkGreen);
     }
@@ -173,6 +198,35 @@ void ofApp::startButtonPressed()
 
 void ofApp::stopButtonPressed()
 {
+    PMAudioAnalyzer::getInstance().stop();
+
     lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF);
     lblStatus.setBackgroundColor(ofColor::darkRed);
+}
+
+void ofApp::pitchChanged(pitchParams &pitchParams)
+{
+    pitchMidiNote = pitchParams.midiNote;
+}
+
+void ofApp::energyChanged(energyParams &energyParams)
+{
+    energyEnergy = energyParams.energy * energyGain;
+}
+
+void ofApp::silenceStateChanged(silenceParams &silenceParams)
+{
+    cout << "Silence state changed" << endl;
+    silenceOn = silenceParams.isSilent;
+}
+
+void ofApp::pauseStateChanged(pauseParams &pauseParams)
+{
+    cout << "Pause state changed" << endl;
+    pauseOn = pauseParams.isPaused;
+}
+
+void ofApp::onsetDetected(onsetParams &onsetParams)
+{
+    onsetsOn = onsetParams.isOnset;
 }

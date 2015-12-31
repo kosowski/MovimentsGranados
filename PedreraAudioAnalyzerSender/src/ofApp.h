@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGUI.h"
+#include "PMAudioAnalyzer.hpp"
 #include "XBDeviceParams.h"
 
 class ofApp : public ofBaseApp
@@ -49,4 +50,10 @@ private:
 
     void startButtonPressed();
     void stopButtonPressed();
+
+    void pitchChanged(pitchParams &pitchParams);
+    void energyChanged(energyParams &energyParams);
+    void silenceStateChanged(silenceParams &silenceParams);
+    void pauseStateChanged(pauseParams &pauseParams);
+    void onsetDetected(onsetParams &onsetParams);
 };
