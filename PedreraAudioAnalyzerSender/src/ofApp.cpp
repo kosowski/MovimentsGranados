@@ -128,7 +128,7 @@ void ofApp::buildAnalysisPanel()
     guiAnalysis.add(paramsEnergy);
 
     paramsSilence.setName(STR_SILENCE);
-    paramsSilence.add(silenceThreshold.set(STR_SILENCE_THRESHOLD, 0.23, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MAX));
+    paramsSilence.add(silenceThreshold.set(STR_SILENCE_THRESHOLD, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MIN, SILENCE_THRSHLD_MAX));
     paramsSilence.add(silenceLength.set(STR_SILENCE_LENGTH, SILENCE_LENGTH_MIN, SILENCE_LENGTH_MIN, SILENCE_LENGTH_MAX));
     paramsSilence.add(silenceOn.set(STR_SILENCE_STATUS, false));
     guiAnalysis.add(paramsSilence);
@@ -151,7 +151,7 @@ void ofApp::buildAnalysisPanel()
 
 void ofApp::startButtonPressed()
 {
-    unsigned int deviceID;
+    unsigned int deviceID = 0;
     vector<unsigned int> enabledChannels;
 
     bool deviceIsValid = false;
@@ -174,7 +174,7 @@ void ofApp::startButtonPressed()
             if (deviceFound) deviceIndex = i;
         }
 
-        int audioInputIndex = 0;
+        unsigned int audioInputIndex = 0;
         PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
                 devices[deviceIndex].deviceID,
                 devices[deviceIndex].inputChannels,
@@ -183,11 +183,36 @@ void ofApp::startButtonPressed()
                 DEFAULT_BUFFERSIZE,
                 enabledChannels);
 
-        ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::pitchChanged);
-        ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::energyChanged);
-        ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::silenceStateChanged);
-        ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::pauseStateChanged);
-        ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::onsetDetected);
+        audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
+
+        // Register GUI events
+        {
+            silenceThreshold.addListener(this, &ofApp::silenceThresholdChanged);
+            silenceLength.addListener(this, &ofApp::silenceLengthChanged);
+            pauseLength.addListener(this, &ofApp::pauseLengthChanged);
+            onsetsThreshold.addListener(this, &ofApp::onsetsThresholdChanged);
+        }
+
+        // Force initial audio analyzer values setup
+        {
+            float tmpSilenceThrshld = silenceThreshold.get();
+            silenceThresholdChanged(tmpSilenceThrshld);
+            float tmpSilenceLength = silenceLength.get();
+            silenceLengthChanged(tmpSilenceLength);
+            float tmpPauseLength = pauseLength.get();
+            pauseLengthChanged(tmpPauseLength);
+            float tmpOnsetsThrshld = onsetsThreshold.get();
+            onsetsThresholdChanged(tmpOnsetsThrshld);
+        }
+
+        // Register audio events
+        {
+            ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::pitchChanged);
+            ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::energyChanged);
+            ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::silenceStateChanged);
+            ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::pauseStateChanged);
+            ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::onsetDetected);
+        }
 
         PMAudioAnalyzer::getInstance().start();
 
@@ -204,6 +229,46 @@ void ofApp::stopButtonPressed()
     lblStatus.setBackgroundColor(ofColor::darkRed);
 }
 
+void ofApp::silenceThresholdChanged(float &threshold)
+{
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != 0) continue;
+        (*itAudioAnalyzer)->setSilenceThreshold(threshold);
+    }
+}
+
+void ofApp::silenceLengthChanged(float &length)
+{
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != 0) continue;
+        (*itAudioAnalyzer)->setSilenceQueueLength(length);
+    }
+}
+
+void ofApp::pauseLengthChanged(float &length)
+{
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != 0) continue;
+        (*itAudioAnalyzer)->setPauseTimeTreshold(length);
+    }
+}
+
+void ofApp::onsetsThresholdChanged(float &threshold)
+{
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != 0) continue;
+        (*itAudioAnalyzer)->setOnsetsThreshold(threshold);
+    }
+}
+
 void ofApp::pitchChanged(pitchParams &pitchParams)
 {
     pitchMidiNote = truncateFloat(pitchParams.midiNote, 2);
@@ -216,13 +281,11 @@ void ofApp::energyChanged(energyParams &energyParams)
 
 void ofApp::silenceStateChanged(silenceParams &silenceParams)
 {
-    cout << "Silence state changed" << endl;
     silenceOn = silenceParams.isSilent;
 }
 
 void ofApp::pauseStateChanged(pauseParams &pauseParams)
 {
-    cout << "Pause state changed" << endl;
     pauseOn = pauseParams.isPaused;
 }
 

@@ -20,6 +20,8 @@ public:
 
 private:
 
+    // GUI
+
     // Audio device selector
     ofxPanel                guiDevices;
     vector<XBDeviceParams>  deviceParams;
@@ -37,19 +39,32 @@ private:
     ofParameterGroup        paramsSilence;
     ofParameter<float>      silenceThreshold;
     ofParameter<float>      silenceLength;
+//    ofxLabel                silenceOn;
     ofParameter<bool>       silenceOn;
     ofParameterGroup        paramsPause;
     ofParameter<float>      pauseLength;
+//    ofxLabel                pauseOn;
     ofParameter<bool>       pauseOn;
     ofParameterGroup        paramsOnsets;
     ofParameter<float>      onsetsThreshold;
+//    ofxLabel                onsetsOn;
     ofParameter<bool>       onsetsOn;
 
     void buildDevicesPanel();
     void buildAnalysisPanel();
 
+    // GUI EVENTS
+
     void startButtonPressed();
     void stopButtonPressed();
+    void silenceThresholdChanged(float &threshold);
+    void silenceLengthChanged(float &length);
+    void pauseLengthChanged(float &length);
+    void onsetsThresholdChanged(float &threshold);
+
+    // AUDIO ANALYZER
+
+    vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 
     void pitchChanged(pitchParams &pitchParams);
     void energyChanged(energyParams &energyParams);
