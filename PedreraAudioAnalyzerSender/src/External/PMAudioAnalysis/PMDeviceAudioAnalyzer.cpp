@@ -8,18 +8,13 @@
 
 #include "PMDeviceAudioAnalyzer.hpp"
 
-#define USE_RECORDER false
-
-#if USE_RECORDER == true
-#include "PMRecorder.hpp"
-#endif
-
 // TODO: Should be able to change to a custom number
 static const int NUM_MELBANDS = 40;
 
-PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize)
+PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _channelID, int _outChannels, int _sampleRate, int _bufferSize, int _inChannels)
 {
     deviceID = _deviceID;
+    channelID = _channelID;
     inChannels = _inChannels;
     outChannels = _outChannels;
     sampleRate = _sampleRate;
@@ -30,6 +25,9 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     soundStream.printDeviceList();
 
     isSetup = false;
+
+    /**/
+    channelInput = new float[bufferSize];
 }
 
 PMDeviceAudioAnalyzer::~PMDeviceAudioAnalyzer()
@@ -98,104 +96,119 @@ void PMDeviceAudioAnalyzer::clear()
 
 void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
-    // Init of audio event params struct
-    pitchParams pitchParams;
-    pitchParams.deviceID = deviceID;
-    pitchParams.audioInputIndex = audioInputIndex;
-    silenceParams silenceParams;
-    silenceParams.deviceID = deviceID;
-    silenceParams.audioInputIndex = audioInputIndex;
-    energyParams energyParams;
-    energyParams.deviceID = deviceID;
-    energyParams.audioInputIndex = audioInputIndex;
-    onsetParams onsetParams;
-    onsetParams.deviceID = deviceID;
-    onsetParams.audioInputIndex = audioInputIndex;
-    freqBandsParams freqBandsParams;
-    freqBandsParams.deviceID = deviceID;
-    freqBandsParams.audioInputIndex = audioInputIndex;
-
-    aubioOnset->setThreshold(onsetsThreshold);
-
-    aubioPitch->audioIn(input, bufferSize, nChannels);
-    aubioOnset->audioIn(input, bufferSize, nChannels);
-    aubioMelBands->audioIn(input, bufferSize, nChannels);
-
-    float currentMidiNote = aubioPitch->latestPitch;
-//    cout << "Pitch confidence: " << aubioPitch->pitchConfidence << endl;
-
-    // Silence
-    //cout << " sil.thr : " << silenceThreshold << endl;
-    bool isSilent = (getAbsMean(input, bufferSize) < silenceThreshold);
+    for (int k=0; k<channelNumbers.size(); ++k)
     {
-        if (wasSilent != isSilent) // Changes in silence (ON>OFF or OFF>ON)
-        {
-            wasSilent = isSilent;
-            if (isSilent) {
-                silenceStarted();
-            } else {
-                silenceEnded();
+        /**/
+        for (int i=0; i<bufferSize; i++) {
+            channelInput[i] = input[(i*nChannels) + channelID];
+        }
 
+
+    //    for (int i = 0; i < bufferSize; i++){
+    //        ch1In[i] = input[i*2];
+    //        ch2In[i] = input[i*2+1];
+    //    }
+
+
+        // Init of audio event params struct
+        pitchParams pitchParams;
+        pitchParams.deviceID = deviceID;
+        pitchParams.channelID = channelNumbers[k];
+        pitchParams.audioInputIndex = audioInputIndex;
+        silenceParams silenceParams;
+        silenceParams.deviceID = deviceID;
+        silenceParams.channelID = channelNumbers[k];
+        silenceParams.audioInputIndex = audioInputIndex;
+        energyParams energyParams;
+        energyParams.deviceID = deviceID;
+        energyParams.channelID = channelNumbers[k];
+        energyParams.audioInputIndex = audioInputIndex;
+        onsetParams onsetParams;
+        onsetParams.deviceID = deviceID;
+        onsetParams.channelID = channelNumbers[k];
+        onsetParams.audioInputIndex = audioInputIndex;
+        freqBandsParams freqBandsParams;
+        freqBandsParams.deviceID = deviceID;
+        freqBandsParams.channelID = channelNumbers[k];
+        freqBandsParams.audioInputIndex = audioInputIndex;
+
+        aubioOnset->setThreshold(onsetsThreshold);
+    /**/
+        aubioPitch->audioIn(channelInput, bufferSize, 1);
+        aubioOnset->audioIn(channelInput, bufferSize, 1);
+        aubioMelBands->audioIn(channelInput, bufferSize, 1);
+
+    //    aubioPitch->audioIn(channelInput, bufferSize, nChannels);
+    //    aubioOnset->audioIn(channelInput, bufferSize, nChannels);
+    //    aubioMelBands->audioIn(channelInput, bufferSize, nChannels);
+
+        float currentMidiNote = aubioPitch->latestPitch;
+    //    cout << "Pitch confidence: " << aubioPitch->pitchConfidence << endl;
+
+        // Silence
+        //cout << " sil.thr : " << silenceThreshold << endl;
+        bool isSilent = (getAbsMean(channelInput, bufferSize) < silenceThreshold);
+        {
+            if (wasSilent != isSilent) // Changes in silence (ON>OFF or OFF>ON)
+            {
+                wasSilent = isSilent;
+                if (isSilent) {
+                    silenceStarted();
+                } else {
+                    silenceEnded();
+
+                }
+            }
+
+            if (isInSilence)
+                updateSilenceTime();
+        }
+
+    //    if(isSilent) cout << "in silence..." << endl;
+    //    else cout << "not silent" << endl;
+
+        // Pitch
+        {
+            if (currentMidiNote)
+            {
+                pitchParams.midiNote = currentMidiNote;
+                ofNotifyEvent(eventPitchChanged, pitchParams, this);
+
+                midiNoteHistory.push_front(currentMidiNote);
+
+                if (midiNoteHistory.size() > ascDescAnalysisSize)
+                    midiNoteHistory.pop_back();
+
+                // MELODY DIRECTION
+                checkMelodyDirection();
+            } else {
+                if (midiNoteHistory.size() > 0)
+                    midiNoteHistory.pop_back();
             }
         }
 
-        if (isInSilence)
-            updateSilenceTime();
-    }
-
-//    if(isSilent) cout << "in silence..." << endl;
-//    else cout << "not silent" << endl;
-    
-    // Pitch
-    {
-        if (currentMidiNote)
+        // Mel bands
         {
-            pitchParams.midiNote = currentMidiNote;
-            ofNotifyEvent(eventPitchChanged, pitchParams, this);
+            energyParams.energy = getAbsMean(channelInput, bufferSize);
+            ofNotifyEvent(eventEnergyChanged, energyParams, this);
+        }
 
-            midiNoteHistory.push_front(currentMidiNote);
+        // Shhhht
+        {
+            if (!isSilent) checkShtSound();
+        }
 
-            if (midiNoteHistory.size() > ascDescAnalysisSize)
-                midiNoteHistory.pop_back();
-
-            // MELODY DIRECTION
-            checkMelodyDirection();
-        } else {
-            if (midiNoteHistory.size() > 0)
-                midiNoteHistory.pop_back();
+        // Onsets
+        {
+            bool isOnset = aubioOnset->received();
+            if (oldOnsetState != isOnset)
+            {
+                oldOnsetState = isOnset;
+                onsetParams.isOnset = isOnset;
+                ofNotifyEvent(eventOnsetStateChanged, onsetParams, this);
+            }
         }
     }
-
-    // Mel bands
-    {
-        energyParams.energy = getAbsMean(input, bufferSize);
-        ofNotifyEvent(eventEnergyChanged, energyParams, this);
-    }
-
-    // Shhhht
-    {
-        if (!isSilent) checkShtSound();
-    }
-
-    // Onsets
-    {
-        bool isOnset = aubioOnset->received();
-        if (oldOnsetState != isOnset)
-        {
-            oldOnsetState = isOnset;
-            onsetParams.isOnset = isOnset;
-            ofNotifyEvent(eventOnsetStateChanged, onsetParams, this);
-        }
-    }
-
-#if USE_RECORDER == true
-    //Call to the Recorder
-    // FIXME: Això no hauria d'estar a l'analitzador d'àudio, sino fora!!!
-    // FIXME: Now records all channels, better to chose how many chanels to record
-    if (PMRecorder::getInstance().isRecording()) {
-        PMRecorder::getInstance().addAudioBuffer(input, bufferSize, inChannels);
-    }
-#endif
 }
 
 float PMDeviceAudioAnalyzer::getEnergy()
@@ -228,13 +241,19 @@ float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
     float sum = 0.0f;
     for (int i=0; i<bufferSize; ++i)
     {
-        for (int j=0; j<channelNumbers.size(); ++j)
-        {
-            sum += abs(input[(i * inChannels) + channelNumbers[j]]*digitalGain);
-        }
+        /**/
+//        for (int j=0; j<channelNumbers.size(); ++j)
+//        {
+//            sum += abs(input[(i * inChannels) + channelNumbers[j]]*digitalGain);
+//        }
+
+//            sum += abs(input[i]*digitalGain);
+            sum += abs(input[i]*digitalGain);
     }
 
-    return (sum / (bufferSize * channelNumbers.size()));
+/**/
+//    return (sum / (bufferSize * channelNumbers.size()));
+    return (sum / bufferSize);
 }
 
 void PMDeviceAudioAnalyzer::silenceStarted()

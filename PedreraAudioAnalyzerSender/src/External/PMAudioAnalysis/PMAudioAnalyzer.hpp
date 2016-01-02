@@ -26,8 +26,7 @@ public:
     void init(float silenceThreshold, unsigned int silenceQueueLength,
             float onsetsThreshold, int ascDescAnalysisSize);
 
-    PMDeviceAudioAnalyzer *addDeviceAnalyzer(unsigned int audioInputIndex, int deviceID, int inChannels, int outChannels,
-            int sampleRate, int bufferSize, vector<unsigned int> channelNumbers);
+    PMDeviceAudioAnalyzer *addDeviceAnalyzer(unsigned int audioInputIndex, int deviceID, int channelID, int outChannels, int sampleRate, int bufferSize, vector<unsigned int> channelNumbers, int inChannels);
 
     vector<PMDeviceAudioAnalyzer *> *getAudioAnalyzers();
 

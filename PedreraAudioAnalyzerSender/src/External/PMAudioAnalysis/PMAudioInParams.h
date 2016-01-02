@@ -13,6 +13,7 @@
 struct baseAudioInParams {
     unsigned int audioInputIndex;
     int deviceID;
+    int channelID;
 };
 
 struct pitchParams : public baseAudioInParams {

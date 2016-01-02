@@ -22,7 +22,7 @@ class PMDeviceAudioAnalyzer : public ofBaseSoundInput
 {
 public:
 
-    PMDeviceAudioAnalyzer(int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize);
+    PMDeviceAudioAnalyzer(int deviceID, int channelID, int outChannels, int sampleRate, int bufferSize, int inChannels);
     PMDeviceAudioAnalyzer() {};
     ~PMDeviceAudioAnalyzer();
 
@@ -61,9 +61,13 @@ public:
 
 private:
 
+    /**/
+    float *channelInput;
+
     // Setup
     unsigned int audioInputIndex;
     int deviceID;
+    int channelID;
     int inChannels;
     int outChannels;
     int sampleRate;

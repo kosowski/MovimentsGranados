@@ -29,7 +29,7 @@ private:
     ofxButton               btnStopAnalysis;
     ofxLabel                lblStatus;
 
-    // Audio analysis
+    // Audio analysis (cello)
     ofxPanel                guiAnalysis;
     ofParameterGroup        paramsPitch;
     ofParameter<float>      pitchMidiNote;
@@ -48,24 +48,25 @@ private:
     ofParameter<bool>       onsetsOn;
 
     void buildDevicesPanel();
-    void buildAnalysisPanel();
+    void buildCelloAnalysisPanel();
 
     // GUI EVENTS
 
     void startButtonPressed();
     void stopButtonPressed();
-    void silenceThresholdChanged(float &threshold);
-    void silenceLengthChanged(float &length);
-    void pauseLengthChanged(float &length);
-    void onsetsThresholdChanged(float &threshold);
+
+    void guiSilenceThresholdChanged(float &threshold);
+    void guiSilenceLengthChanged(float &length);
+    void guiPauseLengthChanged(float &length);
+    void guiOnsetsThresholdChanged(float &threshold);
 
     // AUDIO ANALYZER
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 
-    void pitchChanged(pitchParams &pitchParams);
-    void energyChanged(energyParams &energyParams);
-    void silenceStateChanged(silenceParams &silenceParams);
-    void pauseStateChanged(pauseParams &pauseParams);
-    void onsetDetected(onsetParams &onsetParams);
+    void analyzerPitchChanged(pitchParams &pitchParams);
+    void analyzerEnergyChanged(energyParams &energyParams);
+    void analyzerSilenceStateChanged(silenceParams &silenceParams);
+    void analyzerPauseStateChanged(pauseParams &pauseParams);
+    void analyzerOnsetDetected(onsetParams &onsetParams);
 };
