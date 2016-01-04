@@ -1,5 +1,7 @@
 #include "ofApp.h"
 #include "MathUtils.h"
+#include "Defaults.h"
+
 
 static const int DEFAULT_SAMPLERATE = 44100;
 static const int DEFAULT_BUFFERSIZE = 512;
@@ -62,6 +64,8 @@ void ofApp::setup()
 
     buildDevicesPanel();
     buildCelloAnalysisPanel();
+
+    oscSender.setup(OSC_SENDER_HOST, OSC_SENDER_PORT);
 }
 
 void ofApp::update()
@@ -168,6 +172,8 @@ void ofApp::startButtonPressed()
 
     if (deviceIsValid)
     {
+        // Create Audio Analyzer for the selected device
+
         vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
         bool deviceFound = false;
         int deviceIndex = 0;
@@ -178,7 +184,6 @@ void ofApp::startButtonPressed()
             if (deviceFound) deviceIndex = i;
         }
 
-        // Create audio analyzer
         unsigned int audioInputIndex = 0;
         PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
                 devices[deviceIndex].deviceID,
@@ -195,6 +200,13 @@ void ofApp::startButtonPressed()
         ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::analyzerOnsetDetected);
 
         audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
+
+        // Send "start" OSC message
+        {
+            ofxOscMessage m;
+            m.setAddress("/start");
+            oscSender.sendMessage(m, false);
+        }
 
         // Register GUI events
         {
@@ -229,6 +241,13 @@ void ofApp::stopButtonPressed()
 
     lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF);
     lblStatus.setBackgroundColor(ofColor::darkRed);
+
+    // Send "stop" OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/stop");
+        oscSender.sendMessage(m, false);
+    }
 }
 
 void ofApp::guiSilenceThresholdChanged(float &threshold) {
@@ -247,22 +266,67 @@ void ofApp::guiOnsetsThresholdChanged(float &threshold) {
     (*audioAnalyzers)[0]->setOnsetsThreshold(threshold);
 }
 
-void ofApp::analyzerPitchChanged(pitchParams &pitchParams) {
+void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
+{
     pitchMidiNote = truncateFloat(pitchParams.midiNote, 2);
+
+    // Send pitch MIDI note OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/pitchMIDINote");
+        m.addFloatArg(pitchParams.midiNote);
+        oscSender.sendMessage(m, false);
+    }
 }
 
-void ofApp::analyzerEnergyChanged(energyParams &energyParams) {
-    energyEnergy = truncateFloat(energyParams.energy * energyGain, 2);
+void ofApp::analyzerEnergyChanged(energyParams &energyParams)
+{
+    float gainEnergy = energyParams.energy * energyGain;
+    energyEnergy = truncateFloat(gainEnergy, 2);
+
+    // Send energy OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/energy");
+        m.addFloatArg(gainEnergy);
+        oscSender.sendMessage(m, false);
+    }
 }
 
-void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams) {
+void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
+{
     silenceOn = silenceParams.isSilent;
+
+    // Send silence change OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/silence");
+        m.addBoolArg(silenceOn);
+        oscSender.sendMessage(m, false);
+    }
 }
 
-void ofApp::analyzerPauseStateChanged(pauseParams &pauseParams) {
+void ofApp::analyzerPauseStateChanged(pauseParams &pauseParams)
+{
     pauseOn = pauseParams.isPaused;
+
+    // Send pause change OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/pause");
+        m.addBoolArg(pauseOn);
+        oscSender.sendMessage(m, false);
+    }
 }
 
-void ofApp::analyzerOnsetDetected(onsetParams &onsetParams) {
+void ofApp::analyzerOnsetDetected(onsetParams &onsetParams)
+{
     onsetsOn = onsetParams.isOnset;
+
+    // Send onset detected OSC message
+    {
+        ofxOscMessage m;
+        m.setAddress("/onset");
+        oscSender.sendMessage(m, false);
+    }
 }

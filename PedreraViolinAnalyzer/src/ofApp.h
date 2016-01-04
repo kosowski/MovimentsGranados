@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGUI.h"
+#include "ofxOsc.h"
 #include "PMAudioAnalyzer.hpp"
 #include "XBDeviceParams.h"
 
@@ -69,4 +70,8 @@ private:
     void analyzerSilenceStateChanged(silenceParams &silenceParams);
     void analyzerPauseStateChanged(pauseParams &pauseParams);
     void analyzerOnsetDetected(onsetParams &onsetParams);
+
+    // OSC
+
+    ofxOscSender oscSender;
 };

@@ -16,4 +16,7 @@ static const int            DEFAULT_WINDOW_HEIGHT       = 350;
 
 static const ofWindowMode   DEFAULT_WINDOW_MODE         = OF_WINDOW;
 
+static const string         OSC_SENDER_HOST             = "localhost";
+static const int            OSC_SENDER_PORT             = 30301;
+
 #endif
