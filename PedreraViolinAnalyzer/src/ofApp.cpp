@@ -1,6 +1,6 @@
 #include "ofApp.h"
 #include "MathUtils.h"
-#include "Defaults.h"
+#include "../../Shared/OSCSettings.h"
 
 
 static const int DEFAULT_SAMPLERATE = 44100;
@@ -65,7 +65,7 @@ void ofApp::setup()
     buildDevicesPanel();
     buildCelloAnalysisPanel();
 
-    oscSender.setup(OSC_SENDER_HOST, OSC_SENDER_PORT);
+    oscSender.setup(OSC_VIOLIN_SENDER_HOST, OSC_VIOLIN_SENDER_PORT);
 }
 
 void ofApp::update()
