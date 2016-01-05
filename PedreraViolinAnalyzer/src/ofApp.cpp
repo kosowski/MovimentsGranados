@@ -270,13 +270,12 @@ void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     pitchMidiNote = truncateFloat(pitchParams.midiNote, 2);
 
-    // Send pitch MIDI note OSC message
-    {
-        ofxOscMessage m;
-        m.setAddress("/pitchMIDINote");
-        m.addFloatArg(pitchParams.midiNote);
-        oscSender.sendMessage(m, false);
-    }
+    ofxOscMessage m;
+    stringstream address;
+    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
+    m.setAddress(address.str());
+    m.addFloatArg(pitchParams.midiNote);
+    oscSender.sendMessage(m, false);
 }
 
 void ofApp::analyzerEnergyChanged(energyParams &energyParams)
@@ -284,49 +283,45 @@ void ofApp::analyzerEnergyChanged(energyParams &energyParams)
     float gainEnergy = energyParams.energy * energyGain;
     energyEnergy = truncateFloat(gainEnergy, 2);
 
-    // Send energy OSC message
-    {
-        ofxOscMessage m;
-        m.setAddress("/energy");
-        m.addFloatArg(gainEnergy);
-        oscSender.sendMessage(m, false);
-    }
+    ofxOscMessage m;
+    stringstream address;
+    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
+    m.setAddress(address.str());
+    m.addFloatArg(gainEnergy);
+    oscSender.sendMessage(m, false);
 }
 
 void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 {
     silenceOn = silenceParams.isSilent;
 
-    // Send silence change OSC message
-    {
-        ofxOscMessage m;
-        m.setAddress("/silence");
-        m.addBoolArg(silenceOn);
-        oscSender.sendMessage(m, false);
-    }
+    ofxOscMessage m;
+    stringstream address;
+    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_SILENCE;
+    m.setAddress(address.str());
+    m.addBoolArg(silenceOn);
+    oscSender.sendMessage(m, false);
 }
 
 void ofApp::analyzerPauseStateChanged(pauseParams &pauseParams)
 {
     pauseOn = pauseParams.isPaused;
 
-    // Send pause change OSC message
-    {
-        ofxOscMessage m;
-        m.setAddress("/pause");
-        m.addBoolArg(pauseOn);
-        oscSender.sendMessage(m, false);
-    }
+    ofxOscMessage m;
+    stringstream address;
+    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PAUSE;
+    m.setAddress(address.str());
+    m.addBoolArg(pauseOn);
+    oscSender.sendMessage(m, false);
 }
 
 void ofApp::analyzerOnsetDetected(onsetParams &onsetParams)
 {
     onsetsOn = onsetParams.isOnset;
 
-    // Send onset detected OSC message
-    {
-        ofxOscMessage m;
-        m.setAddress("/onset");
-        oscSender.sendMessage(m, false);
-    }
+    ofxOscMessage m;
+    stringstream address;
+    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_ONSET;
+    m.setAddress(address.str());
+    oscSender.sendMessage(m, false);
 }
