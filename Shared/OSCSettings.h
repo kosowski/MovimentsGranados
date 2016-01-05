@@ -11,18 +11,15 @@
 #ifndef MovimentsGranados_OSCSettings_h
 #define MovimentsGranados_OSCSettings_h
 
-// Master
-static const int			OSC_MASTER_RECEIVER_PORT	= 30300;
-
 // Cello analyzer
-static const string         OSC_CELLO_SENDER_HOST		= "localhost";
-static const int            OSC_CELLO_SENDER_PORT		= 30301;
-static const string         OSC_CELLO_ADDR_BASE         = "/analyzer/cello";
+static const string         OSC_CELLO_SENDER_HOST		    = "localhost";
+static const int            OSC_CELLO_SENDER_PORT		    = 30301;
+static const string         OSC_CELLO_ADDR_BASE             = "/analyzer/cello";
 
 // Violin analyzer
-static const string         OSC_VIOLIN_SENDER_HOST  	= "localhost";
-static const int            OSC_VIOLIN_SENDER_PORT      = 30302;
-static const string         OSC_VIOLIN_ADDR_BASE        = "/analyzer/violin";
+static const string         OSC_VIOLIN_SENDER_HOST  	    = "localhost";
+static const int            OSC_VIOLIN_SENDER_PORT          = 30302;
+static const string         OSC_VIOLIN_ADDR_BASE            = "/analyzer/violin";
 
 // Analyzer (shared by cello and violin)
 static const string         OSC_ANALYZER_ADDR_STARTED       = "/started";
@@ -32,5 +29,13 @@ static const string         OSC_ANALYZER_ADDR_ENERGY        = "/energy";
 static const string         OSC_ANALYZER_ADDR_SILENCE       = "/silence";
 static const string         OSC_ANALYZER_ADDR_PAUSE         = "/pause";
 static const string         OSC_ANALYZER_ADDR_ONSET         = "/onset";
+
+// Piano
+static const string         OSC_PIANO_SENDER_HOST           = "localhost";
+static const int            OSC_PIANO_SENDER_PORT           = 30303;
+
+// Kinect
+static const string         OSC_KINECT_SENDER_HOST          = "localhost";
+static const int            OSC_KINECT_SENDER_PORT          = 30304;
 
 #endif

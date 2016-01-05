@@ -2,6 +2,8 @@
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"
+#include "XBOSCManager.h"
+#include "../../Shared/OSCSettings.h"
 
 void ofApp::setup()
 {
@@ -9,6 +11,8 @@ void ofApp::setup()
     ofSetVerticalSync(true);
 
     ofBackground(0, 0, 0);
+
+    XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
     XBScene1 *scene1 = new XBScene1("Scene 1");
     scene1->setup();
@@ -26,6 +30,7 @@ void ofApp::setup()
 
 void ofApp::update()
 {
+    XBOSCManager::getInstance().update();
     sceneManager.update();
 }
 
