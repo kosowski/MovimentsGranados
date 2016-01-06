@@ -23,6 +23,22 @@ public:
     void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
     float *getFBOAlpha() { return &fboAlpha; }
 
+    virtual void onCelloStarted() {};
+    virtual void onCelloStopped() {};
+    virtual void onCelloPitchChanged(float &pitch) {};
+    virtual void onCelloEnergyChanged(float &energy) {};
+    virtual void onCelloSilenceChanged(bool &isSilent) {};
+    virtual void onCelloPauseChanged(bool &isPaused) {};
+    virtual void onCelloOnsetDetected() {};
+
+    virtual void onViolinStarted() {};
+    virtual void onViolinStopped() {};
+    virtual void onViolinPitchChanged(float &pitch) {};
+    virtual void onViolinEnergyChanged(float &energy) {};
+    virtual void onViolinSilenceChanged(bool &isSilent) {};
+    virtual void onViolinPauseChanged(bool &isPaused) {};
+    virtual void onViolinOnsetDetected() {};
+
 protected:
 
     void drawFadeRectangle();

@@ -3,6 +3,7 @@
 //
 
 #include "XBBaseScene.h"
+#include "XBOSCManager.h"
 
 XBBaseScene::XBBaseScene(string _name)
 {
@@ -22,6 +23,8 @@ void XBBaseScene::setup()
     fbo.end();
 
     fboAlpha = 255.0f;
+
+    XBOSCManager::getInstance().subscribeToCelloEvents(this);
 }
 
 void XBBaseScene::update()

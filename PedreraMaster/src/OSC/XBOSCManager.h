@@ -6,6 +6,7 @@
 #define PEDRERAMASTER_XBOSCMANAGER_H
 
 #include "ofxOSC.h"
+#include "XBBaseScene.h"
 
 class XBOSCManager
 {
@@ -17,8 +18,12 @@ public:
     }
 
     void init(int celloPort, int violinPort, int pianoPort, int kinectPort);
-
     void update();
+
+    void subscribeToCelloEvents(XBBaseScene *sceneListener);
+    void subscribeToViolinEvents(XBBaseScene *sceneListener);
+    void subscribeToPianoEvents(XBBaseScene *sceneListener);
+    void subscribeToKinectEvents(XBBaseScene *sceneListener);
 
 private:
 

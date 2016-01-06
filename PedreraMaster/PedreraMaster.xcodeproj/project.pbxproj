@@ -138,6 +138,7 @@
 		21476B2D5110E0A3A73E969E /* XBOSCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBOSCManager.h; sourceTree = "<group>"; };
 		21476B6ADF5E2B7C61C9963F /* XBScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1.h; sourceTree = "<group>"; };
 		21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBSceneManager.cpp; sourceTree = "<group>"; };
+		21476C863136A53712900209 /* XBOSCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBOSCEvents.h; sourceTree = "<group>"; };
 		21476C885558C407FE930F0E /* Shared */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = Shared; path = ../../Shared; sourceTree = "<group>"; };
 		21476D7D75555C4AE6056C8A /* XBSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBSceneManager.h; sourceTree = "<group>"; };
 		21476E530868A30A65FE8BA5 /* XBScene2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene2.cpp; sourceTree = "<group>"; };
@@ -317,6 +318,7 @@
 			children = (
 				214762A363D919020F64E5B8 /* XBOSCManager.cpp */,
 				21476B2D5110E0A3A73E969E /* XBOSCManager.h */,
+				21476C863136A53712900209 /* XBOSCEvents.h */,
 			);
 			path = OSC;
 			sourceTree = "<group>";

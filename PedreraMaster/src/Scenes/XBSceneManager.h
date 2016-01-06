@@ -6,6 +6,7 @@
 #define PEDRERAMASTER_XBSCENEMANAGER_H
 
 #include "XBBaseScene.h"
+#include "XBOSCManager.h"
 
 #ifdef OF_DEBUG
 #include "ofxUI.h"

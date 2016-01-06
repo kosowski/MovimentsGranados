@@ -204,7 +204,9 @@ void ofApp::startButtonPressed()
         // Send "start" OSC message
         {
             ofxOscMessage m;
-            m.setAddress("/start");
+            stringstream address;
+            address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_STARTED;
+            m.setAddress(address.str());
             oscSender.sendMessage(m, false);
         }
 
@@ -245,7 +247,9 @@ void ofApp::stopButtonPressed()
     // Send "stop" OSC message
     {
         ofxOscMessage m;
-        m.setAddress("/stop");
+        stringstream address;
+        address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_STOPPED;
+        m.setAddress(address.str());
         oscSender.sendMessage(m, false);
     }
 }
