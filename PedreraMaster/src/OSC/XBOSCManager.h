@@ -20,10 +20,15 @@ public:
     void init(int celloPort, int violinPort, int pianoPort, int kinectPort);
     void update();
 
-    void subscribeToCelloEvents(XBBaseScene *sceneListener);
-    void subscribeToViolinEvents(XBBaseScene *sceneListener);
-    void subscribeToPianoEvents(XBBaseScene *sceneListener);
-    void subscribeToKinectEvents(XBBaseScene *sceneListener);
+    // Methods used by scenes to subscribe/unsubscribe to received OSC messages
+    void subscribeToCelloEvents(XBBaseScene *listenerScene);
+    void unsubscribeFromCelloEvents(XBBaseScene *listenerScene);
+    void subscribeToViolinEvents(XBBaseScene *listenerScene);
+    void unsubscribeFromViolinEvents(XBBaseScene *listenerScene);
+    void subscribeToPianoEvents(XBBaseScene *listenerScene);
+    void unsubscribeFromPianoEvents(XBBaseScene *listenerScene);
+    void subscribeToKinectEvents(XBBaseScene *listenerScene);
+    void unsubscribeFromKinectEvents(XBBaseScene *listenerScene);
 
 private:
 

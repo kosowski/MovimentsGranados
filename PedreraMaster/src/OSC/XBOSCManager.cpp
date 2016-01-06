@@ -132,6 +132,17 @@ void XBOSCManager::subscribeToCelloEvents(XBBaseScene *listenerScene)
     ofAddListener(eventCelloOnsetDetected, listenerScene, &XBBaseScene::onCelloOnsetDetected);
 }
 
+void XBOSCManager::unsubscribeFromCelloEvents(XBBaseScene *listenerScene)
+{
+    ofRemoveListener(eventCelloStarted, listenerScene, &XBBaseScene::onCelloStarted);
+    ofRemoveListener(eventCelloStopped, listenerScene, &XBBaseScene::onCelloStopped);
+    ofRemoveListener(eventCelloPitchChanged, listenerScene, &XBBaseScene::onCelloPitchChanged);
+    ofRemoveListener(eventCelloEnergyChanged, listenerScene, &XBBaseScene::onCelloEnergyChanged);
+    ofRemoveListener(eventCelloSilenceChanged, listenerScene, &XBBaseScene::onCelloSilenceChanged);
+    ofRemoveListener(eventCelloPauseChanged, listenerScene, &XBBaseScene::onCelloPauseChanged);
+    ofRemoveListener(eventCelloOnsetDetected, listenerScene, &XBBaseScene::onCelloOnsetDetected);
+}
+
 void XBOSCManager::subscribeToViolinEvents(XBBaseScene *listenerScene)
 {
     ofAddListener(eventViolinStarted, listenerScene, &XBBaseScene::onViolinStarted);
@@ -143,11 +154,30 @@ void XBOSCManager::subscribeToViolinEvents(XBBaseScene *listenerScene)
     ofAddListener(eventViolinOnsetDetected, listenerScene, &XBBaseScene::onViolinOnsetDetected);
 }
 
+void XBOSCManager::unsubscribeFromViolinEvents(XBBaseScene *listenerScene)
+{
+    ofRemoveListener(eventViolinStarted, listenerScene, &XBBaseScene::onViolinStarted);
+    ofRemoveListener(eventViolinStopped, listenerScene, &XBBaseScene::onViolinStopped);
+    ofRemoveListener(eventViolinPitchChanged, listenerScene, &XBBaseScene::onViolinPitchChanged);
+    ofRemoveListener(eventViolinEnergyChanged, listenerScene, &XBBaseScene::onViolinEnergyChanged);
+    ofRemoveListener(eventViolinSilenceChanged, listenerScene, &XBBaseScene::onViolinSilenceChanged);
+    ofRemoveListener(eventViolinPauseChanged, listenerScene, &XBBaseScene::onViolinPauseChanged);
+    ofRemoveListener(eventViolinOnsetDetected, listenerScene, &XBBaseScene::onViolinOnsetDetected);
+}
+
 void XBOSCManager::subscribeToPianoEvents(XBBaseScene *listenerScene)
 {
 }
 
+void XBOSCManager::unsubscribeFromPianoEvents(XBBaseScene *listenerScene)
+{
+}
+
 void XBOSCManager::subscribeToKinectEvents(XBBaseScene *listenerScene)
+{
+}
+
+void XBOSCManager::unsubscribeFromKinectEvents(XBBaseScene *listenerScene)
 {
 }
 

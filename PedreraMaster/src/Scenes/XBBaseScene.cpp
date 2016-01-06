@@ -25,6 +25,9 @@ void XBBaseScene::setup()
     fboAlpha = 255.0f;
 
     XBOSCManager::getInstance().subscribeToCelloEvents(this);
+    XBOSCManager::getInstance().subscribeToViolinEvents(this);
+    XBOSCManager::getInstance().subscribeToPianoEvents(this);
+    XBOSCManager::getInstance().subscribeToKinectEvents(this);
 }
 
 void XBBaseScene::update()

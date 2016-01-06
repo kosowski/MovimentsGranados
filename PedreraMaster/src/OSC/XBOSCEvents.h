@@ -5,7 +5,6 @@
 #ifndef PEDRERAMASTER_XBOSCEVENTS_H
 #define PEDRERAMASTER_XBOSCEVENTS_H
 
-
 // Cello audio analysis
 ofEvent<void>   eventCelloStarted;
 ofEvent<void>   eventCelloStopped;
@@ -23,6 +22,5 @@ ofEvent<float>  eventViolinEnergyChanged;
 ofEvent<bool>   eventViolinSilenceChanged;
 ofEvent<bool>   eventViolinPauseChanged;
 ofEvent<void>   eventViolinOnsetDetected;
-
 
 #endif //PEDRERAMASTER_XBOSCEVENTS_H
