@@ -46,29 +46,7 @@ void ofApp::setup()
 
 void ofApp::update()
 {
-    if (currState != prevState)
-    {
-        // Update state label
-        string stateDescr;
-        switch(currState)
-        {
-            case STATE_SETUP:
-                stateDescr = STR_STATE_SETUP;
-                guiStatusLbl.setBackgroundColor(ofColor::darkRed);
-                break;
-            case STATE_DETECTING:
-                stateDescr = STR_STATE_DETECTING;
-                guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
-                break;
-            case STATE_CAPTURING:
-                stateDescr = STR_STATE_CAPTURING;
-                guiStatusLbl.setBackgroundColor(ofColor::darkGreen);
-                break;
-        }
-        guiStatusLbl.setup(STR_STATE, stateDescr);
-
-        prevState = currState;
-    }
+    handleStateChanges();
 
     switch(currState)
     {
@@ -95,6 +73,61 @@ void ofApp::draw()
 void ofApp::exit()
 {
     gui.saveToFile(SETTINGS_FILENAME);
+}
+
+void ofApp::handleStateChanges()
+{
+    if (currState == prevState) return;
+
+    string stateDescr;
+    switch(currState)
+    {
+        case STATE_SETUP:
+        {
+            stateDescr = STR_STATE_SETUP;
+            guiStatusLbl.setBackgroundColor(ofColor::darkRed);
+
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            m.setAddress(address.str());
+            m.addStringArg(OSC_KINECT_STATE_SETUP);
+            oscSender.sendMessage(m, false);
+
+            break;
+        }
+        case STATE_DETECTING:
+        {
+            stateDescr = STR_STATE_DETECTING;
+            guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
+
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            m.setAddress(address.str());
+            m.addStringArg(OSC_KINECT_STATE_DETECTING);
+            oscSender.sendMessage(m, false);
+
+            break;
+        }
+        case STATE_CAPTURING:
+        {
+            stateDescr = STR_STATE_CAPTURING;
+            guiStatusLbl.setBackgroundColor(ofColor::darkGreen);
+
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            m.setAddress(address.str());
+            m.addStringArg(OSC_KINECT_STATE_CAPTURING);
+            oscSender.sendMessage(m, false);
+
+            break;
+        }
+    }
+    guiStatusLbl.setup(STR_STATE, stateDescr);
+
+    prevState = currState;
 }
 
 void ofApp::keyReleased(int key)

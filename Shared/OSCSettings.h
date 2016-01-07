@@ -37,5 +37,10 @@ static const int            OSC_PIANO_SENDER_PORT           = 30303;
 // Kinect
 static const string         OSC_KINECT_SENDER_HOST          = "localhost";
 static const int            OSC_KINECT_SENDER_PORT          = 30304;
+static const string         OSC_KINECT_ADDR_BASE            = "/motion";
+static const string         OSC_KINECT_STATE                = "/detectionStatus";
+static const string         OSC_KINECT_STATE_SETUP          = "Setting up";
+static const string         OSC_KINECT_STATE_DETECTING      = "Detecting";
+static const string         OSC_KINECT_STATE_CAPTURING      = "Capturing";
 
 #endif

@@ -20,6 +20,8 @@ public:
     void draw();
     void exit();
 
+    void handleStateChanges();
+
     void keyReleased(int key);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
