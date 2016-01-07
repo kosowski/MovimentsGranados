@@ -42,6 +42,13 @@ void ofApp::setup()
     {
         oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
     }
+    
+    // KINECT / MOTION
+    {
+        isKinect = motionExtractor.setup();
+        if(isKinect)
+            currState = STATE_DETECTING;
+    }
 }
 
 void ofApp::update()

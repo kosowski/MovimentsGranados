@@ -28,6 +28,21 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		9F8A3AA91C3EB44B0071A16C /* ofxOpenNI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A3AA41C3EB44B0071A16C /* ofxOpenNI.cpp */; };
 		9F8A3AAA1C3EB44B0071A16C /* ofxOpenNITypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A3AA61C3EB44B0071A16C /* ofxOpenNITypes.cpp */; };
+		9F8A3AAF1C3EB86B0071A16C /* PMMotionExtractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A3AAD1C3EB86B0071A16C /* PMMotionExtractor.cpp */; };
+		9F8A3AE01C3EBE3B0071A16C /* libnimCodecs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD21C3EBE3B0071A16C /* libnimCodecs.dylib */; };
+		9F8A3AE11C3EBE3B0071A16C /* libnimMockNodes.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD31C3EBE3B0071A16C /* libnimMockNodes.dylib */; };
+		9F8A3AE21C3EBE3B0071A16C /* libnimRecorder.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD41C3EBE3B0071A16C /* libnimRecorder.dylib */; };
+		9F8A3AE31C3EBE3B0071A16C /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD51C3EBE3B0071A16C /* libOpenNI.dylib */; };
+		9F8A3AE41C3EBE3B0071A16C /* libusb-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD61C3EBE3B0071A16C /* libusb-1.0.0.dylib */; };
+		9F8A3AE51C3EBE3B0071A16C /* libXnCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD71C3EBE3B0071A16C /* libXnCore.dylib */; };
+		9F8A3AE61C3EBE3B0071A16C /* libXnDDK.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD81C3EBE3B0071A16C /* libXnDDK.dylib */; };
+		9F8A3AE71C3EBE3B0071A16C /* libXnDeviceFile.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3AD91C3EBE3B0071A16C /* libXnDeviceFile.dylib */; };
+		9F8A3AE81C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADA1C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib */; };
+		9F8A3AE91C3EBE3B0071A16C /* libXnFormats.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADB1C3EBE3B0071A16C /* libXnFormats.dylib */; };
+		9F8A3AEA1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADC1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib */; };
+		9F8A3AEB1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADD1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib */; };
+		9F8A3AEC1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADE1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib */; };
+		9F8A3AED1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A3ADF1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		CB81E90445B5A2738B94DE24 /* ofxMocapElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB8DDCD3AD97561D1DEA08CB /* ofxMocapElement.cpp */; };
@@ -115,6 +130,22 @@
 		9F8A3AA61C3EB44B0071A16C /* ofxOpenNITypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpenNITypes.cpp; sourceTree = "<group>"; };
 		9F8A3AA71C3EB44B0071A16C /* ofxOpenNITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpenNITypes.h; sourceTree = "<group>"; };
 		9F8A3AA81C3EB44B0071A16C /* ofxOpenNIUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpenNIUtils.h; sourceTree = "<group>"; };
+		9F8A3AAD1C3EB86B0071A16C /* PMMotionExtractor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMMotionExtractor.cpp; sourceTree = "<group>"; };
+		9F8A3AAE1C3EB86B0071A16C /* PMMotionExtractor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMMotionExtractor.hpp; sourceTree = "<group>"; };
+		9F8A3AD21C3EBE3B0071A16C /* libnimCodecs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimCodecs.dylib; path = bin/data/openni/lib/libnimCodecs.dylib; sourceTree = "<group>"; };
+		9F8A3AD31C3EBE3B0071A16C /* libnimMockNodes.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimMockNodes.dylib; path = bin/data/openni/lib/libnimMockNodes.dylib; sourceTree = "<group>"; };
+		9F8A3AD41C3EBE3B0071A16C /* libnimRecorder.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimRecorder.dylib; path = bin/data/openni/lib/libnimRecorder.dylib; sourceTree = "<group>"; };
+		9F8A3AD51C3EBE3B0071A16C /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = bin/data/openni/lib/libOpenNI.dylib; sourceTree = "<group>"; };
+		9F8A3AD61C3EBE3B0071A16C /* libusb-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libusb-1.0.0.dylib"; path = "bin/data/openni/lib/libusb-1.0.0.dylib"; sourceTree = "<group>"; };
+		9F8A3AD71C3EBE3B0071A16C /* libXnCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnCore.dylib; path = bin/data/openni/lib/libXnCore.dylib; sourceTree = "<group>"; };
+		9F8A3AD81C3EBE3B0071A16C /* libXnDDK.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDDK.dylib; path = bin/data/openni/lib/libXnDDK.dylib; sourceTree = "<group>"; };
+		9F8A3AD91C3EBE3B0071A16C /* libXnDeviceFile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceFile.dylib; path = bin/data/openni/lib/libXnDeviceFile.dylib; sourceTree = "<group>"; };
+		9F8A3ADA1C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceSensorV2KM.dylib; path = bin/data/openni/lib/libXnDeviceSensorV2KM.dylib; sourceTree = "<group>"; };
+		9F8A3ADB1C3EBE3B0071A16C /* libXnFormats.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnFormats.dylib; path = bin/data/openni/lib/libXnFormats.dylib; sourceTree = "<group>"; };
+		9F8A3ADC1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVCNITE_1_5_2.dylib; path = bin/data/openni/lib/libXnVCNITE_1_5_2.dylib; sourceTree = "<group>"; };
+		9F8A3ADD1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_5_2.dylib; path = bin/data/openni/lib/libXnVFeatures_1_5_2.dylib; sourceTree = "<group>"; };
+		9F8A3ADE1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVHandGenerator_1_5_2.dylib; path = bin/data/openni/lib/libXnVHandGenerator_1_5_2.dylib; sourceTree = "<group>"; };
+		9F8A3ADF1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVNite_1_5_2.dylib; path = bin/data/openni/lib/libXnVNite_1_5_2.dylib; sourceTree = "<group>"; };
 		A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
 		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
@@ -145,6 +176,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+				9F8A3AE01C3EBE3B0071A16C /* libnimCodecs.dylib in Frameworks */,
+				9F8A3AE11C3EBE3B0071A16C /* libnimMockNodes.dylib in Frameworks */,
+				9F8A3AE21C3EBE3B0071A16C /* libnimRecorder.dylib in Frameworks */,
+				9F8A3AE31C3EBE3B0071A16C /* libOpenNI.dylib in Frameworks */,
+				9F8A3AE41C3EBE3B0071A16C /* libusb-1.0.0.dylib in Frameworks */,
+				9F8A3AE51C3EBE3B0071A16C /* libXnCore.dylib in Frameworks */,
+				9F8A3AE61C3EBE3B0071A16C /* libXnDDK.dylib in Frameworks */,
+				9F8A3AE71C3EBE3B0071A16C /* libXnDeviceFile.dylib in Frameworks */,
+				9F8A3AE81C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib in Frameworks */,
+				9F8A3AE91C3EBE3B0071A16C /* libXnFormats.dylib in Frameworks */,
+				9F8A3AEA1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib in Frameworks */,
+				9F8A3AEB1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib in Frameworks */,
+				9F8A3AEC1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib in Frameworks */,
+				9F8A3AED1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +322,15 @@
 			path = "../../../addons/ofxOpenNI-PM/src";
 			sourceTree = "<group>";
 		};
+		9F8A3AAC1C3EB86B0071A16C /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+				9F8A3AAD1C3EB86B0071A16C /* PMMotionExtractor.cpp */,
+				9F8A3AAE1C3EB86B0071A16C /* PMMotionExtractor.hpp */,
+			);
+			path = Motion;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +381,20 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				9F8A3AD21C3EBE3B0071A16C /* libnimCodecs.dylib */,
+				9F8A3AD31C3EBE3B0071A16C /* libnimMockNodes.dylib */,
+				9F8A3AD41C3EBE3B0071A16C /* libnimRecorder.dylib */,
+				9F8A3AD51C3EBE3B0071A16C /* libOpenNI.dylib */,
+				9F8A3AD61C3EBE3B0071A16C /* libusb-1.0.0.dylib */,
+				9F8A3AD71C3EBE3B0071A16C /* libXnCore.dylib */,
+				9F8A3AD81C3EBE3B0071A16C /* libXnDDK.dylib */,
+				9F8A3AD91C3EBE3B0071A16C /* libXnDeviceFile.dylib */,
+				9F8A3ADA1C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib */,
+				9F8A3ADB1C3EBE3B0071A16C /* libXnFormats.dylib */,
+				9F8A3ADC1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib */,
+				9F8A3ADD1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib */,
+				9F8A3ADE1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib */,
+				9F8A3ADF1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
@@ -343,6 +411,7 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				9F8A3AAC1C3EB86B0071A16C /* Motion */,
 				21476F6B6800DF107C2B37A3 /* Defaults.h */,
 				2AFC96251C3E604100F8A122 /* Shared */,
 			);
@@ -473,6 +542,7 @@
 				EC67EFAE257EDF0230E94783 /* ofxKinectFeatures.cpp in Sources */,
 				CB81E90445B5A2738B94DE24 /* ofxMocapElement.cpp in Sources */,
 				9F8A3AA91C3EB44B0071A16C /* ofxOpenNI.cpp in Sources */,
+				9F8A3AAF1C3EB86B0071A16C /* PMMotionExtractor.cpp in Sources */,
 				2ACF4F301C3E54A5005B2756 /* ofxBaseGui.cpp in Sources */,
 				106D661542619CFF59CC1591 /* ofxMocapEvents.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
@@ -597,6 +667,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -634,6 +705,12 @@
 					"$(SRCROOT)/bin/data/openni/lib",
 					"$(SRCROOT)/bin/data/openni/config",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_LIBS)",
+					"$(OF_CORE_FRAMEWORKS)",
+					"../../../addons/ofxKinect/libs/libusb-1.0/lib/osx/usb-1.0.a",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -644,6 +721,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -678,6 +756,12 @@
 					"$(inherited)",
 					"$(SRCROOT)/bin/data/openni/lib",
 					"$(SRCROOT)/bin/data/openni/config",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_LIBS)",
+					"$(OF_CORE_FRAMEWORKS)",
+					"../../../addons/ofxKinect/libs/libusb-1.0/lib/osx/usb-1.0.a",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";

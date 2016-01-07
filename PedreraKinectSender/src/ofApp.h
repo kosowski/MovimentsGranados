@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGUI.h"
 #include "ofxOsc.h"
+#include "PMMotionExtractor.hpp"
 
 typedef enum
 {
@@ -36,4 +37,8 @@ private:
     ofxButton guiRestartBtn;
 
     ofxOscSender oscSender;
+    
+    PMMotionExtractor motionExtractor;
+    
+    bool    isKinect;
 };
