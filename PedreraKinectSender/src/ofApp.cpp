@@ -14,7 +14,7 @@ static const string STR_BUTTON_RESTART      = "RESTART";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
-static const int GUI_WIDTH  = 350;
+static const int GUI_WIDTH = 350;
 
 void ofApp::setup()
 {

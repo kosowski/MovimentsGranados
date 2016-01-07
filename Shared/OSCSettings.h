@@ -42,5 +42,9 @@ static const string         OSC_KINECT_STATE                = "/detectionStatus"
 static const string         OSC_KINECT_STATE_SETUP          = "Setting up";
 static const string         OSC_KINECT_STATE_DETECTING      = "Detecting";
 static const string         OSC_KINECT_STATE_CAPTURING      = "Capturing";
+static const string         OSC_KINECT_ADDR_LHAND           = "/leftHand";
+static const string         OSC_KINECT_ADDR_RHAND           = "/rightHand";
+static const string         OSC_KINECT_ADDR_POSITION        = "/position";
+static const string         OSC_KINECT_ADDR_VELOCITY        = "/velocity";
 
 #endif
