@@ -1,71 +1,25 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
-void ofApp::setup(){
+static const string STR_APP_TITLE = "PIANO [MIDI RECEIVER]";
 
+void ofApp::setup()
+{
+    ofSetWindowTitle(STR_APP_TITLE);
+    ofBackground(81, 111, 88);
+
+#ifdef OF_DEBUG
+    midiIn.listPorts();
+#endif
 }
 
-//--------------------------------------------------------------
-void ofApp::update(){
-
+void ofApp::update()
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::draw(){
-
+void ofApp::draw()
+{
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::keyReleased(int key)
+{
 }
