@@ -26,6 +26,8 @@
 		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
 		879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */; };
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
+		9F8A3AA91C3EB44B0071A16C /* ofxOpenNI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A3AA41C3EB44B0071A16C /* ofxOpenNI.cpp */; };
+		9F8A3AAA1C3EB44B0071A16C /* ofxOpenNITypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A3AA61C3EB44B0071A16C /* ofxOpenNITypes.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		CB81E90445B5A2738B94DE24 /* ofxMocapElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB8DDCD3AD97561D1DEA08CB /* ofxMocapElement.cpp */; };
@@ -108,6 +110,11 @@
 		8C75AFC8774A62495DD53464 /* ofxOscReceiver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscReceiver.h; path = ../../../addons/ofxOsc/src/ofxOscReceiver.h; sourceTree = SOURCE_ROOT; };
 		9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
 		9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
+		9F8A3AA41C3EB44B0071A16C /* ofxOpenNI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpenNI.cpp; sourceTree = "<group>"; };
+		9F8A3AA51C3EB44B0071A16C /* ofxOpenNI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpenNI.h; sourceTree = "<group>"; };
+		9F8A3AA61C3EB44B0071A16C /* ofxOpenNITypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOpenNITypes.cpp; sourceTree = "<group>"; };
+		9F8A3AA71C3EB44B0071A16C /* ofxOpenNITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpenNITypes.h; sourceTree = "<group>"; };
+		9F8A3AA81C3EB44B0071A16C /* ofxOpenNIUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOpenNIUtils.h; sourceTree = "<group>"; };
 		A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
 		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
@@ -249,12 +256,34 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		9F8A3AA21C3EB44B0071A16C /* ofxOpenNI-PM */ = {
+			isa = PBXGroup;
+			children = (
+				9F8A3AA31C3EB44B0071A16C /* src */,
+			);
+			name = "ofxOpenNI-PM";
+			sourceTree = "<group>";
+		};
+		9F8A3AA31C3EB44B0071A16C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9F8A3AA41C3EB44B0071A16C /* ofxOpenNI.cpp */,
+				9F8A3AA51C3EB44B0071A16C /* ofxOpenNI.h */,
+				9F8A3AA61C3EB44B0071A16C /* ofxOpenNITypes.cpp */,
+				9F8A3AA71C3EB44B0071A16C /* ofxOpenNITypes.h */,
+				9F8A3AA81C3EB44B0071A16C /* ofxOpenNIUtils.h */,
+			);
+			name = src;
+			path = "../../../addons/ofxOpenNI-PM/src";
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
 				2ABA0F509A1D41CC18336C93 /* ofxKinectFeatures-PM */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				2ACF4F1D1C3E54A5005B2756 /* ofxGui */,
+				9F8A3AA21C3EB44B0071A16C /* ofxOpenNI-PM */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -443,6 +472,7 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				EC67EFAE257EDF0230E94783 /* ofxKinectFeatures.cpp in Sources */,
 				CB81E90445B5A2738B94DE24 /* ofxMocapElement.cpp in Sources */,
+				9F8A3AA91C3EB44B0071A16C /* ofxOpenNI.cpp in Sources */,
 				2ACF4F301C3E54A5005B2756 /* ofxBaseGui.cpp in Sources */,
 				106D661542619CFF59CC1591 /* ofxMocapEvents.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
@@ -450,6 +480,7 @@
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
+				9F8A3AAA1C3EB44B0071A16C /* ofxOpenNITypes.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				2ACF4F371C3E54A5005B2756 /* ofxToggle.cpp in Sources */,
 				2ACF4F311C3E54A5005B2756 /* ofxButton.cpp in Sources */,
@@ -589,12 +620,20 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
+					"../../../addons/ofxOpenNI-PM/include",
+					"../../../addons/ofxOpenNI-PM/include/libusb",
+					"../../../addons/ofxOpenNI-PM/include/nite",
+					"../../../addons/ofxOpenNI-PM/include/openni",
 				);
 				ICON = "$(ICON_NAME_DEBUG)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/bin/data/openni/lib",
+					"$(SRCROOT)/bin/data/openni/config",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -626,12 +665,20 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
+					"../../../addons/ofxOpenNI-PM/include",
+					"../../../addons/ofxOpenNI-PM/include/libusb",
+					"../../../addons/ofxOpenNI-PM/include/nite",
+					"../../../addons/ofxOpenNI-PM/include/openni",
 				);
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/bin/data/openni/lib",
+					"$(SRCROOT)/bin/data/openni/config",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
