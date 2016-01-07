@@ -2,7 +2,6 @@
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"
-#include "XBOSCManager.h"
 #include "../../Shared/OSCSettings.h"
 
 void ofApp::setup()
