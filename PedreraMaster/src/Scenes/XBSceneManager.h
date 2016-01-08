@@ -9,7 +9,6 @@
 #include "XBOSCManager.h"
 
 #ifdef OF_DEBUG
-#include "ofxUI.h"
 #endif
 
 typedef enum
