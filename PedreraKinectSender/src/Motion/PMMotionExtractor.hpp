@@ -20,18 +20,16 @@
 
 struct KinectElement
 {
-    float x;
-    float y;
-    float z;
-    float a;
+    ofPoint pos;
     ofPoint v;
+    float a;
 };
 struct KinectInfo
 {
-    KinectElement leftHand_joint;
-    KinectElement rightHand_joint;
-    KinectElement head_joint;
-    KinectElement torso_joint;
+    KinectElement leftHand;
+    KinectElement rightHand;
+//    KinectElement head_joint;
+//    KinectElement torso_joint;
 };
 
 class PMMotionExtractor
@@ -51,49 +49,20 @@ public:
     ~PMMotionExtractor() {};
 
     bool setup();
-
     void update();
-
-    void draw(); //noexistirà?
+    void draw(bool drawDebug);
     void exit();
 
-    KinectInfo *getKinectInfo();
-
-    bool isReady() { return (isSomeoneTracked<30 && hadUsers); };
-
-    bool isTracking()
-    {
-        return hadUsers;
-    }
+    KinectInfo getKinectInfo();
+    KinectInfo gethandsPosition(){return handsPosition;};
     
-    void resetUsers();
-    void stop(){
-        hadUsers = false;
-        kinectNI->setPaused(true);
-        kinectNI->removeUserGenerator();
-        isSomeoneTracked=0;
-    };
-    
-    void hardStart(){kinectNI->start();};
-    void start(){
-        kinectNI->addUserGenerator();
-//        kinectNI->setMaxNumUsers(1);
-        kinectNI->setPaused(false);
-        isSomeoneTracked=0;
-    };
-    
-    int getNumUsers(){
-        return kinectNI->getNumTrackedUsers();
-    }
+    ofEvent<bool> eventUserDetection;
 
 private:
-    ofTrueTypeFont font;
-    ofxKinectFeatures kinectFeatures;
-    ofxOpenNI* kinectNI;
-    bool hadUsers;
+    ofxOpenNI openNIDevice;
     KinectInfo kinectOut;
-
-    int isSomeoneTracked;
+    KinectInfo handsPosition;
+    bool hasUser;
 };
 
 #endif /* PMMotionExtractor_hpp */

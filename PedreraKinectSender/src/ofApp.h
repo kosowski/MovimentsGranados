@@ -22,6 +22,8 @@ public:
     void exit();
 
     void handleStateChanges();
+    void userDetection(bool &hasUser);
+    void sendHandInfo(KinectInfo hands);
 
     void keyReleased(int key);
     void mouseDragged(int x, int y, int button);
@@ -35,10 +37,12 @@ private:
     ofxPanel gui;
     ofxLabel guiStatusLbl;
     ofxButton guiRestartBtn;
+    ofxToggle showImage;
+    ofxToggle showHands;
 
     ofxOscSender oscSender;
     
-    PMMotionExtractor motionExtractor;
+    PMMotionExtractor* motionExtractor;
     
     bool    isKinect;
 };

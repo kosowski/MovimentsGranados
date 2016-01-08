@@ -146,6 +146,7 @@
 		9F8A3ADD1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_5_2.dylib; path = bin/data/openni/lib/libXnVFeatures_1_5_2.dylib; sourceTree = "<group>"; };
 		9F8A3ADE1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVHandGenerator_1_5_2.dylib; path = bin/data/openni/lib/libXnVHandGenerator_1_5_2.dylib; sourceTree = "<group>"; };
 		9F8A3ADF1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVNite_1_5_2.dylib; path = bin/data/openni/lib/libXnVNite_1_5_2.dylib; sourceTree = "<group>"; };
+		9F8A3AF01C3F1B210071A16C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
 		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
@@ -176,20 +177,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
-				9F8A3AE01C3EBE3B0071A16C /* libnimCodecs.dylib in Frameworks */,
-				9F8A3AE11C3EBE3B0071A16C /* libnimMockNodes.dylib in Frameworks */,
-				9F8A3AE21C3EBE3B0071A16C /* libnimRecorder.dylib in Frameworks */,
-				9F8A3AE31C3EBE3B0071A16C /* libOpenNI.dylib in Frameworks */,
-				9F8A3AE41C3EBE3B0071A16C /* libusb-1.0.0.dylib in Frameworks */,
-				9F8A3AE51C3EBE3B0071A16C /* libXnCore.dylib in Frameworks */,
-				9F8A3AE61C3EBE3B0071A16C /* libXnDDK.dylib in Frameworks */,
 				9F8A3AE71C3EBE3B0071A16C /* libXnDeviceFile.dylib in Frameworks */,
-				9F8A3AE81C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib in Frameworks */,
-				9F8A3AE91C3EBE3B0071A16C /* libXnFormats.dylib in Frameworks */,
-				9F8A3AEA1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib in Frameworks */,
-				9F8A3AEB1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib in Frameworks */,
-				9F8A3AEC1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib in Frameworks */,
+				9F8A3AE61C3EBE3B0071A16C /* libXnDDK.dylib in Frameworks */,
 				9F8A3AED1C3EBE3B0071A16C /* libXnVNite_1_5_2.dylib in Frameworks */,
+				9F8A3AE01C3EBE3B0071A16C /* libnimCodecs.dylib in Frameworks */,
+				9F8A3AE81C3EBE3B0071A16C /* libXnDeviceSensorV2KM.dylib in Frameworks */,
+				9F8A3AE31C3EBE3B0071A16C /* libOpenNI.dylib in Frameworks */,
+				9F8A3AE21C3EBE3B0071A16C /* libnimRecorder.dylib in Frameworks */,
+				9F8A3AE91C3EBE3B0071A16C /* libXnFormats.dylib in Frameworks */,
+				9F8A3AEB1C3EBE3B0071A16C /* libXnVFeatures_1_5_2.dylib in Frameworks */,
+				9F8A3AEA1C3EBE3B0071A16C /* libXnVCNITE_1_5_2.dylib in Frameworks */,
+				9F8A3AEC1C3EBE3B0071A16C /* libXnVHandGenerator_1_5_2.dylib in Frameworks */,
+				9F8A3AE51C3EBE3B0071A16C /* libXnCore.dylib in Frameworks */,
+				9F8A3AE11C3EBE3B0071A16C /* libnimMockNodes.dylib in Frameworks */,
+				9F8A3AE41C3EBE3B0071A16C /* libusb-1.0.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +382,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				9F8A3AF01C3F1B210071A16C /* GLUT.framework */,
 				9F8A3AD21C3EBE3B0071A16C /* libnimCodecs.dylib */,
 				9F8A3AD31C3EBE3B0071A16C /* libnimMockNodes.dylib */,
 				9F8A3AD41C3EBE3B0071A16C /* libnimRecorder.dylib */,
@@ -583,6 +585,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -611,7 +614,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -625,6 +628,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -654,7 +658,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-mtune=native",
@@ -705,7 +709,7 @@
 					"$(SRCROOT)/bin/data/openni/lib",
 					"$(SRCROOT)/bin/data/openni/config",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
 					"$(OF_CORE_FRAMEWORKS)",
@@ -757,7 +761,7 @@
 					"$(SRCROOT)/bin/data/openni/lib",
 					"$(SRCROOT)/bin/data/openni/config",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
 					"$(OF_CORE_FRAMEWORKS)",

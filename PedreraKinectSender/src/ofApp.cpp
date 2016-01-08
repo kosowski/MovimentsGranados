@@ -11,6 +11,8 @@ static const string STR_STATE_SETUP         = "Initializing Kinect...";
 static const string STR_STATE_DETECTING     = "Detecting Person...";
 static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
+static const string STR_TOGGLE_SHOW_KINECT  = "kinectDraw";
+static const string STR_TOGGLE_SHOW_HANDS   = "debugDraw";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
@@ -33,7 +35,9 @@ void ofApp::setup()
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
-
+        gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
+        gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
+        
         gui.setSize(GUI_WIDTH, GUI_WIDTH);
         gui.setWidthElements(GUI_WIDTH);
     }
@@ -45,10 +49,14 @@ void ofApp::setup()
     
     // KINECT / MOTION
     {
-        isKinect = motionExtractor.setup();
-        if(isKinect)
+        motionExtractor=&PMMotionExtractor::getInstance();
+        isKinect = motionExtractor->setup();
+        if(isKinect){
             currState = STATE_DETECTING;
+        }
     }
+    
+    ofAddListener(motionExtractor->eventUserDetection, this, &ofApp::userDetection);
 }
 
 void ofApp::update()
@@ -63,10 +71,14 @@ void ofApp::update()
         }
         case STATE_DETECTING:
         {
+            motionExtractor->update();
             break;
         }
         case STATE_CAPTURING:
         {
+            motionExtractor->update();
+            KinectInfo hands = motionExtractor->gethandsPosition();
+            sendHandInfo(hands);
             break;
         }
     }
@@ -74,11 +86,14 @@ void ofApp::update()
 
 void ofApp::draw()
 {
+    if(showImage)
+        motionExtractor->draw(showHands);
     gui.draw();
 }
 
 void ofApp::exit()
 {
+    motionExtractor->exit();
     gui.saveToFile(SETTINGS_FILENAME);
 }
 
@@ -135,6 +150,57 @@ void ofApp::handleStateChanges()
     guiStatusLbl.setup(STR_STATE, stateDescr);
 
     prevState = currState;
+}
+
+void ofApp::userDetection(bool &hasUser)
+{
+    if(hasUser)
+        currState = STATE_CAPTURING;
+    else
+        currState = STATE_DETECTING;
+}
+
+void ofApp::sendHandInfo(KinectInfo hands)
+{
+    //LEFT HAND POSITION
+    ofxOscMessage lhandpos;
+    stringstream lhandpos_address;
+    lhandpos_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_POSITION;
+    lhandpos.setAddress(lhandpos_address.str());
+    lhandpos.addFloatArg(hands.leftHand.pos.x);
+    lhandpos.addFloatArg(hands.leftHand.pos.y);
+    lhandpos.addFloatArg(hands.leftHand.pos.z);
+    oscSender.sendMessage(lhandpos, false);
+    
+    //RIGHT HAND POSITION
+    ofxOscMessage rhandpos;
+    stringstream rhandpos_address;
+    rhandpos_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_RHAND << OSC_KINECT_ADDR_POSITION;
+    rhandpos.setAddress(rhandpos_address.str());
+    rhandpos.addFloatArg(hands.rightHand.pos.x);
+    rhandpos.addFloatArg(hands.rightHand.pos.y);
+    rhandpos.addFloatArg(hands.rightHand.pos.z);
+    oscSender.sendMessage(rhandpos, false);
+    
+    //LEFT HAND VELOCITY
+    ofxOscMessage lhandvel;
+    stringstream lhandvel_address;
+    lhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
+    lhandvel.setAddress(lhandvel_address.str());
+    lhandvel.addFloatArg(hands.leftHand.v.x);
+    lhandvel.addFloatArg(hands.leftHand.v.y);
+    lhandvel.addFloatArg(hands.leftHand.v.z);
+    oscSender.sendMessage(lhandvel, false);
+    
+    //RIGHT HAND VELOCITY
+    ofxOscMessage rhandvel;
+    stringstream rhandvel_address;
+    rhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
+    rhandvel.setAddress(rhandvel_address.str());
+    rhandvel.addFloatArg(hands.rightHand.v.x);
+    rhandvel.addFloatArg(hands.rightHand.v.y);
+    rhandvel.addFloatArg(hands.rightHand.v.z);
+    oscSender.sendMessage(rhandvel, false);
 }
 
 void ofApp::keyReleased(int key)
