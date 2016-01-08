@@ -12,6 +12,7 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - [ofxTweenzor](https://github.com/NickHardeman/ofxTweenzor)
 - ofxGUI (already part of OF)
 - ofxXmlSettings (already part of OF)
+- [ofxTraerhysics](https://github.com/martinlindelof/ofxTraerPhysics)
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)
