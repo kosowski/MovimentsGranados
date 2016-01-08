@@ -38,6 +38,7 @@ public:
     virtual void onViolinSilenceChanged(bool &isSilent) {};
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
+    virtual void keyReleased(int key){};
 
 protected:
 

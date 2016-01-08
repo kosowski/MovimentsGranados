@@ -154,6 +154,10 @@ void XBSceneManager::onFadeComplete(float *arg)
     currentSceneIndex = nextSceneIndex;
 }
 
+void XBSceneManager::keyReleased(int key){
+    scenes[currentSceneIndex]->keyReleased(key);
+}
+
 // The code below is kept just as a reminder on how to create a GUI with ofxUI:
 /*
 void XBSceneManager::showAllScenes()

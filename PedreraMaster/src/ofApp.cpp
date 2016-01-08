@@ -77,6 +77,7 @@ void ofApp::keyReleased(int key)
             sceneManager.goToScene(2); break;
         default: break;
     }
+    sceneManager.keyReleased(key);
 }
 
 void ofApp::mouseMoved(int x, int y)
