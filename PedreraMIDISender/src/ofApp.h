@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxMidi.h"
 #include "ofxGui.h"
+#include "ofxOsc.h"
 #include "XBMidiPortParams.h"
 
 class ofApp : public ofBaseApp, public ofxMidiListener
@@ -18,8 +19,14 @@ public:
 
 private:
 
+    // MIDI
+
     ofxMidiIn       midiIn;
     ofxMidiMessage  midiMessage;
+
+    void newMidiMessage(ofxMidiMessage& midiMessage);
+
+    // GUI
 
     ofxPanel                    gui;
     vector<XBMidiPortParams>    portParams;
@@ -27,8 +34,13 @@ private:
     ofxButton                   btnStart;
     ofxButton                   btnStop;
 
+    stringstream                strMessage;
+    unsigned int                numStrMessages;
+
     void startButtonPressed();
     void stopButtonPressed();
 
-    void newMidiMessage(ofxMidiMessage& eventArgs);
+    // OSC
+
+    ofxOscSender oscSender;
 };
