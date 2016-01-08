@@ -33,6 +33,14 @@ static const string         OSC_ANALYZER_ADDR_ONSET         = "/onset";
 // Piano
 static const string         OSC_PIANO_SENDER_HOST           = "localhost";
 static const int            OSC_PIANO_SENDER_PORT           = 30303;
+static const string         OSC_PIANO_ADDR_BASE             = "/midi";
+static const string         OSC_PIANO_ADDR_NOTEON           = "/noteOn";
+static const string         OSC_PIANO_ADDR_NOTEOFF          = "/noteOff";
+static const string         OSC_PIANO_ADDR_CONTROLCHANGE    = "/controlChange";
+static const string         OSC_PIANO_ADDR_PROGRAMCHANGE    = "/programChange";
+static const string         OSC_PIANO_ADDR_PITCHBEND        = "/pitchBend";
+static const string         OSC_PIANO_ADDR_AFTERTOUCH       = "/aftertouch";
+static const string         OSC_PIANO_ADDR_POLYAFTERTOUCH   = "/polyAftertouch";
 
 // Kinect
 static const string         OSC_KINECT_SENDER_HOST          = "localhost";

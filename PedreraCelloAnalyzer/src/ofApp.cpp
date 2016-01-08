@@ -10,7 +10,7 @@ static const int GUI_DEV_WIDTH  = 300;
 static const int GUI_AN_WIDTH   = 200;
 static const int GUI_MARGIN     = 10;
 
-static const string STR_APP_TITLE              = "AUDIO ANALYZER [CELLO]";
+static const string STR_APP_TITLE              = "CELLO [AUDIO ANALYZER]";
 
 static const string DEVICE_SETTINGS_FILENAME   = "deviceSettings.xml";
 static const string STR_DEV_TITLE              = "DEVICE SELECTOR";

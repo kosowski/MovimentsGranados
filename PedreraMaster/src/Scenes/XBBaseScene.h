@@ -39,6 +39,8 @@ public:
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
+    virtual void keyReleased(int key) {};
+
 protected:
 
     void drawFadeRectangle();

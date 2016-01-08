@@ -2,13 +2,18 @@
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"
-#include "XBOSCManager.h"
 #include "../../Shared/OSCSettings.h"
 
 void ofApp::setup()
 {
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
+
+#ifdef OF_DEBUG
+    showFPS = true;
+#else
+    showFPS = false;
+#endif
 
     ofBackground(0, 0, 0);
 
@@ -37,6 +42,11 @@ void ofApp::update()
 void ofApp::draw()
 {
     sceneManager.draw();
+
+    if (showFPS) {
+        ofSetColor(ofColor::white);
+        ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, ofGetHeight() - 15);
+    }
 }
 
 void ofApp::exit()
@@ -56,17 +66,18 @@ void ofApp::keyReleased(int key)
         case OF_KEY_UP:
             sceneManager.goToNextScene(SCENETRANSITION_Fade, 0.5f);
             break;
+        case 'f':
+        case 'F':
+            showFPS = !showFPS; break;
         case '1':
-            sceneManager.goToScene(0);
-            break;
+            sceneManager.goToScene(0); break;
         case '2':
-            sceneManager.goToScene(1);
-            break;
+            sceneManager.goToScene(1); break;
         case '3':
-            sceneManager.goToScene(2);
-            break;
+            sceneManager.goToScene(2); break;
         default: break;
     }
+    sceneManager.keyReleased(key);
 }
 
 void ofApp::mouseMoved(int x, int y)

@@ -12,6 +12,7 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - [ofxTweenzor](https://github.com/NickHardeman/ofxTweenzor)
 - ofxGUI (already part of OF)
 - ofxXmlSettings (already part of OF)
+- [ofxTraerhysics](https://github.com/martinlindelof/ofxTraerPhysics)
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)
@@ -21,13 +22,13 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 
 ### PedreraMIDISender
 - [ofxMidi](https://github.com/danomatika/ofxMidi)
-- ofxOSC (already part of OF)
 - ofxGUI (already part of OF)
+- ofxOSC (already part of OF)
 
 ### PedreraCelloAnalyzer and PedreraViolinAnalyzer
 - [ofxAubio](https://github.com/aubio/ofxAubio)
-- ofxOSC (already part of OF)
 - ofxGUI (already part of OF)
+- ofxOSC (already part of OF)
 
 ### PedreraGUIController
 - ofxGUI (already part of OF)

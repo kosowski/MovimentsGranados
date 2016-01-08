@@ -4,25 +4,121 @@
 
 #include "XBScene2.h"
 
+
+#define NODE_SIZE 6
+#define GRID_X_RES 40
+#define GRID_Y_RES 40
+
 void XBScene2::setup()
 {
     XBBaseScene::setup();
+    
+    gui.setup();
+    
+    gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
+    gui.add(springDamping.setup("damping", 0.01, 0.000, 0.201));
+    gui.add(drag.setup("drag", 0.1, 0.01, 1.00));
+    gui.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
+    gui.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
+    gui.add(mouseStrength.setup("mouseStrength", -96000, -6000, -200000));
+    gui.add(mouseSlope.setup("mouseSlope", 160, 60., 260));
+    gui.add(fixedStrength.setup("fixedStrength", 0.03, 0.01, 0.50));
+    gui.add(fixedDamping.setup("fixedDamping",  0.01, 0.000, 0.201));
+    
+    initSystem();
+}
+
+void XBScene2::initSystem(){
+    
+    physics	= new ParticleSystem( gravity, drag );
+    physics->clear();
+    
+    
+    p_mouse = physics->makeParticle(1.0, 0.0, 0.0, 0.0);
+    p_mouse->setFixed( true );
+    
+    
+    float gridStepX = (float)( ofGetWindowWidth() / GRID_X_RES );
+    float gridStepY = (float)( ofGetWindowHeight()  / GRID_Y_RES );
+    
+    for( int y=0; y<GRID_Y_RES; y++ ){
+        for( int x=0; x<GRID_X_RES; x++ ){
+            ofVec3f pos = ofVec3f( x * gridStepX , y * gridStepY , 0.0f );
+            Particle* p = physics->makeParticle( particleMass, pos.x, pos.y, pos.z );
+            
+            //fixed particle to which free particle is attached through a spring
+            Particle* fixed = physics->makeParticle( particleMass, pos.x, pos.y, pos.z );
+            fixed->setFixed( true );
+            physics->makeSpring(fixed, p, fixedStrength, fixedDamping, 2.0);
+            
+            physics->makeAttraction(p_mouse, p, mouseStrength, mouseSlope);
+            
+            particles.push_back( p );
+            if( x > 0 ){
+                Spring* s = physics->makeSpring( particles[y*GRID_X_RES + x - 1], particles[y*GRID_X_RES + x], springStrength, springDamping, gridStepX );
+                visibleSprings.push_back(s);
+            }
+        }
+    }
+    
+    
+    for( int y=1; y<GRID_Y_RES; y++ ){
+        for( int x=0; x<GRID_X_RES; x++ ){
+            Spring* s = physics->makeSpring( particles[ (y - 1) * GRID_X_RES + x], particles[y*GRID_X_RES + x], springStrength, springDamping, gridStepY );
+            visibleSprings.push_back(s);
+        }
+    }
+    
 }
 
 void XBScene2::update()
 {
     XBBaseScene::update();
+    
+    p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
+    //physics->setGravity( gravityDir.x, gravityDir.y, gravityDir.z );
+    physics->tick();
 }
 
 void XBScene2::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofSetColor(ofColor::green);
-        ofSetCircleResolution(64);
-        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 150);
+        
+        ofBackground(0);
+        // draw vertices
+//        ofSetColor(0.63f, 0.63f, 0.63f);
+//        for ( int i = 0; i <particles.size(); ++i )
+//        {
+//            Particle* v = particles[i];
+//            ofDrawCircle( v->position.x, v->position.y, NODE_SIZE/2.0f );
+//        }
+        
+        // draw springs
+        ofSetColor(200);
+        for ( int i = 0; i < visibleSprings.size(); ++i )
+        {
+            Spring* e = visibleSprings[i];
+            Particle* a = e->getOneEnd();
+            Particle* b = e->getTheOtherEnd();
+            ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
+        }
+        if(showGui)
+            gui.draw();
 
         drawFadeRectangle();
     }
     fbo.end();
 }
+
+void XBScene2::keyReleased(int key){
+    if(key == 'z'){
+        particles.clear();
+        visibleSprings.clear();
+        delete physics;
+        initSystem();
+    }
+    else if(key == 'g')
+        showGui = !showGui;
+}
+

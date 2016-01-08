@@ -1,24 +1,46 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxMidi.h"
+#include "ofxGui.h"
+#include "ofxOsc.h"
+#include "XBMidiPortParams.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp, public ofxMidiListener
+{
+public:
 
-	public:
-		void setup();
-		void update();
-		void draw();
+    void setup();
+    void update();
+    void draw();
+    void exit();
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+    void keyReleased(int key);
+
+private:
+
+    // MIDI
+
+    ofxMidiIn       midiIn;
+    ofxMidiMessage  midiMessage;
+
+    void newMidiMessage(ofxMidiMessage& midiMessage);
+
+    // GUI
+
+    ofxPanel                    gui;
+    vector<XBMidiPortParams>    portParams;
+    ofxLabel                    lblStatus;
+    ofxButton                   btnStart;
+    ofxButton                   btnStop;
+
+    stringstream                strMessage;
+    unsigned int                numStrMessages;
+
+    void startButtonPressed();
+    void stopButtonPressed();
+
+    // OSC
+
+    ofxOscSender oscSender;
 };

@@ -9,7 +9,6 @@
 #include "XBOSCManager.h"
 
 #ifdef OF_DEBUG
-#include "ofxUI.h"
 #endif
 
 typedef enum
@@ -41,6 +40,7 @@ public:
     void goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
     void goToNextScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
     void goToPrevScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
+    void keyReleased(int key);
 
 private:
 

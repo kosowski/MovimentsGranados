@@ -26,4 +26,6 @@ public:
 private:
 
     XBSceneManager sceneManager;
+
+    bool showFPS;
 };
