@@ -7,20 +7,25 @@
 void XBScene3::setup()
 {
     XBBaseScene::setup();
+    v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
+    x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
 }
 
 void XBScene3::update()
 {
     XBBaseScene::update();
+    
+    v.update();
+    x.update();
 }
 
 void XBScene3::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofSetColor(ofColor::blue);
-        ofSetCircleResolution(64);
-        ofDrawCircle(ofGetWidth()/2 + 100, ofGetHeight()/2, 150);
+        ofBackground(0);
+        v.draw();
+        x.draw();
 
         drawFadeRectangle();
     }

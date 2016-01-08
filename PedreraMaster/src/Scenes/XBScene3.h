@@ -6,6 +6,8 @@
 #define PEDRERAMASTER_XBSCENE3_H
 
 #include "XBBaseScene.h"
+#include "Vehicle.h"
+
 
 class XBScene3 : public XBBaseScene
 {
@@ -16,6 +18,8 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+    
+    Vehicle v, x;
 
 };
 
