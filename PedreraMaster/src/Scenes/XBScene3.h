@@ -7,6 +7,7 @@
 
 #include "XBBaseScene.h"
 #include "Vehicle.h"
+#include "ofxColorPicker.h"
 
 
 class XBScene3 : public XBBaseScene
@@ -18,8 +19,13 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+     void keyReleased(int key);
     
     Vehicle v, x;
+    
+    bool showGui;
+    ofxColorPicker colorPickerV;
+    ofxColorPicker colorPickerX;
 
 };
 
