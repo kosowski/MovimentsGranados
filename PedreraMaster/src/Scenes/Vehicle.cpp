@@ -21,8 +21,7 @@ void Vehicle::setup(int x, int y){
         Rope s(&nodes[i], &nodes[i+1], 1, 0, r);
         springs.push_back(s);
     }
-    
-
+    colour.set(255);
 }
 
 void Vehicle::applyForce(const ofPoint & force){
@@ -69,7 +68,7 @@ void Vehicle::update(){
 
 void Vehicle::draw(){
     
-    ofSetColor(ofColor::fireBrick);
+    ofSetColor(colour);
     
     for (ofPoint p:nodes)
         ofDrawCircle(p.x, p.y, r-2);
@@ -84,6 +83,10 @@ void Vehicle::draw(){
     
     for (Rope s:springs)
         s.draw();
+}
+
+void Vehicle::setColor(ofColor c){
+    colour = c;
 }
 
 

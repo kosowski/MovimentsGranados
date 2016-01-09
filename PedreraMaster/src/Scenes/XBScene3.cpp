@@ -9,6 +9,10 @@ void XBScene3::setup()
     XBBaseScene::setup();
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
+    ofColor vColor(255,243,183);
+    v.setColor(vColor);
+    ofColor xColor(252,185,112);
+    x.setColor(xColor);
 }
 
 void XBScene3::update()

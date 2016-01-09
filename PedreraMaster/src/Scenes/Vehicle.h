@@ -11,6 +11,7 @@ public:
     void seek(const ofPoint & target);
     void update();
     void draw();
+    void setColor(ofColor c);
     
 private:
     
@@ -22,6 +23,7 @@ private:
     int r, cor;
     float offset;
     int numNodes = 4;
+    ofColor colour;
 
     vector <ofPoint> nodes;
     vector <Rope> springs;
