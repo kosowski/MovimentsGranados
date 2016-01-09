@@ -14,6 +14,8 @@ Rope::Rope(ofPoint* pointA, ofPoint* pointB, float m, float g, float r) {
     mass = m;
     gravity = g;
     radius = r;
+    vx = 0.;
+    vy = 0.;
 }
 
 void Rope::update() {
