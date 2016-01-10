@@ -8,7 +8,7 @@ XBBaseScene::XBBaseScene(string _name)
 {
     name = _name;
 
-    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
+    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB,8);
 }
 
 void XBBaseScene::setup()

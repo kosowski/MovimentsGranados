@@ -23,6 +23,10 @@
 		62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */; };
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
 		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
+		660E8BB31C41770100A23F26 /* ofxColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */; };
+		660E8BCF1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */; };
+		662B18811C405DF100004722 /* Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187D1C405DF100004722 /* Rope.cpp */; };
+		662B18821C405DF100004722 /* Vehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187F1C405DF100004722 /* Vehicle.cpp */; };
 		6659B6ED1C3FDF9900B8285C /* Attraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6DC1C3FDF9900B8285C /* Attraction.cpp */; };
 		6659B6EE1C3FDF9900B8285C /* EulerIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6DE1C3FDF9900B8285C /* EulerIntegrator.cpp */; };
 		6659B6EF1C3FDF9900B8285C /* ModifiedEulerIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6E21C3FDF9900B8285C /* ModifiedEulerIntegrator.cpp */; };
@@ -118,6 +122,14 @@
 		50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
 		63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
+		660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxColorPicker.cpp; sourceTree = "<group>"; };
+		660E8BB21C41770100A23F26 /* ofxColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxColorPicker.h; sourceTree = "<group>"; };
+		660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSAInteractiveObject.cpp; sourceTree = "<group>"; };
+		660E8BCE1C41797A00A23F26 /* ofxMSAInteractiveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSAInteractiveObject.h; sourceTree = "<group>"; };
+		662B187D1C405DF100004722 /* Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rope.cpp; sourceTree = "<group>"; };
+		662B187E1C405DF100004722 /* Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rope.h; sourceTree = "<group>"; };
+		662B187F1C405DF100004722 /* Vehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vehicle.cpp; sourceTree = "<group>"; };
+		662B18801C405DF100004722 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
 		6659B6DC1C3FDF9900B8285C /* Attraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attraction.cpp; sourceTree = "<group>"; };
 		6659B6DD1C3FDF9900B8285C /* Attraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attraction.h; sourceTree = "<group>"; };
 		6659B6DE1C3FDF9900B8285C /* EulerIntegrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EulerIntegrator.cpp; sourceTree = "<group>"; };
@@ -209,6 +221,10 @@
 		21476C9C72CA2F646A3F0702 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				662B187D1C405DF100004722 /* Rope.cpp */,
+				662B187E1C405DF100004722 /* Rope.h */,
+				662B187F1C405DF100004722 /* Vehicle.cpp */,
+				662B18801C405DF100004722 /* Vehicle.h */,
 				21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */,
 				21476D7D75555C4AE6056C8A /* XBSceneManager.h */,
 				214768EA36A596B0A3391931 /* XBBaseScene.cpp */,
@@ -290,6 +306,42 @@
 				E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */,
 			);
 			name = posix;
+			sourceTree = "<group>";
+		};
+		660E8BB01C41770100A23F26 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */,
+				660E8BB21C41770100A23F26 /* ofxColorPicker.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxColorPicker/src;
+			sourceTree = "<group>";
+		};
+		660E8BB41C41770500A23F26 /* ofxColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				660E8BB01C41770100A23F26 /* src */,
+			);
+			name = ofxColorPicker;
+			sourceTree = "<group>";
+		};
+		660E8BCC1C41797A00A23F26 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */,
+				660E8BCE1C41797A00A23F26 /* ofxMSAInteractiveObject.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxMSAInteractiveObject/src;
+			sourceTree = "<group>";
+		};
+		660E8BD01C41797F00A23F26 /* ofxMSAInteractiveObject */ = {
+			isa = PBXGroup;
+			children = (
+				660E8BCC1C41797A00A23F26 /* src */,
+			);
+			name = ofxMSAInteractiveObject;
 			sourceTree = "<group>";
 		};
 		6659B6DB1C3FDF9900B8285C /* src */ = {
@@ -396,6 +448,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				660E8BD01C41797F00A23F26 /* ofxMSAInteractiveObject */,
+				660E8BB41C41770500A23F26 /* ofxColorPicker */,
 				6659B70F1C3FE15C00B8285C /* ofxGui */,
 				6659B6F41C3FDFA000B8285C /* ofxTraerPhysics */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
@@ -590,6 +644,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
+				662B18821C405DF100004722 /* Vehicle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				2A1C6E521C2CDAA00068B7CD /* Tween.cpp in Sources */,
@@ -597,15 +652,18 @@
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
+				660E8BCF1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				6659B6F21C3FDF9900B8285C /* RungeKuttaIntegrator.cpp in Sources */,
+				662B18811C405DF100004722 /* Rope.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
 				6659B70D1C3FE15500B8285C /* ofxSliderGroup.cpp in Sources */,
 				6659B70C1C3FE15500B8285C /* ofxSlider.cpp in Sources */,
 				6659B7081C3FE15500B8285C /* ofxButton.cpp in Sources */,
+				660E8BB31C41770100A23F26 /* ofxColorPicker.cpp in Sources */,
 				2A1C6E531C2CDAA00068B7CD /* Tweenzor.cpp in Sources */,
 				6659B6ED1C3FDF9900B8285C /* Attraction.cpp in Sources */,
 				6659B6EF1C3FDF9900B8285C /* ModifiedEulerIntegrator.cpp in Sources */,
