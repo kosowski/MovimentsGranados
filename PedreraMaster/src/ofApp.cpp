@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "XBOSCManager.h"
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"

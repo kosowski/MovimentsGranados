@@ -208,6 +208,8 @@ void ofApp::startButtonPressed()
             address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_STARTED;
             m.setAddress(address.str());
             oscSender.sendMessage(m, false);
+
+            cout << "Send start" << endl;
         }
 
         // Register GUI events

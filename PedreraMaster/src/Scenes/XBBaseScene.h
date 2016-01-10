@@ -6,6 +6,8 @@
 #define PEDRERAMASTER_XBBASESCENE_H
 
 #include "ofMain.h"
+//#include "XBOSCEvents.h"
+#include "XBOSCManager.h"
 
 class XBBaseScene
 {
@@ -23,6 +25,20 @@ public:
     void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
     float *getFBOAlpha() { return &fboAlpha; }
 
+    virtual void keyReleased(int key) {};
+
+protected:
+
+    void drawFadeRectangle();
+
+    ofFbo fbo;
+    float fboAlpha;
+
+    void subscribeToCelloEvents();
+    void subscribeToViolinEvents();
+    void subscribeToPianoEvents();
+    void subscribeToKinectEvents();
+
     virtual void onCelloStarted() {};
     virtual void onCelloStopped() {};
     virtual void onCelloPitchChanged(float &pitch) {};
@@ -39,19 +55,12 @@ public:
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
-    virtual void keyReleased(int key) {};
-
-protected:
-
-    void drawFadeRectangle();
-
-    ofFbo fbo;
-    float fboAlpha;
+    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {};
+    virtual void onPianoNoteOff(int &noteOff) {};
 
 private:
 
     string name;
 };
-
 
 #endif //PEDRERAMASTER_XBBASESCENE_H

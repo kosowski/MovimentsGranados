@@ -4,7 +4,6 @@
 
 #include "XBOSCManager.h"
 #include "../../Shared/OSCSettings.h"
-#include "XBOSCEvents.h"
 
 void XBOSCManager::init(int celloPort, int violinPort, int pianoPort, int kinectPort)
 {
@@ -38,14 +37,16 @@ void XBOSCManager::handleCelloMessages()
         string address = msg.getAddress();
 
         if (address == celloAddrStarted) {
-            ofNotifyEvent(eventCelloStarted);
+            ofNotifyEvent(eventCelloStarted, this);
+
+//            ofNotifyEvent(eventCelloStarted);
         }
         else if (address == celloAddrStopped) {
             ofNotifyEvent(eventCelloStopped);
         }
         else if (address == celloAddrPitchNote) {
             float pitchMidiNote = msg.getArgAsFloat(0);
-            ofNotifyEvent(eventCelloPitchChanged, pitchMidiNote);
+            ofNotifyEvent(eventCelloPitchChanged, pitchMidiNote, this);
         }
         else if (address == celloAddrEnergy) {
             float energy = msg.getArgAsFloat(0);
@@ -108,6 +109,17 @@ void XBOSCManager::handlePianoMessages()
         ofxOscMessage msg;
         pianoReceiver.getNextMessage(&msg);
         string address = msg.getAddress();
+
+        if (address == pianoAddrNoteOn) {
+            PianoNoteOnArgs args;
+            args.pitch = msg.getArgAsInt(0);
+            args.velocity = msg.getArgAsInt(1);
+            ofNotifyEvent(eventPianoNoteOn, args);
+        }
+        else if (address == pianoAddrNoteOff) {
+            int pitch = msg.getArgAsInt(0);
+            ofNotifyEvent(eventPianoNoteOff, pitch);
+        }
     }
 }
 
@@ -119,66 +131,6 @@ void XBOSCManager::handleKinectMessages()
         kinectReceiver.getNextMessage(&msg);
         string address = msg.getAddress();
     }
-}
-
-void XBOSCManager::subscribeToCelloEvents(XBBaseScene *listenerScene)
-{
-    ofAddListener(eventCelloStarted, listenerScene, &XBBaseScene::onCelloStarted);
-    ofAddListener(eventCelloStopped, listenerScene, &XBBaseScene::onCelloStopped);
-    ofAddListener(eventCelloPitchChanged, listenerScene, &XBBaseScene::onCelloPitchChanged);
-    ofAddListener(eventCelloEnergyChanged, listenerScene, &XBBaseScene::onCelloEnergyChanged);
-    ofAddListener(eventCelloSilenceChanged, listenerScene, &XBBaseScene::onCelloSilenceChanged);
-    ofAddListener(eventCelloPauseChanged, listenerScene, &XBBaseScene::onCelloPauseChanged);
-    ofAddListener(eventCelloOnsetDetected, listenerScene, &XBBaseScene::onCelloOnsetDetected);
-}
-
-void XBOSCManager::unsubscribeFromCelloEvents(XBBaseScene *listenerScene)
-{
-    ofRemoveListener(eventCelloStarted, listenerScene, &XBBaseScene::onCelloStarted);
-    ofRemoveListener(eventCelloStopped, listenerScene, &XBBaseScene::onCelloStopped);
-    ofRemoveListener(eventCelloPitchChanged, listenerScene, &XBBaseScene::onCelloPitchChanged);
-    ofRemoveListener(eventCelloEnergyChanged, listenerScene, &XBBaseScene::onCelloEnergyChanged);
-    ofRemoveListener(eventCelloSilenceChanged, listenerScene, &XBBaseScene::onCelloSilenceChanged);
-    ofRemoveListener(eventCelloPauseChanged, listenerScene, &XBBaseScene::onCelloPauseChanged);
-    ofRemoveListener(eventCelloOnsetDetected, listenerScene, &XBBaseScene::onCelloOnsetDetected);
-}
-
-void XBOSCManager::subscribeToViolinEvents(XBBaseScene *listenerScene)
-{
-    ofAddListener(eventViolinStarted, listenerScene, &XBBaseScene::onViolinStarted);
-    ofAddListener(eventViolinStopped, listenerScene, &XBBaseScene::onViolinStopped);
-    ofAddListener(eventViolinPitchChanged, listenerScene, &XBBaseScene::onViolinPitchChanged);
-    ofAddListener(eventViolinEnergyChanged, listenerScene, &XBBaseScene::onViolinEnergyChanged);
-    ofAddListener(eventViolinSilenceChanged, listenerScene, &XBBaseScene::onViolinSilenceChanged);
-    ofAddListener(eventViolinPauseChanged, listenerScene, &XBBaseScene::onViolinPauseChanged);
-    ofAddListener(eventViolinOnsetDetected, listenerScene, &XBBaseScene::onViolinOnsetDetected);
-}
-
-void XBOSCManager::unsubscribeFromViolinEvents(XBBaseScene *listenerScene)
-{
-    ofRemoveListener(eventViolinStarted, listenerScene, &XBBaseScene::onViolinStarted);
-    ofRemoveListener(eventViolinStopped, listenerScene, &XBBaseScene::onViolinStopped);
-    ofRemoveListener(eventViolinPitchChanged, listenerScene, &XBBaseScene::onViolinPitchChanged);
-    ofRemoveListener(eventViolinEnergyChanged, listenerScene, &XBBaseScene::onViolinEnergyChanged);
-    ofRemoveListener(eventViolinSilenceChanged, listenerScene, &XBBaseScene::onViolinSilenceChanged);
-    ofRemoveListener(eventViolinPauseChanged, listenerScene, &XBBaseScene::onViolinPauseChanged);
-    ofRemoveListener(eventViolinOnsetDetected, listenerScene, &XBBaseScene::onViolinOnsetDetected);
-}
-
-void XBOSCManager::subscribeToPianoEvents(XBBaseScene *listenerScene)
-{
-}
-
-void XBOSCManager::unsubscribeFromPianoEvents(XBBaseScene *listenerScene)
-{
-}
-
-void XBOSCManager::subscribeToKinectEvents(XBBaseScene *listenerScene)
-{
-}
-
-void XBOSCManager::unsubscribeFromKinectEvents(XBBaseScene *listenerScene)
-{
 }
 
 void XBOSCManager::buildCelloAddresses()
@@ -245,6 +197,13 @@ void XBOSCManager::buildViolinAddresses()
 
 void XBOSCManager::buildPianoReceiverAddresses()
 {
+    stringstream ssPianoAddrNoteOn;
+    ssPianoAddrNoteOn << OSC_PIANO_ADDR_BASE << OSC_PIANO_ADDR_NOTEON;
+    pianoAddrNoteOn = ssPianoAddrNoteOn.str();
+
+    stringstream ssPianoAddrNoteOff;
+    ssPianoAddrNoteOff << OSC_PIANO_ADDR_BASE << OSC_PIANO_ADDR_NOTEOFF;
+    pianoAddrNoteOff = ssPianoAddrNoteOff.str();
 }
 
 void XBOSCManager::buildKinectReceiverAddresses()

@@ -44,7 +44,6 @@ public:
     ofxFloatSlider restLength;
     ofxFloatSlider xDamping;
     ofxPanel gui;
-
 };
 
 

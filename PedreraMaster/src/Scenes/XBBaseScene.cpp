@@ -3,7 +3,6 @@
 //
 
 #include "XBBaseScene.h"
-#include "XBOSCManager.h"
 
 XBBaseScene::XBBaseScene(string _name)
 {
@@ -24,14 +23,15 @@ void XBBaseScene::setup()
 
     fboAlpha = 255.0f;
 
-    XBOSCManager::getInstance().subscribeToCelloEvents(this);
-    XBOSCManager::getInstance().subscribeToViolinEvents(this);
-    XBOSCManager::getInstance().subscribeToPianoEvents(this);
-    XBOSCManager::getInstance().subscribeToKinectEvents(this);
+    subscribeToCelloEvents();
+    subscribeToViolinEvents();
+    subscribeToPianoEvents();
+    subscribeToKinectEvents();
 }
 
 void XBBaseScene::update()
 {
+
 //    cout << name << " alpha: " << fboAlpha << endl;
 }
 
@@ -42,4 +42,39 @@ void XBBaseScene::drawFadeRectangle()
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
     ofClear(0, 0, 0, (int)fboAlpha);
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+}
+
+void XBBaseScene::subscribeToCelloEvents()
+{
+    XBOSCManager &oscManager = XBOSCManager::getInstance();
+    ofAddListener(oscManager.eventCelloStarted, this, &XBBaseScene::onCelloStarted);
+    ofAddListener(oscManager.eventCelloStopped, this, &XBBaseScene::onCelloStopped);
+    ofAddListener(oscManager.eventCelloPitchChanged, this, &XBBaseScene::onCelloPitchChanged);
+    ofAddListener(oscManager.eventCelloEnergyChanged, this, &XBBaseScene::onCelloEnergyChanged);
+    ofAddListener(oscManager.eventCelloSilenceChanged, this, &XBBaseScene::onCelloSilenceChanged);
+    ofAddListener(oscManager.eventCelloPauseChanged, this, &XBBaseScene::onCelloPauseChanged);
+    ofAddListener(oscManager.eventCelloOnsetDetected, this, &XBBaseScene::onCelloOnsetDetected);
+}
+
+void XBBaseScene::subscribeToViolinEvents()
+{
+    XBOSCManager &oscManager = XBOSCManager::getInstance();
+    ofAddListener(oscManager.eventViolinStarted, this, &XBBaseScene::onViolinStarted);
+    ofAddListener(oscManager.eventViolinStopped, this, &XBBaseScene::onViolinStopped);
+    ofAddListener(oscManager.eventViolinPitchChanged, this, &XBBaseScene::onViolinPitchChanged);
+    ofAddListener(oscManager.eventViolinEnergyChanged, this, &XBBaseScene::onViolinEnergyChanged);
+    ofAddListener(oscManager.eventViolinSilenceChanged, this, &XBBaseScene::onViolinSilenceChanged);
+    ofAddListener(oscManager.eventViolinPauseChanged, this, &XBBaseScene::onViolinPauseChanged);
+    ofAddListener(oscManager.eventViolinOnsetDetected, this, &XBBaseScene::onViolinOnsetDetected);
+}
+
+void XBBaseScene::subscribeToPianoEvents()
+{
+    XBOSCManager &oscManager = XBOSCManager::getInstance();
+    ofAddListener(oscManager.eventPianoNoteOn, this, &XBBaseScene::onPianoNoteOn);
+    ofAddListener(oscManager.eventPianoNoteOff, this, &XBBaseScene::onPianoNoteOff);
+}
+
+void XBBaseScene::subscribeToKinectEvents()
+{
 }

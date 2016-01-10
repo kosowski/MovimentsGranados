@@ -6,8 +6,6 @@
 //
 //
 
-#pragma once
-
 #ifndef ConductrEnter_Config_h
 #define ConductrEnter_Config_h
 

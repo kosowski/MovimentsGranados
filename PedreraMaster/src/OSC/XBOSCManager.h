@@ -6,7 +6,6 @@
 #define PEDRERAMASTER_XBOSCMANAGER_H
 
 #include "ofxOSC.h"
-#include "XBBaseScene.h"
 
 class XBOSCManager
 {
@@ -20,15 +19,33 @@ public:
     void init(int celloPort, int violinPort, int pianoPort, int kinectPort);
     void update();
 
-    // Methods used by scenes to subscribe/unsubscribe to received OSC messages
-    void subscribeToCelloEvents(XBBaseScene *listenerScene);
-    void unsubscribeFromCelloEvents(XBBaseScene *listenerScene);
-    void subscribeToViolinEvents(XBBaseScene *listenerScene);
-    void unsubscribeFromViolinEvents(XBBaseScene *listenerScene);
-    void subscribeToPianoEvents(XBBaseScene *listenerScene);
-    void unsubscribeFromPianoEvents(XBBaseScene *listenerScene);
-    void subscribeToKinectEvents(XBBaseScene *listenerScene);
-    void unsubscribeFromKinectEvents(XBBaseScene *listenerScene);
+    // Cello events
+    ofEvent<void>   eventCelloStarted;
+    ofEvent<void>   eventCelloStopped;
+    ofEvent<float>  eventCelloPitchChanged;
+    ofEvent<float>  eventCelloEnergyChanged;
+    ofEvent<bool>   eventCelloSilenceChanged;
+    ofEvent<bool>   eventCelloPauseChanged;
+    ofEvent<void>   eventCelloOnsetDetected;
+
+    // Violin events
+    ofEvent<void>   eventViolinStarted;
+    ofEvent<void>   eventViolinStopped;
+    ofEvent<float>  eventViolinPitchChanged;
+    ofEvent<float>  eventViolinEnergyChanged;
+    ofEvent<bool>   eventViolinSilenceChanged;
+    ofEvent<bool>   eventViolinPauseChanged;
+    ofEvent<void>   eventViolinOnsetDetected;
+
+    // Piano events
+    class PianoNoteOnArgs : public ofEventArgs
+    {
+    public:
+        int pitch;
+        int velocity;
+    };
+    ofEvent<PianoNoteOnArgs>    eventPianoNoteOn;
+    ofEvent<int>                eventPianoNoteOff;
 
 private:
 
@@ -63,6 +80,8 @@ private:
     string violinAddrOnset;
 
     ofxOscReceiver pianoReceiver;
+    string pianoAddrNoteOn;
+    string pianoAddrNoteOff;
 
     ofxOscReceiver kinectReceiver;
 };
