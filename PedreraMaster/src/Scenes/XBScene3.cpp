@@ -13,10 +13,10 @@ void XBScene3::setup()
     int h = 250;
     colorPickerV.setSize(10, ofGetHeight() - h - 20, w, h);
     colorPickerX.setSize(10, ofGetHeight() - 2 * (h + 20), w, h);
-    ofColor vColor(255,243,183);
-    ofColor xColor(252,185,112);
-    colorPickerV.setColor( vColor);
-    colorPickerX.setColor(xColor);
+    violinColor.set(72,92,81);
+    celloColor.set(207,87,60);
+    colorPickerV.setColor( violinColor);
+    colorPickerX.setColor(celloColor);
 
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     x.setup(ofGetWidth() / 2, ofGetHeight() / 2);

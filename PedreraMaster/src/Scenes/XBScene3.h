@@ -23,6 +23,10 @@ public:
     
     Vehicle v, x;
     
+    ofColor directorColor;
+    ofColor violinColor;
+    ofColor celloColor;
+    
     bool showGui;
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
