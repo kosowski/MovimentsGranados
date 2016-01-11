@@ -63,30 +63,43 @@ void ofApp::update()
 {
     handleStateChanges();
 
-    switch(currState)
-    {
-        case STATE_SETUP:
+    if(isKinect){
+        switch(currState)
         {
-            break;
+            case STATE_SETUP:
+            {
+                break;
+            }
+            case STATE_DETECTING:
+            {
+                motionExtractor->update();
+                break;
+            }
+            case STATE_CAPTURING:
+            {
+                motionExtractor->update();
+                KinectInfo hands = motionExtractor->gethandsPosition();
+                sendHandInfo(hands);
+                break;
+            }
         }
-        case STATE_DETECTING:
-        {
-            motionExtractor->update();
-            break;
-        }
-        case STATE_CAPTURING:
-        {
-            motionExtractor->update();
-            KinectInfo hands = motionExtractor->gethandsPosition();
-            sendHandInfo(hands);
-            break;
-        }
+    }else if(ofGetMousePressed()){
+        currState=STATE_CAPTURING; //change state of fake detection
+        KinectInfo fakeHands;
+        fakeHands.leftHand.pos.x=ofGetMouseX()/ofGetWidth();
+        fakeHands.leftHand.pos.y=ofGetMouseY()/ofGetHeight();
+        fakeHands.rightHand.pos.x=ofMap(fakeHands.leftHand.pos.x, 0, 1, 1, 0);
+//        fakeHands.rightHand.pos.y=ofMap(fakeHands.leftHand.pos.y, 0, 1, 1, 0);
+        fakeHands.rightHand.pos.y=fakeHands.leftHand.pos.y;
+        sendHandInfo(fakeHands); //send fake info by osc
+    }else{
+        currState=STATE_DETECTING;
     }
 }
 
 void ofApp::draw()
 {
-    if(showImage)
+    if(showImage && isKinect) //draw only if is detecting and if kinect is open
         motionExtractor->draw(showHands);
     gui.draw();
 }
