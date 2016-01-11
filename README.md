@@ -13,7 +13,8 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - ofxGUI (already part of OF)
 - ofxXmlSettings (already part of OF)
 - [ofxTraerhysics](https://github.com/martinlindelof/ofxTraerPhysics)
-- [ofxColorPicker](https://github.com/julapy/ofxColorPicker) This addon requires [ofxMSAInteractiveObject] but not the current version. The correct version in included in ofxColorPicker, inside the folder  'examples/addons'. It must be copied to openFrameworks addon folder.
+- [ofxColorPicker](https://github.com/julapy/ofxColorPicker)
+- [ofxMSAInteractiveObject-PM](https://github.com/kosowski/ofxMSAInteractiveObject-PM)
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)
