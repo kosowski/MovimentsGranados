@@ -16,6 +16,7 @@
 		21476F3D1B9FF21BECBC5304 /* XBScene3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214765431925D68F22429800 /* XBScene3.cpp */; };
 		2A1C6E521C2CDAA00068B7CD /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C6E4B1C2CDAA00068B7CD /* Tween.cpp */; };
 		2A1C6E531C2CDAA00068B7CD /* Tweenzor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C6E501C2CDAA00068B7CD /* Tweenzor.cpp */; };
+		2AD47E1B1C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AD47E191C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.cpp */; };
 		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
 		510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */; };
 		5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */; };
@@ -24,7 +25,6 @@
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
 		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
 		660E8BB31C41770100A23F26 /* ofxColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */; };
-		660E8BCF1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */; };
 		662B18811C405DF100004722 /* Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187D1C405DF100004722 /* Rope.cpp */; };
 		662B18821C405DF100004722 /* Vehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187F1C405DF100004722 /* Vehicle.cpp */; };
 		6659B6ED1C3FDF9900B8285C /* Attraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6DC1C3FDF9900B8285C /* Attraction.cpp */; };
@@ -113,6 +113,8 @@
 		2A1C6E4F1C2CDAA00068B7CD /* TweenSelector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TweenSelector.h; sourceTree = "<group>"; };
 		2A1C6E501C2CDAA00068B7CD /* Tweenzor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Tweenzor.cpp; sourceTree = "<group>"; };
 		2A1C6E511C2CDAA00068B7CD /* Tweenzor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Tweenzor.h; sourceTree = "<group>"; };
+		2AD47E191C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSAInteractiveObject.cpp; sourceTree = "<group>"; };
+		2AD47E1A1C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxMSAInteractiveObject.h; sourceTree = "<group>"; };
 		2B40EDA85BEB63E46785BC29 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
 		2FD4B0329909D3527F003494 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
 		3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
@@ -124,8 +126,6 @@
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxColorPicker.cpp; sourceTree = "<group>"; };
 		660E8BB21C41770100A23F26 /* ofxColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxColorPicker.h; sourceTree = "<group>"; };
-		660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSAInteractiveObject.cpp; sourceTree = "<group>"; };
-		660E8BCE1C41797A00A23F26 /* ofxMSAInteractiveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSAInteractiveObject.h; sourceTree = "<group>"; };
 		662B187D1C405DF100004722 /* Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rope.cpp; sourceTree = "<group>"; };
 		662B187E1C405DF100004722 /* Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rope.h; sourceTree = "<group>"; };
 		662B187F1C405DF100004722 /* Vehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vehicle.cpp; sourceTree = "<group>"; };
@@ -272,6 +272,24 @@
 			path = ../../../addons/ofxTweenzor/src;
 			sourceTree = "<group>";
 		};
+		2AD47E171C43CFEF00DFF2E4 /* ofxMSAInteractiveObject-PM */ = {
+			isa = PBXGroup;
+			children = (
+				2AD47E181C43CFEF00DFF2E4 /* src */,
+			);
+			name = "ofxMSAInteractiveObject-PM";
+			sourceTree = "<group>";
+		};
+		2AD47E181C43CFEF00DFF2E4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2AD47E191C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.cpp */,
+				2AD47E1A1C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.h */,
+			);
+			name = src;
+			path = "../../../addons/ofxMSAInteractiveObject-PM/src";
+			sourceTree = "<group>";
+		};
 		30CB364908817057B430D528 /* osc */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,24 +342,6 @@
 				660E8BB01C41770100A23F26 /* src */,
 			);
 			name = ofxColorPicker;
-			sourceTree = "<group>";
-		};
-		660E8BCC1C41797A00A23F26 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				660E8BCD1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp */,
-				660E8BCE1C41797A00A23F26 /* ofxMSAInteractiveObject.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxMSAInteractiveObject/src;
-			sourceTree = "<group>";
-		};
-		660E8BD01C41797F00A23F26 /* ofxMSAInteractiveObject */ = {
-			isa = PBXGroup;
-			children = (
-				660E8BCC1C41797A00A23F26 /* src */,
-			);
-			name = ofxMSAInteractiveObject;
 			sourceTree = "<group>";
 		};
 		6659B6DB1C3FDF9900B8285C /* src */ = {
@@ -448,13 +448,13 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				660E8BD01C41797F00A23F26 /* ofxMSAInteractiveObject */,
 				660E8BB41C41770500A23F26 /* ofxColorPicker */,
 				6659B70F1C3FE15C00B8285C /* ofxGui */,
 				6659B6F41C3FDFA000B8285C /* ofxTraerPhysics */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				2A1C6E481C2CDAA00068B7CD /* ofxTweenzor */,
 				1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */,
+				2AD47E171C43CFEF00DFF2E4 /* ofxMSAInteractiveObject-PM */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -652,7 +652,7 @@
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
-				660E8BCF1C41797A00A23F26 /* ofxMSAInteractiveObject.cpp in Sources */,
+				2AD47E1B1C43CFEF00DFF2E4 /* ofxMSAInteractiveObject.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
@@ -877,7 +877,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
