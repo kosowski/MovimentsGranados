@@ -4,7 +4,7 @@
 
 #include "XBBaseScene.h"
 
-static const int FBO_NUM_SAMPLES = 2;
+static const int FBO_NUM_SAMPLES = 0;
 
 XBBaseScene::XBBaseScene(string _name)
 {
