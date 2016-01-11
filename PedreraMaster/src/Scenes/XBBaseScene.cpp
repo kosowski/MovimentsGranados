@@ -4,11 +4,13 @@
 
 #include "XBBaseScene.h"
 
+static const int FBO_NUM_SAMPLES = 0;
+
 XBBaseScene::XBBaseScene(string _name)
 {
     name = _name;
 
-    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB,8);
+    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, FBO_NUM_SAMPLES);
 }
 
 void XBBaseScene::setup()
