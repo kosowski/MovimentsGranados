@@ -5,7 +5,7 @@
 #include "XBScene1.h"
 
 #define NODE_SIZE 3
-#define GRID_X_RES 60
+#define GRID_X_RES 120
 #define GRID_Y_RES 10
 
 
@@ -29,6 +29,8 @@ void XBScene1::setup()
     gui.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
     
     gui.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
+    
+    directorColor.set(77,125,140);
     initSystem();
 }
 
@@ -112,7 +114,7 @@ void XBScene1::drawIntoFBO()
 //        }
         
         // draw springs
-        ofSetColor(200);
+        ofSetColor(directorColor);
         for ( int i = 0; i < visibleSprings.size(); ++i )
         {
             Spring* e = visibleSprings[i];

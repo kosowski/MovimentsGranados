@@ -30,6 +30,8 @@ public:
     Particle*			selectedParticle;
     Particle* p_mouse;
     
+    ofColor directorColor;
+    
     bool showGui;
     ofxFloatSlider springStrength;
     ofxFloatSlider springDamping;

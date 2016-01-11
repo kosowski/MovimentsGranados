@@ -25,6 +25,7 @@ void XBScene2::setup()
     gui.add(fixedStrength.setup("fixedStrength", 0.03, 0.01, 0.50));
     gui.add(fixedDamping.setup("fixedDamping",  0.01, 0.000, 0.201));
     
+    directorColor.set(77,125,140);
     initSystem();
 }
 
@@ -78,6 +79,7 @@ void XBScene2::update()
     p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
     //physics->setGravity( gravityDir.x, gravityDir.y, gravityDir.z );
     physics->tick();
+    
 }
 
 void XBScene2::drawIntoFBO()
@@ -95,7 +97,7 @@ void XBScene2::drawIntoFBO()
 //        }
         
         // draw springs
-        ofSetColor(200);
+        ofSetColor(directorColor);
         for ( int i = 0; i < visibleSprings.size(); ++i )
         {
             Spring* e = visibleSprings[i];
