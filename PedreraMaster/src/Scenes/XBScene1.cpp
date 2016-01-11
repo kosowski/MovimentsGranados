@@ -5,7 +5,7 @@
 #include "XBScene1.h"
 
 #define NODE_SIZE 3
-#define GRID_X_RES 60
+#define GRID_X_RES 120
 #define GRID_Y_RES 10
 
 
