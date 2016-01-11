@@ -221,10 +221,6 @@
 		21476C9C72CA2F646A3F0702 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				662B187D1C405DF100004722 /* Rope.cpp */,
-				662B187E1C405DF100004722 /* Rope.h */,
-				662B187F1C405DF100004722 /* Vehicle.cpp */,
-				662B18801C405DF100004722 /* Vehicle.h */,
 				21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */,
 				21476D7D75555C4AE6056C8A /* XBSceneManager.h */,
 				214768EA36A596B0A3391931 /* XBBaseScene.cpp */,
@@ -235,6 +231,10 @@
 				21476F5C426AAE97521D9364 /* XBScene2.h */,
 				214765431925D68F22429800 /* XBScene3.cpp */,
 				21476036AB3F59ED8BAE77A9 /* XBScene3.h */,
+				662B187D1C405DF100004722 /* Rope.cpp */,
+				662B187E1C405DF100004722 /* Rope.h */,
+				662B187F1C405DF100004722 /* Vehicle.cpp */,
+				662B18801C405DF100004722 /* Vehicle.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
