@@ -14,6 +14,7 @@
 		21476396328FCF7C0EA5A01B /* XBScene2GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */; };
 		2147662A8D4FFACF9FAAF319 /* XBBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F4D5CB49F867A9EC844 /* XBBaseGUI.cpp */; };
 		214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */; };
+		2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214767E46A8462F4E616A97A /* GUIApp.cpp */; };
 		21476979746B32EBBBF8CCB5 /* XBBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214768EA36A596B0A3391931 /* XBBaseScene.cpp */; };
 		21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */; };
 		21476DBE1D97923486A7ABA1 /* XBScene2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */; };
@@ -99,6 +100,7 @@
 		214760908A1992B269B2EFE3 /* data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
 		214761088AC0A8B723CC52C3 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		2147617FBC02B546C344BAC8 /* XBScene1GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1GUI.h; sourceTree = "<group>"; };
+		21476259C699FCFC880F32B2 /* GUIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIApp.h; sourceTree = "<group>"; };
 		214762A363D919020F64E5B8 /* XBOSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBOSCManager.cpp; sourceTree = "<group>"; };
 		214762E2D9D203239903B85A /* XBScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene2.h; sourceTree = "<group>"; };
 		2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene3GUI.cpp; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		214764C341C5CA54E348762F /* XBScene1GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene1GUI.cpp; sourceTree = "<group>"; };
 		214765866958D847D3A12F01 /* XBScene3GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3GUI.h; sourceTree = "<group>"; };
 		214767AA642614B458E845C3 /* XBScene2GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene2GUI.h; sourceTree = "<group>"; };
+		214767E46A8462F4E616A97A /* GUIApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIApp.cpp; sourceTree = "<group>"; };
 		214768EA36A596B0A3391931 /* XBBaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseScene.cpp; sourceTree = "<group>"; };
 		21476901AA2FBE51D6FE2F18 /* XBScene3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3.h; sourceTree = "<group>"; };
 		214769380F508C291232B6EF /* XBScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1.h; sourceTree = "<group>"; };
@@ -578,6 +581,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* MainApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* MainApp.h */,
+				214767E46A8462F4E616A97A /* GUIApp.cpp */,
+				21476259C699FCFC880F32B2 /* GUIApp.h */,
 				214761088AC0A8B723CC52C3 /* Defaults.h */,
 				21476C9C72CA2F646A3F0702 /* Scenes */,
 				21476E8F52179BE6F92AFAA1 /* OSC */,
@@ -756,6 +761,7 @@
 				21476396328FCF7C0EA5A01B /* XBScene2GUI.cpp in Sources */,
 				214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */,
 				21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */,
+				2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,7 +953,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

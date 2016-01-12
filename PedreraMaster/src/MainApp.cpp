@@ -1,13 +1,17 @@
 #include "MainApp.h"
-#include "XBOSCManager.h"
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"
 #include "XBScene4.h"
 #include "../../Shared/OSCSettings.h"
 
+static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
+
+
 void MainApp::setup()
 {
+    ofSetWindowTitle(STR_WINDOW_TITLE);
+
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
 
@@ -109,9 +113,5 @@ void MainApp::mouseEntered(int x, int y)
 }
 
 void MainApp::mouseExited(int x, int y)
-{
-}
-
-void MainApp::windowResized(int w, int h)
 {
 }
