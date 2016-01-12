@@ -27,6 +27,8 @@ void GUIApp::setup()
     }
 
     ofSetWindowPosition(winX, winY);
+
+    ofAddListener(sceneManager->eventSceneChanged, this, &GUIApp::sceneChanged);
 }
 
 void GUIApp::update()
@@ -47,6 +49,12 @@ void GUIApp::draw()
     string msg2 = "Expect to see SCENE GUIs in this window";
     int msg2Width = int(msg2.size()) * fontSize;
     ofDrawBitmapStringHighlight(msg2, ofGetWidth()/2 - msg2Width/2, ofGetHeight()/2 + fontSize, ofColor::black, ofColor::white);
+
+    XBBaseScene *currentScene = sceneManager->getCurrentScene();
+    if (currentScene != NULL)
+    {
+//        currentScene->getGUI()->draw();
+    }
 }
 
 void GUIApp::exit()

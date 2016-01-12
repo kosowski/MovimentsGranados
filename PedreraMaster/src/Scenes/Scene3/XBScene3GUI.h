@@ -11,8 +11,15 @@ class XBScene3;
 
 class XBScene3GUI : public XBBaseGUI
 {
+public:
+
     XBScene3GUI(XBScene3 *scene);
     void draw();
+
+    ofxFloatSlider particleSize;
+    ofxFloatSlider particleLife;
+    ofxVec3Slider particleVelocity;
+    ofxVec3Slider particleSpread;
 };
 
 

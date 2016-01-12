@@ -3,11 +3,14 @@
 //
 
 #include "XBScene3.h"
+#include "XBScene3GUI.h"
 
 void XBScene3::setup()
 {
     XBBaseScene::setup();
-    
+
+    gui = new XBScene3GUI(this);
+
     int w = 200;
     int h = 250;
     
@@ -22,8 +25,8 @@ void XBScene3::setup()
     guiOld.setup();
     guiOld.add(particleSize.setup("Particle size", 10, 2, 40));
     guiOld.add(particleLife.setup("Particle life", 30, 1, 60));
-    guiOld.add(pVelocity.setup("particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
-    guiOld.add(pSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+    guiOld.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
+    guiOld.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
     
     // creatures init
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
@@ -32,8 +35,8 @@ void XBScene3::setup()
     //particles init
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    vEmitter.setVelocity(pVelocity);
-    vEmitter.velSpread = pSpread;
+    vEmitter.setVelocity(particleVelocity);
+    vEmitter.velSpread = particleSpread;
     vEmitter.life = particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = 1;
@@ -41,8 +44,8 @@ void XBScene3::setup()
     vEmitter.size = particleSize;
     
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    xEmitter.setVelocity(pVelocity);
-    xEmitter.velSpread = pSpread;
+    xEmitter.setVelocity(particleVelocity);
+    xEmitter.velSpread = particleSpread;
     xEmitter.life = particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 1;
@@ -72,14 +75,14 @@ void XBScene3::update()
     if(emitParticles){
         //GUI related
         vEmitter.size = particleSize;
-        vEmitter.setVelocity(pVelocity);
-        vEmitter.velSpread = pSpread;
+        vEmitter.setVelocity(particleVelocity);
+        vEmitter.velSpread = particleSpread;
         vEmitter.life = particleLife;
         vEmitter.color.set(colorPickerV.getColor());
 
         xEmitter.size = particleSize;
-        xEmitter.setVelocity(pVelocity);
-        xEmitter.velSpread = pSpread;
+        xEmitter.setVelocity(particleVelocity);
+        xEmitter.velSpread = particleSpread;
         xEmitter.life = particleLife;
         xEmitter.color.set(colorPickerX.getColor());
         

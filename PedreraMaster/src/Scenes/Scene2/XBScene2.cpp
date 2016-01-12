@@ -3,7 +3,7 @@
 //
 
 #include "XBScene2.h"
-
+#include "XBScene2GUI.h"
 
 #define NODE_SIZE 6
 #define GRID_X_RES 40
@@ -12,6 +12,8 @@
 void XBScene2::setup()
 {
     XBBaseScene::setup();
+
+    gui = new XBScene2GUI(this);
 
     guiOld.setup();
 

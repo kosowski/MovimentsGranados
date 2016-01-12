@@ -44,10 +44,10 @@ public:
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
     
-    ofxVec3Slider pVelocity;
-    ofxVec3Slider pSpread;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
+    ofxVec3Slider particleVelocity;
+    ofxVec3Slider particleSpread;
 };
 
 

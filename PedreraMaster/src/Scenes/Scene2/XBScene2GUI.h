@@ -11,6 +11,8 @@ class XBScene2;
 
 class XBScene2GUI : public XBBaseGUI
 {
+public:
+
     XBScene2GUI(XBScene2 *scene);
     void draw();
 

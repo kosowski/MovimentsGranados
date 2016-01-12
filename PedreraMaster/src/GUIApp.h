@@ -6,6 +6,7 @@
 #define PEDRERAMASTER_GUIAPP_H
 
 #include "ofMain.h"
+#include "XBSceneManager.h"
 
 class GUIApp : public ofBaseApp
 {
@@ -15,6 +16,14 @@ public:
     void update();
     void draw();
     void exit();
+
+    void setSceneManager(XBSceneManager *_sceneManager) { sceneManager = _sceneManager; };
+
+private:
+
+    XBSceneManager *sceneManager;
+
+    void sceneChanged(int &sceneIndex) { cout << "Scene changed to " << sceneIndex << endl; };
 };
 
 
