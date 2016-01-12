@@ -18,7 +18,8 @@ public:
 
     virtual void setup();
     virtual void update() {};
-    virtual void drawIntoFBO();
+    virtual void drawIntoFBO() = 0;
+    virtual void drawGUI();
 
     const string &getName() const { return name; }
     const ofFbo &getMainFBO() const { return fbo; }
@@ -26,7 +27,7 @@ public:
     void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
     float *getFBOAlpha() { return &fboAlpha; }
 
-//    XBBaseGUI *getGUI() { return &gui; };
+    XBBaseGUI *getGUI() { return gui; };
 
     virtual void keyReleased(int key);
 
@@ -37,8 +38,8 @@ protected:
     ofFbo fbo;
     float fboAlpha;
 
-//    XBBaseGUI gui;
-    ofxPanel gui;
+    XBBaseGUI *gui;
+    ofxPanel guiOld;
     bool showGUI;
 
     void subscribeToCelloEvents();

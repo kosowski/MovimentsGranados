@@ -3,6 +3,7 @@
 //
 
 #include "XBScene1.h"
+#include "XBScene1GUI.h"
 
 #define NODE_SIZE 3
 #define GRID_X_RES 120
@@ -12,23 +13,25 @@
 void XBScene1::setup()
 {
     XBBaseScene::setup();
+
+    gui = new XBScene1GUI(this);
     
     //ofSetBackgroundAuto(true);
-    gui.setup();
-    gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-    gui.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
-    gui.add(restLength.setup("restLength", 0., -10., 20.));
+    guiOld.setup();
+    guiOld.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
+    guiOld.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
+    guiOld.add(restLength.setup("restLength", 0., -10., 20.));
     
-    gui.add(drag.setup("drag", 0.1, 0.01, 1.00));
-    gui.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-    gui.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
-    gui.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
-    gui.add(mouseSlope.setup("mouseSlope", 70, 60., 260));
-    gui.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
-    gui.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
-    gui.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
+    guiOld.add(drag.setup("drag", 0.1, 0.01, 1.00));
+    guiOld.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
+    guiOld.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
+    guiOld.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
+    guiOld.add(mouseSlope.setup("mouseSlope", 70, 60., 260));
+    guiOld.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
+    guiOld.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
+    guiOld.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
     
-    gui.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
+    guiOld.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
     
     directorColor.set(77,125,140);
     initSystem();
@@ -122,10 +125,8 @@ void XBScene1::drawIntoFBO()
             Particle* b = e->getTheOtherEnd();
             ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
         }
-        
-        if(showGUI)
-            gui.draw();
 
+        drawGUI();
         drawFadeRectangle();
     }
     fbo.end();

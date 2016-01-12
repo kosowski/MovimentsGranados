@@ -7,9 +7,12 @@
 
 #include "XBBaseGUI.h"
 
+class XBScene3;
+
 class XBScene3GUI : public XBBaseGUI
 {
-
+    XBScene3GUI(XBScene3 *scene);
+    void draw();
 };
 
 

@@ -31,13 +31,9 @@ void XBBaseScene::setup()
     subscribeToKinectEvents();
 }
 
-void XBBaseScene::drawIntoFBO()
+void XBBaseScene::drawGUI()
 {
-    fbo.begin();
-    {
-        if (showGUI) gui.draw();
-    }
-    fbo.end();
+    if (showGUI) guiOld.draw();
 }
 
 void XBBaseScene::drawFadeRectangle()

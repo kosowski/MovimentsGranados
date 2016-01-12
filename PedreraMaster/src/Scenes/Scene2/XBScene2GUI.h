@@ -7,9 +7,22 @@
 
 #include "XBBaseGUI.h"
 
+class XBScene2;
+
 class XBScene2GUI : public XBBaseGUI
 {
+    XBScene2GUI(XBScene2 *scene);
+    void draw();
 
+    ofxFloatSlider springStrength;
+    ofxFloatSlider springDamping;
+    ofxFloatSlider drag;
+    ofxFloatSlider gravity;
+    ofxFloatSlider particleMass;
+    ofxFloatSlider mouseSlope;
+    ofxFloatSlider mouseStrength;
+    ofxFloatSlider fixedStrength;
+    ofxFloatSlider fixedDamping;
 };
 
 

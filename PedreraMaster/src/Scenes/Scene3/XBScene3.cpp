@@ -8,7 +8,6 @@ void XBScene3::setup()
 {
     XBBaseScene::setup();
 
-    showGUI = false;
     int w = 200;
     int h = 250;
     colorPickerV.setSize(10, ofGetHeight() - h - 20, w, h);
@@ -44,12 +43,19 @@ void XBScene3::drawIntoFBO()
         v.draw();
         x.draw();
 
-        if (showGUI) {
-            colorPickerV.draw();
-            colorPickerX.draw();
-        }
+        drawGUI();
 
         drawFadeRectangle();
     }
     fbo.end();
+}
+
+void XBScene3::drawGUI()
+{
+    XBBaseScene::drawGUI();
+
+    if (showGUI) {
+        colorPickerV.draw();
+        colorPickerX.draw();
+    }
 }

@@ -19,6 +19,7 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+    virtual void drawGUI();
 
     Vehicle v, x;
     
