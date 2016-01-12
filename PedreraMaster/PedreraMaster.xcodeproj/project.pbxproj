@@ -150,6 +150,7 @@
 		662B187E1C405DF100004722 /* Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rope.h; sourceTree = "<group>"; };
 		662B187F1C405DF100004722 /* Vehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vehicle.cpp; sourceTree = "<group>"; };
 		662B18801C405DF100004722 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
+		6657D5381C457A1E0090CE82 /* ofxParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticles.h; sourceTree = "<group>"; };
 		6659B6DC1C3FDF9900B8285C /* Attraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attraction.cpp; sourceTree = "<group>"; };
 		6659B6DD1C3FDF9900B8285C /* Attraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attraction.h; sourceTree = "<group>"; };
 		6659B6DE1C3FDF9900B8285C /* EulerIntegrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EulerIntegrator.cpp; sourceTree = "<group>"; };
@@ -410,6 +411,23 @@
 			name = Scene4;
 			sourceTree = "<group>";
 		};
+		6657D5371C457A1E0090CE82 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6657D5381C457A1E0090CE82 /* ofxParticles.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxParticles/src;
+			sourceTree = "<group>";
+		};
+		6657D5391C457A240090CE82 /* ofxParticles */ = {
+			isa = PBXGroup;
+			children = (
+				6657D5371C457A1E0090CE82 /* src */,
+			);
+			name = ofxParticles;
+			sourceTree = "<group>";
+		};
 		6659B6DB1C3FDF9900B8285C /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,6 +532,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				6657D5391C457A240090CE82 /* ofxParticles */,
 				660E8BB41C41770500A23F26 /* ofxColorPicker */,
 				6659B70F1C3FE15C00B8285C /* ofxGui */,
 				6659B6F41C3FDFA000B8285C /* ofxTraerPhysics */,
