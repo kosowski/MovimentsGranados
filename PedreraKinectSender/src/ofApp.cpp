@@ -11,8 +11,8 @@ static const string STR_STATE_SETUP         = "Initializing Kinect...";
 static const string STR_STATE_DETECTING     = "Detecting Person...";
 static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
-static const string STR_TOGGLE_SHOW_KINECT  = "kinectDraw";
-static const string STR_TOGGLE_SHOW_HANDS   = "debugDraw";
+static const string STR_TOGGLE_SHOW_KINECT  = "Draw Kinect Output";
+static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
