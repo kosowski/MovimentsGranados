@@ -4,6 +4,7 @@
 #include "XBScene3.h"
 #include "XBScene4.h"
 #include "../../Shared/OSCSettings.h"
+#include "Defaults.h"
 
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
 
@@ -11,6 +12,16 @@ static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
 void MainApp::setup()
 {
     ofSetWindowTitle(STR_WINDOW_TITLE);
+    ofBackground(0, 0, 0);
+
+    if (MAIN_WINDOW_MODE == OF_WINDOW)
+    {
+        int windowWidths = MAIN_WINDOW_WIDTH + GUI_WINDOW_WIDTH;
+        int winX = ofGetScreenWidth()/2 - windowWidths/2;
+        int winY = ofGetScreenHeight()/2 - MAIN_WINDOW_HEIGHT/2;
+        ofSetWindowPosition(winX, winY);
+    }
+
 
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
@@ -20,8 +31,6 @@ void MainApp::setup()
 #else
     showFPS = false;
 #endif
-
-    ofBackground(0, 0, 0);
 
     XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
