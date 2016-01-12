@@ -29,14 +29,14 @@ void ofApp::setup()
     {
         gui.setup(STR_GUI_TITLE, SETTINGS_FILENAME);
         gui.setPosition(GUI_POSX, GUI_POSY);
+        gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
+        gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
         gui.loadFromFile(SETTINGS_FILENAME);
 
         gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
-        gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
-        gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
 
         gui.setSize(GUI_WIDTH, GUI_WIDTH);
         gui.setWidthElements(GUI_WIDTH);
