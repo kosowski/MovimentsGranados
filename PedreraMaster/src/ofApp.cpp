@@ -20,6 +20,8 @@ void ofApp::setup()
 
     XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
+    ofAddListener(sceneManager.eventSceneChanged, this, &ofApp::sceneChanged);
+
     XBScene1 *scene1 = new XBScene1("Scene 1");
     scene1->setup();
     sceneManager.addScene(scene1);

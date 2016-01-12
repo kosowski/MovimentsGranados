@@ -28,6 +28,8 @@ public:
 
 private:
 
+    void sceneChanged(int &sceneIndex) { cout << "Scene changed to " << sceneIndex << endl; };
+
     XBSceneManager sceneManager;
 
     bool showFPS;

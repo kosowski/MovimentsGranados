@@ -38,6 +38,10 @@ public:
     void goToPrevScene(SceneTransitionMode transitionMode = SCENETRANSITION_Direct, float timeInSeconds = 0.0f);
     void keyReleased(int key);
 
+    XBBaseScene *getCurrentScene();
+
+    ofEvent<int> eventSceneChanged;
+
 private:
 
     void drawSceneAtIndex(int sceneIndex);

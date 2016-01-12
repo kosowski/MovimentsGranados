@@ -21,6 +21,7 @@ void XBSceneManager::setup(int initialScene)
 {
     currentSceneIndex = nextSceneIndex = initialScene;
     Tweenzor::init();
+    ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 
 void XBSceneManager::update()
@@ -82,11 +83,7 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
 {
     if (sceneIndex >= scenes.size()) return;
     if (sceneIndex == currentSceneIndex) return;
-    if (state == SCENESTATE_Transitioning)
-    {
-        cout << "Is transitioning: SKIP" << endl;
-        return;
-    }
+    if (state == SCENESTATE_Transitioning) return;
 
     switch(transitionMode)
     {
@@ -95,6 +92,7 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
             state = SCENESTATE_OnScene;
             currentSceneIndex = sceneIndex;
             scenes[currentSceneIndex]->setFBOAlpha(255.0f);
+            ofNotifyEvent(eventSceneChanged, currentSceneIndex);
             break;
         }
         case SCENETRANSITION_Fade:
@@ -102,7 +100,6 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
             state = SCENESTATE_Transitioning;
             nextSceneIndex = sceneIndex;
 
-            cout << "[START FADE TWEEN]" << endl;
             scenes[nextSceneIndex]->setFBOAlpha(0.0f);
 
             float tweenDelay = 0.0f;
@@ -143,15 +140,21 @@ void XBSceneManager::drawSceneAtIndex(int sceneIndex)
     sceneFBO.draw(0, 0);
 }
 
+XBBaseScene *XBSceneManager::getCurrentScene()
+{
+    if (currentSceneIndex == -1) return nullptr;
+    return scenes[currentSceneIndex];
+}
+
 void XBSceneManager::onFadeComplete(float *arg)
 {
-    cout << "[END FADE TWEEN]" << endl;
     Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
     Tweenzor::removeTween(scenes[nextSceneIndex]->getFBOAlpha());
     Tweenzor::removeCompleteListener(dstTween);
 
     state = SCENESTATE_OnScene;
     currentSceneIndex = nextSceneIndex;
+    ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 
 void XBSceneManager::keyReleased(int key){

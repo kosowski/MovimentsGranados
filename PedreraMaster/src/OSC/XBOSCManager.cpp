@@ -37,16 +37,14 @@ void XBOSCManager::handleCelloMessages()
         string address = msg.getAddress();
 
         if (address == celloAddrStarted) {
-            ofNotifyEvent(eventCelloStarted, this);
-
-//            ofNotifyEvent(eventCelloStarted);
+            ofNotifyEvent(eventCelloStarted);
         }
         else if (address == celloAddrStopped) {
             ofNotifyEvent(eventCelloStopped);
         }
         else if (address == celloAddrPitchNote) {
             float pitchMidiNote = msg.getArgAsFloat(0);
-            ofNotifyEvent(eventCelloPitchChanged, pitchMidiNote, this);
+            ofNotifyEvent(eventCelloPitchChanged, pitchMidiNote);
         }
         else if (address == celloAddrEnergy) {
             float energy = msg.getArgAsFloat(0);
