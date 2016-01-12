@@ -11,6 +11,8 @@ static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS [GUI]";
 void GUIApp::setup()
 {
     ofSetWindowTitle(STR_WINDOW_TITLE);
+    ofSetVerticalSync(false);
+
     ofBackground(68, 84, 71);
 
     int winX, winY;

@@ -24,8 +24,8 @@ int main()
 
     guiApp->setSceneManager(mainApp->getSceneManager());
 
-    ofRunApp(guiWindow, guiApp);
     ofRunApp(mainWindow, mainApp);
+    ofRunApp(guiWindow, guiApp);
 
     ofRunMainLoop();
 }
