@@ -48,6 +48,7 @@ void MainApp::setup()
     XBScene4 *scene4 = new XBScene4("Scene 4");
     scene4->setup();
     sceneManager.addScene(scene4);
+
     // Start with scene 0
     sceneManager.setup(0);
 }
@@ -99,28 +100,4 @@ void MainApp::keyReleased(int key)
         default: break;
     }
     sceneManager.keyReleased(key);
-}
-
-void MainApp::mouseMoved(int x, int y)
-{
-}
-
-void MainApp::mouseDragged(int x, int y, int button)
-{
-}
-
-void MainApp::mousePressed(int x, int y, int button)
-{
-}
-
-void MainApp::mouseReleased(int x, int y, int button)
-{
-}
-
-void MainApp::mouseEntered(int x, int y)
-{
-}
-
-void MainApp::mouseExited(int x, int y)
-{
 }
