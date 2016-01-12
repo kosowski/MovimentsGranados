@@ -28,13 +28,11 @@ public:
     vector<Wave> waves;
     ofColor directorColor;
     
-    bool showGui;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
-    ofxPanel gui;
-
+   
 };
 
 

@@ -262,10 +262,6 @@
 		21476C9C72CA2F646A3F0702 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				66E85B9B1C4444A900953D88 /* XBScene4.cpp */,
-				66E85B9C1C4444A900953D88 /* XBScene4.h */,
-				6626DFF41C443A27001E40C2 /* Wave.cpp */,
-				6626DFF51C443A27001E40C2 /* Wave.h */,
 				21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */,
 				21476D7D75555C4AE6056C8A /* XBSceneManager.h */,
 				214768EA36A596B0A3391931 /* XBBaseScene.cpp */,
@@ -275,10 +271,13 @@
 				214765951495ED2DD7ABFB49 /* Scene1 */,
 				21476C800E7D9E82E7D59363 /* Scene2 */,
 				21476F2EA52598B8CB87246C /* Scene3 */,
-				662B187D1C405DF100004722 /* Rope.cpp */,
+				6657D52F1C4545E20090CE82 /* Scene4 */,
 				662B187E1C405DF100004722 /* Rope.h */,
-				662B187F1C405DF100004722 /* Vehicle.cpp */,
+				662B187D1C405DF100004722 /* Rope.cpp */,
 				662B18801C405DF100004722 /* Vehicle.h */,
+				662B187F1C405DF100004722 /* Vehicle.cpp */,
+				6626DFF51C443A27001E40C2 /* Wave.h */,
+				6626DFF41C443A27001E40C2 /* Wave.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -397,6 +396,15 @@
 				660E8BB01C41770100A23F26 /* src */,
 			);
 			name = ofxColorPicker;
+			sourceTree = "<group>";
+		};
+		6657D52F1C4545E20090CE82 /* Scene4 */ = {
+			isa = PBXGroup;
+			children = (
+				66E85B9B1C4444A900953D88 /* XBScene4.cpp */,
+				66E85B9C1C4444A900953D88 /* XBScene4.h */,
+			);
+			name = Scene4;
 			sourceTree = "<group>";
 		};
 		6659B6DB1C3FDF9900B8285C /* src */ = {
