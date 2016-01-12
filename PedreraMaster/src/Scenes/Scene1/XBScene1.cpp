@@ -123,7 +123,7 @@ void XBScene1::drawIntoFBO()
             ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
         }
         
-        if(showGui)
+        if(showGUI)
             gui.draw();
 
         drawFadeRectangle();
@@ -131,13 +131,21 @@ void XBScene1::drawIntoFBO()
     fbo.end();
 }
 
-void XBScene1::keyReleased(int key){
-    if(key == 'z'){
-        particles.clear();
-        visibleSprings.clear();
-        delete physics;
-        initSystem();
+void XBScene1::keyReleased(int key)
+{
+    XBBaseScene::keyReleased(key);
+
+    switch(key)
+    {
+        case 'z':
+        case 'Z':
+        {
+            particles.clear();
+            visibleSprings.clear();
+            delete physics;
+            initSystem();
+            break;
+        }
+        default: break;
     }
-    else if(key == 'g')
-        showGui = !showGui;
 }

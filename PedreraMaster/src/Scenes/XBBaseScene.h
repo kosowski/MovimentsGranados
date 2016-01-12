@@ -6,8 +6,9 @@
 #define PEDRERAMASTER_XBBASESCENE_H
 
 #include "ofMain.h"
-//#include "XBOSCEvents.h"
+#include "XBBaseGUI.h"
 #include "XBOSCManager.h"
+#include "ofxGui.h"
 
 class XBBaseScene
 {
@@ -16,8 +17,8 @@ public:
     XBBaseScene(string name);
 
     virtual void setup();
-    virtual void update();
-    virtual void drawIntoFBO() = 0;
+    virtual void update() {};
+    virtual void drawIntoFBO();
 
     const string &getName() const { return name; }
     const ofFbo &getMainFBO() const { return fbo; }
@@ -25,7 +26,9 @@ public:
     void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
     float *getFBOAlpha() { return &fboAlpha; }
 
-    virtual void keyReleased(int key) {};
+//    XBBaseGUI *getGUI() { return &gui; };
+
+    virtual void keyReleased(int key);
 
 protected:
 
@@ -33,6 +36,10 @@ protected:
 
     ofFbo fbo;
     float fboAlpha;
+
+//    XBBaseGUI gui;
+    ofxPanel gui;
+    bool showGUI;
 
     void subscribeToCelloEvents();
     void subscribeToViolinEvents();

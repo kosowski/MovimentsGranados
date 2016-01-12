@@ -2,20 +2,19 @@
 // Created by Miquel Àngel Soler on 24/12/15.
 //
 
-#ifndef PEDRERAMASTER_XBSCENE2_H
-#define PEDRERAMASTER_XBSCENE2_H
+#ifndef PEDRERAMASTER_XBSCENE1_H
+#define PEDRERAMASTER_XBSCENE1_H
 
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
-#include "ofxGui.h"
 
 using namespace  traer::physics ;
 
-class XBScene2 : public XBBaseScene
+class XBScene1 : public XBBaseScene
 {
 public:
 
-    XBScene2(const string &name) : XBBaseScene(name) {}
+    XBScene1(const string &name) : XBBaseScene(name) {}
 
     virtual void setup();
     virtual void update();
@@ -32,7 +31,6 @@ public:
     
     ofColor directorColor;
     
-    bool showGui;
     ofxFloatSlider springStrength;
     ofxFloatSlider springDamping;
     ofxFloatSlider drag;
@@ -42,9 +40,10 @@ public:
     ofxFloatSlider mouseStrength;
     ofxFloatSlider fixedStrength;
     ofxFloatSlider fixedDamping;
-    ofxPanel gui;
-
+    ofxFloatSlider fixedRestLength;
+    ofxFloatSlider restLength;
+    ofxFloatSlider xDamping;
 };
 
 
-#endif //PEDRERAMASTER_XBSCENE2_H
+#endif //PEDRERAMASTER_XBSCENE1_H

@@ -19,18 +19,15 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
-     void keyReleased(int key);
-    
+
     Vehicle v, x;
     
     ofColor directorColor;
     ofColor violinColor;
     ofColor celloColor;
     
-    bool showGui;
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
-
 };
 
 

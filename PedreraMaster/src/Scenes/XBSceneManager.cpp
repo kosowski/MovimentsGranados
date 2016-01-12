@@ -157,6 +157,7 @@ void XBSceneManager::onFadeComplete(float *arg)
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 
-void XBSceneManager::keyReleased(int key){
+void XBSceneManager::keyReleased(int key)
+{
     scenes[currentSceneIndex]->keyReleased(key);
 }

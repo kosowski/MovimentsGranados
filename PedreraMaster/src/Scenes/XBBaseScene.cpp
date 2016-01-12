@@ -31,10 +31,13 @@ void XBBaseScene::setup()
     subscribeToKinectEvents();
 }
 
-void XBBaseScene::update()
+void XBBaseScene::drawIntoFBO()
 {
-
-//    cout << name << " alpha: " << fboAlpha << endl;
+    fbo.begin();
+    {
+        if (showGUI) gui.draw();
+    }
+    fbo.end();
 }
 
 void XBBaseScene::drawFadeRectangle()
@@ -44,6 +47,19 @@ void XBBaseScene::drawFadeRectangle()
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
     ofClear(0, 0, 0, (int)fboAlpha);
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+}
+
+void XBBaseScene::keyReleased(int key)
+{
+    switch(key)
+    {
+        case 'g':
+        case 'G':
+            showGUI = !showGUI;
+            break;
+        default:
+            break;
+    }
 }
 
 void XBBaseScene::subscribeToCelloEvents()
