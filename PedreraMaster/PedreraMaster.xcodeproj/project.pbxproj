@@ -255,15 +255,15 @@
 			path = Scene1;
 			sourceTree = "<group>";
 		};
-		214768CB488FBA5AD8F34C59 /* Scene 4 */ = {
+		214768CB488FBA5AD8F34C59 /* Scene4 */ = {
 			isa = PBXGroup;
 			children = (
-				214767CBBDE9BD21E04273AF /* XBScene4GUI.h */,
 				21476884F1D18B15ED1BA428 /* XBScene4.cpp */,
-				214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */,
 				214765B8C2E92E7DC2846428 /* XBScene4.h */,
+				214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */,
+				214767CBBDE9BD21E04273AF /* XBScene4GUI.h */,
 			);
-			path = "Scene 4";
+			path = Scene4;
 			sourceTree = "<group>";
 		};
 		21476C800E7D9E82E7D59363 /* Scene2 */ = {
@@ -289,7 +289,7 @@
 				214765951495ED2DD7ABFB49 /* Scene1 */,
 				21476C800E7D9E82E7D59363 /* Scene2 */,
 				21476F2EA52598B8CB87246C /* Scene3 */,
-				214768CB488FBA5AD8F34C59 /* Scene 4 */,
+				214768CB488FBA5AD8F34C59 /* Scene4 */,
 				662B187E1C405DF100004722 /* Rope.h */,
 				662B187D1C405DF100004722 /* Rope.cpp */,
 				662B18801C405DF100004722 /* Vehicle.h */,
