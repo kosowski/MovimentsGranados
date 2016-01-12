@@ -76,8 +76,8 @@ void ofApp::update()
             }
             case STATE_CAPTURING: {
                 motionExtractor->update();
-                KinectInfo hands = motionExtractor->gethandsPosition();
-                sendHandInfo(hands);
+                handsInfo = motionExtractor->gethandsPosition();
+                sendHandInfo();
                 break;
             }
         }
@@ -85,13 +85,12 @@ void ofApp::update()
     else if (ofGetMousePressed())
     {
         currState = STATE_CAPTURING; //change state of fake detection
-        KinectInfo fakeHands;
-        fakeHands.leftHand.pos.x = ofGetMouseX() / ofGetWidth();
-        fakeHands.leftHand.pos.y = ofGetMouseY() / ofGetHeight();
-        fakeHands.rightHand.pos.x = ofMap(fakeHands.leftHand.pos.x, 0, 1, 1, 0);
-//        fakeHands.rightHand.pos.y=ofMap(fakeHands.leftHand.pos.y, 0, 1, 1, 0);
-        fakeHands.rightHand.pos.y = fakeHands.leftHand.pos.y;
-        sendHandInfo(fakeHands); //send fake info by osc
+        handsInfo.leftHand.pos.x = ofGetMouseX() / ofGetWidth();
+        handsInfo.leftHand.pos.y = ofGetMouseY() / ofGetHeight();
+        handsInfo.rightHand.pos.x = ofMap(handsInfo.leftHand.pos.x, 0, 1, 1, 0);
+//        handsInfo.rightHand.pos.y=ofMap(handsInfo.leftHand.pos.y, 0, 1, 1, 0);
+        handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
+        sendHandInfo(); //send fake info by osc
     } else
     {
         currState = STATE_DETECTING;
@@ -102,6 +101,8 @@ void ofApp::draw()
 {
     if (showImage && kinectAvailable) //draw only if is detecting and if kinect is open
         motionExtractor->draw(showHands);
+    
+    
     gui.draw();
 }
 
@@ -170,16 +171,16 @@ void ofApp::userDetection(bool &hasUser)
         currState = STATE_DETECTING;
 }
 
-void ofApp::sendHandInfo(KinectInfo hands)
+void ofApp::sendHandInfo()
 {
     //LEFT HAND POSITION
     ofxOscMessage lhandpos;
     stringstream lhandpos_address;
     lhandpos_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_POSITION;
     lhandpos.setAddress(lhandpos_address.str());
-    lhandpos.addFloatArg(hands.leftHand.pos.x);
-    lhandpos.addFloatArg(hands.leftHand.pos.y);
-    lhandpos.addFloatArg(hands.leftHand.pos.z);
+    lhandpos.addFloatArg(handsInfo.leftHand.pos.x);
+    lhandpos.addFloatArg(handsInfo.leftHand.pos.y);
+    lhandpos.addFloatArg(handsInfo.leftHand.pos.z);
     oscSender.sendMessage(lhandpos, false);
 
     //RIGHT HAND POSITION
@@ -187,9 +188,9 @@ void ofApp::sendHandInfo(KinectInfo hands)
     stringstream rhandpos_address;
     rhandpos_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_RHAND << OSC_KINECT_ADDR_POSITION;
     rhandpos.setAddress(rhandpos_address.str());
-    rhandpos.addFloatArg(hands.rightHand.pos.x);
-    rhandpos.addFloatArg(hands.rightHand.pos.y);
-    rhandpos.addFloatArg(hands.rightHand.pos.z);
+    rhandpos.addFloatArg(handsInfo.rightHand.pos.x);
+    rhandpos.addFloatArg(handsInfo.rightHand.pos.y);
+    rhandpos.addFloatArg(handsInfo.rightHand.pos.z);
     oscSender.sendMessage(rhandpos, false);
 
     //LEFT HAND VELOCITY
@@ -197,9 +198,9 @@ void ofApp::sendHandInfo(KinectInfo hands)
     stringstream lhandvel_address;
     lhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
     lhandvel.setAddress(lhandvel_address.str());
-    lhandvel.addFloatArg(hands.leftHand.v.x);
-    lhandvel.addFloatArg(hands.leftHand.v.y);
-    lhandvel.addFloatArg(hands.leftHand.v.z);
+    lhandvel.addFloatArg(handsInfo.leftHand.v.x);
+    lhandvel.addFloatArg(handsInfo.leftHand.v.y);
+    lhandvel.addFloatArg(handsInfo.leftHand.v.z);
     oscSender.sendMessage(lhandvel, false);
 
     //RIGHT HAND VELOCITY
@@ -207,9 +208,9 @@ void ofApp::sendHandInfo(KinectInfo hands)
     stringstream rhandvel_address;
     rhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
     rhandvel.setAddress(rhandvel_address.str());
-    rhandvel.addFloatArg(hands.rightHand.v.x);
-    rhandvel.addFloatArg(hands.rightHand.v.y);
-    rhandvel.addFloatArg(hands.rightHand.v.z);
+    rhandvel.addFloatArg(handsInfo.rightHand.v.x);
+    rhandvel.addFloatArg(handsInfo.rightHand.v.y);
+    rhandvel.addFloatArg(handsInfo.rightHand.v.z);
     oscSender.sendMessage(rhandvel, false);
 }
 

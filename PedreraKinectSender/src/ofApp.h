@@ -23,7 +23,7 @@ public:
 
     void handleStateChanges();
     void userDetection(bool &hasUser);
-    void sendHandInfo(KinectInfo hands);
+    void sendHandInfo();
 
     void keyReleased(int key);
     void mouseDragged(int x, int y, int button);
@@ -45,4 +45,6 @@ private:
     PMMotionExtractor* motionExtractor;
     
     bool kinectAvailable;
+    
+    KinectInfo  handsInfo;
 };
