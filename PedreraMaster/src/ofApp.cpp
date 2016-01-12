@@ -3,6 +3,7 @@
 #include "XBScene1.h"
 #include "XBScene2.h"
 #include "XBScene3.h"
+#include "XBScene4.h"
 #include "../../Shared/OSCSettings.h"
 
 void ofApp::setup()
@@ -31,7 +32,9 @@ void ofApp::setup()
     XBScene3 *scene3 = new XBScene3("Scene 3");
     scene3->setup();
     sceneManager.addScene(scene3);
-
+    XBScene4 *scene4 = new XBScene4("Scene 4");
+    scene4->setup();
+    sceneManager.addScene(scene4);
     // Start with scene 0
     sceneManager.setup(0);
 }
@@ -78,6 +81,8 @@ void ofApp::keyReleased(int key)
             sceneManager.goToScene(1); break;
         case '3':
             sceneManager.goToScene(2); break;
+        case '4':
+            sceneManager.goToScene(3); break;
         default: break;
     }
     sceneManager.keyReleased(key);
