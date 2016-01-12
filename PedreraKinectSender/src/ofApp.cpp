@@ -1,10 +1,8 @@
 #include "ofApp.h"
 #include "../../Shared/OSCSettings.h"
 
-static const string STR_APP_TITLE = "KINECT DETECTOR";
-static const string STR_GUI_TITLE = "Kinect Status";
-
-static const string SETTINGS_FILENAME = "settings.xml";
+static const string STR_APP_TITLE           = "KINECT DETECTOR";
+static const string STR_GUI_TITLE           = "Kinect Status";
 
 static const string STR_STATE               = "STATUS";
 static const string STR_STATE_SETUP         = "Initializing Kinect...";
@@ -13,6 +11,8 @@ static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
 static const string STR_TOGGLE_SHOW_KINECT  = "Draw Kinect Output";
 static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
+
+static const string SETTINGS_FILENAME       = "settings.xml";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
@@ -37,7 +37,7 @@ void ofApp::setup()
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
         gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
         gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
-        
+
         gui.setSize(GUI_WIDTH, GUI_WIDTH);
         gui.setWidthElements(GUI_WIDTH);
     }
@@ -46,16 +46,16 @@ void ofApp::setup()
     {
         oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
     }
-    
+
     // KINECT / MOTION
     {
-        motionExtractor=&PMMotionExtractor::getInstance();
-        isKinect = motionExtractor->setup();
-        if(isKinect){
+        motionExtractor = &PMMotionExtractor::getInstance();
+        kinectAvailable = motionExtractor->setup();
+        if (kinectAvailable) {
             currState = STATE_DETECTING;
         }
     }
-    
+
     ofAddListener(motionExtractor->eventUserDetection, this, &ofApp::userDetection);
 }
 
@@ -63,43 +63,44 @@ void ofApp::update()
 {
     handleStateChanges();
 
-    if(isKinect){
-        switch(currState)
+    if (kinectAvailable)
+    {
+        switch (currState)
         {
-            case STATE_SETUP:
-            {
+            case STATE_SETUP: {
                 break;
             }
-            case STATE_DETECTING:
-            {
+            case STATE_DETECTING: {
                 motionExtractor->update();
                 break;
             }
-            case STATE_CAPTURING:
-            {
+            case STATE_CAPTURING: {
                 motionExtractor->update();
                 KinectInfo hands = motionExtractor->gethandsPosition();
                 sendHandInfo(hands);
                 break;
             }
         }
-    }else if(ofGetMousePressed()){
-        currState=STATE_CAPTURING; //change state of fake detection
+    }
+    else if (ofGetMousePressed())
+    {
+        currState = STATE_CAPTURING; //change state of fake detection
         KinectInfo fakeHands;
-        fakeHands.leftHand.pos.x=ofGetMouseX()/ofGetWidth();
-        fakeHands.leftHand.pos.y=ofGetMouseY()/ofGetHeight();
-        fakeHands.rightHand.pos.x=ofMap(fakeHands.leftHand.pos.x, 0, 1, 1, 0);
+        fakeHands.leftHand.pos.x = ofGetMouseX() / ofGetWidth();
+        fakeHands.leftHand.pos.y = ofGetMouseY() / ofGetHeight();
+        fakeHands.rightHand.pos.x = ofMap(fakeHands.leftHand.pos.x, 0, 1, 1, 0);
 //        fakeHands.rightHand.pos.y=ofMap(fakeHands.leftHand.pos.y, 0, 1, 1, 0);
-        fakeHands.rightHand.pos.y=fakeHands.leftHand.pos.y;
+        fakeHands.rightHand.pos.y = fakeHands.leftHand.pos.y;
         sendHandInfo(fakeHands); //send fake info by osc
-    }else{
-        currState=STATE_DETECTING;
+    } else
+    {
+        currState = STATE_DETECTING;
     }
 }
 
 void ofApp::draw()
 {
-    if(showImage && isKinect) //draw only if is detecting and if kinect is open
+    if (showImage && kinectAvailable) //draw only if is detecting and if kinect is open
         motionExtractor->draw(showHands);
     gui.draw();
 }
@@ -115,10 +116,8 @@ void ofApp::handleStateChanges()
     if (currState == prevState) return;
 
     string stateDescr;
-    switch(currState)
-    {
-        case STATE_SETUP:
-        {
+    switch (currState) {
+        case STATE_SETUP: {
             stateDescr = STR_STATE_SETUP;
             guiStatusLbl.setBackgroundColor(ofColor::darkRed);
 
@@ -131,8 +130,7 @@ void ofApp::handleStateChanges()
 
             break;
         }
-        case STATE_DETECTING:
-        {
+        case STATE_DETECTING: {
             stateDescr = STR_STATE_DETECTING;
             guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
 
@@ -145,8 +143,7 @@ void ofApp::handleStateChanges()
 
             break;
         }
-        case STATE_CAPTURING:
-        {
+        case STATE_CAPTURING: {
             stateDescr = STR_STATE_CAPTURING;
             guiStatusLbl.setBackgroundColor(ofColor::darkGreen);
 
@@ -167,7 +164,7 @@ void ofApp::handleStateChanges()
 
 void ofApp::userDetection(bool &hasUser)
 {
-    if(hasUser)
+    if (hasUser)
         currState = STATE_CAPTURING;
     else
         currState = STATE_DETECTING;
@@ -184,7 +181,7 @@ void ofApp::sendHandInfo(KinectInfo hands)
     lhandpos.addFloatArg(hands.leftHand.pos.y);
     lhandpos.addFloatArg(hands.leftHand.pos.z);
     oscSender.sendMessage(lhandpos, false);
-    
+
     //RIGHT HAND POSITION
     ofxOscMessage rhandpos;
     stringstream rhandpos_address;
@@ -194,7 +191,7 @@ void ofApp::sendHandInfo(KinectInfo hands)
     rhandpos.addFloatArg(hands.rightHand.pos.y);
     rhandpos.addFloatArg(hands.rightHand.pos.z);
     oscSender.sendMessage(rhandpos, false);
-    
+
     //LEFT HAND VELOCITY
     ofxOscMessage lhandvel;
     stringstream lhandvel_address;
@@ -204,7 +201,7 @@ void ofApp::sendHandInfo(KinectInfo hands)
     lhandvel.addFloatArg(hands.leftHand.v.y);
     lhandvel.addFloatArg(hands.leftHand.v.z);
     oscSender.sendMessage(lhandvel, false);
-    
+
     //RIGHT HAND VELOCITY
     ofxOscMessage rhandvel;
     stringstream rhandvel_address;
@@ -219,12 +216,18 @@ void ofApp::sendHandInfo(KinectInfo hands)
 void ofApp::keyReleased(int key)
 {
     // TODO: Remove after Kinect is working. The code below is just to simulate state changes.
-    switch(key)
-    {
-        case '1': currState = STATE_SETUP; break;
-        case '2': currState = STATE_DETECTING; break;
-        case '3': currState = STATE_CAPTURING; break;
-        default: break;
+    switch (key) {
+        case '1':
+            currState = STATE_SETUP;
+            break;
+        case '2':
+            currState = STATE_DETECTING;
+            break;
+        case '3':
+            currState = STATE_CAPTURING;
+            break;
+        default:
+            break;
     }
 }
 

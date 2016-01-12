@@ -44,5 +44,5 @@ private:
     
     PMMotionExtractor* motionExtractor;
     
-    bool    isKinect;
+    bool kinectAvailable;
 };
