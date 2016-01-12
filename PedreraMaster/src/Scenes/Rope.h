@@ -9,7 +9,7 @@
 #ifndef Rope_h
 #define Rope_h
 
-#include "ofApp.h"
+#include "ofMain.h"
 
 class Rope{
 public:

@@ -1,4 +1,4 @@
-#include "ofApp.h"
+#include "MainApp.h"
 #include "XBOSCManager.h"
 #include "XBScene1.h"
 #include "XBScene2.h"
@@ -6,7 +6,7 @@
 #include "XBScene4.h"
 #include "../../Shared/OSCSettings.h"
 
-void ofApp::setup()
+void MainApp::setup()
 {
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
@@ -21,7 +21,7 @@ void ofApp::setup()
 
     XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
-    ofAddListener(sceneManager.eventSceneChanged, this, &ofApp::sceneChanged);
+    ofAddListener(sceneManager.eventSceneChanged, this, &MainApp::sceneChanged);
 
     XBScene1 *scene1 = new XBScene1("Scene 1");
     scene1->setup();
@@ -39,13 +39,13 @@ void ofApp::setup()
     sceneManager.setup(0);
 }
 
-void ofApp::update()
+void MainApp::update()
 {
     XBOSCManager::getInstance().update();
     sceneManager.update();
 }
 
-void ofApp::draw()
+void MainApp::draw()
 {
     sceneManager.draw();
 
@@ -55,12 +55,12 @@ void ofApp::draw()
     }
 }
 
-void ofApp::exit()
+void MainApp::exit()
 {
     sceneManager.exit();
 }
 
-void ofApp::keyReleased(int key)
+void MainApp::keyReleased(int key)
 {
     switch (key)
     {
@@ -88,30 +88,30 @@ void ofApp::keyReleased(int key)
     sceneManager.keyReleased(key);
 }
 
-void ofApp::mouseMoved(int x, int y)
+void MainApp::mouseMoved(int x, int y)
 {
 }
 
-void ofApp::mouseDragged(int x, int y, int button)
+void MainApp::mouseDragged(int x, int y, int button)
 {
 }
 
-void ofApp::mousePressed(int x, int y, int button)
+void MainApp::mousePressed(int x, int y, int button)
 {
 }
 
-void ofApp::mouseReleased(int x, int y, int button)
+void MainApp::mouseReleased(int x, int y, int button)
 {
 }
 
-void ofApp::mouseEntered(int x, int y)
+void MainApp::mouseEntered(int x, int y)
 {
 }
 
-void ofApp::mouseExited(int x, int y)
+void MainApp::mouseExited(int x, int y)
 {
 }
 
-void ofApp::windowResized(int w, int h)
+void MainApp::windowResized(int w, int h)
 {
 }
