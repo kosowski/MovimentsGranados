@@ -12,6 +12,7 @@ public:
     void update();
     void draw();
     void setColor(ofColor c);
+    ofPoint getLocation(){return location;};
     
 private:
     

@@ -15,6 +15,7 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - [ofxTraerhysics](https://github.com/martinlindelof/ofxTraerPhysics)
 - [ofxColorPicker](https://github.com/julapy/ofxColorPicker)
 - [ofxMSAInteractiveObject-PM](https://github.com/kosowski/ofxMSAInteractiveObject-PM)
+- [ofxParticles](https://github.com/timscaffidi/ofxParticles)
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)

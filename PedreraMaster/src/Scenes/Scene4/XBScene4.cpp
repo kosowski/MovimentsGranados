@@ -3,13 +3,14 @@
 //
 
 #include "XBScene4.h"
-
-
+#include "XBScene4GUI.h"
 
 void XBScene4::setup()
 {
     XBBaseScene::setup();
-    
+
+    gui = new XBScene4GUI(this);
+
     guiOld.setup();
     guiOld.add(minPeriod.setup("Min wave period", 800., 200., 2000.));
     guiOld.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));

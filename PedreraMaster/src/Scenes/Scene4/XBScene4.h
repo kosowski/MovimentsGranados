@@ -32,7 +32,6 @@ public:
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
-   
 };
 
 

@@ -12,10 +12,12 @@
 		214763101014E1552EC054B2 /* XBSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */; };
 		21476354B8F0C4325D82467F /* XBScene1GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214764C341C5CA54E348762F /* XBScene1GUI.cpp */; };
 		21476396328FCF7C0EA5A01B /* XBScene2GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */; };
+		2147643B75FD4078E237C224 /* XBScene4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476884F1D18B15ED1BA428 /* XBScene4.cpp */; };
 		2147662A8D4FFACF9FAAF319 /* XBBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F4D5CB49F867A9EC844 /* XBBaseGUI.cpp */; };
 		214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */; };
 		2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214767E46A8462F4E616A97A /* GUIApp.cpp */; };
 		21476979746B32EBBBF8CCB5 /* XBBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214768EA36A596B0A3391931 /* XBBaseScene.cpp */; };
+		21476A37847B388C4E321B90 /* XBScene4GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */; };
 		21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */; };
 		21476DBE1D97923486A7ABA1 /* XBScene2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */; };
 		21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214762A363D919020F64E5B8 /* XBOSCManager.cpp */; };
@@ -48,7 +50,6 @@
 		6659B70C1C3FE15500B8285C /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B7011C3FE15500B8285C /* ofxSlider.cpp */; };
 		6659B70D1C3FE15500B8285C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B7031C3FE15500B8285C /* ofxSliderGroup.cpp */; };
 		6659B70E1C3FE15500B8285C /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B7051C3FE15500B8285C /* ofxToggle.cpp */; };
-		66E85B9D1C4444A900953D88 /* XBScene4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E85B9B1C4444A900953D88 /* XBScene4.cpp */; };
 		67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
 		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
 		879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */; };
@@ -107,8 +108,12 @@
 		214764A72FFCD45BBAC06128 /* XBScene1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene1.cpp; sourceTree = "<group>"; };
 		214764C341C5CA54E348762F /* XBScene1GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene1GUI.cpp; sourceTree = "<group>"; };
 		214765866958D847D3A12F01 /* XBScene3GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3GUI.h; sourceTree = "<group>"; };
+		214765B8C2E92E7DC2846428 /* XBScene4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene4.h; sourceTree = "<group>"; };
+		214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene4GUI.cpp; sourceTree = "<group>"; };
 		214767AA642614B458E845C3 /* XBScene2GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene2GUI.h; sourceTree = "<group>"; };
+		214767CBBDE9BD21E04273AF /* XBScene4GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene4GUI.h; sourceTree = "<group>"; };
 		214767E46A8462F4E616A97A /* GUIApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIApp.cpp; sourceTree = "<group>"; };
+		21476884F1D18B15ED1BA428 /* XBScene4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene4.cpp; sourceTree = "<group>"; };
 		214768EA36A596B0A3391931 /* XBBaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseScene.cpp; sourceTree = "<group>"; };
 		21476901AA2FBE51D6FE2F18 /* XBScene3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3.h; sourceTree = "<group>"; };
 		214769380F508C291232B6EF /* XBScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1.h; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 		662B187E1C405DF100004722 /* Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rope.h; sourceTree = "<group>"; };
 		662B187F1C405DF100004722 /* Vehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vehicle.cpp; sourceTree = "<group>"; };
 		662B18801C405DF100004722 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
+		6657D5381C457A1E0090CE82 /* ofxParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticles.h; sourceTree = "<group>"; };
 		6659B6DC1C3FDF9900B8285C /* Attraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attraction.cpp; sourceTree = "<group>"; };
 		6659B6DD1C3FDF9900B8285C /* Attraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attraction.h; sourceTree = "<group>"; };
 		6659B6DE1C3FDF9900B8285C /* EulerIntegrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EulerIntegrator.cpp; sourceTree = "<group>"; };
@@ -184,8 +190,6 @@
 		6659B7041C3FE15500B8285C /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		6659B7051C3FE15500B8285C /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		6659B7061C3FE15500B8285C /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
-		66E85B9B1C4444A900953D88 /* XBScene4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene4.cpp; sourceTree = "<group>"; };
-		66E85B9C1C4444A900953D88 /* XBScene4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene4.h; sourceTree = "<group>"; };
 		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
 		7689F8A0F3D0B7635A8C3104 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
 		81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscSender.cpp; path = ../../../addons/ofxOsc/src/ofxOscSender.cpp; sourceTree = SOURCE_ROOT; };
@@ -251,6 +255,17 @@
 			path = Scene1;
 			sourceTree = "<group>";
 		};
+		214768CB488FBA5AD8F34C59 /* Scene4 */ = {
+			isa = PBXGroup;
+			children = (
+				21476884F1D18B15ED1BA428 /* XBScene4.cpp */,
+				214765B8C2E92E7DC2846428 /* XBScene4.h */,
+				214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */,
+				214767CBBDE9BD21E04273AF /* XBScene4GUI.h */,
+			);
+			path = Scene4;
+			sourceTree = "<group>";
+		};
 		21476C800E7D9E82E7D59363 /* Scene2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +289,7 @@
 				214765951495ED2DD7ABFB49 /* Scene1 */,
 				21476C800E7D9E82E7D59363 /* Scene2 */,
 				21476F2EA52598B8CB87246C /* Scene3 */,
-				6657D52F1C4545E20090CE82 /* Scene4 */,
+				214768CB488FBA5AD8F34C59 /* Scene4 */,
 				662B187E1C405DF100004722 /* Rope.h */,
 				662B187D1C405DF100004722 /* Rope.cpp */,
 				662B18801C405DF100004722 /* Vehicle.h */,
@@ -401,13 +416,21 @@
 			name = ofxColorPicker;
 			sourceTree = "<group>";
 		};
-		6657D52F1C4545E20090CE82 /* Scene4 */ = {
+		6657D5371C457A1E0090CE82 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				66E85B9B1C4444A900953D88 /* XBScene4.cpp */,
-				66E85B9C1C4444A900953D88 /* XBScene4.h */,
+				6657D5381C457A1E0090CE82 /* ofxParticles.h */,
 			);
-			name = Scene4;
+			name = src;
+			path = ../../../addons/ofxParticles/src;
+			sourceTree = "<group>";
+		};
+		6657D5391C457A240090CE82 /* ofxParticles */ = {
+			isa = PBXGroup;
+			children = (
+				6657D5371C457A1E0090CE82 /* src */,
+			);
+			name = ofxParticles;
 			sourceTree = "<group>";
 		};
 		6659B6DB1C3FDF9900B8285C /* src */ = {
@@ -514,6 +537,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				6657D5391C457A240090CE82 /* ofxParticles */,
 				660E8BB41C41770500A23F26 /* ofxColorPicker */,
 				6659B70F1C3FE15C00B8285C /* ofxGui */,
 				6659B6F41C3FDFA000B8285C /* ofxTraerPhysics */,
@@ -741,7 +765,6 @@
 				6659B70E1C3FE15500B8285C /* ofxToggle.cpp in Sources */,
 				6659B6EE1C3FDF9900B8285C /* EulerIntegrator.cpp in Sources */,
 				6659B6F31C3FDF9900B8285C /* Spring.cpp in Sources */,
-				66E85B9D1C4444A900953D88 /* XBScene4.cpp in Sources */,
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
@@ -762,6 +785,8 @@
 				214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */,
 				21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */,
 				2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */,
+				2147643B75FD4078E237C224 /* XBScene4.cpp in Sources */,
+				21476A37847B388C4E321B90 /* XBScene4GUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,7 +978,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

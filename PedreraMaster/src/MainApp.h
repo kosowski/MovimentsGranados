@@ -18,9 +18,9 @@ public:
 
     void keyReleased(int key);
 
-private:
+    XBSceneManager *getSceneManager() { return &sceneManager; };
 
-    void sceneChanged(int &sceneIndex) { cout << "Scene changed to " << sceneIndex << endl; };
+private:
 
     XBSceneManager sceneManager;
 

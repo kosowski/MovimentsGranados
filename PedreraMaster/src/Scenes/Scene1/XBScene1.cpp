@@ -9,7 +9,6 @@
 #define GRID_X_RES 120
 #define GRID_Y_RES 10
 
-
 void XBScene1::setup()
 {
     XBBaseScene::setup();

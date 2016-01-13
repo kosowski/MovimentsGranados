@@ -20,10 +20,12 @@ int main()
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(guiSettings);
 
     shared_ptr<GUIApp> guiApp(new GUIApp);
-    ofRunApp(guiWindow, guiApp);
-
     shared_ptr<MainApp> mainApp(new MainApp);
+
+    guiApp->setSceneManager(mainApp->getSceneManager());
+
     ofRunApp(mainWindow, mainApp);
+    ofRunApp(guiWindow, guiApp);
 
     ofRunMainLoop();
 }
