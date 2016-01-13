@@ -24,6 +24,7 @@ public:
     void handleStateChanges();
     void userDetection(bool &hasUser);
     void sendHandInfo();
+    void resetKinect();
 
     void keyReleased(int key);
     void mouseDragged(int x, int y, int button);

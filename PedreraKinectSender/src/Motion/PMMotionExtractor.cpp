@@ -144,3 +144,25 @@ void PMMotionExtractor::computeVelocity(int meanSize)
     handsInfo.leftHand.v=lHandVel;
     
 }
+
+bool PMMotionExtractor::reset(bool kinectActivated){
+    if(!kinectActivated)
+        return setup();
+    else{
+        hasUser=false;
+        ofNotifyEvent(eventUserDetection, hasUser, this);
+        openNIDevice.setPaused(true);
+        openNIDevice.removeHandsGenerator();
+        openNIDevice.removeAllHandFocusGestures();
+        openNIDevice.addHandsGenerator();
+        openNIDevice.addAllHandFocusGestures();
+        openNIDevice.setMaxNumHands(2);
+        
+        for (int i = 0; i < openNIDevice.getMaxNumHands(); i++) {
+            ofxOpenNIDepthThreshold depthThreshold = ofxOpenNIDepthThreshold(0, 0, false, true, true, true, true);
+            openNIDevice.addDepthThreshold(depthThreshold);
+        }
+        openNIDevice.setPaused(false);
+        return true;
+    }
+}

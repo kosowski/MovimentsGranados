@@ -55,6 +55,8 @@ public:
     void draw();
     void exit();
     
+    bool reset(bool kinectActivated);
+    
     void computeVelocity(int meanSize);
 
     KinectInfo getKinectInfo();

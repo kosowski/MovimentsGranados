@@ -38,6 +38,8 @@ void ofApp::setup()
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
+        
+        guiRestartBtn.addListener(this, &ofApp::resetKinect);
 
         gui.setSize(GUI_WIDTH, GUI_WIDTH);
         gui.setWidthElements(GUI_WIDTH);
@@ -222,6 +224,10 @@ void ofApp::sendHandInfo()
     rhandvel.addFloatArg(handsInfo.rightHand.v.y);
     rhandvel.addFloatArg(handsInfo.rightHand.v.z);
     oscSender.sendMessage(rhandvel, false);
+}
+
+void ofApp::resetKinect(){
+    kinectAvailable = motionExtractor->reset(kinectAvailable);
 }
 
 void ofApp::keyReleased(int key)
