@@ -7,13 +7,11 @@
 
 #include "XBBaseGUI.h"
 
-class XBScene3;
-
 class XBScene3GUI : public XBBaseGUI
 {
 public:
 
-    XBScene3GUI(XBScene3 *scene);
+    XBScene3GUI();
     void draw();
 
     ofxFloatSlider particleSize;

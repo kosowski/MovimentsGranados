@@ -7,13 +7,11 @@
 
 #include "XBBaseGUI.h"
 
-class XBScene4;
-
 class XBScene4GUI : public XBBaseGUI
 {
 public:
 
-    XBScene4GUI(XBScene4 *scene);
+    XBScene4GUI();
     void draw();
 
     ofxFloatSlider attractorStrength;

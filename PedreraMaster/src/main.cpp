@@ -19,13 +19,15 @@ int main()
     guiSettings.resizable = GUI_WINDOW_RESIZABLE;
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(guiSettings);
 
-    shared_ptr<GUIApp> guiApp(new GUIApp);
     shared_ptr<MainApp> mainApp(new MainApp);
+    shared_ptr<GUIApp> guiApp(new GUIApp);
+
+    mainApp->setGuiApp(guiApp);
 
     guiApp->setSceneManager(mainApp->getSceneManager());
 
-    ofRunApp(mainWindow, mainApp);
     ofRunApp(guiWindow, guiApp);
+    ofRunApp(mainWindow, mainApp);
 
     ofRunMainLoop();
 }

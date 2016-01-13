@@ -30,6 +30,17 @@ void GUIApp::setup()
 
     ofSetWindowPosition(winX, winY);
 
+    currentGuiIndex = -1;
+
+    XBScene1GUI *s1GUI = new XBScene1GUI();
+    guis.push_back(s1GUI);
+    XBScene2GUI *s2GUI = new XBScene2GUI();
+    guis.push_back(s2GUI);
+    XBScene3GUI *s3GUI = new XBScene3GUI();
+    guis.push_back(s3GUI);
+    XBScene4GUI *s4GUI = new XBScene4GUI();
+    guis.push_back(s4GUI);
+
     ofAddListener(sceneManager->eventSceneChanged, this, &GUIApp::sceneChanged);
 }
 
@@ -39,26 +50,17 @@ void GUIApp::update()
 
 void GUIApp::draw()
 {
-    ofSetColor(ofColor::white);
-    ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, ofGetHeight() - 15);
-
-    int fontSize = 8;
-
-    string msg1 = "NOTHING TO SEE HERE (for the moment)";
-    int msg1Width = int(msg1.size()) * fontSize;
-    ofDrawBitmapStringHighlight(msg1, ofGetWidth()/2 - msg1Width/2, ofGetHeight()/2 - fontSize, ofColor::black, ofColor(255, 170, 170));
-
-    string msg2 = "Expect to see SCENE GUIs in this window";
-    int msg2Width = int(msg2.size()) * fontSize;
-    ofDrawBitmapStringHighlight(msg2, ofGetWidth()/2 - msg2Width/2, ofGetHeight()/2 + fontSize, ofColor::black, ofColor::white);
-
-    XBBaseScene *currentScene = sceneManager->getCurrentScene();
-    if (currentScene != NULL)
-    {
-//        currentScene->getGUI()->draw();
-    }
+    if (currentGuiIndex >= 0)
+        guis[currentGuiIndex]->draw();
 }
 
 void GUIApp::exit()
 {
+}
+
+XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
+{
+    if (sceneIndex >= guis.size()) return nullptr;
+
+    return guis[sceneIndex];
 }

@@ -16,7 +16,7 @@ public:
 
     XBBaseScene(string name);
 
-    virtual void setup();
+    virtual void setup(XBBaseGUI *gui);
     virtual void update() {};
     virtual void drawIntoFBO() = 0;
     virtual void drawGUI();
@@ -26,8 +26,6 @@ public:
 
     void setFBOAlpha(float _fboAlpha) { fboAlpha = _fboAlpha; };
     float *getFBOAlpha() { return &fboAlpha; }
-
-    XBBaseGUI *getGUI() { return gui; };
 
     virtual void keyReleased(int key);
 
@@ -40,7 +38,6 @@ protected:
 
     XBBaseGUI *gui;
     ofxPanel guiOld;
-    bool showGUI;
 
     void subscribeToCelloEvents();
     void subscribeToViolinEvents();

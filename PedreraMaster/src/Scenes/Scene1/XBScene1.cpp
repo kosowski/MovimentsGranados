@@ -9,36 +9,36 @@
 #define GRID_X_RES 120
 #define GRID_Y_RES 10
 
-void XBScene1::setup()
+void XBScene1::setup(XBBaseGUI *_gui)
 {
-    XBBaseScene::setup();
+    XBBaseScene::setup(_gui);
 
-    gui = new XBScene1GUI(this);
-    
     //ofSetBackgroundAuto(true);
-    guiOld.setup();
-    guiOld.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-    guiOld.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
-    guiOld.add(restLength.setup("restLength", 0., -10., 20.));
-    
-    guiOld.add(drag.setup("drag", 0.1, 0.01, 1.00));
-    guiOld.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-    guiOld.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
-    guiOld.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
-    guiOld.add(mouseSlope.setup("mouseSlope", 70, 60., 260));
-    guiOld.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
-    guiOld.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
-    guiOld.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
-    
-    guiOld.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
+//    guiOld.setup();
+//    guiOld.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
+//    guiOld.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
+//    guiOld.add(restLength.setup("restLength", 0., -10., 20.));
+//
+//    guiOld.add(drag.setup("drag", 0.1, 0.01, 1.00));
+//    guiOld.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
+//    guiOld.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
+//    guiOld.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
+//    guiOld.add(mouseSlope.setup("mouseSlope", 70, 60., 260));
+//    guiOld.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
+//    guiOld.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
+//    guiOld.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
+//
+//    guiOld.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
     
     directorColor.set(77,125,140);
     initSystem();
 }
 
-void XBScene1::initSystem(){
+void XBScene1::initSystem()
+{
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
     
-    physics	= new ParticleSystem( gravity, drag );
+    physics	= new ParticleSystem( myGUI->gravity, myGUI->drag );
     physics->clear();
     
     
@@ -54,7 +54,7 @@ void XBScene1::initSystem(){
             ofVec3f pos = ofVec3f( x * gridStepX , y * gridStepY , 0.0f );
             
             //free particle
-            Particle* p = physics->makeParticle( particleMass, pos.x, pos.y, pos.z );
+            Particle* p = physics->makeParticle( myGUI->particleMass, pos.x, pos.y, pos.z );
             
             // particles in the extremes are fixed
             if(x== 0 || x == GRID_X_RES - 1)
@@ -62,19 +62,19 @@ void XBScene1::initSystem(){
             // the rest are connected through a spring to their fixed particle
             else{
                 //fixed particle to which free particle is attached through a spring
-                Particle* fixed = physics->makeParticle( particleMass, pos.x, pos.y, pos.z );
+                Particle* fixed = physics->makeParticle( myGUI->particleMass, pos.x, pos.y, pos.z );
                 fixed->setFixed( true );
                 
-                Spring* s = physics->makeSpring(fixed, p, fixedStrength, fixedDamping, fixedRestLength);
+                Spring* s = physics->makeSpring(fixed, p, myGUI->fixedStrength, myGUI->fixedDamping, myGUI->fixedRestLength);
                 //            visibleSprings.push_back(s);
             }
             
             
-            physics->makeAttraction(p_mouse, p, mouseStrength, mouseSlope);
+            physics->makeAttraction(p_mouse, p, myGUI->mouseStrength, myGUI->mouseSlope);
             
             particles.push_back( p );
             if( x > 0 ){
-                Spring* s = physics->makeSpring( particles[y*GRID_X_RES + x - 1], particles[y*GRID_X_RES + x], springStrength, springDamping, gridStepX + restLength);
+                Spring* s = physics->makeSpring( particles[y*GRID_X_RES + x - 1], particles[y*GRID_X_RES + x], myGUI->springStrength, myGUI->springDamping, gridStepX + myGUI->restLength);
                 visibleSprings.push_back(s);
             }
         }
@@ -92,13 +92,15 @@ void XBScene1::initSystem(){
 void XBScene1::update()
 {
     XBBaseScene::update();
-    
+
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+
     p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
     physics->tick();
     for ( int i = 0; i <particles.size(); ++i )
     {
         Particle* v = particles[i];
-        v->velocity.set(v->velocity.x * xDamping,v->velocity.y ,0);
+        v->velocity.set(v->velocity.x * myGUI->xDamping,v->velocity.y ,0);
     }
 }
 

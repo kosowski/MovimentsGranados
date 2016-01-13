@@ -3,12 +3,9 @@
 //
 
 #include "XBScene3GUI.h"
-#include "XBScene3.h"
 
-XBScene3GUI::XBScene3GUI(XBScene3 *_scene) : XBBaseGUI(_scene)
+XBScene3GUI::XBScene3GUI() : XBBaseGUI()
 {
-    scene = _scene;
-
     gui.setup();
     gui.add(particleSize.setup("Particle size", 10, 2, 40));
     gui.add(particleLife.setup("Particle life", 30, 1, 60));

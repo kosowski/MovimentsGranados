@@ -3,12 +3,9 @@
 //
 
 #include "XBScene2GUI.h"
-#include "XBScene2.h"
 
-XBScene2GUI::XBScene2GUI(XBScene2 *_scene) : XBBaseGUI(_scene)
+XBScene2GUI::XBScene2GUI() : XBBaseGUI()
 {
-    scene = _scene;
-
     gui.setup();
 
     gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
