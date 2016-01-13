@@ -17,6 +17,8 @@
 #include "ofxOpenNI.h"
 
 #define MAX_DEVICES 1
+#define KINECT_STD_COLOR_WIDTH 640
+#define KINECT_STD_COLOR_HEIGHT 480
 
 struct KinectElement
 {
@@ -50,7 +52,7 @@ public:
 
     bool setup();
     void update();
-    void draw(bool drawDebug);
+    void draw();
     void exit();
 
     KinectInfo getKinectInfo();

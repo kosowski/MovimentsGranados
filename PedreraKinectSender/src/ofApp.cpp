@@ -20,6 +20,7 @@ static const int GUI_WIDTH = 350;
 
 void ofApp::setup()
 {
+    ofSetWindowShape(KINECT_STD_COLOR_WIDTH, KINECT_STD_COLOR_HEIGHT);
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(ofColor::black);
 
@@ -85,10 +86,9 @@ void ofApp::update()
     else if (ofGetMousePressed())
     {
         currState = STATE_CAPTURING; //change state of fake detection
-        handsInfo.leftHand.pos.x = ofGetMouseX() / ofGetWidth();
-        handsInfo.leftHand.pos.y = ofGetMouseY() / ofGetHeight();
+        handsInfo.leftHand.pos.x = (float)ofGetMouseX() / (float)ofGetWidth();
+        handsInfo.leftHand.pos.y = (float)ofGetMouseY() / (float)ofGetHeight();
         handsInfo.rightHand.pos.x = ofMap(handsInfo.leftHand.pos.x, 0, 1, 1, 0);
-//        handsInfo.rightHand.pos.y=ofMap(handsInfo.leftHand.pos.y, 0, 1, 1, 0);
         handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
         sendHandInfo(); //send fake info by osc
     } else
@@ -100,9 +100,17 @@ void ofApp::update()
 void ofApp::draw()
 {
     if (showImage && kinectAvailable) //draw only if is detecting and if kinect is open
-        motionExtractor->draw(showHands);
+        motionExtractor->draw();
     
-    
+    if(showHands && currState==STATE_CAPTURING){
+        ofPushStyle();
+        ofNoFill();
+        ofSetLineWidth(3);
+        ofSetColor(ofColor::red);
+        ofDrawCircle(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20);
+        ofDrawCircle(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20);
+        ofPopStyle();
+    }
     gui.draw();
 }
 
@@ -242,4 +250,10 @@ void ofApp::mousePressed(int x, int y, int button)
 
 void ofApp::mouseReleased(int x, int y, int button)
 {
+}
+
+void ofApp::windowResized(int w, int h)
+{
+    float kinect_aspectRatio=(float)KINECT_STD_COLOR_WIDTH/(float)KINECT_STD_COLOR_HEIGHT;
+    ofSetWindowShape((float)h*kinect_aspectRatio, h);
 }

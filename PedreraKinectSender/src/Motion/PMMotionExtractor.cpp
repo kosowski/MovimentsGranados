@@ -86,22 +86,9 @@ void PMMotionExtractor::update()
 }
 
 ///--------------------------------------------------------------
-void PMMotionExtractor::draw(bool drawDebug)
+void PMMotionExtractor::draw()
 {
-    openNIDevice.drawImage();
-    if (drawDebug && hasUser) {
-        ofPushStyle();
-        ofNoFill();
-        ofSetLineWidth(3);
-        ofSetColor(ofColor::red);
-        ofDrawCircle(handsPosition.rightHand.pos.x * openNIDevice.getWidth(), handsPosition.rightHand.pos.y * openNIDevice.getHeight(), 20);
-        ofDrawCircle(handsPosition.leftHand.pos.x * openNIDevice.getWidth(), handsPosition.leftHand.pos.y * openNIDevice.getHeight(), 20);
-        ofPopStyle();
-    }
-//    ofSetRectMode(OF_RECTMODE_CENTER);
-//        kinectNI->drawImage(ofGetWidth()/2,ofGetHeight()/2, ofGetWidth(), ofGetHeight()*(kinectNI->getHeight()/kinectNI->getWidth()));
-//    //kinectNI->drawImage();
-//    ofSetRectMode(OF_RECTMODE_CORNER);
+    openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
 }
 
 ///--------------------------------------------------------------
