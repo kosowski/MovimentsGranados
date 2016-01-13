@@ -42,10 +42,17 @@ void XBScene4::update()
 
 void XBScene4::drawIntoFBO()
 {
+    XBScene4GUI *myGUI = (XBScene4GUI *)gui;
+
     fbo.begin();
     {
+        if(myGUI->enableSmooth)
+            ofEnableSmoothing();
+        else
+            ofDisableSmoothing();
         ofBackground(0);
-        ofSetColor(directorColor);
+        ofSetColor( ofColor(directorColor, myGUI->alpha));
+        ofSetLineWidth(myGUI->lineWidth);
         for(Wave w:waves)
             w.display();
         

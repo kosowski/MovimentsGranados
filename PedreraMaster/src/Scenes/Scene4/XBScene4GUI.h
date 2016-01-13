@@ -18,6 +18,9 @@ public:
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
+    ofxFloatSlider alpha;
+    ofxToggle enableSmooth;
 };
 
 
