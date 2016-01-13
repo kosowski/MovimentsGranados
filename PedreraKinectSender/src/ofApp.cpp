@@ -77,7 +77,7 @@ void ofApp::update()
             }
             case STATE_CAPTURING: {
                 motionExtractor->update();
-                handsInfo = motionExtractor->gethandsPosition();
+                handsInfo = motionExtractor->gethandsInfo();
                 sendHandInfo();
                 break;
             }
@@ -107,8 +107,10 @@ void ofApp::draw()
         ofNoFill();
         ofSetLineWidth(3);
         ofSetColor(ofColor::red);
-        ofDrawCircle(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20);
-        ofDrawCircle(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20);
+//        ofDrawCircle(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20);
+//        ofDrawCircle(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20);
+        ofDrawEllipse(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20+20*(handsInfo.rightHand.v.x), 20+20*(handsInfo.rightHand.v.y));
+        ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
         ofPopStyle();
     }
     gui.draw();

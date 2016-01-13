@@ -54,17 +54,23 @@ public:
     void update();
     void draw();
     void exit();
+    
+    void computeVelocity(int meanSize);
 
     KinectInfo getKinectInfo();
-    KinectInfo gethandsPosition(){return handsPosition;};
+    KinectInfo gethandsInfo(){return handsInfo;};
     
     ofEvent<bool> eventUserDetection;
 
 private:
     ofxOpenNI openNIDevice;
     KinectInfo kinectOut;
-    KinectInfo handsPosition;
+    KinectInfo handsInfo;
     bool hasUser;
+    
+    //for computing velocity
+    deque<ofPoint> rHandPosHist;
+    deque<ofPoint> lHandPosHist;
 };
 
 #endif /* PMMotionExtractor_hpp */

@@ -43,8 +43,8 @@ bool PMMotionExtractor::setup()
 
     openNIDevice.start();
 
-//    handsPosition.push_back(ofPoint(0,0,0));
-//    handsPosition.push_back(ofPoint(0,0,0));
+//    handsInfo.push_back(ofPoint(0,0,0));
+//    handsInfo.push_back(ofPoint(0,0,0));
 
     return (openNIDevice.getNumDevices() >= 1);
 }
@@ -72,17 +72,20 @@ void PMMotionExtractor::update()
             //Random choser left and right hand
             //TODO: implement right/left detection (IF NEED)
             if (i)
-                handsPosition.leftHand.pos = handPos;
+                handsInfo.leftHand.pos = handPos;
             else
-                handsPosition.rightHand.pos = handPos;
+                handsInfo.rightHand.pos = handPos;
         }
+        computeVelocity(5);
     } else {
         if (hasUser) {
             hasUser = false;
             ofNotifyEvent(eventUserDetection, hasUser, this);
+            rHandPosHist.clear();
+            lHandPosHist.clear();
         }
     }
-
+    
 }
 
 ///--------------------------------------------------------------
@@ -102,4 +105,42 @@ KinectInfo PMMotionExtractor::getKinectInfo()
     return kinectOut;
 }
 
-
+void PMMotionExtractor::computeVelocity(int meanSize)
+{
+    while(rHandPosHist.size() > meanSize)
+        rHandPosHist.pop_back();
+    while(lHandPosHist.size() > meanSize)
+        lHandPosHist.pop_back();
+    
+    rHandPosHist.push_front(handsInfo.rightHand.pos);
+    lHandPosHist.push_front(handsInfo.leftHand.pos);
+    
+    ofPoint rHandPosMean = ofPoint(0);
+    for(auto & tempPos : rHandPosHist){
+        rHandPosMean += tempPos;
+    }
+    rHandPosMean/=rHandPosHist.size();
+    
+    ofPoint lHandPosMean = ofPoint(0);
+    for(auto & tempPos : lHandPosHist){
+        lHandPosMean += tempPos;
+    }
+    lHandPosMean/=lHandPosHist.size();
+    
+    ofPoint rHandVel = ofPoint(0);
+    for(auto & tempPos : rHandPosHist){
+        rHandVel = (tempPos-rHandPosMean)*(tempPos-rHandPosMean);
+    }
+    rHandVel/=rHandPosHist.size();
+    rHandVel*=1000;
+    handsInfo.rightHand.v=rHandVel;
+    
+    ofPoint lHandVel = ofPoint(0);
+    for(auto & tempPos : lHandPosHist){
+        lHandVel = (tempPos-lHandPosMean)*(tempPos-lHandPosMean);
+    }
+    lHandVel/=lHandPosHist.size();
+    lHandVel*=1000;
+    handsInfo.leftHand.v=lHandVel;
+    
+}
