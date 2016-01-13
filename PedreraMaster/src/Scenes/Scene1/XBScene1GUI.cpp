@@ -3,12 +3,9 @@
 //
 
 #include "XBScene1GUI.h"
-#include "XBScene1.h"
 
-XBScene1GUI::XBScene1GUI(XBScene1 *_scene) : XBBaseGUI(_scene)
+XBScene1GUI::XBScene1GUI() : XBBaseGUI()
 {
-    scene = _scene;
-
     gui.setup();
     gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
     gui.add(springDamping.setup("damping", 0.0, 0.000, 0.201));

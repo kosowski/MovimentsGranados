@@ -17,7 +17,7 @@ public:
 
     XBScene3(const string &name) : XBBaseScene(name) {}
 
-    virtual void setup();
+    virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();
     virtual void drawGUI();
@@ -44,10 +44,10 @@ public:
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
     
-    ofxFloatSlider particleSize;
-    ofxFloatSlider particleLife;
-    ofxVec3Slider particleVelocity;
-    ofxVec3Slider particleSpread;
+//    ofxFloatSlider particleSize;
+//    ofxFloatSlider particleLife;
+//    ofxVec3Slider particleVelocity;
+//    ofxVec3Slider particleSpread;
 };
 
 

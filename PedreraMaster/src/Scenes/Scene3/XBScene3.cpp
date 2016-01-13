@@ -5,11 +5,9 @@
 #include "XBScene3.h"
 #include "XBScene3GUI.h"
 
-void XBScene3::setup()
+void XBScene3::setup(XBBaseGUI *_gui)
 {
-    XBBaseScene::setup();
-
-    gui = new XBScene3GUI(this);
+    XBBaseScene::setup(_gui);
 
     int w = 200;
     int h = 250;
@@ -22,35 +20,37 @@ void XBScene3::setup()
     colorPickerV.setColor(violinColor);
     colorPickerX.setColor(celloColor);
     
-    guiOld.setup();
-    guiOld.add(particleSize.setup("Particle size", 10, 2, 40));
-    guiOld.add(particleLife.setup("Particle life", 30, 1, 60));
-    guiOld.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
-    guiOld.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+//    guiOld.setup();
+//    guiOld.add(particleSize.setup("Particle size", 10, 2, 40));
+//    guiOld.add(particleLife.setup("Particle life", 30, 1, 60));
+//    guiOld.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
+//    guiOld.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
     
     // creatures init
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
-    
+
+    XBScene3GUI *myGUI = (XBScene3GUI *)gui;
+
     //particles init
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    vEmitter.setVelocity(particleVelocity);
-    vEmitter.velSpread = particleSpread;
-    vEmitter.life = particleLife;
+    vEmitter.setVelocity(myGUI->particleVelocity);
+    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = 1;
     vEmitter.color = ofColor(violinColor);
-    vEmitter.size = particleSize;
+    vEmitter.size = myGUI->particleSize;
     
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    xEmitter.setVelocity(particleVelocity);
-    xEmitter.velSpread = particleSpread;
-    xEmitter.life = particleLife;
+    xEmitter.setVelocity(myGUI->particleVelocity);
+    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 1;
     xEmitter.color = ofColor(violinColor);
-    xEmitter.size = particleSize;
+    xEmitter.size = myGUI->particleSize;
     
     ofLoadImage(pTex, "p.png");
     
@@ -60,7 +60,9 @@ void XBScene3::setup()
 void XBScene3::update()
 {
     XBBaseScene::update();
-    
+
+    XBScene3GUI *myGUI = (XBScene3GUI *)gui;
+
     // update color pickers
     colorPickerV.update();
     colorPickerX.update();
@@ -74,16 +76,16 @@ void XBScene3::update()
     //update emitters
     if(emitParticles){
         //GUI related
-        vEmitter.size = particleSize;
-        vEmitter.setVelocity(particleVelocity);
-        vEmitter.velSpread = particleSpread;
-        vEmitter.life = particleLife;
+        vEmitter.size = myGUI->particleSize;
+        vEmitter.setVelocity(myGUI->particleVelocity);
+        vEmitter.velSpread = myGUI->particleSpread;
+        vEmitter.life = myGUI->particleLife;
         vEmitter.color.set(colorPickerV.getColor());
 
-        xEmitter.size = particleSize;
-        xEmitter.setVelocity(particleVelocity);
-        xEmitter.velSpread = particleSpread;
-        xEmitter.life = particleLife;
+        xEmitter.size = myGUI->particleSize;
+        xEmitter.setVelocity(myGUI->particleVelocity);
+        xEmitter.velSpread = myGUI->particleSpread;
+        xEmitter.life = myGUI->particleLife;
         xEmitter.color.set(colorPickerX.getColor());
         
         //update emitters following creatures
@@ -126,10 +128,8 @@ void XBScene3::drawGUI()
 {
     XBBaseScene::drawGUI();
     
-    if (showGUI) {
-        colorPickerV.draw();
-        colorPickerX.draw();
-    }
+    colorPickerV.draw();
+    colorPickerX.draw();
 }
 
 void XBScene3::keyReleased(int key){

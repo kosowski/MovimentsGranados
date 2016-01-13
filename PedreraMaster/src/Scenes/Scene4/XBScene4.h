@@ -18,7 +18,7 @@ public:
 
     XBScene4(const string &name) : XBBaseScene(name) {}
 
-    virtual void setup();
+    virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();
     void keyReleased(int key);
@@ -28,10 +28,10 @@ public:
     vector<Wave> waves;
     ofColor directorColor;
     
-    ofxFloatSlider attractorStrength;
-    ofxFloatSlider attractorRadius;
-    ofxFloatSlider minPeriod;
-    ofxFloatSlider maxPeriod;
+//    ofxFloatSlider attractorStrength;
+//    ofxFloatSlider attractorRadius;
+//    ofxFloatSlider minPeriod;
+//    ofxFloatSlider maxPeriod;
 };
 
 

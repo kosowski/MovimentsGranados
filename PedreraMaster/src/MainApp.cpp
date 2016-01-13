@@ -35,16 +35,16 @@ void MainApp::setup()
     XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
     XBScene1 *scene1 = new XBScene1("Scene 1");
-    scene1->setup();
+    scene1->setup(guiApp->getGuiForSceneIndex(0));
     sceneManager.addScene(scene1);
     XBScene2 *scene2 = new XBScene2("Scene 2");
-    scene2->setup();
+    scene2->setup(guiApp->getGuiForSceneIndex(1));
     sceneManager.addScene(scene2);
     XBScene3 *scene3 = new XBScene3("Scene 3");
-    scene3->setup();
+    scene3->setup(guiApp->getGuiForSceneIndex(2));
     sceneManager.addScene(scene3);
     XBScene4 *scene4 = new XBScene4("Scene 4");
-    scene4->setup();
+    scene4->setup(guiApp->getGuiForSceneIndex(3));
     sceneManager.addScene(scene4);
 
     // Start with scene 0

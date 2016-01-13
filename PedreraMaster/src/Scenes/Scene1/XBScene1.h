@@ -16,7 +16,7 @@ public:
 
     XBScene1(const string &name) : XBBaseScene(name) {}
 
-    virtual void setup();
+    virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();
     void keyReleased(int key);
@@ -31,18 +31,18 @@ public:
     
     ofColor directorColor;
     
-    ofxFloatSlider springStrength;
-    ofxFloatSlider springDamping;
-    ofxFloatSlider drag;
-    ofxFloatSlider gravity;
-    ofxFloatSlider particleMass;
-    ofxFloatSlider mouseSlope;
-    ofxFloatSlider mouseStrength;
-    ofxFloatSlider fixedStrength;
-    ofxFloatSlider fixedDamping;
-    ofxFloatSlider fixedRestLength;
-    ofxFloatSlider restLength;
-    ofxFloatSlider xDamping;
+//    ofxFloatSlider springStrength;
+//    ofxFloatSlider springDamping;
+//    ofxFloatSlider drag;
+//    ofxFloatSlider gravity;
+//    ofxFloatSlider particleMass;
+//    ofxFloatSlider mouseSlope;
+//    ofxFloatSlider mouseStrength;
+//    ofxFloatSlider fixedStrength;
+//    ofxFloatSlider fixedDamping;
+//    ofxFloatSlider fixedRestLength;
+//    ofxFloatSlider restLength;
+//    ofxFloatSlider xDamping;
 };
 
 

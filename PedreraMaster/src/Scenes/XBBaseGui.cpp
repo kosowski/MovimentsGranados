@@ -4,9 +4,8 @@
 
 #include "XBBaseGUI.h"
 
-XBBaseGUI::XBBaseGUI(XBBaseScene *_scene)
+XBBaseGUI::XBBaseGUI()
 {
-    scene = _scene;
 }
 
 void XBBaseGUI::update()

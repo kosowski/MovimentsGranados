@@ -13,7 +13,7 @@ XBBaseScene::XBBaseScene(string _name)
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, FBO_NUM_SAMPLES);
 }
 
-void XBBaseScene::setup()
+void XBBaseScene::setup(XBBaseGUI *_gui)
 {
     fbo.begin();
     {
@@ -29,11 +29,12 @@ void XBBaseScene::setup()
     subscribeToViolinEvents();
     subscribeToPianoEvents();
     subscribeToKinectEvents();
+
+    gui = _gui;
 }
 
 void XBBaseScene::drawGUI()
 {
-    if (showGUI) guiOld.draw();
 }
 
 void XBBaseScene::drawFadeRectangle()
@@ -49,10 +50,6 @@ void XBBaseScene::keyReleased(int key)
 {
     switch(key)
     {
-        case 'g':
-        case 'G':
-            showGUI = !showGUI;
-            break;
         default:
             break;
     }

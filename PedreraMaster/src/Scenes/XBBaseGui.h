@@ -8,13 +8,12 @@
 #include "ofxGui.h"
 #include "ofxColorPicker.h"
 
-class XBBaseScene;
 
 class XBBaseGUI
 {
 public:
 
-    XBBaseGUI(XBBaseScene *scene);
+    XBBaseGUI();
     virtual void update();
     virtual void draw();
 
@@ -23,11 +22,6 @@ protected:
     ofxPanel gui;
     vector<ofxColorPicker> colorPickers;
     vector<ofColor> colors;
-
-    XBBaseScene *scene;
-
-private:
-
 };
 
 

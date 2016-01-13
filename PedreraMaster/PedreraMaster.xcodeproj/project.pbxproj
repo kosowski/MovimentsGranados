@@ -13,7 +13,7 @@
 		21476354B8F0C4325D82467F /* XBScene1GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214764C341C5CA54E348762F /* XBScene1GUI.cpp */; };
 		21476396328FCF7C0EA5A01B /* XBScene2GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */; };
 		2147643B75FD4078E237C224 /* XBScene4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476884F1D18B15ED1BA428 /* XBScene4.cpp */; };
-		2147662A8D4FFACF9FAAF319 /* XBBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F4D5CB49F867A9EC844 /* XBBaseGUI.cpp */; };
+		2147662A8D4FFACF9FAAF319 /* XBBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F4D5CB49F867A9EC844 /* XBBaseGui.cpp */; };
 		214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */; };
 		2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214767E46A8462F4E616A97A /* GUIApp.cpp */; };
 		21476979746B32EBBBF8CCB5 /* XBBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214768EA36A596B0A3391931 /* XBBaseScene.cpp */; };
@@ -125,8 +125,8 @@
 		21476C885558C407FE930F0E /* Shared */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = Shared; path = ../../Shared; sourceTree = "<group>"; };
 		21476D7D75555C4AE6056C8A /* XBSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBSceneManager.h; sourceTree = "<group>"; };
 		21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene3.cpp; sourceTree = "<group>"; };
-		21476F4D5CB49F867A9EC844 /* XBBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseGUI.cpp; sourceTree = "<group>"; };
-		21476FA3C9BFA50AFC86668A /* XBBaseGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBBaseGUI.h; sourceTree = "<group>"; };
+		21476F4D5CB49F867A9EC844 /* XBBaseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseGui.cpp; sourceTree = "<group>"; };
+		21476FA3C9BFA50AFC86668A /* XBBaseGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBBaseGui.h; sourceTree = "<group>"; };
 		23640F57DF6C4BB6BFC5DA4C /* PacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h; sourceTree = SOURCE_ROOT; };
 		2A1C6E4A1C2CDAA00068B7CD /* ofxTweenzor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxTweenzor.h; sourceTree = "<group>"; };
 		2A1C6E4B1C2CDAA00068B7CD /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Tween.cpp; sourceTree = "<group>"; };
@@ -284,8 +284,8 @@
 				21476D7D75555C4AE6056C8A /* XBSceneManager.h */,
 				214768EA36A596B0A3391931 /* XBBaseScene.cpp */,
 				21476A40F5757F1B800038BA /* XBBaseScene.h */,
-				21476F4D5CB49F867A9EC844 /* XBBaseGUI.cpp */,
-				21476FA3C9BFA50AFC86668A /* XBBaseGUI.h */,
+				21476F4D5CB49F867A9EC844 /* XBBaseGui.cpp */,
+				21476FA3C9BFA50AFC86668A /* XBBaseGui.h */,
 				214765951495ED2DD7ABFB49 /* Scene1 */,
 				21476C800E7D9E82E7D59363 /* Scene2 */,
 				21476F2EA52598B8CB87246C /* Scene3 */,
@@ -777,7 +777,7 @@
 				6659B7071C3FE15500B8285C /* ofxBaseGui.cpp in Sources */,
 				21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */,
 				6659B7091C3FE15500B8285C /* ofxGuiGroup.cpp in Sources */,
-				2147662A8D4FFACF9FAAF319 /* XBBaseGUI.cpp in Sources */,
+				2147662A8D4FFACF9FAAF319 /* XBBaseGui.cpp in Sources */,
 				214760DB796EA0C9572BC558 /* XBScene1.cpp in Sources */,
 				21476354B8F0C4325D82467F /* XBScene1GUI.cpp in Sources */,
 				21476DBE1D97923486A7ABA1 /* XBScene2.cpp in Sources */,
@@ -978,7 +978,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};

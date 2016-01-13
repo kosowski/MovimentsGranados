@@ -8,6 +8,11 @@
 #include "ofMain.h"
 #include "XBSceneManager.h"
 
+#include "XBScene1GUI.h"
+#include "XBScene2GUI.h"
+#include "XBScene3GUI.h"
+#include "XBScene4GUI.h"
+
 class GUIApp : public ofBaseApp
 {
 public:
@@ -19,11 +24,16 @@ public:
 
     void setSceneManager(XBSceneManager *_sceneManager) { sceneManager = _sceneManager; };
 
+    XBBaseGUI *getGuiForSceneIndex(int sceneIndex);
+
 private:
+
+    vector<XBBaseGUI *> guis;
+    int currentGuiIndex;
 
     XBSceneManager *sceneManager;
 
-    void sceneChanged(int &sceneIndex) { cout << "Scene changed to " << sceneIndex << endl; };
+    void sceneChanged(int &sceneIndex) { currentGuiIndex = sceneIndex; };
 };
 
 
