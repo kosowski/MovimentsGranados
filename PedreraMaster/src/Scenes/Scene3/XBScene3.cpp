@@ -39,6 +39,8 @@ void XBScene3::setup(XBBaseGUI *_gui)
     xEmitter.size = myGUI->particleSize;
     
     ofLoadImage(pTex, "resources/particle.png");
+
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
 
 void XBScene3::update()
@@ -84,6 +86,8 @@ void XBScene3::update()
 
 void XBScene3::drawIntoFBO()
 {
+    XBScene3GUI *myGUI = (XBScene3GUI *)gui;
+
     fbo.begin();
     {
         ofBackground(0);
@@ -102,6 +106,9 @@ void XBScene3::drawIntoFBO()
         drawFadeRectangle();
     }
     fbo.end();
+    
+    blur.apply(&fbo, myGUI->blurAmount, 1);
+
 }
 
 void XBScene3::drawGUI()

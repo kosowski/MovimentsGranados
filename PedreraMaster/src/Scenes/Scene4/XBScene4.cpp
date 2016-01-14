@@ -11,7 +11,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     
     initSystem();
     
-    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight() );
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 1 );
 }
 
 void XBScene4::initSystem(){

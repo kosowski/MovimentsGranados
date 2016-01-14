@@ -18,6 +18,7 @@ public:
     ofxFloatSlider particleLife;
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
+    ofxFloatSlider blurAmount;
 };
 
 

@@ -8,6 +8,7 @@
 #include "XBBaseScene.h"
 #include "Vehicle.h"
 #include "ofxParticles.h"
+#include "BlurEffect.h"
 
 
 class XBScene3 : public XBBaseScene
@@ -32,6 +33,7 @@ public:
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
     int displayMode;
+    BlurEffect blur;
 };
 
 

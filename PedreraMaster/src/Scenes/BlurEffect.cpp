@@ -12,7 +12,7 @@ BlurEffect::BlurEffect() {
     initialized = false;
 }
 
-void BlurEffect::setup(float w, float h) {
+void BlurEffect::setup(float w, float h, int mode) {
     
     firstPass.allocate(w,h);
     
@@ -48,6 +48,20 @@ void BlurEffect::setup(float w, float h) {
     gl_FragColor = color;\
     }";
     
+    // same shader but with only one tap
+    string fragmentShaderHorizontalKernel1 =
+    "uniform sampler2DRect src_tex_unit0;\
+    uniform float blurAmount;\
+    void main(void) {\
+    vec2 st = gl_TexCoord[0].st;\
+    vec4 color=vec4(0.);\
+    color += 1.0 * texture2DRect(src_tex_unit0, st + vec2(blurAmount * -1.0, 0.0));\
+    color += 2.0 * texture2DRect(src_tex_unit0, st );\
+    color += 1.0 * texture2DRect(src_tex_unit0, st + vec2(blurAmount * 1.0, 0.0));\
+    color /= 4.0;\
+    gl_FragColor = color;\
+    }";
+    
     // same but now for vertical neighbours
     
     string fragmentShaderVertical =
@@ -69,12 +83,31 @@ void BlurEffect::setup(float w, float h) {
     gl_FragColor = color;\
     }";
     
+    // same shader but only one tap
+    string fragmentShaderVerticalKernel1 =
+    "uniform sampler2DRect src_tex_unit0;\
+    uniform float blurAmount;\
+    void main(void) {\
+    vec2 st = gl_TexCoord[0].st;\
+    vec4 color=vec4(0.);\
+    color += 1.0 * texture2DRect(src_tex_unit0, st + vec2(0.0, blurAmount * 1.0));\
+    color += 2.0 * texture2DRect(src_tex_unit0, st );\
+    color += 1.0 * texture2DRect(src_tex_unit0, st + vec2(0.0, blurAmount * -1.0));\
+    color /= 4.0;\
+    gl_FragColor = color;\
+    }";
     
-    vShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderVertical);
+    if(mode == 0)
+        vShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderVerticalKernel1);
+    else
+        vShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderVertical);
     vShader.setupShaderFromSource(GL_VERTEX_SHADER, vertexShader);
     vShader.linkProgram();
     
-    hShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderHorizontal);
+    if(mode == 0)
+        hShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderHorizontalKernel1);
+    else
+        hShader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShaderHorizontal);
     hShader.setupShaderFromSource(GL_VERTEX_SHADER, vertexShader);
     hShader.linkProgram();
     
