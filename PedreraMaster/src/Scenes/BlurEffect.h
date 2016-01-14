@@ -14,7 +14,7 @@ class BlurEffect{
 public:
     
     BlurEffect();
-    void setup(float w, float h);
+    void setup(float w, float h, int mode);
     void apply(ofFbo *targetFbo, int amount, int iterations);
     
     int iterations, amount;

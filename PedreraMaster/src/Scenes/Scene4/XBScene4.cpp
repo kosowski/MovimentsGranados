@@ -12,7 +12,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     directorColor.set(77,125,140);
     initSystem();
     
-    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight() );
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 1 );
 }
 
 void XBScene4::initSystem(){

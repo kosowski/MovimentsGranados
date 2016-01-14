@@ -19,5 +19,7 @@ void XBScene3GUI::setup()
     sceneGui.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
 
+    sceneGui.add(blurAmount.setup("Blur amount", 0., 0.00, 8.00));
+
     loadSettings();
 }

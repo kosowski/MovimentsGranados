@@ -9,6 +9,7 @@
 #include "Vehicle.h"
 #include "ofxColorPicker.h"
 #include "ofxParticles.h"
+#include "BlurEffect.h"
 
 
 class XBScene3 : public XBBaseScene
@@ -34,6 +35,7 @@ public:
     ofTexture pTex;
     int displayMode;
 
+    BlurEffect blur;
     
     ofColor directorColor;
     ofColor violinColor;
@@ -42,10 +44,6 @@ public:
     //GUI related
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
-//    ofxFloatSlider particleSize;
-//    ofxFloatSlider particleLife;
-//    ofxVec3Slider particleVelocity;
-//    ofxVec3Slider particleSpread;
 };
 
 
