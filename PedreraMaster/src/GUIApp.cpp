@@ -60,8 +60,8 @@ void GUIApp::draw()
 
 void GUIApp::exit()
 {
-    for (int i=0; i<guis.size(); ++i)
-        guis[i]->saveSettings();
+//    for (int i=0; i<guis.size(); ++i)
+//        guis[i]->saveSettings();
 }
 
 XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
@@ -73,8 +73,8 @@ XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
 
 void GUIApp::sceneChanged(int &sceneIndex)
 {
-    if (currentGuiIndex >= 0)
-        guis[currentGuiIndex]->saveSettings();
+//    if (currentGuiIndex >= 0)
+//        guis[currentGuiIndex]->saveSettings();
 
     currentGuiIndex = sceneIndex;
 }
