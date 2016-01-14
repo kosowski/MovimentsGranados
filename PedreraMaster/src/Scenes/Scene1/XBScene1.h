@@ -28,21 +28,6 @@ public:
     vector<   Spring * > visibleSprings;
     Particle*			selectedParticle;
     Particle* p_mouse;
-    
-    ofColor directorColor;
-    
-//    ofxFloatSlider springStrength;
-//    ofxFloatSlider springDamping;
-//    ofxFloatSlider drag;
-//    ofxFloatSlider gravity;
-//    ofxFloatSlider particleMass;
-//    ofxFloatSlider mouseSlope;
-//    ofxFloatSlider mouseStrength;
-//    ofxFloatSlider fixedStrength;
-//    ofxFloatSlider fixedDamping;
-//    ofxFloatSlider fixedRestLength;
-//    ofxFloatSlider restLength;
-//    ofxFloatSlider xDamping;
 };
 
 

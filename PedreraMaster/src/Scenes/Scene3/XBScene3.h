@@ -7,7 +7,6 @@
 
 #include "XBBaseScene.h"
 #include "Vehicle.h"
-#include "ofxColorPicker.h"
 #include "ofxParticles.h"
 
 
@@ -33,19 +32,6 @@ public:
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
     int displayMode;
-
-    
-    ofColor directorColor;
-    ofColor violinColor;
-    ofColor celloColor;
-
-    //GUI related
-    ofxColorPicker colorPickerV;
-    ofxColorPicker colorPickerX;
-//    ofxFloatSlider particleSize;
-//    ofxFloatSlider particleLife;
-//    ofxVec3Slider particleVelocity;
-//    ofxVec3Slider particleSpread;
 };
 
 

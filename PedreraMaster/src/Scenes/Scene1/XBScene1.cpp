@@ -15,7 +15,6 @@ void XBScene1::setup(XBBaseGUI *_gui)
 
     //ofSetBackgroundAuto(true);
 
-    directorColor.set(77,125,140);
     initSystem();
 }
 
@@ -91,6 +90,8 @@ void XBScene1::update()
 
 void XBScene1::drawIntoFBO()
 {
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+
     fbo.begin();
     {
         ofBackground(0);
@@ -103,7 +104,7 @@ void XBScene1::drawIntoFBO()
 //        }
         
         // draw springs
-        ofSetColor(directorColor);
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         for ( int i = 0; i < visibleSprings.size(); ++i )
         {
             Spring* e = visibleSprings[i];

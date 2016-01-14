@@ -9,7 +9,6 @@ void XBScene4::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
     
-    directorColor.set(77,125,140);
     initSystem();
     
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight() );
@@ -49,7 +48,7 @@ void XBScene4::drawIntoFBO()
         else
             ofDisableSmoothing();
         ofBackground(0);
-        ofSetColor( ofColor(directorColor, myGUI->alpha));
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         ofSetLineWidth(myGUI->lineWidth);
         for(Wave w:waves)
             w.display();

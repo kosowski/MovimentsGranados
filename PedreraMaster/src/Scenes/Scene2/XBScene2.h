@@ -31,16 +31,6 @@ public:
     Particle* p_mouse;
     
     ofColor directorColor;
-    
-//    ofxFloatSlider springStrength;
-//    ofxFloatSlider springDamping;
-//    ofxFloatSlider drag;
-//    ofxFloatSlider gravity;
-//    ofxFloatSlider particleMass;
-//    ofxFloatSlider mouseSlope;
-//    ofxFloatSlider mouseStrength;
-//    ofxFloatSlider fixedStrength;
-//    ofxFloatSlider fixedDamping;
 };
 
 

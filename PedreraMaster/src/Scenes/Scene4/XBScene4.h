@@ -27,14 +27,8 @@ public:
     void initSystem();
     
     vector<Wave> waves;
-    ofColor directorColor;
-    
+
     BlurEffect blur;
-    
-//    ofxFloatSlider attractorStrength;
-//    ofxFloatSlider attractorRadius;
-//    ofxFloatSlider minPeriod;
-//    ofxFloatSlider maxPeriod;
 };
 
 

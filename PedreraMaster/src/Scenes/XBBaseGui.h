@@ -6,7 +6,6 @@
 #define PEDRERAMASTER_XBBASEGUI_H
 
 #include "ofxGui.h"
-#include "ofxColorPicker.h"
 
 static const string STR_SETTINGS_BASEPATH = "settings/";
 
@@ -21,28 +20,24 @@ public:
     ofxPanel sceneGui;
     ofxPanel colorGui;
 
-    ofxLabel lblDirector;
-    ofxIntSlider colorDirectorH;
-    ofxIntSlider colorDirectorS;
-    ofxIntSlider colorDirectorB;
+    int rgbColorDirectorR;
+    int rgbColorDirectorG;
+    int rgbColorDirectorB;
     ofxIntSlider colorDirectorA;
 
-    ofxLabel lblCello;
-    ofxIntSlider colorCelloH;
-    ofxIntSlider colorCelloS;
-    ofxIntSlider colorCelloB;
+    int rgbColorCelloR;
+    int rgbColorCelloG;
+    int rgbColorCelloB;
     ofxIntSlider colorCelloA;
 
-    ofxLabel lblViolin;
-    ofxIntSlider colorViolinH;
-    ofxIntSlider colorViolinS;
-    ofxIntSlider colorViolinB;
+    int rgbColorViolinR;
+    int rgbColorViolinG;
+    int rgbColorViolinB;
     ofxIntSlider colorViolinA;
 
-    ofxLabel lblPiano;
-    ofxIntSlider colorPianoH;
-    ofxIntSlider colorPianoS;
-    ofxIntSlider colorPianoB;
+    int rgbColorPianoR;
+    int rgbColorPianoG;
+    int rgbColorPianoB;
     ofxIntSlider colorPianoA;
 
     void loadSettings();
@@ -52,6 +47,39 @@ protected:
 
     string sceneSettingsFilename;
     string colorSettingsFilename;
+
+    ofxLabel lblDirector;
+    ofxIntSlider colorDirectorH;
+    ofxIntSlider colorDirectorS;
+    ofxIntSlider colorDirectorB;
+    void colorDirectorHChanged(int &newH);
+    void colorDirectorSChanged(int &newS);
+    void colorDirectorBChanged(int &newB);
+
+    ofxLabel lblCello;
+    ofxIntSlider colorCelloH;
+    ofxIntSlider colorCelloS;
+    ofxIntSlider colorCelloB;
+    void colorCelloHChanged(int &newH);
+    void colorCelloSChanged(int &newS);
+    void colorCelloBChanged(int &newB);
+
+    ofxLabel lblViolin;
+    ofxIntSlider colorViolinH;
+    ofxIntSlider colorViolinS;
+    ofxIntSlider colorViolinB;
+    void colorViolinHChanged(int &newH);
+    void colorViolinSChanged(int &newS);
+    void colorViolinBChanged(int &newB);
+
+    ofxLabel lblPiano;
+    ofxIntSlider colorPianoH;
+    ofxIntSlider colorPianoS;
+    ofxIntSlider colorPianoB;
+    void colorPianoHChanged(int &newH);
+    void colorPianoSChanged(int &newS);
+    void colorPianoBChanged(int &newB);
+
 };
 
 
