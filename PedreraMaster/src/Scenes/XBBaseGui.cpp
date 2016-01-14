@@ -19,7 +19,7 @@ static const string strAlpha        = "Alpha";
 
 static const float scenePosX        = 10;
 static const float scenePosY        = 10;
-static const float colorsPosX       = 240;
+static const float colorsPosX       = 260;
 static const float colorsPosY       = scenePosY;
 
 static const int defColorValue      = 127;

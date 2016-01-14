@@ -34,6 +34,10 @@ private:
     XBSceneManager *sceneManager;
 
     void sceneChanged(int &sceneIndex);
+
+    void addLegendMessage(string msg);
+
+    vector<string> legendMessages;
 };
 
 

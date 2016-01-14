@@ -46,6 +46,12 @@ void GUIApp::setup()
     guis.push_back(s4GUI);
 
     ofAddListener(sceneManager->eventSceneChanged, this, &GUIApp::sceneChanged);
+
+    addLegendMessage("KEYS:");
+    addLegendMessage("- [LEFT] Go to Previous Scene");
+    addLegendMessage("- [RIGHT] Go to Next Scene");
+    addLegendMessage("- [T] Show facade template");
+    addLegendMessage("- [F] Show facade bitmap");
 }
 
 void GUIApp::update()
@@ -56,6 +62,21 @@ void GUIApp::draw()
 {
     if (currentGuiIndex >= 0)
         guis[currentGuiIndex]->draw();
+
+    // Show keys info
+    {
+        int msgHeight = 16;
+        float xMargin = 10;
+        float yMargin = 10;
+
+        float posX = xMargin;
+        float posY = ofGetHeight() - (legendMessages.size() * msgHeight) - yMargin;
+
+        for (int i=0; i<legendMessages.size(); ++i) {
+            ofDrawBitmapString(legendMessages[i], posX, posY);
+            posY += msgHeight;
+        }
+    }
 }
 
 void GUIApp::exit()
@@ -77,4 +98,9 @@ void GUIApp::sceneChanged(int &sceneIndex)
 //        guis[currentGuiIndex]->saveSettings();
 
     currentGuiIndex = sceneIndex;
+}
+
+void GUIApp::addLegendMessage(string msg)
+{
+    legendMessages.push_back(msg);
 }

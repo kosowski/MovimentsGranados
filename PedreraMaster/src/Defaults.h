@@ -16,7 +16,7 @@ static const bool           MAIN_WINDOW_RESIZABLE = false;
 static const ofWindowMode   MAIN_WINDOW_MODE = OF_WINDOW;
 
 // GUI WINDOW SETTINGS
-static const int            GUI_WINDOW_WIDTH = 600;
+static const int            GUI_WINDOW_WIDTH = 470;
 static const int            GUI_WINDOW_HEIGHT = 450;
 static const bool           GUI_WINDOW_RESIZABLE = false;
 static const ofWindowMode   GUI_WINDOW_MODE = OF_WINDOW;
