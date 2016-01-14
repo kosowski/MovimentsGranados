@@ -12,6 +12,7 @@ class XBScene3GUI : public XBBaseGUI
 public:
 
     XBScene3GUI();
+    virtual void setup();
 
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;

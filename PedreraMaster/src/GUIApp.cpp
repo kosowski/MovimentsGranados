@@ -33,12 +33,16 @@ void GUIApp::setup()
     currentGuiIndex = -1;
 
     XBScene1GUI *s1GUI = new XBScene1GUI();
+    s1GUI->setup();
     guis.push_back(s1GUI);
     XBScene2GUI *s2GUI = new XBScene2GUI();
+    s2GUI->setup();
     guis.push_back(s2GUI);
     XBScene3GUI *s3GUI = new XBScene3GUI();
+    s3GUI->setup();
     guis.push_back(s3GUI);
     XBScene4GUI *s4GUI = new XBScene4GUI();
+    s4GUI->setup();
     guis.push_back(s4GUI);
 
     ofAddListener(sceneManager->eventSceneChanged, this, &GUIApp::sceneChanged);
@@ -56,6 +60,8 @@ void GUIApp::draw()
 
 void GUIApp::exit()
 {
+    for (int i=0; i<guis.size(); ++i)
+        guis[i]->saveSettings();
 }
 
 XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
@@ -67,5 +73,8 @@ XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
 
 void GUIApp::sceneChanged(int &sceneIndex)
 {
+    if (currentGuiIndex >= 0)
+        guis[currentGuiIndex]->saveSettings();
+
     currentGuiIndex = sceneIndex;
 }

@@ -12,6 +12,7 @@ class XBScene1GUI : public XBBaseGUI
 public:
 
     XBScene1GUI();
+    virtual void setup();
 
     ofxFloatSlider springStrength;
     ofxFloatSlider springDamping;

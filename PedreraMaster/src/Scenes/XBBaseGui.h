@@ -8,15 +8,17 @@
 #include "ofxGui.h"
 #include "ofxColorPicker.h"
 
+static const string STR_SETTINGS_BASEPATH = "settings/";
 
 class XBBaseGUI
 {
 public:
 
     XBBaseGUI();
+    virtual void setup();
     virtual void draw();
 
-    ofxPanel gui;
+    ofxPanel sceneGui;
     ofxPanel colorGui;
 
     ofxLabel lblDirector;
@@ -42,6 +44,14 @@ public:
     ofxIntSlider colorPianoS;
     ofxIntSlider colorPianoB;
     ofxIntSlider colorPianoA;
+
+    void loadSettings();
+    void saveSettings();
+
+protected:
+
+    string sceneSettingsFilename;
+    string colorSettingsFilename;
 };
 
 
