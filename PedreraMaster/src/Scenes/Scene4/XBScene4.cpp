@@ -9,13 +9,6 @@ void XBScene4::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
 
-//    guiOld.setup();
-//    guiOld.add(minPeriod.setup("Min wave period", 800., 200., 2000.));
-//    guiOld.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
-//
-//    guiOld.add(attractorStrength.setup("attractorStrength",  3, 0.0, 10.0));
-//    guiOld.add(attractorRadius.setup("attractorRadius", 3., 0.00, 14.00));
-    
     directorColor.set(77,125,140);
     initSystem();
 }

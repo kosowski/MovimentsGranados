@@ -13,18 +13,6 @@ void XBScene2::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
 
-//    guiOld.setup();
-//
-//    guiOld.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-//    guiOld.add(springDamping.setup("damping", 0.01, 0.000, 0.201));
-//    guiOld.add(drag.setup("drag", 0.1, 0.01, 1.00));
-//    guiOld.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-//    guiOld.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
-//    guiOld.add(mouseStrength.setup("mouseStrength", -96000, -6000, -200000));
-//    guiOld.add(mouseSlope.setup("mouseSlope", 160, 60., 260));
-//    guiOld.add(fixedStrength.setup("fixedStrength", 0.03, 0.01, 0.50));
-//    guiOld.add(fixedDamping.setup("fixedDamping", 0.01, 0.000, 0.201));
-
     directorColor.set(77, 125, 140);
     initSystem();
 }

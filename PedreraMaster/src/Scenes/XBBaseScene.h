@@ -37,7 +37,6 @@ protected:
     float fboAlpha;
 
     XBBaseGUI *gui;
-    ofxPanel guiOld;
 
     void subscribeToCelloEvents();
     void subscribeToViolinEvents();

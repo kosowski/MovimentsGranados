@@ -20,12 +20,6 @@ void XBScene3::setup(XBBaseGUI *_gui)
     colorPickerV.setColor(violinColor);
     colorPickerX.setColor(celloColor);
     
-//    guiOld.setup();
-//    guiOld.add(particleSize.setup("Particle size", 10, 2, 40));
-//    guiOld.add(particleLife.setup("Particle life", 30, 1, 60));
-//    guiOld.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
-//    guiOld.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
-    
     // creatures init
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
