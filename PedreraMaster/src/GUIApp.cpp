@@ -64,3 +64,8 @@ XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)
 
     return guis[sceneIndex];
 }
+
+void GUIApp::sceneChanged(int &sceneIndex)
+{
+    currentGuiIndex = sceneIndex;
+}

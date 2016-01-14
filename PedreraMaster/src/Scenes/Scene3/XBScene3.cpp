@@ -52,7 +52,7 @@ void XBScene3::setup(XBBaseGUI *_gui)
     xEmitter.color = ofColor(violinColor);
     xEmitter.size = myGUI->particleSize;
     
-    ofLoadImage(pTex, "p.png");
+    ofLoadImage(pTex, "resources/particle.png");
     
     
 }

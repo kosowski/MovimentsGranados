@@ -33,7 +33,7 @@ private:
 
     XBSceneManager *sceneManager;
 
-    void sceneChanged(int &sceneIndex) { currentGuiIndex = sceneIndex; };
+    void sceneChanged(int &sceneIndex);
 };
 
 
