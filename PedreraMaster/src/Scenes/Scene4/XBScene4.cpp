@@ -8,7 +8,7 @@
 void XBScene4::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
-
+    
     directorColor.set(77,125,140);
     initSystem();
     
@@ -17,9 +17,9 @@ void XBScene4::setup(XBBaseGUI *_gui)
 
 void XBScene4::initSystem(){
     // Initialize a wave with starting point, width, amplitude, and period
-
+    
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-
+    
     for(int i= 0; i < NUM_WAVES; i++)
         waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
 }
@@ -28,9 +28,12 @@ void XBScene4::update()
 {
     XBBaseScene::update();
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-
+    
     for(int i=0; i< waves.size();i++){
-        waves[i].setAttractor(ofGetMouseX(), ofGetMouseY(), myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(0, ofGetMouseX(), ofGetMouseY(), myGUI->attractorStrength, myGUI->attractorRadius);
+        float fakeX = ofGetMouseX() - ofGetWidth()/2 + 600 * (ofNoise( ofGetElapsedTimeMillis() * 0.0005) - 0.5 );
+        float fakeY = ofGetMouseY() + 600 * ( ofNoise( ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5 );
+        waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
         waves[i].update();
     }
 }
@@ -38,7 +41,7 @@ void XBScene4::update()
 void XBScene4::drawIntoFBO()
 {
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-
+    
     fbo.begin();
     {
         if(myGUI->enableSmooth)

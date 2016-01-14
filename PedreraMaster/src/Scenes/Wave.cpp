@@ -45,10 +45,19 @@ void Wave::update() {
             if(j==0)
                 particles[i].set(origin.x+i*xspacing, origin.y);
             
-            float dist = 1 - particles[i].distance( attractor) / maxDist;
+//            float dist = 1 - particles[i].distance( attractor) / maxDist;
+//            ofPoint attractor2 ( attractor.x - ofGetWidth()/2, attractor.y);
+//            float dist2 = 1 - particles[i].distance( attractor2) / maxDist;
+            
+            float attraction = 0;
+            for(int k= 0; k< attractors.size(); k++){
+                float dist = 1 - particles[i].distance( attractors[k]) / maxDist;
+                attraction += pow(dist, attractorRadius) * attractorStrength;
+            }
             // Every other wave is cosine instead of sine
             // if (j % 2 == 0)
-            particles[i] += ofPoint(0, sin(x)*amplitude[j] * pow(dist, attractorRadius) * attractorStrength);
+            //particles[i] += ofPoint(0, sin(x)*amplitude[j] * pow(dist, attractorRadius) * attractorStrength);
+            particles[i] += ofPoint(0, sin(x)*amplitude[j] * attraction );
             //else
             //particles[i].location.add(0,  cos(x)*amplitude[j] * dist);
             x+=dx[j];
@@ -67,8 +76,14 @@ void Wave::display() {
     }
 }
 
-void Wave::setAttractor(float x, float y, float strength, float radius){
-    attractor.x=x;attractor.y=y;
+void Wave::setAttractor(int index, float x, float y, float strength, float radius){
+    if( index >= attractors.size()){
+        attractors.push_back(ofPoint(x, y));
+        index = attractors.size() - 1;
+    }
+    attractors[index].x=x;
+    attractors[index].y=y;
     attractorStrength = strength;
     attractorRadius = radius;
+    
 }
