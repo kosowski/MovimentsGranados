@@ -32,6 +32,7 @@
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
 		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
 		660E8BB31C41770100A23F26 /* ofxColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */; };
+		660FB9E71C47C895000BBF02 /* BlurEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660FB9E61C47C895000BBF02 /* BlurEffect.cpp */; };
 		6626DFF61C443A27001E40C2 /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6626DFF41C443A27001E40C2 /* Wave.cpp */; };
 		662B18811C405DF100004722 /* Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187D1C405DF100004722 /* Rope.cpp */; };
 		662B18821C405DF100004722 /* Vehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187F1C405DF100004722 /* Vehicle.cpp */; };
@@ -149,6 +150,8 @@
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		660E8BB11C41770100A23F26 /* ofxColorPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxColorPicker.cpp; sourceTree = "<group>"; };
 		660E8BB21C41770100A23F26 /* ofxColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxColorPicker.h; sourceTree = "<group>"; };
+		660FB9E51C47C743000BBF02 /* BlurEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurEffect.h; sourceTree = "<group>"; };
+		660FB9E61C47C895000BBF02 /* BlurEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlurEffect.cpp; sourceTree = "<group>"; };
 		6626DFF41C443A27001E40C2 /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
 		6626DFF51C443A27001E40C2 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
 		662B187D1C405DF100004722 /* Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rope.cpp; sourceTree = "<group>"; };
@@ -296,6 +299,8 @@
 				662B187F1C405DF100004722 /* Vehicle.cpp */,
 				6626DFF51C443A27001E40C2 /* Wave.h */,
 				6626DFF41C443A27001E40C2 /* Wave.cpp */,
+				660FB9E51C47C743000BBF02 /* BlurEffect.h */,
+				660FB9E61C47C895000BBF02 /* BlurEffect.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -777,6 +782,7 @@
 				6659B7071C3FE15500B8285C /* ofxBaseGui.cpp in Sources */,
 				21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */,
 				6659B7091C3FE15500B8285C /* ofxGuiGroup.cpp in Sources */,
+				660FB9E71C47C895000BBF02 /* BlurEffect.cpp in Sources */,
 				2147662A8D4FFACF9FAAF319 /* XBBaseGui.cpp in Sources */,
 				214760DB796EA0C9572BC558 /* XBScene1.cpp in Sources */,
 				21476354B8F0C4325D82467F /* XBScene1GUI.cpp in Sources */,
@@ -978,7 +984,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
