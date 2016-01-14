@@ -20,6 +20,7 @@ public:
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
     ofxFloatSlider alpha;
+    ofxFloatSlider blurAmount;
     ofxToggle enableSmooth;
 };
 

@@ -11,6 +11,8 @@ void XBScene4::setup(XBBaseGUI *_gui)
 
     directorColor.set(77,125,140);
     initSystem();
+    
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight() );
 }
 
 void XBScene4::initSystem(){
@@ -53,6 +55,8 @@ void XBScene4::drawIntoFBO()
         drawFadeRectangle();
     }
     fbo.end();
+    
+    blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
 void XBScene4::keyReleased(int key){

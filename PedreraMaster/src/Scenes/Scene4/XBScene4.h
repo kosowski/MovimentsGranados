@@ -8,6 +8,7 @@
 #include "XBBaseScene.h"
 #include "ofxGui.h"
 #include "Wave.h"
+#include "BlurEffect.h"
 
 
 #define NUM_WAVES 10
@@ -27,6 +28,8 @@ public:
     
     vector<Wave> waves;
     ofColor directorColor;
+    
+    BlurEffect blur;
     
 //    ofxFloatSlider attractorStrength;
 //    ofxFloatSlider attractorRadius;

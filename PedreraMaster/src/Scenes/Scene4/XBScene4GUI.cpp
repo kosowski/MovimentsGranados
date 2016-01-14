@@ -21,6 +21,8 @@ void XBScene4GUI::setup()
     sceneGui.add(attractorStrength.setup("attractorStrength",  3, 0.0, 10.0));
     sceneGui.add(attractorRadius.setup("attractorRadius", 3., 0.00, 14.00));
 
+    sceneGui.add(blurAmount.setup("Blur amount", 0., 0.00, 8.00));
+    
     sceneGui.add(alpha.setup("Alpha", 0, 0, 255));
     sceneGui.add(enableSmooth.setup("Smooth", false));
 
