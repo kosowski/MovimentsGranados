@@ -6,8 +6,6 @@
 
 XBScene2GUI::XBScene2GUI() : XBBaseGUI()
 {
-    gui.setup();
-
     gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
     gui.add(springDamping.setup("damping", 0.01, 0.000, 0.201));
     gui.add(drag.setup("drag", 0.1, 0.01, 1.00));
@@ -17,9 +15,4 @@ XBScene2GUI::XBScene2GUI() : XBBaseGUI()
     gui.add(mouseSlope.setup("mouseSlope", 160, 60., 260));
     gui.add(fixedStrength.setup("fixedStrength", 0.03, 0.01, 0.50));
     gui.add(fixedDamping.setup("fixedDamping", 0.01, 0.000, 0.201));
-}
-
-void XBScene2GUI::draw()
-{
-    gui.draw();
 }

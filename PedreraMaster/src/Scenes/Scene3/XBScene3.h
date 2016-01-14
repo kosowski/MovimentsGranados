@@ -38,12 +38,10 @@ public:
     ofColor directorColor;
     ofColor violinColor;
     ofColor celloColor;
-    
-    
+
     //GUI related
     ofxColorPicker colorPickerV;
     ofxColorPicker colorPickerX;
-    
 //    ofxFloatSlider particleSize;
 //    ofxFloatSlider particleLife;
 //    ofxVec3Slider particleVelocity;

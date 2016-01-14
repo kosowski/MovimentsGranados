@@ -12,7 +12,6 @@ class XBScene4GUI : public XBBaseGUI
 public:
 
     XBScene4GUI();
-    void draw();
 
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;

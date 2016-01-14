@@ -6,7 +6,6 @@
 
 XBScene1GUI::XBScene1GUI() : XBBaseGUI()
 {
-    gui.setup();
     gui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
     gui.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
     gui.add(restLength.setup("restLength", 0., -10., 20.));
@@ -21,9 +20,4 @@ XBScene1GUI::XBScene1GUI() : XBBaseGUI()
     gui.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
 
     gui.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
-}
-
-void XBScene1GUI::draw()
-{
-    gui.draw();
 }

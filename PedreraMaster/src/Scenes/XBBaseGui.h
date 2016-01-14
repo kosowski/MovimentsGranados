@@ -14,14 +14,34 @@ class XBBaseGUI
 public:
 
     XBBaseGUI();
-    virtual void update();
     virtual void draw();
 
-protected:
-
     ofxPanel gui;
-    vector<ofxColorPicker> colorPickers;
-    vector<ofColor> colors;
+    ofxPanel colorGui;
+
+    ofxLabel lblDirector;
+    ofxIntSlider colorDirectorH;
+    ofxIntSlider colorDirectorS;
+    ofxIntSlider colorDirectorB;
+    ofxIntSlider colorDirectorA;
+
+    ofxLabel lblCello;
+    ofxIntSlider colorCelloH;
+    ofxIntSlider colorCelloS;
+    ofxIntSlider colorCelloB;
+    ofxIntSlider colorCelloA;
+
+    ofxLabel lblViolin;
+    ofxIntSlider colorViolinH;
+    ofxIntSlider colorViolinS;
+    ofxIntSlider colorViolinB;
+    ofxIntSlider colorViolinA;
+
+    ofxLabel lblPiano;
+    ofxIntSlider colorPianoH;
+    ofxIntSlider colorPianoS;
+    ofxIntSlider colorPianoB;
+    ofxIntSlider colorPianoA;
 };
 
 
