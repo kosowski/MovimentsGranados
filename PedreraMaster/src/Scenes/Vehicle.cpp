@@ -68,7 +68,9 @@ void Vehicle::update(){
 
 void Vehicle::draw(){
     
+    ofPushStyle();
     ofSetColor(colour);
+    ofFill();
     
     for (ofPoint p:nodes)
         ofDrawCircle(p.x, p.y, r-2);
@@ -83,6 +85,7 @@ void Vehicle::draw(){
     
     for (Rope s:springs)
         s.draw();
+    ofPopStyle();
 }
 
 void Vehicle::setColor(ofColor c){
