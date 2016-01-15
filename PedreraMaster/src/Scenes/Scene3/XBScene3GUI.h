@@ -14,14 +14,24 @@ public:
     XBScene3GUI();
     virtual void setup();
 
+    ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
     ofxFloatSlider blurAmount;
+    
+    ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
     ofxFloatSlider stoneAlphaDecrease;
     ofxFloatSlider stoneTime;
+    
+    ofxGuiGroup directorGroup;
+    ofxFloatSlider attractorStrength;
+    ofxFloatSlider attractorRadius;
+    ofxFloatSlider minPeriod;
+    ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
     
 };
 

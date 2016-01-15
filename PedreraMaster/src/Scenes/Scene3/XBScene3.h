@@ -4,13 +4,14 @@
 
 #ifndef PEDRERAMASTER_XBSCENE3_H
 #define PEDRERAMASTER_XBSCENE3_H
+#define NUM_WAVES 8
 
 #include "XBBaseScene.h"
 #include "Vehicle.h"
 #include "ofxParticles.h"
 #include "BlurEffect.h"
 #include "ofxSvg.h"
-
+#include "Wave.h"
 
 struct expandingPolyLine{
     ofPolyline line;
@@ -47,6 +48,11 @@ public:
     ofxSVG svg;
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
+    
+    
+    void initWaves();
+    
+    vector<Wave> waves;
     
     BlurEffect blur;
 };
