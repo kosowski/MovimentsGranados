@@ -19,6 +19,10 @@ public:
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
     ofxFloatSlider blurAmount;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    
 };
 
 

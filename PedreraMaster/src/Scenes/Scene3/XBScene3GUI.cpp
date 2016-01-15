@@ -18,6 +18,10 @@ void XBScene3GUI::setup()
     sceneGui.add(particleLife.setup("Particle life", 30, 1, 60));
     sceneGui.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+    
+    sceneGui.add(stoneGrowFactor.setup("stone grow speed", 0.025, 0.000, 0.5));
+    sceneGui.add(stoneAlphaDecrease.setup("stone alpha speed", 2.3, 1, 20));
+    sceneGui.add(stoneTime.setup("stone time", 2, 0.0, 4.0));
 
     sceneGui.add(blurAmount.setup("Blur amount", 0., 0.00, 8.00));
 

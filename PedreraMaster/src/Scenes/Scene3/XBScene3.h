@@ -9,7 +9,15 @@
 #include "Vehicle.h"
 #include "ofxParticles.h"
 #include "BlurEffect.h"
+#include "ofxSvg.h"
 
+
+struct expandingPolyLine{
+    ofPolyline line;
+    ofPath path;
+    float life;
+    ofPoint centroid;
+};
 
 class XBScene3 : public XBBaseScene
 {
@@ -22,6 +30,8 @@ public:
     virtual void drawIntoFBO();
     virtual void drawGUI();
     void keyReleased(int key);
+    void initSVG();
+    void initParticles();
 
     Vehicle v, x;
     
@@ -33,6 +43,11 @@ public:
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
     int displayMode;
+    
+    ofxSVG svg;
+    vector<expandingPolyLine> stones;
+    vector<expandingPolyLine> stonesToDraw;
+    
     BlurEffect blur;
 };
 
