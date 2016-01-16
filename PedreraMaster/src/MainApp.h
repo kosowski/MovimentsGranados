@@ -16,6 +16,7 @@ public:
     void draw();
     void exit();
 
+    void keyPressed(int key);
     void keyReleased(int key);
 
     XBSceneManager *getSceneManager() { return &sceneManager; };

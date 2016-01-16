@@ -72,6 +72,11 @@ void MainApp::exit()
     sceneManager.exit();
 }
 
+void MainApp::keyPressed(int key)
+{
+    sceneManager.keyPressed(key);
+}
+
 void MainApp::keyReleased(int key)
 {
     switch (key)

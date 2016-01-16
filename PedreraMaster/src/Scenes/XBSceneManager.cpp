@@ -161,3 +161,8 @@ void XBSceneManager::keyReleased(int key)
 {
     scenes[currentSceneIndex]->keyReleased(key);
 }
+
+void XBSceneManager::keyPressed(int key)
+{
+    scenes[currentSceneIndex]->keyPressed(key);
+}

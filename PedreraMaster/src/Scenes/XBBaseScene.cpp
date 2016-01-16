@@ -55,6 +55,15 @@ void XBBaseScene::keyReleased(int key)
     }
 }
 
+void XBBaseScene::keyPressed(int key)
+{
+    switch(key)
+    {
+        default:
+            break;
+    }
+}
+
 void XBBaseScene::subscribeToCelloEvents()
 {
     XBOSCManager &oscManager = XBOSCManager::getInstance();

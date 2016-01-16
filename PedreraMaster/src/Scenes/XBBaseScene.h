@@ -28,6 +28,7 @@ public:
     float *getFBOAlpha() { return &fboAlpha; }
 
     virtual void keyReleased(int key);
+    virtual void keyPressed(int key);
 
 protected:
 
