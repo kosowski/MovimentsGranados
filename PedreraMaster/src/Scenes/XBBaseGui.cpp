@@ -102,59 +102,83 @@ void XBBaseGUI::saveSettings()
 void XBBaseGUI::colorDirectorHChanged(int &newH) {
     ofColor c = ofColor::fromHsb(newH, colorDirectorS, colorDirectorB);
     rgbColorDirectorR = int(c.r);
+    rgbColorDirectorG = int(c.g);
+    rgbColorDirectorB = int(c.b);
 }
 
 void XBBaseGUI::colorDirectorSChanged(int &newS) {
     ofColor c = ofColor::fromHsb(colorDirectorH, newS, colorDirectorB);
+    rgbColorDirectorR = int(c.r);
     rgbColorDirectorG = int(c.g);
+    rgbColorDirectorB = int(c.b);
 }
 
 void XBBaseGUI::colorDirectorBChanged(int &newB) {
     ofColor c = ofColor::fromHsb(colorDirectorH, colorDirectorS, newB);
+    rgbColorDirectorR = int(c.r);
+    rgbColorDirectorG = int(c.g);
     rgbColorDirectorB = int(c.b);
 }
 
 void XBBaseGUI::colorCelloHChanged(int &newH) {
     ofColor c = ofColor::fromHsb(newH, colorCelloS, colorCelloB);
     rgbColorCelloR = int(c.r);
+    rgbColorCelloG = int(c.g);
+    rgbColorCelloB = int(c.b);
 }
 
 void XBBaseGUI::colorCelloSChanged(int &newS) {
     ofColor c = ofColor::fromHsb(colorCelloH, newS, colorCelloB);
+    rgbColorCelloR = int(c.r);
     rgbColorCelloG = int(c.g);
+    rgbColorCelloB = int(c.b);
 }
 
 void XBBaseGUI::colorCelloBChanged(int &newB) {
     ofColor c = ofColor::fromHsb(colorCelloH, colorCelloS, newB);
+    rgbColorCelloR = int(c.r);
+    rgbColorCelloG = int(c.g);
     rgbColorCelloB = int(c.b);
 }
 
 void XBBaseGUI::colorViolinHChanged(int &newH) {
     ofColor c = ofColor::fromHsb(newH, colorViolinS, colorViolinB);
     rgbColorViolinR = int(c.r);
+    rgbColorViolinG = int(c.g);
+    rgbColorViolinB = int(c.b);
 }
 
 void XBBaseGUI::colorViolinSChanged(int &newS) {
     ofColor c = ofColor::fromHsb(colorViolinH, newS, colorViolinB);
+    rgbColorViolinR = int(c.r);
     rgbColorViolinG = int(c.g);
+    rgbColorViolinB = int(c.b);
 }
 
 void XBBaseGUI::colorViolinBChanged(int &newB) {
     ofColor c = ofColor::fromHsb(colorViolinH, colorViolinS, newB);
+    rgbColorViolinR = int(c.r);
+    rgbColorViolinG = int(c.g);
     rgbColorViolinB = int(c.b);
 }
 
 void XBBaseGUI::colorPianoHChanged(int &newH) {
     ofColor c = ofColor::fromHsb(newH, colorPianoS, colorPianoB);
     rgbColorPianoR = int(c.r);
+    rgbColorPianoG = int(c.g);
+    rgbColorPianoB = int(c.b);
 }
 
 void XBBaseGUI::colorPianoSChanged(int &newS) {
     ofColor c = ofColor::fromHsb(colorPianoH, newS, colorPianoB);
+    rgbColorPianoR = int(c.r);
     rgbColorPianoG = int(c.g);
+    rgbColorPianoB = int(c.b);
 }
 
 void XBBaseGUI::colorPianoBChanged(int &newB) {
     ofColor c = ofColor::fromHsb(colorPianoH, colorPianoS, newB);
+    rgbColorPianoR = int(c.r);
+    rgbColorPianoG = int(c.g);
     rgbColorPianoB = int(c.b);
 }
