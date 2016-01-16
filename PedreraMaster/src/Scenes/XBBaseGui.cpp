@@ -22,7 +22,18 @@ static const float scenePosY        = 10;
 static const float colorsPosX       = 260;
 static const float colorsPosY       = scenePosY;
 
-static const int defColorValue      = 127;
+static const int defColorDirR       = 195;
+static const int defColorDirG       = 45;
+static const int defColorDirB       = 55;
+static const int defColorCelR       = 147;
+static const int defColorCelG       = 22;
+static const int defColorCelB       = 36;
+static const int defColorVioR       = 46;
+static const int defColorVioG       = 63;
+static const int defColorVioB       = 95;
+static const int defColorPiaR       = 11;
+static const int defColorPiaG       = 71;
+static const int defColorPiaB       = 81;
 static const int defAlpha           = 255;
 static const int minColor           = 0;
 static const int maxColor           = 255;
@@ -40,36 +51,36 @@ void XBBaseGUI::setup()
     colorGui.setPosition(colorsPosX, colorsPosY);
 
     colorGui.add(lblDirector.setup(strDirector, ""));
-    colorGui.add(colorDirectorH.setup("D " + strHue, defColorValue, minColor, maxColor));
-    colorGui.add(colorDirectorS.setup("D " + strSat, defColorValue, minColor, maxColor));
-    colorGui.add(colorDirectorB.setup("D " + strBright, defColorValue, minColor, maxColor));
+    colorGui.add(colorDirectorH.setup("D " + strHue, defColorDirR, minColor, maxColor));
+    colorGui.add(colorDirectorS.setup("D " + strSat, defColorDirG, minColor, maxColor));
+    colorGui.add(colorDirectorB.setup("D " + strBright, defColorDirB, minColor, maxColor));
     colorGui.add(colorDirectorA.setup("D " + strAlpha, defAlpha, minColor, maxColor));
     colorDirectorH.addListener(this, &XBBaseGUI::colorDirectorHChanged);
     colorDirectorS.addListener(this, &XBBaseGUI::colorDirectorSChanged);
     colorDirectorB.addListener(this, &XBBaseGUI::colorDirectorBChanged);
 
     colorGui.add(lblCello.setup(strCello, ""));
-    colorGui.add(colorCelloH.setup("C " + strHue, defColorValue, minColor, maxColor));
-    colorGui.add(colorCelloS.setup("C " + strSat, defColorValue, minColor, maxColor));
-    colorGui.add(colorCelloB.setup("C " + strBright, defColorValue, minColor, maxColor));
+    colorGui.add(colorCelloH.setup("C " + strHue, defColorCelR, minColor, maxColor));
+    colorGui.add(colorCelloS.setup("C " + strSat, defColorCelG, minColor, maxColor));
+    colorGui.add(colorCelloB.setup("C " + strBright, defColorCelB, minColor, maxColor));
     colorGui.add(colorCelloA.setup("C " + strAlpha, defAlpha, minColor, maxColor));
     colorCelloH.addListener(this, &XBBaseGUI::colorCelloHChanged);
     colorCelloS.addListener(this, &XBBaseGUI::colorCelloSChanged);
     colorCelloB.addListener(this, &XBBaseGUI::colorCelloBChanged);
 
     colorGui.add(lblViolin.setup(strViolin, ""));
-    colorGui.add(colorViolinH.setup("V " + strHue, defColorValue, minColor, maxColor));
-    colorGui.add(colorViolinS.setup("V " + strSat, defColorValue, minColor, maxColor));
-    colorGui.add(colorViolinB.setup("V " + strBright, defColorValue, minColor, maxColor));
+    colorGui.add(colorViolinH.setup("V " + strHue, defColorVioR, minColor, maxColor));
+    colorGui.add(colorViolinS.setup("V " + strSat, defColorVioG, minColor, maxColor));
+    colorGui.add(colorViolinB.setup("V " + strBright, defColorVioB, minColor, maxColor));
     colorGui.add(colorViolinA.setup("V " + strAlpha, defAlpha, minColor, maxColor));
     colorViolinH.addListener(this, &XBBaseGUI::colorViolinHChanged);
     colorViolinS.addListener(this, &XBBaseGUI::colorViolinSChanged);
     colorViolinB.addListener(this, &XBBaseGUI::colorViolinBChanged);
 
     colorGui.add(lblPiano.setup(strPiano, ""));
-    colorGui.add(colorPianoH.setup("P " + strHue, defColorValue, minColor, maxColor));
-    colorGui.add(colorPianoS.setup("P " + strSat, defColorValue, minColor, maxColor));
-    colorGui.add(colorPianoB.setup("P " + strBright, defColorValue, minColor, maxColor));
+    colorGui.add(colorPianoH.setup("P " + strHue, defColorPiaR, minColor, maxColor));
+    colorGui.add(colorPianoS.setup("P " + strSat, defColorPiaG, minColor, maxColor));
+    colorGui.add(colorPianoB.setup("P " + strBright, defColorPiaB, minColor, maxColor));
     colorGui.add(colorPianoA.setup("P " + strAlpha, defAlpha, minColor, maxColor));
     colorPianoH.addListener(this, &XBBaseGUI::colorPianoHChanged);
     colorPianoS.addListener(this, &XBBaseGUI::colorPianoSChanged);
@@ -79,6 +90,12 @@ void XBBaseGUI::setup()
     lblCello.setBackgroundColor(ofColor(40, 100, 40));
     lblViolin.setBackgroundColor(ofColor(50, 110, 50));
     lblPiano.setBackgroundColor(ofColor(60, 120, 60));
+
+    // Write XML settings files if they do not exist.
+    if (!(ofFile::doesFileExist(STR_SETTINGS_BASEPATH + sceneSettingsFilename)))
+        sceneGui.saveToFile(STR_SETTINGS_BASEPATH + sceneSettingsFilename);
+    if (!(ofFile::doesFileExist(STR_SETTINGS_BASEPATH + colorSettingsFilename)))
+        colorGui.saveToFile(STR_SETTINGS_BASEPATH + colorSettingsFilename);
 }
 
 void XBBaseGUI::draw()
