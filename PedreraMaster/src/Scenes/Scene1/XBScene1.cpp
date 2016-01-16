@@ -17,6 +17,7 @@ void XBScene1::setup(XBBaseGUI *_gui)
     
     initSVG();
     initSystem();
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
 
 
