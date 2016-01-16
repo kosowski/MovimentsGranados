@@ -23,6 +23,7 @@ int main()
     shared_ptr<GUIApp> guiApp(new GUIApp);
 
     mainApp->setGuiApp(guiApp);
+    guiApp->setMainApp(mainApp);
 
     guiApp->setSceneManager(mainApp->getSceneManager());
 

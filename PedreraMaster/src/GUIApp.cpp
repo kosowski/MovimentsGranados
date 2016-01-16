@@ -4,6 +4,7 @@
 
 #include "GUIApp.h"
 #include "Defaults.h"
+#include "MainApp.h"
 
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS [GUI]";
 
@@ -83,6 +84,25 @@ void GUIApp::exit()
 {
 //    for (int i=0; i<guis.size(); ++i)
 //        guis[i]->saveSettings();
+}
+
+void GUIApp::keyReleased(int key)
+{
+    switch (key)
+    {
+        case OF_KEY_LEFT:
+        case OF_KEY_DOWN:
+        case OF_KEY_RIGHT:
+        case OF_KEY_UP:
+        case 'f':
+        case 'F':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+            mainApp->keyReleased(key);
+        default: break;
+    }
 }
 
 XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)

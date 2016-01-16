@@ -7,11 +7,12 @@
 
 #include "ofMain.h"
 #include "XBSceneManager.h"
-
 #include "XBScene1GUI.h"
 #include "XBScene2GUI.h"
 #include "XBScene3GUI.h"
 #include "XBScene4GUI.h"
+
+class MainApp;
 
 class GUIApp : public ofBaseApp
 {
@@ -22,14 +23,19 @@ public:
     void draw();
     void exit();
 
+    void keyReleased(int key);
+
     void setSceneManager(XBSceneManager *_sceneManager) { sceneManager = _sceneManager; };
 
     XBBaseGUI *getGuiForSceneIndex(int sceneIndex);
+
+    void setMainApp(const shared_ptr<MainApp> &mainApp) { GUIApp::mainApp = mainApp; };
 
 private:
 
     vector<XBBaseGUI *> guis;
     int currentGuiIndex;
+    shared_ptr<MainApp> mainApp;
 
     XBSceneManager *sceneManager;
 
