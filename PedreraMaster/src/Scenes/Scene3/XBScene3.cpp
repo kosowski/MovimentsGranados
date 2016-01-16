@@ -16,7 +16,9 @@ void XBScene3::setup(XBBaseGUI *_gui)
     // creatures init
     v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
-
+    initPaths();
+    vPathIndex = vPath.size()/2;
+    xPathIndex= xPath.size()/2;
     initParticles();
     initSVG();
     initWaves();
@@ -31,7 +33,24 @@ void XBScene3::update()
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
 
     // update violin and cello positions and colours
+       vPathIndex += myGUI-> pathSpeed;
+    v.setMaxForce(myGUI->maxForce);
+    v.setMaxSpeed(myGUI->maxSpeed);
+    v.setTailStiffness(myGUI->stiffness);
+    v.setTailDamping(myGUI->damping);
+    v.setMass(myGUI->mass);
+    ofPoint vTarget = vPath.getPointAtIndexInterpolated(vPathIndex);
+    v.seek(vTarget);
     v.update();
+    
+    xPathIndex += myGUI-> pathSpeed;
+    x.setMaxForce(myGUI->maxForce);
+    x.setMaxSpeed(myGUI->maxSpeed);
+    x.setTailStiffness(myGUI->stiffness);
+    x.setTailDamping(myGUI->damping);
+    x.setMass(myGUI->mass);
+    ofPoint xTarget = xPath.getPointAtIndexInterpolated(xPathIndex);
+    x.seek(xTarget);
     x.update();
     v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
     x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
@@ -150,6 +169,27 @@ void XBScene3::keyReleased(int key){
         e.life= 1;
         stonesToDraw.push_back(e);
     }
+}
+
+void XBScene3::initPaths(){
+    svg.load("resources/caminosEscena3.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        if(lines.size() > 1)
+            cout << "Error en formato caminos escena 3" << endl;
+
+        ofPolyline pl = lines[0].getResampledBySpacing(1);
+        if(i== 1)
+            vPath = pl;
+        else if( i== 2)
+            xPath = pl;
+        
+    }
+
 }
 
 void XBScene3::initSVG()

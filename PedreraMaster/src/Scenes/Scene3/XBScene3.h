@@ -33,8 +33,13 @@ public:
     void keyReleased(int key);
     void initSVG();
     void initParticles();
+    void initPaths();
 
     Vehicle v, x;
+    ofPolyline vPath;
+    float vPathIndex = 0;
+    ofPolyline xPath;
+    float xPathIndex = 0;
     
     bool emitParticles;
     ofxParticleSystem particleSystem;

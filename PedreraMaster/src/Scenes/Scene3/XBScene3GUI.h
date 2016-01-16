@@ -14,6 +14,14 @@ public:
     XBScene3GUI();
     virtual void setup();
 
+    ofxGuiGroup creaturesGroup;
+    ofxFloatSlider maxSpeed;
+    ofxFloatSlider maxForce;
+    ofxFloatSlider pathSpeed;
+    ofxFloatSlider stiffness;
+    ofxFloatSlider damping;
+    ofxFloatSlider mass;
+    
     ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;

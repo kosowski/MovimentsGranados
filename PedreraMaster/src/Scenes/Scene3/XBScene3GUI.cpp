@@ -14,6 +14,16 @@ void XBScene3GUI::setup()
 {
     XBBaseGUI::setup();
 
+    creaturesGroup.setup("Violin & cello");
+    creaturesGroup.add(maxSpeed.setup("Speed", 4.0, 0.0, 10));
+    creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));
+    creaturesGroup.add(pathSpeed.setup("Path increment", 1.0, 0.0, 5.0));
+    creaturesGroup.add(stiffness.setup("stiffness", 0.05, 0.00, 0.50));
+    creaturesGroup.add(damping.setup("damping", 0.75, 0.00, 1.00));
+    creaturesGroup.add(mass.setup("mass", 1.0, 0.0, 10.0));
+
+    sceneGui.add(&creaturesGroup);
+    
     particlesGroup.setup("Particles");
     particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     particlesGroup.add(particleLife.setup("Particle life", 30, 1, 60));
