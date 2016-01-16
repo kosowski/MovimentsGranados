@@ -14,6 +14,7 @@ public:
     XBScene1GUI();
     virtual void setup();
 
+    ofxGuiGroup directorGroup;
     ofxFloatSlider springStrength;
     ofxFloatSlider springDamping;
     ofxFloatSlider drag;
@@ -26,6 +27,12 @@ public:
     ofxFloatSlider fixedRestLength;
     ofxFloatSlider restLength;
     ofxFloatSlider xDamping;
+    
+    ofxGuiGroup violinGroup;
+    ofxFloatSlider violinBorderSize;
+    ofxFloatSlider ViolinBorderFade;
+    
+    ofxFloatSlider blurAmount;
 };
 
 
