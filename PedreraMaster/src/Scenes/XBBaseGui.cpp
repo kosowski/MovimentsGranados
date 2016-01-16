@@ -19,8 +19,9 @@ static const string strAlpha        = "Alpha";
 
 static const float scenePosX        = 10;
 static const float scenePosY        = 10;
-static const float colorsPosX       = 260;
+static const float colorsPosX       = 220;
 static const float colorsPosY       = scenePosY;
+static const float colorGuiWidth    = 500;
 
 static const ofVec4f defColorDirector(195, 45, 55, 255);
 static const ofVec4f defColorCello(147, 22, 36, 255);
@@ -28,6 +29,8 @@ static const ofVec4f defColorViolin(46, 63, 95, 255);
 static const ofVec4f defColorPiano(11, 71, 81, 255);
 static const int minColor           = 0;
 static const int maxColor           = 255;
+
+
 
 XBBaseGUI::XBBaseGUI()
 {
@@ -87,6 +90,9 @@ void XBBaseGUI::setup()
         sceneGui.saveToFile(STR_SETTINGS_BASEPATH + sceneSettingsFilename);
     if (!(ofFile::doesFileExist(STR_SETTINGS_BASEPATH + colorSettingsFilename)))
         colorGui.saveToFile(STR_SETTINGS_BASEPATH + colorSettingsFilename);
+
+    colorGui.setSize(colorGuiWidth, colorGuiWidth);
+    colorGui.setWidthElements(colorGuiWidth);
 }
 
 void XBBaseGUI::draw()
