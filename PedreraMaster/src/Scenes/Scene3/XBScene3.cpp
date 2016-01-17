@@ -207,7 +207,7 @@ void XBScene3::initPaths(){
 
 void XBScene3::initSVG()
 {
-    svg.load("resources/piedras.svg");
+    svg.load("resources/Esc3y4Piano (temp).svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
