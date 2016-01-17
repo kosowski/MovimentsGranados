@@ -80,6 +80,9 @@ protected:
     void colorPianoSChanged(int &newS);
     void colorPianoBChanged(int &newB);
 
+private:
+
+    ofColor HSBtoRGB(float h, float s, float b);
 };
 
 

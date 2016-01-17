@@ -6,8 +6,8 @@
 int main()
 {
     ofGLFWWindowSettings mainSettings;
-    mainSettings.width = MAIN_WINDOW_WIDTH;
-    mainSettings.height = MAIN_WINDOW_HEIGHT;
+    mainSettings.width = int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE);
+    mainSettings.height = int(MAIN_WINDOW_HEIGHT * MAIN_WINDOW_SCALE);
     mainSettings.windowMode = MAIN_WINDOW_MODE;
     mainSettings.resizable = MAIN_WINDOW_RESIZABLE;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(mainSettings);

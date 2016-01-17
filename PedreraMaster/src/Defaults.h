@@ -10,8 +10,9 @@
 #define ConductrEnter_Config_h
 
 // MAIN WINDOW SETTINGS
-static const int            MAIN_WINDOW_WIDTH = 1024;
-static const int            MAIN_WINDOW_HEIGHT = 820;
+static const int            MAIN_WINDOW_WIDTH = 1200;
+static const int            MAIN_WINDOW_HEIGHT = 1920;
+static const float          MAIN_WINDOW_SCALE = 0.5f;
 static const bool           MAIN_WINDOW_RESIZABLE = false;
 static const ofWindowMode   MAIN_WINDOW_MODE = OF_WINDOW;
 

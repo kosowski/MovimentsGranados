@@ -16,9 +16,9 @@ void MainApp::setup()
 
     if (MAIN_WINDOW_MODE == OF_WINDOW)
     {
-        int windowWidths = MAIN_WINDOW_WIDTH + GUI_WINDOW_WIDTH;
+        int windowWidths = int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE) + GUI_WINDOW_WIDTH;
         int winX = ofGetScreenWidth()/2 - windowWidths/2;
-        int winY = ofGetScreenHeight()/2 - MAIN_WINDOW_HEIGHT/2;
+        int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * MAIN_WINDOW_SCALE)/2;
         ofSetWindowPosition(winX, winY);
     }
 
