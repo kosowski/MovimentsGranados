@@ -21,6 +21,7 @@ public:
     ofxFloatSlider stiffness;
     ofxFloatSlider damping;
     ofxFloatSlider mass;
+    ofxToggle showPath;
     
     ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;

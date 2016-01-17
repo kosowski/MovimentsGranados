@@ -14,11 +14,13 @@ void XBScene3::setup(XBBaseGUI *_gui)
     int h = 250;
     
     // creatures init
-    v.setup(ofGetWidth() / 2, ofGetHeight() / 2);
-    x.setup(ofGetWidth() / 2, ofGetHeight() / 2);
     initPaths();
-    vPathIndex = vPath.size()/2;
-    xPathIndex= xPath.size()/2;
+    vPathIndex = 0;//vPath.size()/2;
+    xPathIndex= 0;//xPath.size()/2;
+    v.setup(vPath.getPointAtIndexInterpolated(vPathIndex).x, vPath.getPointAtIndexInterpolated(vPathIndex).y);
+    x.setup(xPath.getPointAtIndexInterpolated(xPathIndex).x, xPath.getPointAtIndexInterpolated(xPathIndex).y);
+
+
     initParticles();
     initSVG();
     initWaves();
@@ -137,6 +139,12 @@ void XBScene3::drawIntoFBO()
         }
         
         // draw violin and cello
+        if(myGUI->showPath){
+            ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+            vPath.draw();
+            ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+            xPath.draw();
+        }
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         v.draw();
         x.draw();

@@ -20,7 +20,8 @@ void XBScene3GUI::setup()
     creaturesGroup.add(pathSpeed.setup("Path increment", 1.0, 0.0, 5.0));
     creaturesGroup.add(stiffness.setup("stiffness", 0.05, 0.00, 0.50));
     creaturesGroup.add(damping.setup("damping", 0.75, 0.00, 1.00));
-    creaturesGroup.add(mass.setup("mass", 1.0, 0.0, 10.0));
+    creaturesGroup.add(mass.setup("mass", 1.3, 0.0, 10.0));
+    creaturesGroup.add(showPath.setup("Show path", false));
 
     sceneGui.add(&creaturesGroup);
     
