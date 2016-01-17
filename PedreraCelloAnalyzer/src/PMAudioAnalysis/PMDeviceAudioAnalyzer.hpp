@@ -48,6 +48,14 @@ public:
     void                    setPauseTimeTreshold(float value)  { pauseTimeTreshold = value; };
     void                    setDigitalGain(float value) { digitalGain = value; };
     void                    setOnsetsThreshold(float value);
+    void                    setMinPitch(float value)    {pParams.min=value;};
+    void                    setMaxPitch(float value)    {pParams.max=value;};
+    void                    setMinEnergy(float value)   {eParams.min=value;};
+    void                    setMaxEnergy(float value)   {eParams.max=value;};
+    void                    setDeltaEnergy(float value)  {eParams.deltaEnergy=value;};
+    void                    setDeltaPitch(float value)   {pParams.deltaPitch=value;};
+    void                    setSmoothedPitch(float value) {pParams.smoothedPitch=value;};
+    void                    setSmoothedEnergy(float value) {eParams.smoothedEnergy=value;};
 
     // Events for listeners
     ofEvent<pitchParams> eventPitchChanged;
@@ -98,9 +106,9 @@ private:
     float silenceThreshold;
     float oldTimeOfSilence;
 
-    bool isInSilence;
+    bool alreadyInSilence;
     bool isInPause;
-    float silenceBeginTime;
+    float notSilenceBeginTime;
     float silenceTimeTreshold;
     float pauseTimeTreshold;
     float digitalGain;
@@ -109,8 +117,8 @@ private:
     float getRms(float *input, int bufferSize);
     float getAbsMean(float *input, int bufferSize);
     void silenceStarted();
-    void updateSilenceTime();
-    void silenceEnded();
+    void notifySilence(bool b);
+    void silenceStopped();
     void checkMelodyDirection();
 
     int ascDescAnalysisSize;
@@ -123,6 +131,13 @@ private:
     bool isShtFalseSent;
 
     void checkShtSound();
+
+    pitchParams pParams;
+    energyParams eParams;
+    float      oldPitch;
+    float      oldEnergy;
+    float      deltaConfidence;
+    float      oldPitchForConfidence;
 };
 
 #endif /* PMDeviceAudioAnalyzer_h */

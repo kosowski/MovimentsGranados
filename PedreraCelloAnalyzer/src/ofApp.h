@@ -32,10 +32,14 @@ private:
     // Audio analysis (cello)
     ofxPanel                guiAnalysis;
     ofParameterGroup        paramsPitch;
-    ofParameter<float>      pitchMidiNote;
+    ofParameter<float>      pitchCurrentNote;
+    ofParameter<float>      pitchSmoothedNote;
+    ofParameter<float>      pitchSmoothAmount;
+    ofParameter<float>      pitchMidiMin;
+    ofParameter<float>      pitchMidiMax;
     ofParameterGroup        paramsEnergy;
     ofParameter<float>      energyEnergy;
-    ofParameter<float>      energyGain;
+    ofParameter<float> digitalGain;
     ofParameterGroup        paramsSilence;
     ofParameter<float>      silenceThreshold;
     ofParameter<float>      silenceLength;
@@ -55,6 +59,9 @@ private:
     void startButtonPressed();
     void stopButtonPressed();
 
+    void guiPitchSmoothAmountChanged(float &smoothAmount);
+    void guiMinMidiNoteChanged(float &pitch);
+    void guiMaxMidiNoteChanged(float &pitch);
     void guiDigitalGainChanged(float &digitalGain);
     void guiSilenceThresholdChanged(float &threshold);
     void guiSilenceLengthChanged(float &length);

@@ -12,7 +12,7 @@
 #define ConductrEnter_Config_h
 
 static const int            DEFAULT_WINDOW_WIDTH        = 550;
-static const int            DEFAULT_WINDOW_HEIGHT       = 350;
+static const int            DEFAULT_WINDOW_HEIGHT       = 500;
 
 static const ofWindowMode   DEFAULT_WINDOW_MODE         = OF_WINDOW;
 

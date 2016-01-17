@@ -18,15 +18,24 @@ struct baseAudioInParams {
 
 struct pitchParams : public baseAudioInParams {
     float midiNote;
+    float min;
+    float max;
+    float deltaPitch;
+    float smoothedPitch;
+    float confidence;
+    float minConfidence;
 };
 
 struct energyParams : public baseAudioInParams {
     float energy;
+    float min;
+    float max;
+    float deltaEnergy;
+    float smoothedEnergy;
 };
 
 struct silenceParams : public baseAudioInParams {
     bool isSilent;
-    float silenceTime;
 };
 
 struct freqBandsParams : public baseAudioInParams {
@@ -45,7 +54,6 @@ struct shtParams : public baseAudioInParams {
 
 struct pauseParams : public baseAudioInParams {
     bool isPaused;
-    float pauseTime;
 };
 
 struct melodyDirectionParams : public baseAudioInParams {

@@ -22,7 +22,11 @@ static const string STR_DEV_STOP               = "STOP";
 
 static const string ANALYSIS_CELLO_FILENAME    = "analyzer.xml";
 static const string STR_PITCH                  = "Pitch";
-static const string STR_PITCH_MIDINOTE         = "Midi Note";
+static const string STR_PITCH_CURRENT_NOTE     = "Current Note";
+static const string STR_PITCH_SMOOTHED_NOTE    = "Smoothed Note";
+static const string STR_PITCH_SMOOTH_AMOUNT    = "Smooth Amount";
+static const string STR_PITCH_MINMIDINOTE      = "Min. Note";
+static const string STR_PITCH_MAXMIDINOTE      = "Max. Note";
 static const string STR_ENERGY                 = "Energy";
 static const string STR_ENERGY_VALUE           = "Energy";
 static const string STR_ENERGY_GAIN            = "Gain";
@@ -44,6 +48,7 @@ static const string STR_ONSETS_STATUS_ON       = "ON";
 static const string STR_ONSETS_STATUS_OFF      = "OFF";
 
 static const float PITCH_MIN = 0, PITCH_MAX = 127;
+static const float PITCH_SMOOTH_MIN = 0.1, PITCH_SMOOTH_MAX = 1;
 static const float ENERGY_MIN = 0, ENERGY_MAX = 1;
 static const float GAIN_MIN = 1, GAIN_MAX = 10;
 static const float SILENCE_THRSHLD_MIN = 0.01, SILENCE_THRSHLD_MAX = 0.5;
@@ -127,12 +132,16 @@ void ofApp::buildCelloAnalysisPanel()
     guiAnalysis.setPosition(ofGetWidth() - GUI_AN_WIDTH - GUI_MARGIN - 1, GUI_MARGIN);
 
     paramsPitch.setName(STR_PITCH);
-    paramsPitch.add(pitchMidiNote.set(STR_PITCH_MIDINOTE, PITCH_MIN, PITCH_MIN, PITCH_MAX));
+    paramsPitch.add(pitchCurrentNote.set(STR_PITCH_CURRENT_NOTE, PITCH_MIN, PITCH_MIN, PITCH_MAX));
+    paramsPitch.add(pitchSmoothedNote.set(STR_PITCH_SMOOTHED_NOTE, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX));
+    paramsPitch.add(pitchSmoothAmount.set(STR_PITCH_SMOOTH_AMOUNT, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX));
+    paramsPitch.add(pitchMidiMin.set(STR_PITCH_MINMIDINOTE, PITCH_MIN, PITCH_MIN, PITCH_MAX));
+    paramsPitch.add(pitchMidiMax.set(STR_PITCH_MAXMIDINOTE, PITCH_MAX, PITCH_MIN, PITCH_MAX));
     guiAnalysis.add(paramsPitch);
 
     paramsEnergy.setName(STR_ENERGY);
     paramsEnergy.add(energyEnergy.set(STR_ENERGY_VALUE, ENERGY_MIN, ENERGY_MIN, ENERGY_MAX));
-    paramsEnergy.add(energyGain.set(STR_ENERGY_GAIN, GAIN_MIN, GAIN_MIN, GAIN_MAX));
+    paramsEnergy.add(digitalGain.set(STR_ENERGY_GAIN, GAIN_MIN, GAIN_MIN, GAIN_MAX));
     guiAnalysis.add(paramsEnergy);
 
     paramsSilence.setName(STR_SILENCE);
@@ -199,6 +208,8 @@ void ofApp::startButtonPressed()
         ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &ofApp::analyzerPauseStateChanged);
         ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::analyzerOnsetDetected);
 
+        // Init audio analyzers with GUI settings
+
         audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
 
         // Send "start" OSC message
@@ -208,13 +219,14 @@ void ofApp::startButtonPressed()
             address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_STARTED;
             m.setAddress(address.str());
             oscSender.sendMessage(m, false);
-
-            cout << "Send start" << endl;
         }
 
         // Register GUI events
         {
-            energyGain.addListener(this, &ofApp::guiDigitalGainChanged);
+            pitchSmoothAmount.addListener(this, &ofApp::guiPitchSmoothAmountChanged);
+            pitchMidiMin.addListener(this, &ofApp::guiMinMidiNoteChanged);
+            pitchMidiMax.addListener(this, &ofApp::guiMaxMidiNoteChanged);
+            digitalGain.addListener(this, &ofApp::guiDigitalGainChanged);
             silenceThreshold.addListener(this, &ofApp::guiSilenceThresholdChanged);
             silenceLength.addListener(this, &ofApp::guiSilenceLengthChanged);
             pauseLength.addListener(this, &ofApp::guiPauseLengthChanged);
@@ -223,6 +235,14 @@ void ofApp::startButtonPressed()
 
         // Force initial audio analyzer values setup
         {
+            float tmpSmoothAmount = pitchSmoothAmount.get();
+            guiPitchSmoothAmountChanged(tmpSmoothAmount);
+            float tmpMidiMin = pitchMidiMin.get();
+            guiMinMidiNoteChanged(tmpMidiMin);
+            float tmpMidiMax = pitchMidiMax.get();
+            guiMaxMidiNoteChanged(tmpMidiMax);
+            float tmpDigitalGain0 = digitalGain.get();
+            guiDigitalGainChanged(tmpDigitalGain0);
             float tmpSilenceThrshld0 = silenceThreshold.get();
             guiSilenceThresholdChanged(tmpSilenceThrshld0);
             float tmpSilenceLength0 = silenceLength.get();
@@ -257,6 +277,19 @@ void ofApp::stopButtonPressed()
     }
 }
 
+void ofApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
+    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
+}
+
+void ofApp::guiMinMidiNoteChanged(float &pitch) {
+    (*audioAnalyzers)[0]->setMinPitch(pitch);
+}
+
+void ofApp::guiMaxMidiNoteChanged(float &pitch) {
+    (*audioAnalyzers)[0]->setMaxPitch(pitch);
+}
+
 void ofApp::guiDigitalGainChanged(float &digitalGain) {
     (*audioAnalyzers)[0]->setDigitalGain(digitalGain);
 }
@@ -279,8 +312,8 @@ void ofApp::guiOnsetsThresholdChanged(float &threshold) {
 
 void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
-    pitchMidiNote = truncateFloat(pitchParams.midiNote, 2);
-
+    pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
+    pitchSmoothedNote = pitchParams.smoothedPitch;
     ofxOscMessage m;
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
