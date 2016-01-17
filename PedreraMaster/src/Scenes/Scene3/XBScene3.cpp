@@ -108,8 +108,11 @@ void XBScene3::drawIntoFBO()
 
     fbo.begin();
     {
-        ofBackground(0);
-        
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        if(myGUI->showTemplate)
+            templateImage.draw(0,0);
+        else
+            ofBackground(0);
         ofPushStyle();
         // draw directors waves
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);

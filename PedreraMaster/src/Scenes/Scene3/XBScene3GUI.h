@@ -42,6 +42,7 @@ public:
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
     
+    ofxToggle showTemplate;
 };
 
 
