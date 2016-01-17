@@ -55,6 +55,7 @@ private:
     void startButtonPressed();
     void stopButtonPressed();
 
+    void guiDigitalGainChanged(float &digitalGain);
     void guiSilenceThresholdChanged(float &threshold);
     void guiSilenceLengthChanged(float &length);
     void guiPauseLengthChanged(float &length);

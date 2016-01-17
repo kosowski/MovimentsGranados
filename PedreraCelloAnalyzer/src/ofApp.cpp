@@ -214,6 +214,7 @@ void ofApp::startButtonPressed()
 
         // Register GUI events
         {
+            energyGain.addListener(this, &ofApp::guiDigitalGainChanged);
             silenceThreshold.addListener(this, &ofApp::guiSilenceThresholdChanged);
             silenceLength.addListener(this, &ofApp::guiSilenceLengthChanged);
             pauseLength.addListener(this, &ofApp::guiPauseLengthChanged);
@@ -256,6 +257,10 @@ void ofApp::stopButtonPressed()
     }
 }
 
+void ofApp::guiDigitalGainChanged(float &digitalGain) {
+    (*audioAnalyzers)[0]->setDigitalGain(digitalGain);
+}
+
 void ofApp::guiSilenceThresholdChanged(float &threshold) {
     (*audioAnalyzers)[0]->setSilenceThreshold(threshold);
 }
@@ -286,7 +291,7 @@ void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
 
 void ofApp::analyzerEnergyChanged(energyParams &energyParams)
 {
-    float gainEnergy = energyParams.energy * energyGain;
+    float gainEnergy = energyParams.energy;
     energyEnergy = truncateFloat(gainEnergy, 2);
 
     ofxOscMessage m;
