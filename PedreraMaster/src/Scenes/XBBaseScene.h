@@ -9,6 +9,7 @@
 #include "XBBaseGUI.h"
 #include "XBOSCManager.h"
 #include "ofxGui.h"
+#include "Defaults.h"
 
 class XBBaseScene
 {
@@ -36,6 +37,7 @@ protected:
 
     ofFbo fbo;
     float fboAlpha;
+    ofImage templateImage;
 
     XBBaseGUI *gui;
 
