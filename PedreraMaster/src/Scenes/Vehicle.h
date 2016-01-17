@@ -18,6 +18,7 @@ public:
     void setTailDamping(float f);
     void setTailStiffness(float s);
     void setMass(float f);
+    void setSize(float radius);
     
 private:
     

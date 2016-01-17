@@ -71,8 +71,8 @@ void Vehicle::draw(){
     ofSetColor(colour);
     ofFill();
     
-    for (ofPoint p:nodes)
-        ofDrawCircle(p.x, p.y, r-2);
+//    for (ofPoint p:nodes)
+//        ofDrawCircle(p.x, p.y, r-2);
     
     for(int i=0; i<nodes.size(); i++){
         if(i==0)
@@ -89,6 +89,10 @@ void Vehicle::draw(){
 
 void Vehicle::setColor(ofColor c){
     colour = c;
+}
+
+void Vehicle::setSize(float radius){
+    r = radius;
 }
 
 void Vehicle::setMaxSpeed(float s){

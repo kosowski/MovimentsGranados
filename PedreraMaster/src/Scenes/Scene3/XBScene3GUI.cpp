@@ -15,6 +15,7 @@ void XBScene3GUI::setup()
     XBBaseGUI::setup();
 
     creaturesGroup.setup("Violin & cello");
+    creaturesGroup.add(size.setup("Size", 6.0, 1.0, 20));
     creaturesGroup.add(maxSpeed.setup("Speed", 1.0, 0.0, 10));
     creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));
     creaturesGroup.add(pathSpeed.setup("Path increment", 1.0, 0.0, 5.0));

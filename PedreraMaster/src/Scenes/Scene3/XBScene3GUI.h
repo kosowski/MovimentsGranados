@@ -15,6 +15,7 @@ public:
     virtual void setup();
 
     ofxGuiGroup creaturesGroup;
+    ofxFloatSlider size;
     ofxFloatSlider maxSpeed;
     ofxFloatSlider maxForce;
     ofxFloatSlider pathSpeed;

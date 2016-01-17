@@ -35,7 +35,8 @@ void XBScene3::update()
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
 
     // update violin and cello positions and colours
-       vPathIndex += myGUI-> pathSpeed;
+    vPathIndex += myGUI-> pathSpeed;
+    v.setSize(myGUI->size);
     v.setMaxForce(myGUI->maxForce);
     v.setMaxSpeed(myGUI->maxSpeed);
     v.setTailStiffness(myGUI->stiffness);
@@ -46,6 +47,7 @@ void XBScene3::update()
     v.update();
     
     xPathIndex += myGUI-> pathSpeed;
+    x.setSize(myGUI->size);
     x.setMaxForce(myGUI->maxForce);
     x.setMaxSpeed(myGUI->maxSpeed);
     x.setTailStiffness(myGUI->stiffness);
