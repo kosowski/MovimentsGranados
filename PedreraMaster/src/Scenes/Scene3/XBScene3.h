@@ -17,6 +17,7 @@ struct expandingPolyLine{
     ofPolyline line;
     ofPath path;
     float life;
+    float amplitude;
     ofPoint centroid;
 };
 
