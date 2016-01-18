@@ -39,14 +39,15 @@ private:
     ofParameter<float>      pitchMidiMax;
     ofParameterGroup        paramsEnergy;
     ofParameter<float>      energyEnergy;
-    ofParameter<float> digitalGain;
+    ofParameter<float>      energySmoothed;
+    ofParameter<float>      energySmoothAmount;
+    ofParameter<float>      energyMin;
+    ofParameter<float>      energyMax;
+    ofParameter<float>      digitalGain;
     ofParameterGroup        paramsSilence;
     ofParameter<float>      silenceThreshold;
     ofParameter<float>      silenceLength;
     ofParameter<bool>       silenceOn;
-    ofParameterGroup        paramsPause;
-    ofParameter<float>      pauseLength;
-    ofParameter<bool>       pauseOn;
     ofParameterGroup        paramsOnsets;
     ofParameter<float>      onsetsThreshold;
     ofParameter<bool>       onsetsOn;
@@ -60,12 +61,14 @@ private:
     void stopButtonPressed();
 
     void guiPitchSmoothAmountChanged(float &smoothAmount);
-    void guiMinMidiNoteChanged(float &pitch);
-    void guiMaxMidiNoteChanged(float &pitch);
+    void guiPitchMinChanged(float &pitch);
+    void getPitchMaxChanged(float &pitch);
+    void guiEnergySmoothAmountChanged(float &smoothAmount);
+    void guiEnergyMinChanged(float &energy);
+    void guiEnergyMaxChanged(float &energy);
     void guiDigitalGainChanged(float &digitalGain);
     void guiSilenceThresholdChanged(float &threshold);
     void guiSilenceLengthChanged(float &length);
-    void guiPauseLengthChanged(float &length);
     void guiOnsetsThresholdChanged(float &threshold);
 
     // AUDIO ANALYZER
@@ -75,7 +78,6 @@ private:
     void analyzerPitchChanged(pitchParams &pitchParams);
     void analyzerEnergyChanged(energyParams &energyParams);
     void analyzerSilenceStateChanged(silenceParams &silenceParams);
-    void analyzerPauseStateChanged(pauseParams &pauseParams);
     void analyzerOnsetDetected(onsetParams &onsetParams);
 
     // OSC

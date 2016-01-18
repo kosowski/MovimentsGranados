@@ -279,14 +279,13 @@ float PMDeviceAudioAnalyzer::getRms(float *input, int bufferSize)
 float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
 {
     float sum = 0.0f;
-    float actual =0.0f;
     for (int i=0; i<bufferSize; ++i)
     {
         for (int j=0; j<channelNumbers.size(); ++j)
         {
-            actual = abs(input[(i * inChannels) + channelNumbers[j]]*digitalGain);
+            float current = abs(input[(i * inChannels) + channelNumbers[j]]*digitalGain);
             //actual = ofMap(actual,eParams.min,eParams.max,0,1,true);
-            sum = sum + actual;
+            sum = sum + current;
         }
     }
 //    for (int j=0; j<channelNumbers.size(); ++j)
