@@ -24,9 +24,9 @@ static const float colorsPosY       = scenePosY;
 static const float colorGuiWidth    = 500;
 
 static const ofVec4f defColorDirector(195, 45, 55, 255);
-static const ofVec4f defColorCello(147, 22, 36, 255);
+static const ofVec4f defColorCello(11, 71, 81, 255);
 static const ofVec4f defColorViolin(46, 63, 95, 255);
-static const ofVec4f defColorPiano(11, 71, 81, 255);
+static const ofVec4f defColorPiano(147, 22, 36, 255);
 
 static const int minHue             = 0;
 static const int maxHue             = 360;
