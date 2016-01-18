@@ -87,6 +87,7 @@ void XBScene3::update()
     }
     for (int i=0; i<stonesToDraw.size(); i++) {
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
         if(stonesToDraw[i].life >  ofGetFrameRate() * myGUI->stoneTime){
             stonesToDraw.erase(stonesToDraw.begin()+i); // fixed this erase call
             i--; // new code to keep i index valid
@@ -116,6 +117,7 @@ void XBScene3::drawIntoFBO()
         else
             ofBackground(0);
         ofPushStyle();
+        
         // draw directors waves
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         ofSetLineWidth(myGUI->lineWidth);
@@ -129,7 +131,9 @@ void XBScene3::drawIntoFBO()
             expandingPolyLine &e = stonesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+//             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+            ofScale( 1 +  e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                     1 + e.amplitude * sin(myGUI->stoneFrequency * e.life ) );
             e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255) ) );
             e.path.draw();
             ofPopMatrix();
@@ -173,6 +177,8 @@ void XBScene3::drawGUI()
 
 void XBScene3::keyReleased(int key){
     XBBaseScene::keyReleased(key);
+    XBScene3GUI *myGUI = (XBScene3GUI *)gui;
+
     if(key == 'p'){
         emitParticles = !emitParticles;
     }
@@ -180,6 +186,7 @@ void XBScene3::keyReleased(int key){
 //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
         expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
         e.life= 1;
+        e.amplitude = myGUI->stoneGrowFactor;
         stonesToDraw.push_back(e);
     }
 }
@@ -207,7 +214,7 @@ void XBScene3::initPaths(){
 
 void XBScene3::initSVG()
 {
-    svg.load("resources/Esc3y4Piano (temp).svg");
+    svg.load("resources/Esc3y4Piano.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
