@@ -191,6 +191,10 @@ void XBScene3::keyReleased(int key){
         e.amplitude = myGUI->stoneGrowFactor;
         stonesToDraw.push_back(e);
     }
+    else if(key == 'z'){
+        waves.clear();
+        initWaves();
+    }
 }
 
 void XBScene3::initPaths(){
@@ -278,11 +282,9 @@ void XBScene3::initWaves(){
     
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
     
-//    for(int i= 0; i < NUM_WAVES; i++)
-//        waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
-    
-    int spacing = 2;
-    vector<ofPolyline> outlines;
+    int spacing = 1;
+
+    // create horzontal waves
     svg.load("resources/horizontales.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
@@ -292,24 +294,26 @@ void XBScene3::initWaves(){
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
         
         for(int j=0;j<(int)lines.size();j++){
-            ofPolyline pl = lines[j].getResampledBySpacing(spacing);
-//            vector<ofPoint> points = pl.getVertices();
-//            //check path direction
-//            if(points.size() > 51)
-//                if(points[0].y > points[50].y){ //bottom to top, we dont want that
-//                    std::reverse(points.begin(), points.end());
-//                    pl.clear();
-//                    pl.addVertices(points);
-//                }
-            
-           outlines.push_back(pl);
+           ofPolyline l(lines[j].getResampledBySpacing(spacing));
+           waves.push_back( Wave( l.getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
+        }
+    }
+    
+    // create vertical waves
+    svg.load("resources/verticales.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+             waves.push_back( Wave( l.getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
 
-    for(int i= 0; i < outlines.size(); i++)
-        waves.push_back( Wave( outlines[i].getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing));
-//    for(int i= 0; i < NUM_WAVES; i++){
-//        waves[i].particles = outlines[i].getVertices();
-//    }
+       
 }
 
