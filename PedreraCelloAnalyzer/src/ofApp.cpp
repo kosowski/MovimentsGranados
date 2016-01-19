@@ -326,8 +326,7 @@ void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
     m.setAddress(address.str());
-    // TODO: Maybe send pitchParams.smoothedPitch instead
-    m.addFloatArg(pitchParams.midiNote);
+    m.addFloatArg(pitchParams.smoothedPitch);
     oscSender.sendMessage(m, false);
 }
 
@@ -340,8 +339,7 @@ void ofApp::analyzerEnergyChanged(energyParams &energyParams)
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
     m.setAddress(address.str());
-    // TODO: Maybe send energyParams.smoothedEnergy instead
-    m.addFloatArg(energyParams.energy);
+    m.addFloatArg(energyParams.smoothedEnergy);
     oscSender.sendMessage(m, false);
 }
 

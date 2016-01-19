@@ -108,17 +108,22 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
         // Init of audio event params struct
         pParams.deviceID = deviceID;
+        pParams.channelID = channelID;
         pParams.audioInputIndex = audioInputIndex;
         silenceParams silenceParams;
         silenceParams.deviceID = deviceID;
+        silenceParams.channelID = channelID;
         silenceParams.audioInputIndex = audioInputIndex;
         eParams.deviceID = deviceID;
+        eParams.channelID = channelID;
         eParams.audioInputIndex = audioInputIndex;
         onsetParams onsetParams;
         onsetParams.deviceID = deviceID;
+        onsetParams.channelID = channelID;
         onsetParams.audioInputIndex = audioInputIndex;
         freqBandsParams freqBandsParams;
         freqBandsParams.deviceID = deviceID;
+        freqBandsParams.channelID = channelID;
         freqBandsParams.audioInputIndex = audioInputIndex;
 
         aubioOnset->setThreshold(onsetsThreshold);
