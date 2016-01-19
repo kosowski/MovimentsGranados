@@ -20,10 +20,10 @@ void XBScene3::setup(XBBaseGUI *_gui)
     v.setup(vPath.getPointAtIndexInterpolated(vPathIndex).x, vPath.getPointAtIndexInterpolated(vPathIndex).y);
     x.setup(xPath.getPointAtIndexInterpolated(xPathIndex).x, xPath.getPointAtIndexInterpolated(xPathIndex).y);
 
-
+    initWaves();
     initParticles();
     initSVG();
-    initWaves();
+    
 
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
@@ -87,6 +87,7 @@ void XBScene3::update()
     }
     for (int i=0; i<stonesToDraw.size(); i++) {
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
         if(stonesToDraw[i].life >  ofGetFrameRate() * myGUI->stoneTime){
             stonesToDraw.erase(stonesToDraw.begin()+i); // fixed this erase call
             i--; // new code to keep i index valid
@@ -95,9 +96,11 @@ void XBScene3::update()
     
     // update waves
     for(int i=0; i< waves.size();i++){
-        waves[i].setAttractor(0, ofGetMouseX(), ofGetMouseY(), myGUI->attractorStrength, myGUI->attractorRadius);
-        float fakeX = ofGetMouseX() - ofGetWidth()/2 + 600 * (ofNoise( ofGetElapsedTimeMillis() * 0.0005) - 0.5 );
-        float fakeY = ofGetMouseY() + 600 * ( ofNoise( ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5 );
+        float mouseX = ofGetMouseX() / (float)ofGetWidth();
+        float mouseY = ofGetMouseY() / (float)ofGetHeight();
+        waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise( ofGetElapsedTimeMillis() * 0.0005) - 0.5 );
+        float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * ( ofNoise( ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5 );
         waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
         waves[i].update();
     }
@@ -116,6 +119,7 @@ void XBScene3::drawIntoFBO()
         else
             ofBackground(0);
         ofPushStyle();
+        
         // draw directors waves
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         ofSetLineWidth(myGUI->lineWidth);
@@ -129,7 +133,9 @@ void XBScene3::drawIntoFBO()
             expandingPolyLine &e = stonesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+//             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+            ofScale( 1 +  e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                     1 + e.amplitude * sin(myGUI->stoneFrequency * e.life ) );
             e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255) ) );
             e.path.draw();
             ofPopMatrix();
@@ -173,6 +179,8 @@ void XBScene3::drawGUI()
 
 void XBScene3::keyReleased(int key){
     XBBaseScene::keyReleased(key);
+    XBScene3GUI *myGUI = (XBScene3GUI *)gui;
+
     if(key == 'p'){
         emitParticles = !emitParticles;
     }
@@ -180,6 +188,7 @@ void XBScene3::keyReleased(int key){
 //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
         expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
         e.life= 1;
+        e.amplitude = myGUI->stoneGrowFactor;
         stonesToDraw.push_back(e);
     }
 }
@@ -207,7 +216,7 @@ void XBScene3::initPaths(){
 
 void XBScene3::initSVG()
 {
-    svg.load("resources/Esc3y4Piano (temp).svg");
+    svg.load("resources/Esc3y4Piano.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -269,7 +278,38 @@ void XBScene3::initWaves(){
     
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
     
-    for(int i= 0; i < NUM_WAVES; i++)
-        waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
+//    for(int i= 0; i < NUM_WAVES; i++)
+//        waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
+    
+    int spacing = 2;
+    vector<ofPolyline> outlines;
+    svg.load("resources/horizontales.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(spacing);
+//            vector<ofPoint> points = pl.getVertices();
+//            //check path direction
+//            if(points.size() > 51)
+//                if(points[0].y > points[50].y){ //bottom to top, we dont want that
+//                    std::reverse(points.begin(), points.end());
+//                    pl.clear();
+//                    pl.addVertices(points);
+//                }
+            
+           outlines.push_back(pl);
+        }
+    }
+
+    for(int i= 0; i < outlines.size(); i++)
+        waves.push_back( Wave( outlines[i].getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing));
+//    for(int i= 0; i < NUM_WAVES; i++){
+//        waves[i].particles = outlines[i].getVertices();
+//    }
 }
 

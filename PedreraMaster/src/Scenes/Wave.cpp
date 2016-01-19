@@ -13,9 +13,10 @@
 #include "Wave.h"
 
 
-Wave::Wave(ofPoint o, int w_, float a, float p) {
-    origin.set(o.x, o.y);
+Wave::Wave(vector<ofPoint>& o, int w_, float a, float p, float s) {
+    origin = o;
     w = w_;
+    xspacing = s;
     for (int i = 0; i < numComponents; i++) {
         period = p / (2*(i+1));
         amplitude.push_back( a / (i+1) );
@@ -24,9 +25,10 @@ Wave::Wave(ofPoint o, int w_, float a, float p) {
     //period = p;
     //amplitude = a;
     //dx = (TWO_PI / period) * xspacing;
-    float numParticles = w/xspacing;
-    particles.resize(numParticles);
-    for (int i = 0; i < numParticles; i++) {
+//    float numParticles = w/xspacing;
+//    particles.resize(numParticles);
+    //particles.resize(o.size());
+    for (int i = 0; i < o.size(); i++) {
         particles.push_back(ofPoint (0,0));
     }
     maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
@@ -43,15 +45,11 @@ void Wave::update() {
         for (int i = 0; i < particles.size(); i++) {
             
             if(j==0)
-                particles[i].set(origin.x+i*xspacing, origin.y);
-            
-//            float dist = 1 - particles[i].distance( attractor) / maxDist;
-//            ofPoint attractor2 ( attractor.x - ofGetWidth()/2, attractor.y);
-//            float dist2 = 1 - particles[i].distance( attractor2) / maxDist;
-            
+                particles[i].set(origin[i].x, origin[i].y);
+    
             float attraction = 0;
             for(int k= 0; k< attractors.size(); k++){
-                float dist = 1 - particles[i].distance( attractors[k]) / maxDist;
+                float dist = ofClamp(1 - particles[i].distance( attractors[k]) / maxDist, 0.0f, 1.0f);
                 attraction += pow(dist, attractorRadius) * attractorStrength;
             }
             // Every other wave is cosine instead of sine
@@ -85,5 +83,5 @@ void Wave::setAttractor(int index, float x, float y, float strength, float radiu
     attractors[index].y=y;
     attractorStrength = strength;
     attractorRadius = radius;
-    
+//    cout << "Set attractor " << ofToString(index) << " at " << x << "," << y <<endl;
 }

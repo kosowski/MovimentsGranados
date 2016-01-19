@@ -4,7 +4,7 @@
 
 #ifndef PEDRERAMASTER_XBSCENE3_H
 #define PEDRERAMASTER_XBSCENE3_H
-#define NUM_WAVES 8
+#define NUM_WAVES 1
 
 #include "XBBaseScene.h"
 #include "Vehicle.h"
@@ -17,6 +17,7 @@ struct expandingPolyLine{
     ofPolyline line;
     ofPath path;
     float life;
+    float amplitude;
     ofPoint centroid;
 };
 

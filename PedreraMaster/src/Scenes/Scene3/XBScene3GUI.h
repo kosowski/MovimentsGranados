@@ -33,8 +33,10 @@ public:
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
     ofxFloatSlider stoneAlphaDecrease;
     ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
     
     ofxGuiGroup directorGroup;
     ofxFloatSlider attractorStrength;
