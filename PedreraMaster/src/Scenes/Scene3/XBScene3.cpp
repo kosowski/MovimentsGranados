@@ -85,6 +85,8 @@ void XBScene3::update()
         float dt = min(ofGetLastFrameTime(), 1.0/10.0);
         particleSystem.update(dt, 1.);
     }
+    
+    // update piano's stones
     for (int i=0; i<stonesToDraw.size(); i++) {
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
         stonesToDraw[i].amplitude *= myGUI->stoneDamping;
@@ -282,7 +284,7 @@ void XBScene3::initWaves(){
     
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
     
-    int spacing = 1;
+    int spacing = 10;
 
     // create horzontal waves
     svg.load("resources/horizontales.svg");
