@@ -31,7 +31,14 @@ public:
     ofxGuiGroup violinGroup;
     ofxFloatSlider violinBorderSize;
     ofxFloatSlider ViolinBorderFade;
+    ofxToggle showTimeMarker;
     
+    ofxGuiGroup particlesGroup;
+    ofxFloatSlider particleSize;
+    ofxFloatSlider particleLife;
+    ofxVec3Slider particleVelocity;
+    ofxVec3Slider particleSpread;
+
     ofxFloatSlider blurAmount;
 };
 

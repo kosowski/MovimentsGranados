@@ -9,6 +9,7 @@
 #include "ofxTraerPhysics.h"
 #include "ofxSvg.h"
 #include "BlurEffect.h"
+#include "ofxParticles.h"
 
 using namespace  traer::physics ;
 
@@ -26,17 +27,33 @@ public:
     
     void initSystem();
     void initSVG();
+    void initParticles();
+    void updateEmitters();
     
 protected:
     ofxSVG svg;
     vector<ofPolyline> verticalLines;
-    int indices[24] = {2,5,6,12,17,19,20,23,24,25,29,30,36,41,43,44,47,52,53,54,56,63,65,70};
-    int timeIndex = 0;
+    vector<ofPolyline> horizontalLines;
+    int violinTimeIndex = 0;
+    int celloTimeIndex = 0;
+
     bool fakeEvent = false;
+    bool fakeCelloEvent = false;
+    
     vector<ofPolyline> linesToDraw;
     unsigned int violinLineIndex = 0;
-    ofPolyline currentNote;
+    ofPolyline currentViolinNote;
     ofPolyline violinLine;
+    
+    unsigned int celloLineIndex = 0;
+    ofPolyline currentCelloNote;
+    ofPolyline celloLine;
+
+    
+    bool emitParticles;
+    ofxParticleSystem particleSystem;
+    ofxParticleEmitter vEmitter, xEmitter;
+    ofTexture pTex;
     
     ParticleSystem * 	physics;
     vector<   Particle * > particles;
