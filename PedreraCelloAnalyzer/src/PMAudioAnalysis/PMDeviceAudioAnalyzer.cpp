@@ -123,9 +123,9 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
         aubioOnset->setThreshold(onsetsThreshold);
 
-        aubioPitch->audioIn(input, bufferSize, nChannels);
-        aubioOnset->audioIn(input, bufferSize, nChannels);
-        aubioMelBands->audioIn(input, bufferSize, nChannels);
+        aubioPitch->audioIn(channelInput, bufferSize, 1);
+        aubioOnset->audioIn(channelInput, bufferSize, 1);
+        aubioMelBands->audioIn(channelInput, bufferSize, 1);
 
         /// PITCH
         ///////////
@@ -142,7 +142,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         // SILENCE
         ////////////
 
-        float absMean = getAbsMean(input,bufferSize);
+        float absMean = getAbsMean(channelInput,bufferSize);
 
         bool nowIsSilent = (eParams.smoothedEnergy < silenceThreshold);
 
