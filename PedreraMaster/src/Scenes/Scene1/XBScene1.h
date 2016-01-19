@@ -26,8 +26,9 @@ public:
     void keyReleased(int key);
     
     void initSystem();
-    void initSVG();
+    void initLines();
     void initParticles();
+    void initStones();
     void updateEmitters();
     
 protected:
@@ -60,6 +61,9 @@ protected:
     vector<   Spring * > visibleSprings;
     Particle*			selectedParticle;
     Particle* p_mouse;
+    
+    vector<expandingPolyLine> stones;
+    vector<expandingPolyLine> stonesToDraw;
     
     BlurEffect blur;
 };

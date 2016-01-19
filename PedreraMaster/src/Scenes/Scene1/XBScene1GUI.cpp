@@ -31,6 +31,14 @@ void XBScene1GUI::setup()
     directorGroup.add(xDamping.setup("xDamping", 1.0f, 0.00, 1.00));
     sceneGui.add(&directorGroup);
     
+    pianoGroup.setup("Piano");
+    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.01, 0.000, 1.));
+    pianoGroup.add(stoneDamping.setup("Damping", 1., 0.4, 1.00));
+    pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
+    pianoGroup.add(stoneTime.setup("Duration", 3.5, 0.0, 5.0));
+    pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
+    sceneGui.add(&pianoGroup);
+    
     violinGroup.setup("Violin&Cello");
     violinGroup.add(violinBorderSize.setup("Line size",  2.0, 1.0, 10.0));
     violinGroup.add(ViolinBorderFade.setup("Border", 100.0f, 1.0f, 200.0f));

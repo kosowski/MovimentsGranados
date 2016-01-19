@@ -38,6 +38,13 @@ public:
     ofxFloatSlider particleLife;
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
+    
+    ofxGuiGroup pianoGroup;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
 
     ofxFloatSlider blurAmount;
 };

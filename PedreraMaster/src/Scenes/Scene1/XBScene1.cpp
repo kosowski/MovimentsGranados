@@ -15,9 +15,11 @@ void XBScene1::setup(XBBaseGUI *_gui)
     
     //ofSetBackgroundAuto(true);
     
-    initSVG();
+    initLines();
     initSystem();
     initParticles();
+    initStones();
+    
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
 
@@ -43,8 +45,6 @@ void XBScene1::update()
         currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
     }
     
-//    if(violinLineIndex == 0)
-    
     // if note ON, update emitter location along the current line
     if(fakeEvent){
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
@@ -60,6 +60,15 @@ void XBScene1::update()
     }
     updateEmitters();
     
+    // update piano's stones
+    for (int i=0; i<stonesToDraw.size(); i++) {
+        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
+        if(stonesToDraw[i].life >  ofGetFrameRate() * myGUI->stoneTime){
+            stonesToDraw.erase(stonesToDraw.begin()+i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
     
     // director update
     p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
@@ -90,6 +99,19 @@ void XBScene1::drawIntoFBO()
             ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
         }
         
+        // draw expanding stones from piano
+        for (int i=0; i<stonesToDraw.size(); i++) {
+            expandingPolyLine &e = stonesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+            ofScale( 1 +  e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                    1 + e.amplitude * sin(myGUI->stoneFrequency * e.life ) );
+            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255) ) );
+            e.path.draw();
+            ofPopMatrix();
+        }
+        
         // draw particles
         if(myGUI->showTimeMarker){
             ofSetColor(220);
@@ -114,6 +136,7 @@ void XBScene1::drawIntoFBO()
 //--------------------------------------------------------------
 void XBScene1::keyPressed(int key){
     XBBaseScene::keyPressed(key);
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
     
     if(key == 'x'){
         if(fakeEvent == false){
@@ -134,6 +157,13 @@ void XBScene1::keyPressed(int key){
             //TODO: find a better way to do this
             ofPoint startPoint = currentCelloNote.getClosestPoint(ofPoint( celloTimeIndex, 0), &celloLineIndex);
         }
+    }
+    else if(key == 'v'){
+        //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
+        expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
+        e.life= 1;
+        e.amplitude = myGUI->stoneGrowFactor;
+        stonesToDraw.push_back(e);
     }
 
 }
@@ -171,7 +201,7 @@ void XBScene1::keyReleased(int key)
     }
 }
 
-void XBScene1::initSVG(){
+void XBScene1::initLines(){
     // load vertical lines
     svg.load("resources/verticales.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
@@ -205,15 +235,15 @@ void XBScene1::initSVG(){
         
         for(int j=0;j<(int)lines.size();j++){
             ofPolyline pl = lines[j].getResampledBySpacing(1);
-//            vector<ofPoint> points = pl.getVertices();
-//            //check path direction
-//            if(points.size() > 51){
-//                if(points[0].y < points[50].y){ //check if the order is top to bottom, we dont want that
-//                    std::reverse(points.begin(), points.end());
-//                    pl.clear();
-//                    pl.addVertices(points);
-//                }
-//            }
+            vector<ofPoint> points = pl.getVertices();
+            //check path direction
+            if(points.size() > 51){
+                if(points[0].x > points[50].x){ //check if the order is right to left, we dont want that
+                    std::reverse(points.begin(), points.end());
+                    pl.clear();
+                    pl.addVertices(points);
+                }
+            }
             horizontalLines.push_back(pl);
         }
     }
@@ -244,6 +274,38 @@ void XBScene1::initParticles(){
     ofLoadImage(pTex, "resources/particle.png");
 }
 
+void XBScene1::initStones(){
+    svg.load("resources/Esc1Piano.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k=0; k<points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if(i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo( points[k].x - epl.centroid.x, points[k].y - epl.centroid.y );
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            stones.push_back(epl);
+        }
+    }
+}
 
 void XBScene1::initSystem()
 {
