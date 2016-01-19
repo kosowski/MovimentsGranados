@@ -33,13 +33,12 @@ void XBScene3GUI::setup()
     particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(&particlesGroup);
     
-    pianoGroup.setup("Paino");
+    pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
     pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));
     pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
     pianoGroup.add(stoneTime.setup("Duration", 2, 0.0, 5.0));
     pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
-    
     sceneGui.add(&pianoGroup);
     
     directorGroup.setup("Director");

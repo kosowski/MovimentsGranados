@@ -13,13 +13,6 @@
 #include "ofxSvg.h"
 #include "Wave.h"
 
-struct expandingPolyLine{
-    ofPolyline line;
-    ofPath path;
-    float life;
-    float amplitude;
-    ofPoint centroid;
-};
 
 class XBScene3 : public XBBaseScene
 {
