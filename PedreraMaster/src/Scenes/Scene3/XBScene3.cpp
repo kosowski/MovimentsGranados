@@ -313,7 +313,5 @@ void XBScene3::initWaves(){
              waves.push_back( Wave( l.getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
-
-       
 }
 
