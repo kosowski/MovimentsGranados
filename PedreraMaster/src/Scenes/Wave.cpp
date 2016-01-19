@@ -13,10 +13,11 @@
 #include "Wave.h"
 
 
-Wave::Wave(vector<ofPoint>& o, int w_, float a, float p, float s) {
+Wave::Wave(vector<ofPoint>& o, int w_, float a, float p, float s, int ori = 0) {
     origin = o;
     w = w_;
     xspacing = s;
+    orientation = ori;
     for (int i = 0; i < numComponents; i++) {
         period = p / (2*(i+1));
         amplitude.push_back( a / (i+1) );
@@ -55,7 +56,10 @@ void Wave::update() {
             // Every other wave is cosine instead of sine
             // if (j % 2 == 0)
             //particles[i] += ofPoint(0, sin(x)*amplitude[j] * pow(dist, attractorRadius) * attractorStrength);
-            particles[i] += ofPoint(0, sin(x)*amplitude[j] * attraction );
+            if(orientation == 0)
+                particles[i] += ofPoint(0, sin(x)*amplitude[j] * attraction );
+            else
+                particles[i] += ofPoint( sin(x)*amplitude[j] * attraction, x );
             //else
             //particles[i].location.add(0,  cos(x)*amplitude[j] * dist);
             x+=dx[j];

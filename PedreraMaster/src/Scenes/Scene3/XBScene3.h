@@ -35,6 +35,7 @@ public:
     void initSVG();
     void initParticles();
     void initPaths();
+    void initWaves();
 
     Vehicle v, x;
     ofPolyline vPath;
@@ -44,20 +45,13 @@ public:
     
     bool emitParticles;
     ofxParticleSystem particleSystem;
-    int pmouseX, pmouseY;
-    ofVec2f pmouseVel;
-    
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
-    int displayMode;
     
     ofxSVG svg;
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
-    
-    
-    void initWaves();
-    
+ 
     vector<Wave> waves;
     
     BlurEffect blur;

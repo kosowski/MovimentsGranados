@@ -19,8 +19,8 @@ void XBScene4::initSystem(){
     
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
     
-    for(int i= 0; i < NUM_WAVES; i++)
-        waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
+//    for(int i= 0; i < NUM_WAVES; i++)
+//        waves.push_back( Wave(ofPoint(20, ofGetHeight() / NUM_WAVES * i), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod)));
 }
 
 void XBScene4::update()

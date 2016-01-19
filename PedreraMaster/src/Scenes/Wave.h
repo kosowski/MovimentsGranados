@@ -16,11 +16,12 @@
 class Wave {
 public:
     
-    Wave(vector<ofPoint>& o, int w_, float a, float p, float s);
+    Wave(vector<ofPoint>& o, int w_, float a, float p, float s, int ori);
     void update();
     void display();
     void setAttractor(int index, float x, float y, float strength, float radius);
     
+    int orientation;
     int xspacing ; // How far apart should each horizontal location be spaced
     int w;            // Width of entire wave
     int numComponents = 3;
