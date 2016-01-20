@@ -12,8 +12,9 @@ class XBScene1GUI : public XBBaseGUI
 public:
 
     XBScene1GUI();
-    void draw();
+    virtual void setup();
 
+    ofxGuiGroup directorGroup;
     ofxFloatSlider springStrength;
     ofxFloatSlider springDamping;
     ofxFloatSlider drag;
@@ -26,6 +27,25 @@ public:
     ofxFloatSlider fixedRestLength;
     ofxFloatSlider restLength;
     ofxFloatSlider xDamping;
+    
+    ofxGuiGroup violinGroup;
+    ofxFloatSlider violinBorderSize;
+    ofxFloatSlider ViolinBorderFade;
+    ofxToggle showTimeMarker;
+    
+    ofxFloatSlider particleSize;
+    ofxFloatSlider particleLife;
+    ofxVec3Slider particleVelocity;
+    ofxVec3Slider particleSpread;
+    
+    ofxGuiGroup pianoGroup;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
+
+    ofxFloatSlider blurAmount;
 };
 
 

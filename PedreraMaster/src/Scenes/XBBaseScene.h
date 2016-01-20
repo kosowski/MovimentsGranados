@@ -9,6 +9,7 @@
 #include "XBBaseGUI.h"
 #include "XBOSCManager.h"
 #include "ofxGui.h"
+#include "Defaults.h"
 
 class XBBaseScene
 {
@@ -28,6 +29,7 @@ public:
     float *getFBOAlpha() { return &fboAlpha; }
 
     virtual void keyReleased(int key);
+    virtual void keyPressed(int key);
 
 protected:
 
@@ -35,9 +37,11 @@ protected:
 
     ofFbo fbo;
     float fboAlpha;
+    ofImage templateImage;
+    bool showTemplate;
+    bool showFacadeImage;
 
     XBBaseGUI *gui;
-    ofxPanel guiOld;
 
     void subscribeToCelloEvents();
     void subscribeToViolinEvents();
@@ -60,12 +64,20 @@ protected:
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
-    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {};
-    virtual void onPianoNoteOff(int &noteOff) {};
+    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) { cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl; };
+    virtual void onPianoNoteOff(int &noteOff) { cout << "Piano NoteOff: p=" << noteOff << endl; };
 
 private:
 
     string name;
+};
+
+struct expandingPolyLine{
+    ofPolyline line;
+    ofPath path;
+    float life;
+    float amplitude;
+    ofPoint centroid;
 };
 
 #endif //PEDRERAMASTER_XBBASESCENE_H

@@ -6,14 +6,52 @@
 
 XBScene3GUI::XBScene3GUI() : XBBaseGUI()
 {
-    gui.setup();
-    gui.add(particleSize.setup("Particle size", 10, 2, 40));
-    gui.add(particleLife.setup("Particle life", 30, 1, 60));
-    gui.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
-    gui.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+    sceneSettingsFilename = "scene3.xml";
+    colorSettingsFilename = "colors3.xml";
 }
 
-void XBScene3GUI::draw()
+void XBScene3GUI::setup()
 {
-    gui.draw();
+    XBBaseGUI::setup();
+
+    creaturesGroup.setup("Violin & cello");
+    creaturesGroup.add(size.setup("Size", 10.0, 1.0, 20));
+    creaturesGroup.add(maxSpeed.setup("Speed", 1.0, 0.0, 10));
+    creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));
+    creaturesGroup.add(pathSpeed.setup("Path increment", 1.0, 0.0, 5.0));
+    creaturesGroup.add(stiffness.setup("stiffness", 0.05, 0.00, 0.50));
+    creaturesGroup.add(damping.setup("damping", 0.75, 0.00, 1.00));
+    creaturesGroup.add(mass.setup("mass", 6., 0.0, 10.0));
+    creaturesGroup.add(showPath.setup("Show path", false));
+
+    sceneGui.add(&creaturesGroup);
+    
+    particlesGroup.setup("Particles");
+    particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
+    particlesGroup.add(particleLife.setup("Particle life", 30, 1, 60));
+    particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
+    particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+    sceneGui.add(&particlesGroup);
+    
+    pianoGroup.setup("Piano");
+    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
+    pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));
+    pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
+    pianoGroup.add(stoneTime.setup("Duration", 2, 0.0, 5.0));
+    pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
+    sceneGui.add(&pianoGroup);
+    
+    directorGroup.setup("Director");
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
+    directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    
+    directorGroup.add(attractorStrength.setup("attractorStrength",  5, 0.0, 10.0));
+    directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    sceneGui.add(&directorGroup);
+
+    sceneGui.add(blurAmount.setup("Blur amount", 1., 0, 8.));
+//    sceneGui.add(showTemplate.setup("Show template", false));
+
+    loadSettings();
 }

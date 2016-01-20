@@ -12,26 +12,299 @@
 void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
-
-    //ofSetBackgroundAuto(true);
-//    guiOld.setup();
-//    guiOld.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-//    guiOld.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
-//    guiOld.add(restLength.setup("restLength", 0., -10., 20.));
-//
-//    guiOld.add(drag.setup("drag", 0.1, 0.01, 1.00));
-//    guiOld.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-//    guiOld.add(particleMass.setup("particleMass", 0.2, 0., 1.00));
-//    guiOld.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
-//    guiOld.add(mouseSlope.setup("mouseSlope", 70, 60., 260));
-//    guiOld.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
-//    guiOld.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
-//    guiOld.add(fixedRestLength.setup("fixedRestLength", 0., 0., 40.));
-//
-//    guiOld.add(xDamping.setup("xDamping", 1., 0.00, 1.00));
     
-    directorColor.set(77,125,140);
+    //ofSetBackgroundAuto(true);
+    
+    initLines();
     initSystem();
+    initParticles();
+    initStones();
+    
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
+}
+
+
+
+void XBScene1::update()
+{
+    XBBaseScene::update();
+    
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    
+    // increase time marker
+    violinTimeIndex--;
+    if(violinTimeIndex < 0)
+        violinTimeIndex =  ofGetHeight() / MAIN_WINDOW_SCALE;
+
+    if(violinLineIndex == 0)
+        currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+    
+    celloTimeIndex++;
+    if(celloTimeIndex > ofGetWidth() / MAIN_WINDOW_SCALE){
+        celloTimeIndex =  0;
+        currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+    }
+    
+    // if note ON, update emitter location along the current line
+    if(fakeEvent){
+        //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
+        violinLineIndex++;
+        vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
+        particleSystem.addParticles(vEmitter);
+    }
+    if(fakeCelloEvent){
+        //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
+        celloLineIndex++;
+        xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex));
+        particleSystem.addParticles(xEmitter);
+    }
+    updateEmitters();
+    
+    // update piano's stones
+    for (int i=0; i<stonesToDraw.size(); i++) {
+        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
+        if(stonesToDraw[i].life >  ofGetFrameRate() * myGUI->stoneTime){
+            stonesToDraw.erase(stonesToDraw.begin()+i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
+    
+    // director update
+    p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
+    physics->tick();
+    for ( int i = 0; i <particles.size(); ++i )
+    {
+        Particle* v = particles[i];
+        v->velocity.set(v->velocity.x * myGUI->xDamping,v->velocity.y ,0);
+    }
+}
+
+void XBScene1::drawIntoFBO()
+{
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    
+    fbo.begin();
+    {
+        ofBackground(0);
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        
+        // draw springs
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+        for ( int i = 0; i < visibleSprings.size(); ++i )
+        {
+            Spring* e = visibleSprings[i];
+            Particle* a = e->getOneEnd();
+            Particle* b = e->getTheOtherEnd();
+            ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
+        }
+        
+        // draw expanding stones from piano
+        for (int i=0; i<stonesToDraw.size(); i++) {
+            expandingPolyLine &e = stonesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+            ofScale( 1 +  e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                    1 + e.amplitude * sin(myGUI->stoneFrequency * e.life ) );
+            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255) ) );
+            e.path.draw();
+            ofPopMatrix();
+        }
+        
+        // draw particles
+        if(myGUI->showTimeMarker){
+            ofSetColor(220);
+            ofDrawLine(0,violinTimeIndex, ofGetWidth() /MAIN_WINDOW_SCALE, violinTimeIndex);
+            ofDrawLine(celloTimeIndex, 0, celloTimeIndex, ofGetHeight() / MAIN_WINDOW_SCALE);
+        }
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        particleSystem.draw(pTex);
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofPopStyle();
+        
+        
+        drawGUI();
+        drawFadeRectangle();
+    }
+    fbo.end();
+    
+    blur.apply(&fbo, myGUI->blurAmount, 1);
+}
+
+//--------------------------------------------------------------
+void XBScene1::keyPressed(int key){
+    XBBaseScene::keyPressed(key);
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    
+    if(key == 'x'){
+        if(fakeEvent == false){
+            fakeEvent = true;
+            int wichLine = (int) ofRandom( verticalLines.size());
+            //            cout << "Line changed to " << ofToString(wichLine) << endl;
+            currentViolinNote = verticalLines[wichLine];
+            //TODO: find a better way to do this
+            ofPoint startPoint = currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+        }
+    }
+    else if(key == 'c'){
+        if(fakeCelloEvent == false){
+            fakeCelloEvent = true;
+            int wichLine = (int) ofRandom( horizontalLines.size());
+            //            cout << "Line changed to " << ofToString(wichLine) << endl;
+            currentCelloNote = horizontalLines[wichLine];
+            //TODO: find a better way to do this
+            ofPoint startPoint = currentCelloNote.getClosestPoint(ofPoint( celloTimeIndex, 0), &celloLineIndex);
+        }
+    }
+    else if(key == 'v'){
+        //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
+        expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
+        e.life= 1;
+        e.amplitude = myGUI->stoneGrowFactor;
+        stonesToDraw.push_back(e);
+    }
+
+}
+
+void XBScene1::keyReleased(int key)
+{
+    XBBaseScene::keyReleased(key);
+    
+    switch(key)
+    {
+        case 'z':
+        case 'Z':
+        {
+            particles.clear();
+            visibleSprings.clear();
+            delete physics;
+            initSystem();
+            break;
+        }
+        case 'x':
+        case 'X':
+        {
+            fakeEvent = false;
+//            linesToDraw.push_back(violinLine);
+//            violinLine.clear();
+        }
+        case 'c':
+        case 'C':
+        {
+            fakeCelloEvent = false;
+//            violinLine.clear();
+        }
+
+        default: break;
+    }
+}
+
+void XBScene1::initLines(){
+    // load vertical lines
+    svg.load("resources/verticales.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(1);
+            vector<ofPoint> points = pl.getVertices();
+            //check path direction
+            if(points.size() > 51){
+                if(points[0].y < points[50].y){ //check if the order is top to bottom, we dont want that
+                    std::reverse(points.begin(), points.end());
+                    pl.clear();
+                    pl.addVertices(points);
+                }
+            }
+            verticalLines.push_back(pl);
+        }
+    }
+    
+    // LOAD HORIZINTAL LINES
+    svg.load("resources/horizontales.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(1);
+            vector<ofPoint> points = pl.getVertices();
+            //check path direction
+            if(points.size() > 51){
+                if(points[0].x > points[50].x){ //check if the order is right to left, we dont want that
+                    std::reverse(points.begin(), points.end());
+                    pl.clear();
+                    pl.addVertices(points);
+                }
+            }
+            horizontalLines.push_back(pl);
+        }
+    }
+}
+
+void XBScene1::initParticles(){
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    
+    emitParticles = false;
+    vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
+    vEmitter.setVelocity(myGUI->particleVelocity);
+    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.life = myGUI->particleLife;
+    vEmitter.lifeSpread = 5.0;
+    vEmitter.numPars = 1;
+    vEmitter.color = ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
+    vEmitter.size = myGUI->particleSize;
+    
+    xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
+    xEmitter.setVelocity(myGUI->particleVelocity);
+    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.life = myGUI->particleLife;
+    xEmitter.lifeSpread = 5.0;
+    xEmitter.numPars = 1;
+    xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
+    xEmitter.size = myGUI->particleSize;
+    
+    ofLoadImage(pTex, "resources/particle.png");
+}
+
+void XBScene1::initStones(){
+    svg.load("resources/Esc1Piano.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k=0; k<points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if(i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo( points[k].x - epl.centroid.x, points[k].y - epl.centroid.y );
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            stones.push_back(epl);
+        }
+    }
 }
 
 void XBScene1::initSystem()
@@ -46,8 +319,8 @@ void XBScene1::initSystem()
     p_mouse->setFixed( true );
     
     
-    float gridStepX = (float)( ofGetWindowWidth() / GRID_X_RES );
-    float gridStepY = (float)( ofGetWindowHeight()  / GRID_Y_RES );
+    float gridStepX = (float)( (ofGetWindowWidth() / MAIN_WINDOW_SCALE) / GRID_X_RES );
+    float gridStepY = (float)( (ofGetWindowHeight() / MAIN_WINDOW_SCALE)  / GRID_Y_RES );
     
     for( int y=0; y<GRID_Y_RES; y++ ){
         for( int x=0; x<GRID_X_RES; x++ ){
@@ -79,75 +352,27 @@ void XBScene1::initSystem()
             }
         }
     }
-    
-    
-    //    for( int y=1; y<GRID_Y_RES; y++ ){
-    //        for( int x=0; x<GRID_X_RES; x++ ){
-    //            physics->makeSpring( particles[ (y - 1) * GRID_X_RES + x], particles[y*GRID_X_RES + x], springStrength, springDamping, gridStepY );
-    //        }
-    //    }
-    
 }
 
-void XBScene1::update()
-{
-    XBBaseScene::update();
-
+void XBScene1::updateEmitters(){
     XBScene1GUI *myGUI = (XBScene1GUI *)gui;
-
-    p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
-    physics->tick();
-    for ( int i = 0; i <particles.size(); ++i )
-    {
-        Particle* v = particles[i];
-        v->velocity.set(v->velocity.x * myGUI->xDamping,v->velocity.y ,0);
-    }
-}
-
-void XBScene1::drawIntoFBO()
-{
-    fbo.begin();
-    {
-        ofBackground(0);
-        // draw vertices
-//        ofSetColor(180);
-//        for ( int i = 0; i <particles.size(); ++i )
-//        {
-//            Particle* v = particles[i];
-//            ofDrawCircle( v->position.x, v->position.y, NODE_SIZE/2.0f );
-//        }
-        
-        // draw springs
-        ofSetColor(directorColor);
-        for ( int i = 0; i < visibleSprings.size(); ++i )
-        {
-            Spring* e = visibleSprings[i];
-            Particle* a = e->getOneEnd();
-            Particle* b = e->getTheOtherEnd();
-            ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
-        }
-
-        drawGUI();
-        drawFadeRectangle();
-    }
-    fbo.end();
-}
-
-void XBScene1::keyReleased(int key)
-{
-    XBBaseScene::keyReleased(key);
-
-    switch(key)
-    {
-        case 'z':
-        case 'Z':
-        {
-            particles.clear();
-            visibleSprings.clear();
-            delete physics;
-            initSystem();
-            break;
-        }
-        default: break;
-    }
+    
+    //GUI related
+    vEmitter.size = myGUI->particleSize;
+    vEmitter.setVelocity(myGUI->particleVelocity);
+    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.life = myGUI->particleLife;
+    vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+    
+    xEmitter.size = myGUI->particleSize;
+    xEmitter.setVelocity(myGUI->particleVelocity);
+    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.life = myGUI->particleLife;
+    xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+    
+    // update particle system
+    float dt = min(ofGetLastFrameTime(), 1.0/10.0);
+    particleSystem.update(dt, 1.);
+    
+    
 }

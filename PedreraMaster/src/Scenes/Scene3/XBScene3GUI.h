@@ -12,12 +12,40 @@ class XBScene3GUI : public XBBaseGUI
 public:
 
     XBScene3GUI();
-    void draw();
+    virtual void setup();
 
+    ofxGuiGroup creaturesGroup;
+    ofxFloatSlider size;
+    ofxFloatSlider maxSpeed;
+    ofxFloatSlider maxForce;
+    ofxFloatSlider pathSpeed;
+    ofxFloatSlider stiffness;
+    ofxFloatSlider damping;
+    ofxFloatSlider mass;
+    ofxToggle showPath;
+    
+    ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
+    ofxFloatSlider blurAmount;
+    
+    ofxGuiGroup pianoGroup;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
+    
+    ofxGuiGroup directorGroup;
+    ofxFloatSlider attractorStrength;
+    ofxFloatSlider attractorRadius;
+    ofxFloatSlider minPeriod;
+    ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
+    
+//    ofxToggle showTemplate;
 };
 
 

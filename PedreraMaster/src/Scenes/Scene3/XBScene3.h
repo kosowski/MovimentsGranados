@@ -4,11 +4,14 @@
 
 #ifndef PEDRERAMASTER_XBSCENE3_H
 #define PEDRERAMASTER_XBSCENE3_H
+#define NUM_WAVES 1
 
 #include "XBBaseScene.h"
 #include "Vehicle.h"
-#include "ofxColorPicker.h"
 #include "ofxParticles.h"
+#include "BlurEffect.h"
+#include "ofxSvg.h"
+#include "Wave.h"
 
 
 class XBScene3 : public XBBaseScene
@@ -22,32 +25,30 @@ public:
     virtual void drawIntoFBO();
     virtual void drawGUI();
     void keyReleased(int key);
+    void initSVG();
+    void initParticles();
+    void initPaths();
+    void initWaves();
 
     Vehicle v, x;
+    ofPolyline vPath;
+    float vPathIndex = 0;
+    ofPolyline xPath;
+    float xPathIndex = 0;
     
     bool emitParticles;
     ofxParticleSystem particleSystem;
-    int pmouseX, pmouseY;
-    ofVec2f pmouseVel;
-    
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
-    int displayMode;
-
     
-    ofColor directorColor;
-    ofColor violinColor;
-    ofColor celloColor;
+    ofxSVG svg;
+    vector<expandingPolyLine> stones;
+    vector<expandingPolyLine> stonesToDraw;
+ 
+    vector<Wave> waves;
     
-    
-    //GUI related
-    ofxColorPicker colorPickerV;
-    ofxColorPicker colorPickerX;
-    
-//    ofxFloatSlider particleSize;
-//    ofxFloatSlider particleLife;
-//    ofxVec3Slider particleVelocity;
-//    ofxVec3Slider particleSpread;
+    ofImage mask;
+    BlurEffect blur;
 };
 
 

@@ -18,7 +18,7 @@ void Vehicle::setup(int x, int y){
         nodes.push_back(p);
     }
     for (int i = 0; i < numNodes-1; i++){
-        Rope s(&nodes[i], &nodes[i+1], 1, 0, r);
+        Rope s(&nodes[i], &nodes[i+1], 1.7, 0, r);
         springs.push_back(s);
     }
     colour.set(255);
@@ -43,10 +43,9 @@ void Vehicle::seek(const ofPoint & target){
 }
 
 void Vehicle::update(){
-    ofPoint target( ofNoise(ofGetElapsedTimeMillis() * 0.0005 + offset) * ofGetWidth(), ofNoise(ofGetElapsedTimeMillis() * 0.0005f + offset + 1000.0) * ofGetHeight());
-    
-    seek(target);
-    
+//    ofPoint target( ofNoise(ofGetElapsedTimeMillis() * 0.0005 + offset) * ofGetWidth(), ofNoise(ofGetElapsedTimeMillis() * 0.0005f + offset + 1000.0) * ofGetHeight());
+//    
+//    seek(target);
     
     velocity += acceleration;
     velocity.limit(maxSpeed);
@@ -68,10 +67,12 @@ void Vehicle::update(){
 
 void Vehicle::draw(){
     
+    ofPushStyle();
     ofSetColor(colour);
+    ofFill();
     
-    for (ofPoint p:nodes)
-        ofDrawCircle(p.x, p.y, r-2);
+//    for (ofPoint p:nodes)
+//        ofDrawCircle(p.x, p.y, r-2);
     
     for(int i=0; i<nodes.size(); i++){
         if(i==0)
@@ -83,11 +84,36 @@ void Vehicle::draw(){
     
     for (Rope s:springs)
         s.draw();
+    ofPopStyle();
 }
 
 void Vehicle::setColor(ofColor c){
     colour = c;
 }
 
+void Vehicle::setSize(float radius){
+    r = radius;
+}
 
+void Vehicle::setMaxSpeed(float s){
+    maxSpeed = s;
+}
 
+void Vehicle::setMaxForce(float f){
+    maxForce = f;
+}
+
+void Vehicle::setTailDamping(float d){
+    for(int i= 0; i< springs.size();i++)
+        springs[i].damping = d;
+}
+
+void Vehicle::setTailStiffness(float s){
+    for(int i= 0; i< springs.size();i++)
+        springs[i].stiffness = s;
+}
+
+void Vehicle::setMass(float m){
+    for(int i= 0; i< springs.size();i++)
+        springs[i].mass = m;
+}

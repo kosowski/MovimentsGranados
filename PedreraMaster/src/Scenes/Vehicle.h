@@ -13,6 +13,12 @@ public:
     void draw();
     void setColor(ofColor c);
     ofPoint getLocation(){return location;};
+    void setMaxSpeed(float s);
+    void setMaxForce(float f);
+    void setTailDamping(float f);
+    void setTailStiffness(float s);
+    void setMass(float f);
+    void setSize(float radius);
     
 private:
     

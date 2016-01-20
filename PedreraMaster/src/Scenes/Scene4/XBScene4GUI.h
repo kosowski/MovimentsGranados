@@ -12,12 +12,16 @@ class XBScene4GUI : public XBBaseGUI
 public:
 
     XBScene4GUI();
-    void draw();
+    virtual void setup();
 
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
+    ofxFloatSlider alpha;
+    ofxIntSlider blurAmount;
+    ofxToggle enableSmooth;
 };
 
 
