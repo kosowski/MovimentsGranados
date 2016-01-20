@@ -20,12 +20,10 @@ void XBScene3::setup(XBBaseGUI *_gui)
     v.setup(vPath.getPointAtIndexInterpolated(vPathIndex).x, vPath.getPointAtIndexInterpolated(vPathIndex).y);
     x.setup(xPath.getPointAtIndexInterpolated(xPathIndex).x, xPath.getPointAtIndexInterpolated(xPathIndex).y);
 
-     initWaves();
+    initWaves();
     initParticles();
     initSVG();
    
-    
-    mask.load("resources/ventanas_invert.png");
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
 

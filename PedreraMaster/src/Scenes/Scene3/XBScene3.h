@@ -47,7 +47,6 @@ public:
  
     vector<Wave> waves;
     
-    ofImage mask;
     BlurEffect blur;
 };
 
