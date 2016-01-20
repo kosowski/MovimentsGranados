@@ -38,6 +38,7 @@ protected:
     ofFbo fbo;
     float fboAlpha;
     ofImage templateImage;
+    ofImage mask;
     bool showTemplate;
     bool showFacadeImage;
 

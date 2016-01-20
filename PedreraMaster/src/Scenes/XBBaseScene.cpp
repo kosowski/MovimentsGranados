@@ -25,6 +25,8 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
     
     fboAlpha = 255.0f;
     templateImage.load("resources/FotoPlantilla_16-10_Foto9615_v2 1200x1920.jpg");
+    mask.load("resources/ventanas_invert.png");
+
     showTemplate = false;
     showFacadeImage = false;
     
