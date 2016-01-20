@@ -52,7 +52,7 @@ void Wave::update() {
             if(orientation == 0)
                 particles[i] += ofPoint(0, sin(x)*amplitude[j] * attraction );
             else
-                particles[i] += ofPoint( sin(x)*amplitude[j] * attraction, x );
+                particles[i] += ofPoint( sin(x)*amplitude[j] * attraction, 0 );
             //else
             //particles[i].location.add(0,  cos(x)*amplitude[j] * dist);
             x+=dx[j];
