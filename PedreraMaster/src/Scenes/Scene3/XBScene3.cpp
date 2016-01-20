@@ -24,7 +24,7 @@ void XBScene3::setup(XBBaseGUI *_gui)
     initParticles();
     initSVG();
     
-
+    mask.load("resources/ventanas_invert.png");
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
 
@@ -163,6 +163,11 @@ void XBScene3::drawIntoFBO()
         x.draw();
         ofPopStyle();
         
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
         //draw GUI
         drawGUI();
         
@@ -297,7 +302,7 @@ void XBScene3::initWaves(){
         
         for(int j=0;j<(int)lines.size();j++){
            ofPolyline l(lines[j].getResampledBySpacing(spacing));
-           waves.push_back( Wave( l.getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
+           waves.push_back( Wave( l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
         }
     }
     
@@ -312,7 +317,7 @@ void XBScene3::initWaves(){
         
         for(int j=0;j<(int)lines.size();j++){
             ofPolyline l(lines[j].getResampledBySpacing(spacing));
-             waves.push_back( Wave( l.getVertices(), ofGetWidth(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
+             waves.push_back( Wave( l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
 }
