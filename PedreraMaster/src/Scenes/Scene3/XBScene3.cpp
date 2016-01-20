@@ -20,9 +20,10 @@ void XBScene3::setup(XBBaseGUI *_gui)
     v.setup(vPath.getPointAtIndexInterpolated(vPathIndex).x, vPath.getPointAtIndexInterpolated(vPathIndex).y);
     x.setup(xPath.getPointAtIndexInterpolated(xPathIndex).x, xPath.getPointAtIndexInterpolated(xPathIndex).y);
 
-    initWaves();
+     initWaves();
     initParticles();
     initSVG();
+   
     
     mask.load("resources/ventanas_invert.png");
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
@@ -116,10 +117,14 @@ void XBScene3::drawIntoFBO()
     fbo.begin();
     {
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
-        if(myGUI->showTemplate)
+        if(showFacadeImage)
             templateImage.draw(0,0);
         else
             ofBackground(0);
+        if(showTemplate){
+            ofSetColor(255);
+            svg.draw();
+        }
         ofPushStyle();
         
         // draw directors waves
@@ -186,6 +191,7 @@ void XBScene3::drawGUI()
 
 void XBScene3::keyReleased(int key){
     XBBaseScene::keyReleased(key);
+    
     XBScene3GUI *myGUI = (XBScene3GUI *)gui;
 
     if(key == 'p'){
