@@ -65,56 +65,17 @@ void ofApp::setup()
 void ofApp::update()
 {
     handleStateChanges();
-
-    if (kinectAvailable)
-    {
-        switch (currState)
-        {
-            case STATE_SETUP: {
-                break;
-            }
-            case STATE_DETECTING: {
-                motionExtractor->update();
-                break;
-            }
-            case STATE_CAPTURING: {
-                motionExtractor->update();
-                handsInfo = motionExtractor->gethandsInfo();
-                sendHandInfo();
-                break;
-            }
-        }
-    }
-    else if (ofGetMousePressed())
-    {
-        currState = STATE_CAPTURING; //change state of fake detection
-        handsInfo.leftHand.pos.x = (float)ofGetMouseX() / (float)ofGetWidth();
-        handsInfo.leftHand.pos.y = (float)ofGetMouseY() / (float)ofGetHeight();
-        handsInfo.rightHand.pos.x = ofMap(handsInfo.leftHand.pos.x, 0, 1, 1, 0);
-        handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
-        sendHandInfo(); //send fake info by osc
-    } else
-    {
-        currState = STATE_DETECTING;
+    motionExtractor->update();
+    if(currState == STATE_CAPTURING){
+        handsInfo = motionExtractor->gethandsInfo();
+        sendHandInfo();
     }
 }
 
 void ofApp::draw()
 {
-    if (showImage && kinectAvailable) //draw only if is detecting and if kinect is open
-        motionExtractor->draw();
-    
-    if(showHands && currState==STATE_CAPTURING){
-        ofPushStyle();
-        ofNoFill();
-        ofSetLineWidth(3);
-        ofSetColor(ofColor::red);
-//        ofDrawCircle(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20);
-//        ofDrawCircle(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20);
-        ofDrawEllipse(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20+20*(handsInfo.rightHand.v.x), 20+20*(handsInfo.rightHand.v.y));
-        ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
-        ofPopStyle();
-    }
+    motionExtractor->draw(showImage, (showHands && currState==STATE_CAPTURING));
+
     gui.draw();
 }
 
@@ -232,20 +193,20 @@ void ofApp::resetKinect(){
 
 void ofApp::keyReleased(int key)
 {
-    // TODO: Remove after Kinect is working. The code below is just to simulate state changes.
-    switch (key) {
-        case '1':
-            currState = STATE_SETUP;
-            break;
-        case '2':
-            currState = STATE_DETECTING;
-            break;
-        case '3':
-            currState = STATE_CAPTURING;
-            break;
-        default:
-            break;
-    }
+//    // TODO: Remove after Kinect is working. The code below is just to simulate state changes.
+//    switch (key) {
+//        case '1':
+//            currState = STATE_SETUP;
+//            break;
+//        case '2':
+//            currState = STATE_DETECTING;
+//            break;
+//        case '3':
+//            currState = STATE_CAPTURING;
+//            break;
+//        default:
+//            break;
+//    }
 }
 
 void ofApp::mouseDragged(int x, int y, int button)

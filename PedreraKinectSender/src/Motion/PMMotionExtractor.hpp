@@ -52,7 +52,7 @@ public:
 
     bool setup();
     void update();
-    void draw();
+    void draw(bool drawImage, bool drawHands);
     void exit();
     
     bool reset(bool kinectActivated);
@@ -68,7 +68,7 @@ private:
     ofxOpenNI openNIDevice;
     KinectInfo kinectOut;
     KinectInfo handsInfo;
-    bool hasUser;
+    bool hasUser, hasKinect;
     
     //for computing velocity
     deque<ofPoint> rHandPosHist;

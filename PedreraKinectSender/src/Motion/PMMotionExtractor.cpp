@@ -43,55 +43,80 @@ bool PMMotionExtractor::setup()
 
     openNIDevice.start();
 
-//    handsInfo.push_back(ofPoint(0,0,0));
-//    handsInfo.push_back(ofPoint(0,0,0));
-
-    return (openNIDevice.getNumDevices() >= 1);
+    hasKinect = (openNIDevice.getNumDevices() >= 1);
+    return hasKinect;
 }
 
 ///--------------------------------------------------------------
 void PMMotionExtractor::update()
 {
-    openNIDevice.update();
-    // iterate through users
-    // only processes if two hands are found, it means a user is found
-    if (openNIDevice.getNumTrackedHands() == 2) {
-        if (!hasUser) {
-            hasUser = true;
-            ofNotifyEvent(eventUserDetection, hasUser, this);
+    if(hasKinect){
+        openNIDevice.update();
+        // iterate through users
+        // only processes if two hands are found, it means a user is found
+        if (openNIDevice.getNumTrackedHands() == 2) {
+            if (!hasUser) {
+                hasUser = true;
+                ofNotifyEvent(eventUserDetection, hasUser, this);
+            }
+            for (int i = 0; i < openNIDevice.getNumTrackedHands(); i++) {
+                // get a reference to this user
+                ofxOpenNIHand &hand = openNIDevice.getTrackedHand(i);
+                
+                // get hand position
+                ofPoint handPos = hand.getPosition();
+                handPos.x /= openNIDevice.getWidth(); //mapped to 0-1
+                handPos.y /= openNIDevice.getHeight(); //mapped to 0-1
+                handPos.z /= 1000; //mapped to give distance to kinect in meters
+                //Random choser left and right hand
+                //TODO: implement right/left detection (IF NEED)
+                if (i)
+                    handsInfo.leftHand.pos = handPos;
+                else
+                    handsInfo.rightHand.pos = handPos;
+            }
+            computeVelocity(5);
+        } else {
+            if (hasUser) {
+                hasUser = false;
+                ofNotifyEvent(eventUserDetection, hasUser, this);
+                rHandPosHist.clear();
+                lHandPosHist.clear();
+            }
         }
-        for (int i = 0; i < openNIDevice.getNumTrackedHands(); i++) {
-            // get a reference to this user
-            ofxOpenNIHand &hand = openNIDevice.getTrackedHand(i);
-
-            // get hand position
-            ofPoint handPos = hand.getPosition();
-            handPos.x /= openNIDevice.getWidth(); //mapped to 0-1
-            handPos.y /= openNIDevice.getHeight(); //mapped to 0-1
-            handPos.z /= 1000; //mapped to give distance to kinect in meters
-            //Random choser left and right hand
-            //TODO: implement right/left detection (IF NEED)
-            if (i)
-                handsInfo.leftHand.pos = handPos;
-            else
-                handsInfo.rightHand.pos = handPos;
-        }
+    }else if(ofGetMousePressed()){
+        hasUser = true;
+        ofNotifyEvent(eventUserDetection, hasUser, this);
+        handsInfo.leftHand.pos.x = (float)ofGetMouseX() / (float)ofGetWidth();
+        handsInfo.leftHand.pos.y = (float)ofGetMouseY() / (float)ofGetHeight();
+        handsInfo.leftHand.pos.z = 1;
+        handsInfo.rightHand.pos.x = ofMap(handsInfo.leftHand.pos.x, 0, 1, 1, 0);
+        handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
+        handsInfo.leftHand.pos.z = 1;
         computeVelocity(5);
-    } else {
-        if (hasUser) {
-            hasUser = false;
-            ofNotifyEvent(eventUserDetection, hasUser, this);
-            rHandPosHist.clear();
-            lHandPosHist.clear();
-        }
+    }else{
+        hasUser = false;
+        ofNotifyEvent(eventUserDetection, hasUser, this);
+        rHandPosHist.clear();
+        lHandPosHist.clear();
     }
     
 }
 
 ///--------------------------------------------------------------
-void PMMotionExtractor::draw()
+void PMMotionExtractor::draw(bool drawImage, bool drawHands)
 {
-    openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
+    if(hasKinect && drawImage)
+        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
+    if(drawHands){
+        ofPushStyle();
+        ofNoFill();
+        ofSetLineWidth(3);
+        ofSetColor(ofColor::red);
+        ofDrawEllipse(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20+20*(handsInfo.rightHand.v.x), 20+20*(handsInfo.rightHand.v.y));
+        ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
+        ofPopStyle();
+    }
 }
 
 ///--------------------------------------------------------------
