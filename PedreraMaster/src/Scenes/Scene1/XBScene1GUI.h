@@ -33,7 +33,6 @@ public:
     ofxFloatSlider ViolinBorderFade;
     ofxToggle showTimeMarker;
     
-    ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
     ofxVec3Slider particleVelocity;

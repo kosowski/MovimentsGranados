@@ -40,17 +40,16 @@ void XBScene1GUI::setup()
     sceneGui.add(&pianoGroup);
     
     violinGroup.setup("Violin&Cello");
-    violinGroup.add(violinBorderSize.setup("Line size",  2.0, 1.0, 10.0));
-    violinGroup.add(ViolinBorderFade.setup("Border", 100.0f, 1.0f, 200.0f));
+    violinGroup.add(particleSize.setup("Particle size", 10, 2, 40));
+    violinGroup.add(particleLife.setup("Particle life", 30, 1, 60));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
+    violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
+    violinGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(150,150)));
+    
     sceneGui.add(&violinGroup);
     
-    particlesGroup.setup("Particles");
-    particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
-    particlesGroup.add(particleLife.setup("Particle life", 30, 1, 60));
-    particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
-    particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(150,150)));
-    sceneGui.add(&particlesGroup);
+//    particlesGroup.setup("Particles");
+//       sceneGui.add(&particlesGroup);
 
     sceneGui.add(blurAmount.setup("Blur amount", 1., 0, 8.));
     
