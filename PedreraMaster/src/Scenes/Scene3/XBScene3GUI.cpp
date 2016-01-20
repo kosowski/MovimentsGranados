@@ -15,13 +15,13 @@ void XBScene3GUI::setup()
     XBBaseGUI::setup();
 
     creaturesGroup.setup("Violin & cello");
-    creaturesGroup.add(size.setup("Size", 6.0, 1.0, 20));
+    creaturesGroup.add(size.setup("Size", 10.0, 1.0, 20));
     creaturesGroup.add(maxSpeed.setup("Speed", 1.0, 0.0, 10));
     creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));
     creaturesGroup.add(pathSpeed.setup("Path increment", 1.0, 0.0, 5.0));
     creaturesGroup.add(stiffness.setup("stiffness", 0.05, 0.00, 0.50));
     creaturesGroup.add(damping.setup("damping", 0.75, 0.00, 1.00));
-    creaturesGroup.add(mass.setup("mass", 4., 0.0, 10.0));
+    creaturesGroup.add(mass.setup("mass", 6., 0.0, 10.0));
     creaturesGroup.add(showPath.setup("Show path", false));
 
     sceneGui.add(&creaturesGroup);
@@ -42,16 +42,16 @@ void XBScene3GUI::setup()
     sceneGui.add(&pianoGroup);
     
     directorGroup.setup("Director");
-    directorGroup.add(lineWidth.setup("Line width", 4.0f, 1.0f, 40.0f));
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
     
-    directorGroup.add(attractorStrength.setup("attractorStrength",  7, 0.0, 10.0));
+    directorGroup.add(attractorStrength.setup("attractorStrength",  5, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     sceneGui.add(&directorGroup);
 
     sceneGui.add(blurAmount.setup("Blur amount", 1., 0, 8.));
-    sceneGui.add(showTemplate.setup("Show template", false));
+//    sceneGui.add(showTemplate.setup("Show template", false));
 
     loadSettings();
 }
