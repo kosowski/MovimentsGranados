@@ -11,9 +11,8 @@
 #ifndef ConductrEnter_Config_h
 #define ConductrEnter_Config_h
 
-static const int            DEFAULT_WINDOW_WIDTH        = 800;
-static const int            DEFAULT_WINDOW_HEIGHT       = 600;
-
-static const ofWindowMode   DEFAULT_WINDOW_MODE         = OF_WINDOW;
+static const int            KINECT_STD_COLOR_WIDTH      = 640;
+static const int            KINECT_STD_COLOR_HEIGHT     = 480;
+static const float          WINDOW_SCALE_FACTOR         = 1.0f;
 
 #endif

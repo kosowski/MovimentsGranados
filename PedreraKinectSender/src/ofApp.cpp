@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "../../Shared/OSCSettings.h"
+#include "Defaults.h"
 
 static const string STR_APP_TITLE           = "KINECT DETECTOR";
 static const string STR_GUI_TITLE           = "Kinect Status";
@@ -20,7 +21,6 @@ static const int GUI_WIDTH = 350;
 
 void ofApp::setup()
 {
-    ofSetWindowShape(KINECT_STD_COLOR_WIDTH, KINECT_STD_COLOR_HEIGHT);
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(ofColor::black);
 
@@ -189,40 +189,4 @@ void ofApp::sendHandInfo()
 
 void ofApp::resetKinect(){
     kinectAvailable = motionExtractor->reset(kinectAvailable);
-}
-
-void ofApp::keyReleased(int key)
-{
-//    // TODO: Remove after Kinect is working. The code below is just to simulate state changes.
-//    switch (key) {
-//        case '1':
-//            currState = STATE_SETUP;
-//            break;
-//        case '2':
-//            currState = STATE_DETECTING;
-//            break;
-//        case '3':
-//            currState = STATE_CAPTURING;
-//            break;
-//        default:
-//            break;
-//    }
-}
-
-void ofApp::mouseDragged(int x, int y, int button)
-{
-}
-
-void ofApp::mousePressed(int x, int y, int button)
-{
-}
-
-void ofApp::mouseReleased(int x, int y, int button)
-{
-}
-
-void ofApp::windowResized(int w, int h)
-{
-    float kinect_aspectRatio=(float)KINECT_STD_COLOR_WIDTH/(float)KINECT_STD_COLOR_HEIGHT;
-    ofSetWindowShape((float)h*kinect_aspectRatio, h);
 }

@@ -45,6 +45,7 @@ static const string         OSC_PIANO_ADDR_POLYAFTERTOUCH   = "/polyAftertouch";
 // Kinect
 static const string         OSC_KINECT_SENDER_HOST          = "localhost";
 static const int            OSC_KINECT_SENDER_PORT          = 30304;
+static const int            OSC_KINECT_SENDER_PORT_AX       = 30305;
 static const string         OSC_KINECT_ADDR_BASE            = "/motion";
 static const string         OSC_KINECT_STATE                = "/detectionStatus";
 static const string         OSC_KINECT_STATE_SETUP          = "Setting up";
