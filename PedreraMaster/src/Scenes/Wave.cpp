@@ -13,9 +13,8 @@
 #include "Wave.h"
 
 
-Wave::Wave(vector<ofPoint>& o, int w_, float a, float p, float s, int ori = 0) {
+Wave::Wave(vector<ofPoint>& o, float a, float p, float s, int ori = 0) {
     origin = o;
-    w = w_;
     xspacing = s;
     orientation = ori;
     for (int i = 0; i < numComponents; i++) {
@@ -23,12 +22,6 @@ Wave::Wave(vector<ofPoint>& o, int w_, float a, float p, float s, int ori = 0) {
         amplitude.push_back( a / (i+1) );
         dx.push_back( (TWO_PI / period) * xspacing);
     }
-    //period = p;
-    //amplitude = a;
-    //dx = (TWO_PI / period) * xspacing;
-//    float numParticles = w/xspacing;
-//    particles.resize(numParticles);
-    //particles.resize(o.size());
     for (int i = 0; i < o.size(); i++) {
         particles.push_back(ofPoint (0,0));
     }

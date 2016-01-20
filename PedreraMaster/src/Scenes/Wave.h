@@ -16,7 +16,7 @@
 class Wave {
 public:
     
-    Wave(vector<ofPoint>& o, int w_, float a, float p, float s, int ori);
+    Wave(vector<ofPoint>& o, float a, float p, float s, int ori);
     void update();
     void display();
     void setAttractor(int index, float x, float y, float strength, float radius);
