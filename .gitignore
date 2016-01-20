@@ -116,3 +116,5 @@ Desktop.ini
 
 PerdreraMaster/bin/data/Settings/*.xml
 *.xml
+!PedreraKinectSender/bin/data/openni/config/licenses.xml
+!PedreraKinectSender/bin/data/openni/config/modules.xml
