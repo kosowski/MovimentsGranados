@@ -38,6 +38,8 @@ protected:
     ofFbo fbo;
     float fboAlpha;
     ofImage templateImage;
+    bool showTemplate;
+    bool showFacadeImage;
 
     XBBaseGUI *gui;
 

@@ -9,7 +9,7 @@ static const int FBO_NUM_SAMPLES = 0;
 XBBaseScene::XBBaseScene(string _name)
 {
     name = _name;
-
+    
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, FBO_NUM_SAMPLES);
 }
 
@@ -22,15 +22,17 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
         ofClear(0, 0, 0, 0);
     }
     fbo.end();
-
+    
     fboAlpha = 255.0f;
     templateImage.load("resources/FotoPlantilla_16-10_Foto9615_v2 1200x1920.jpg");
+    showTemplate = false;
+    showFacadeImage = false;
     
     subscribeToCelloEvents();
     subscribeToViolinEvents();
     subscribeToPianoEvents();
     subscribeToKinectEvents();
-
+    
     gui = _gui;
 }
 
@@ -41,7 +43,7 @@ void XBBaseScene::drawGUI()
 void XBBaseScene::drawFadeRectangle()
 {
     if (int(fboAlpha) == 255) return;
-
+    
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
     ofClear(0, 0, 0, (int)fboAlpha);
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -51,6 +53,14 @@ void XBBaseScene::keyReleased(int key)
 {
     switch(key)
     {
+        case 'f':
+        case 'F':
+            showFacadeImage = !showFacadeImage;
+            break;
+        case 't':
+        case 'T':
+            showTemplate = !showTemplate;
+            break;
         default:
             break;
     }
