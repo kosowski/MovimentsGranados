@@ -322,6 +322,10 @@ void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
+
+    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
+    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
+
     ofxOscMessage m;
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
@@ -335,6 +339,9 @@ void ofApp::analyzerEnergyChanged(energyParams &energyParams)
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
 
+    cout << "energyEnergy = " << energyEnergy << endl;
+    cout << "energySmoothed = " << energySmoothed << endl;
+
     ofxOscMessage m;
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
@@ -347,6 +354,8 @@ void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 {
     silenceOn = silenceParams.isSilent;
 
+    cout << "silenceOn = " << silenceOn << endl;
+
     ofxOscMessage m;
     stringstream address;
     address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_SILENCE;
@@ -358,6 +367,8 @@ void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 void ofApp::analyzerOnsetDetected(onsetParams &onsetParams)
 {
     onsetsOn = onsetParams.isOnset;
+
+    cout << "onsetsOn = " << onsetsOn << endl;
 
     ofxOscMessage m;
     stringstream address;
