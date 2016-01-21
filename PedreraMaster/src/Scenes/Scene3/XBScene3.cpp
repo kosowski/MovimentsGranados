@@ -123,9 +123,9 @@ void XBScene3::drawIntoFBO()
             ofSetColor(255);
             svg.draw();
         }
-        ofPushStyle();
         
         // draw directors waves
+        ofPushStyle();
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         ofSetLineWidth(myGUI->lineWidth);
         for(Wave w:waves)
@@ -166,6 +166,7 @@ void XBScene3::drawIntoFBO()
         x.draw();
         ofPopStyle();
         
+        // mask for removing the windows
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
@@ -298,7 +299,7 @@ void XBScene3::initWaves(){
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontales.svg");
+    svg.load("resources/horizontalesv02.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
@@ -314,7 +315,7 @@ void XBScene3::initWaves(){
     }
     
     // create vertical waves
-    svg.load("resources/verticales.svg");
+    svg.load("resources/verticalesv02.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
