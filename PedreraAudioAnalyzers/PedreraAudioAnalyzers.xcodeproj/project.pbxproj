@@ -10,29 +10,75 @@
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		101D2DB773940813A5C898CD /* ofxAubioPitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93CAC8A94359FD331BAD8CFA /* ofxAubioPitch.cpp */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
-		2AC9BCC31C37EC24003B8E9A /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC11C37EC24003B8E9A /* aubio.framework */; };
-		2AC9BCC41C37EC24003B8E9A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC21C37EC24003B8E9A /* GLUT.framework */; };
-		2AC9BCD41C37EC29003B8E9A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC51C37EC29003B8E9A /* Accelerate.framework */; };
-		2AC9BCD51C37EC29003B8E9A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC61C37EC29003B8E9A /* AppKit.framework */; };
-		2AC9BCD61C37EC29003B8E9A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC71C37EC29003B8E9A /* Cocoa.framework */; };
-		2AC9BCD71C37EC29003B8E9A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC81C37EC29003B8E9A /* IOKit.framework */; };
-		2AC9BCD81C37EC29003B8E9A /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCC91C37EC29003B8E9A /* AGL.framework */; };
-		2AC9BCD91C37EC29003B8E9A /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCA1C37EC29003B8E9A /* ApplicationServices.framework */; };
-		2AC9BCDA1C37EC29003B8E9A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCB1C37EC29003B8E9A /* AudioToolbox.framework */; };
-		2AC9BCDB1C37EC29003B8E9A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCC1C37EC29003B8E9A /* Carbon.framework */; };
-		2AC9BCDC1C37EC29003B8E9A /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCD1C37EC29003B8E9A /* CoreAudio.framework */; };
-		2AC9BCDD1C37EC29003B8E9A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCE1C37EC29003B8E9A /* CoreFoundation.framework */; };
-		2AC9BCDE1C37EC29003B8E9A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCCF1C37EC29003B8E9A /* CoreServices.framework */; };
-		2AC9BCDF1C37EC29003B8E9A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCD01C37EC29003B8E9A /* OpenGL.framework */; };
-		2AC9BCE01C37EC29003B8E9A /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCD11C37EC29003B8E9A /* QuickTime.framework */; };
-		2AC9BCE11C37EC29003B8E9A /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCD21C37EC29003B8E9A /* CoreVideo.framework */; };
-		2AC9BCE21C37EC29003B8E9A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC9BCD31C37EC29003B8E9A /* QTKit.framework */; };
-		2AC9BCE51C37EC49003B8E9A /* XBDeviceParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCE41C37EC49003B8E9A /* XBDeviceParams.cpp */; };
-		2AC9BCFC1C37EDBC003B8E9A /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCF71C37EDAD003B8E9A /* PMAudioAnalyzer.cpp */; };
-		2AC9BCFD1C37EDBE003B8E9A /* PMAudioAnalyzer.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCF81C37EDAD003B8E9A /* PMAudioAnalyzer.hpp */; };
-		2AC9BCFE1C37EDBF003B8E9A /* PMAudioInParams.h in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCF91C37EDAD003B8E9A /* PMAudioInParams.h */; };
-		2AC9BCFF1C37EDC0003B8E9A /* PMDeviceAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCFA1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.cpp */; };
-		2AC9BD001C37EDC1003B8E9A /* PMDeviceAudioAnalyzer.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC9BCFB1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.hpp */; };
+		2AB7CB441C513730002F1BA9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB351C513730002F1BA9 /* Accelerate.framework */; };
+		2AB7CB451C513730002F1BA9 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB361C513730002F1BA9 /* AppKit.framework */; };
+		2AB7CB461C513730002F1BA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB371C513730002F1BA9 /* Cocoa.framework */; };
+		2AB7CB471C513730002F1BA9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB381C513730002F1BA9 /* IOKit.framework */; };
+		2AB7CB481C513730002F1BA9 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB391C513730002F1BA9 /* AGL.framework */; };
+		2AB7CB491C513730002F1BA9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3A1C513730002F1BA9 /* ApplicationServices.framework */; };
+		2AB7CB4A1C513730002F1BA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3B1C513730002F1BA9 /* AudioToolbox.framework */; };
+		2AB7CB4B1C513730002F1BA9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3C1C513730002F1BA9 /* Carbon.framework */; };
+		2AB7CB4C1C513730002F1BA9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3D1C513730002F1BA9 /* CoreAudio.framework */; };
+		2AB7CB4D1C513730002F1BA9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3E1C513730002F1BA9 /* CoreFoundation.framework */; };
+		2AB7CB4E1C513730002F1BA9 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3F1C513730002F1BA9 /* CoreServices.framework */; };
+		2AB7CB4F1C513730002F1BA9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB401C513730002F1BA9 /* OpenGL.framework */; };
+		2AB7CB501C513730002F1BA9 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB411C513730002F1BA9 /* QuickTime.framework */; };
+		2AB7CB511C513730002F1BA9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB421C513730002F1BA9 /* CoreVideo.framework */; };
+		2AB7CB521C513730002F1BA9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB431C513730002F1BA9 /* QTKit.framework */; };
+		2AB7CB551C51373A002F1BA9 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB531C51373A002F1BA9 /* aubio.framework */; };
+		2AB7CB561C51373A002F1BA9 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB541C51373A002F1BA9 /* GLUT.framework */; };
+		2AB7CB5B1C513776002F1BA9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
+		2AB7CB5D1C513776002F1BA9 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A96B8F6D2ECF14F9304EBD6C /* ofxAubioBeat.cpp */; };
+		2AB7CB5E1C513776002F1BA9 /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 737C0C27DB7B0C9484DCEBAE /* ofxAubioBlock.cpp */; };
+		2AB7CB5F1C513776002F1BA9 /* ofxAubioMelBands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 776A1553D592FD9AA388C543 /* ofxAubioMelBands.cpp */; };
+		2AB7CB601C513776002F1BA9 /* ofxAubioOnset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8A90A4B17BBB4CB627CA22C4 /* ofxAubioOnset.cpp */; };
+		2AB7CB611C513776002F1BA9 /* ofxAubioPitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93CAC8A94359FD331BAD8CFA /* ofxAubioPitch.cpp */; };
+		2AB7CB621C513776002F1BA9 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
+		2AB7CB631C513776002F1BA9 /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C88333E71C9457E441C33474 /* ofxButton.cpp */; };
+		2AB7CB641C513776002F1BA9 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
+		2AB7CB651C513776002F1BA9 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
+		2AB7CB661C513776002F1BA9 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */; };
+		2AB7CB671C513776002F1BA9 /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F2C6477A769C03A56D1401 /* ofxSlider.cpp */; };
+		2AB7CB681C513776002F1BA9 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */; };
+		2AB7CB691C513776002F1BA9 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
+		2AB7CB6A1C513776002F1BA9 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
+		2AB7CB6B1C513776002F1BA9 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */; };
+		2AB7CB6C1C513776002F1BA9 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
+		2AB7CB6D1C513776002F1BA9 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
+		2AB7CB6E1C513776002F1BA9 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
+		2AB7CB6F1C513776002F1BA9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
+		2AB7CB701C513776002F1BA9 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
+		2AB7CB711C513776002F1BA9 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */; };
+		2AB7CB721C513776002F1BA9 /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */; };
+		2AB7CB731C513776002F1BA9 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
+		2AB7CB741C513776002F1BA9 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		2AB7CB751C513776002F1BA9 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */; };
+		2AB7CB771C513776002F1BA9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3A1C513730002F1BA9 /* ApplicationServices.framework */; };
+		2AB7CB781C513776002F1BA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB371C513730002F1BA9 /* Cocoa.framework */; };
+		2AB7CB791C513776002F1BA9 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB541C51373A002F1BA9 /* GLUT.framework */; };
+		2AB7CB7A1C513776002F1BA9 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB361C513730002F1BA9 /* AppKit.framework */; };
+		2AB7CB7B1C513776002F1BA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3B1C513730002F1BA9 /* AudioToolbox.framework */; };
+		2AB7CB7C1C513776002F1BA9 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB531C51373A002F1BA9 /* aubio.framework */; };
+		2AB7CB7D1C513776002F1BA9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3C1C513730002F1BA9 /* Carbon.framework */; };
+		2AB7CB7E1C513776002F1BA9 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
+		2AB7CB7F1C513776002F1BA9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB381C513730002F1BA9 /* IOKit.framework */; };
+		2AB7CB801C513776002F1BA9 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3F1C513730002F1BA9 /* CoreServices.framework */; };
+		2AB7CB811C513776002F1BA9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB431C513730002F1BA9 /* QTKit.framework */; };
+		2AB7CB821C513776002F1BA9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB351C513730002F1BA9 /* Accelerate.framework */; };
+		2AB7CB831C513776002F1BA9 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB411C513730002F1BA9 /* QuickTime.framework */; };
+		2AB7CB841C513776002F1BA9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB401C513730002F1BA9 /* OpenGL.framework */; };
+		2AB7CB851C513776002F1BA9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3E1C513730002F1BA9 /* CoreFoundation.framework */; };
+		2AB7CB861C513776002F1BA9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB3D1C513730002F1BA9 /* CoreAudio.framework */; };
+		2AB7CB871C513776002F1BA9 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB391C513730002F1BA9 /* AGL.framework */; };
+		2AB7CB881C513776002F1BA9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB7CB421C513730002F1BA9 /* CoreVideo.framework */; };
+		2AB7CB941C5138FE002F1BA9 /* CelloApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB921C5138FE002F1BA9 /* CelloApp.cpp */; };
+		2AB7CB9B1C513958002F1BA9 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB961C513958002F1BA9 /* PMAudioAnalyzer.cpp */; };
+		2AB7CB9C1C513958002F1BA9 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB961C513958002F1BA9 /* PMAudioAnalyzer.cpp */; };
+		2AB7CB9D1C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB991C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp */; };
+		2AB7CB9E1C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB991C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp */; };
+		2AB7CBA11C513973002F1BA9 /* XBDeviceParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB9F1C513973002F1BA9 /* XBDeviceParams.cpp */; };
+		2AB7CBA21C513973002F1BA9 /* XBDeviceParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CB9F1C513973002F1BA9 /* XBDeviceParams.cpp */; };
+		2AB7CBA71C513B5C002F1BA9 /* ViolinApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AB7CBA61C513B5C002F1BA9 /* ViolinApp.cpp */; };
 		479DCA850DD8BB469A777AD4 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A96B8F6D2ECF14F9304EBD6C /* ofxAubioBeat.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
 		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
@@ -56,11 +102,17 @@
 		C60077973A257D8F44947E2E /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 737C0C27DB7B0C9484DCEBAE /* ofxAubioBlock.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		E4B69E210A3A1BDC003C02F2 /* CelloApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* CelloApp.cpp */; };
 		F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2AB7CB591C513776002F1BA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4B27C1410CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
 		E4328147138ABC890047C5CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
@@ -78,6 +130,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2AB7CB8A1C513776002F1BA9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,36 +160,42 @@
 		17E65988300FBD9AAA2CD0CA /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = ../../../addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
 		1C0DA2561397A7DE0246858B /* ofxGuiGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGuiGroup.h; path = ../../../addons/ofxGui/src/ofxGuiGroup.h; sourceTree = SOURCE_ROOT; };
 		20F35AFADAF0068B067E713F /* OscReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h; sourceTree = SOURCE_ROOT; };
-		214768D9C267E86005D51571 /* Shared */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = Shared; path = ../../Shared; sourceTree = "<group>"; };
 		23640F57DF6C4BB6BFC5DA4C /* PacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h; sourceTree = SOURCE_ROOT; };
 		238BB8FC8860C7A7012B2E27 /* ofxAubioMelBands.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAubioMelBands.h; path = ../../../addons/ofxAubio/src/ofxAubioMelBands.h; sourceTree = SOURCE_ROOT; };
 		2834D88A62CD23F3DE2C47D1 /* ofxButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxButton.h; path = ../../../addons/ofxGui/src/ofxButton.h; sourceTree = SOURCE_ROOT; };
-		2A68E8A81C3A0673005742B6 /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
-		2AC9BCC11C37EC24003B8E9A /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = aubio.framework; path = "../../../addons/ofxAudioAnalyzer/example-basicInput/aubio.framework"; sourceTree = "<group>"; };
-		2AC9BCC21C37EC24003B8E9A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
-		2AC9BCC51C37EC29003B8E9A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
-		2AC9BCC61C37EC29003B8E9A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../../../../../System/Library/Frameworks/AppKit.framework; sourceTree = "<group>"; };
-		2AC9BCC71C37EC29003B8E9A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
-		2AC9BCC81C37EC29003B8E9A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
-		2AC9BCC91C37EC29003B8E9A /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = ../../../../../../../System/Library/Frameworks/AGL.framework; sourceTree = "<group>"; };
-		2AC9BCCA1C37EC29003B8E9A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = ../../../../../../../System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<group>"; };
-		2AC9BCCB1C37EC29003B8E9A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
-		2AC9BCCC1C37EC29003B8E9A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = ../../../../../../../System/Library/Frameworks/Carbon.framework; sourceTree = "<group>"; };
-		2AC9BCCD1C37EC29003B8E9A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = ../../../../../../../System/Library/Frameworks/CoreAudio.framework; sourceTree = "<group>"; };
-		2AC9BCCE1C37EC29003B8E9A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = ../../../../../../../System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<group>"; };
-		2AC9BCCF1C37EC29003B8E9A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = ../../../../../../../System/Library/Frameworks/CoreServices.framework; sourceTree = "<group>"; };
-		2AC9BCD01C37EC29003B8E9A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
-		2AC9BCD11C37EC29003B8E9A /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../../../../../../../System/Library/Frameworks/QuickTime.framework; sourceTree = "<group>"; };
-		2AC9BCD21C37EC29003B8E9A /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = ../../../../../../../System/Library/Frameworks/CoreVideo.framework; sourceTree = "<group>"; };
-		2AC9BCD31C37EC29003B8E9A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
-		2AC9BCE31C37EC49003B8E9A /* XBDeviceParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBDeviceParams.h; sourceTree = "<group>"; };
-		2AC9BCE41C37EC49003B8E9A /* XBDeviceParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBDeviceParams.cpp; sourceTree = "<group>"; };
-		2AC9BCEF1C37EC66003B8E9A /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
-		2AC9BCF71C37EDAD003B8E9A /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
-		2AC9BCF81C37EDAD003B8E9A /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
-		2AC9BCF91C37EDAD003B8E9A /* PMAudioInParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAudioInParams.h; sourceTree = "<group>"; };
-		2AC9BCFA1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
-		2AC9BCFB1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMDeviceAudioAnalyzer.hpp; sourceTree = "<group>"; };
+		2AB7CB351C513730002F1BA9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
+		2AB7CB361C513730002F1BA9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../../../../../System/Library/Frameworks/AppKit.framework; sourceTree = "<group>"; };
+		2AB7CB371C513730002F1BA9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
+		2AB7CB381C513730002F1BA9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
+		2AB7CB391C513730002F1BA9 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = ../../../../../../../System/Library/Frameworks/AGL.framework; sourceTree = "<group>"; };
+		2AB7CB3A1C513730002F1BA9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = ../../../../../../../System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<group>"; };
+		2AB7CB3B1C513730002F1BA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = ../../../../../../../System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
+		2AB7CB3C1C513730002F1BA9 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = ../../../../../../../System/Library/Frameworks/Carbon.framework; sourceTree = "<group>"; };
+		2AB7CB3D1C513730002F1BA9 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = ../../../../../../../System/Library/Frameworks/CoreAudio.framework; sourceTree = "<group>"; };
+		2AB7CB3E1C513730002F1BA9 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = ../../../../../../../System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<group>"; };
+		2AB7CB3F1C513730002F1BA9 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = ../../../../../../../System/Library/Frameworks/CoreServices.framework; sourceTree = "<group>"; };
+		2AB7CB401C513730002F1BA9 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
+		2AB7CB411C513730002F1BA9 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../../../../../../../System/Library/Frameworks/QuickTime.framework; sourceTree = "<group>"; };
+		2AB7CB421C513730002F1BA9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = ../../../../../../../System/Library/Frameworks/CoreVideo.framework; sourceTree = "<group>"; };
+		2AB7CB431C513730002F1BA9 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
+		2AB7CB531C51373A002F1BA9 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = aubio.framework; path = "../../../addons/ofxAudioAnalyzer/example-basicInput/aubio.framework"; sourceTree = "<group>"; };
+		2AB7CB541C51373A002F1BA9 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedreraViolinAnalyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AB7CB8F1C513776002F1BA9 /* PedreraCelloAnalyzer copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PedreraCelloAnalyzer copy-Info.plist"; path = "/Users/miquelsoler/Dev/of_v0.9.0_osx_release/apps/MovimentsGranados/PedreraAudioAnalyzers/PedreraCelloAnalyzer copy-Info.plist"; sourceTree = "<absolute>"; };
+		2AB7CB901C513848002F1BA9 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
+		2AB7CB911C513848002F1BA9 /* SharedConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedConstants.h; sourceTree = "<group>"; };
+		2AB7CB921C5138FE002F1BA9 /* CelloApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CelloApp.cpp; sourceTree = "<group>"; };
+		2AB7CB931C5138FE002F1BA9 /* CelloApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelloApp.h; sourceTree = "<group>"; };
+		2AB7CB961C513958002F1BA9 /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
+		2AB7CB971C513958002F1BA9 /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
+		2AB7CB981C513958002F1BA9 /* PMAudioInParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAudioInParams.h; sourceTree = "<group>"; };
+		2AB7CB991C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
+		2AB7CB9A1C513958002F1BA9 /* PMDeviceAudioAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMDeviceAudioAnalyzer.hpp; sourceTree = "<group>"; };
+		2AB7CB9F1C513973002F1BA9 /* XBDeviceParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBDeviceParams.cpp; sourceTree = "<group>"; };
+		2AB7CBA01C513973002F1BA9 /* XBDeviceParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBDeviceParams.h; sourceTree = "<group>"; };
+		2AB7CBA41C513991002F1BA9 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
+		2AB7CBA51C513B5C002F1BA9 /* ViolinApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViolinApp.h; sourceTree = "<group>"; };
+		2AB7CBA61C513B5C002F1BA9 /* ViolinApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ViolinApp.cpp; sourceTree = "<group>"; };
 		2FD4B0329909D3527F003494 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
 		3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
 		3B6AFA97F893CE28547CFCDC /* ofxAubio.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAubio.h; path = ../../../addons/ofxAubio/src/ofxAubio.h; sourceTree = SOURCE_ROOT; };
@@ -175,8 +242,6 @@
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* PedreraCelloAnalyzerDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedreraCelloAnalyzerDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* CelloApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = CelloApp.cpp; path = src/CelloApp.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1F0A3A1BDC003C02F2 /* CelloApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CelloApp.h; path = src/CelloApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
@@ -188,28 +253,53 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2AB7CB761C513776002F1BA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AB7CB771C513776002F1BA9 /* ApplicationServices.framework in Frameworks */,
+				2AB7CB781C513776002F1BA9 /* Cocoa.framework in Frameworks */,
+				2AB7CB791C513776002F1BA9 /* GLUT.framework in Frameworks */,
+				2AB7CB7A1C513776002F1BA9 /* AppKit.framework in Frameworks */,
+				2AB7CB7B1C513776002F1BA9 /* AudioToolbox.framework in Frameworks */,
+				2AB7CB7C1C513776002F1BA9 /* aubio.framework in Frameworks */,
+				2AB7CB7D1C513776002F1BA9 /* Carbon.framework in Frameworks */,
+				2AB7CB7E1C513776002F1BA9 /* openFrameworksDebug.a in Frameworks */,
+				2AB7CB7F1C513776002F1BA9 /* IOKit.framework in Frameworks */,
+				2AB7CB801C513776002F1BA9 /* CoreServices.framework in Frameworks */,
+				2AB7CB811C513776002F1BA9 /* QTKit.framework in Frameworks */,
+				2AB7CB821C513776002F1BA9 /* Accelerate.framework in Frameworks */,
+				2AB7CB831C513776002F1BA9 /* QuickTime.framework in Frameworks */,
+				2AB7CB841C513776002F1BA9 /* OpenGL.framework in Frameworks */,
+				2AB7CB851C513776002F1BA9 /* CoreFoundation.framework in Frameworks */,
+				2AB7CB861C513776002F1BA9 /* CoreAudio.framework in Frameworks */,
+				2AB7CB871C513776002F1BA9 /* AGL.framework in Frameworks */,
+				2AB7CB881C513776002F1BA9 /* CoreVideo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E4B69B590A3A1756003C02F2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AC9BCDD1C37EC29003B8E9A /* CoreFoundation.framework in Frameworks */,
-				2AC9BCDB1C37EC29003B8E9A /* Carbon.framework in Frameworks */,
+				2AB7CB491C513730002F1BA9 /* ApplicationServices.framework in Frameworks */,
+				2AB7CB461C513730002F1BA9 /* Cocoa.framework in Frameworks */,
+				2AB7CB561C51373A002F1BA9 /* GLUT.framework in Frameworks */,
+				2AB7CB451C513730002F1BA9 /* AppKit.framework in Frameworks */,
+				2AB7CB4A1C513730002F1BA9 /* AudioToolbox.framework in Frameworks */,
+				2AB7CB551C51373A002F1BA9 /* aubio.framework in Frameworks */,
+				2AB7CB4B1C513730002F1BA9 /* Carbon.framework in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
-				2AC9BCD41C37EC29003B8E9A /* Accelerate.framework in Frameworks */,
-				2AC9BCD61C37EC29003B8E9A /* Cocoa.framework in Frameworks */,
-				2AC9BCDE1C37EC29003B8E9A /* CoreServices.framework in Frameworks */,
-				2AC9BCD51C37EC29003B8E9A /* AppKit.framework in Frameworks */,
-				2AC9BCD91C37EC29003B8E9A /* ApplicationServices.framework in Frameworks */,
-				2AC9BCDF1C37EC29003B8E9A /* OpenGL.framework in Frameworks */,
-				2AC9BCDC1C37EC29003B8E9A /* CoreAudio.framework in Frameworks */,
-				2AC9BCC31C37EC24003B8E9A /* aubio.framework in Frameworks */,
-				2AC9BCE01C37EC29003B8E9A /* QuickTime.framework in Frameworks */,
-				2AC9BCD81C37EC29003B8E9A /* AGL.framework in Frameworks */,
-				2AC9BCE11C37EC29003B8E9A /* CoreVideo.framework in Frameworks */,
-				2AC9BCE21C37EC29003B8E9A /* QTKit.framework in Frameworks */,
-				2AC9BCDA1C37EC29003B8E9A /* AudioToolbox.framework in Frameworks */,
-				2AC9BCD71C37EC29003B8E9A /* IOKit.framework in Frameworks */,
-				2AC9BCC41C37EC24003B8E9A /* GLUT.framework in Frameworks */,
+				2AB7CB471C513730002F1BA9 /* IOKit.framework in Frameworks */,
+				2AB7CB4E1C513730002F1BA9 /* CoreServices.framework in Frameworks */,
+				2AB7CB521C513730002F1BA9 /* QTKit.framework in Frameworks */,
+				2AB7CB441C513730002F1BA9 /* Accelerate.framework in Frameworks */,
+				2AB7CB501C513730002F1BA9 /* QuickTime.framework in Frameworks */,
+				2AB7CB4F1C513730002F1BA9 /* OpenGL.framework in Frameworks */,
+				2AB7CB4D1C513730002F1BA9 /* CoreFoundation.framework in Frameworks */,
+				2AB7CB4C1C513730002F1BA9 /* CoreAudio.framework in Frameworks */,
+				2AB7CB481C513730002F1BA9 /* AGL.framework in Frameworks */,
+				2AB7CB511C513730002F1BA9 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,64 +324,64 @@
 			name = src;
 			sourceTree = "<group>";
 		};
-		2AC9BCBE1C37EB8B003B8E9A /* frameworks */ = {
+		2AB7CB321C513706002F1BA9 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AC9BCC01C37EBA4003B8E9A /* 3rd party frameworks */,
-				2AC9BCBF1C37EB9A003B8E9A /* system frameworks */,
+				2AB7CB341C513721002F1BA9 /* system frameworks */,
+				2AB7CB331C513717002F1BA9 /* 3rd party frameworks */,
 			);
 			name = frameworks;
 			sourceTree = "<group>";
 		};
-		2AC9BCBF1C37EB9A003B8E9A /* system frameworks */ = {
+		2AB7CB331C513717002F1BA9 /* 3rd party frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AC9BCC51C37EC29003B8E9A /* Accelerate.framework */,
-				2AC9BCC61C37EC29003B8E9A /* AppKit.framework */,
-				2AC9BCC71C37EC29003B8E9A /* Cocoa.framework */,
-				2AC9BCC81C37EC29003B8E9A /* IOKit.framework */,
-				2AC9BCC91C37EC29003B8E9A /* AGL.framework */,
-				2AC9BCCA1C37EC29003B8E9A /* ApplicationServices.framework */,
-				2AC9BCCB1C37EC29003B8E9A /* AudioToolbox.framework */,
-				2AC9BCCC1C37EC29003B8E9A /* Carbon.framework */,
-				2AC9BCCD1C37EC29003B8E9A /* CoreAudio.framework */,
-				2AC9BCCE1C37EC29003B8E9A /* CoreFoundation.framework */,
-				2AC9BCCF1C37EC29003B8E9A /* CoreServices.framework */,
-				2AC9BCD01C37EC29003B8E9A /* OpenGL.framework */,
-				2AC9BCD11C37EC29003B8E9A /* QuickTime.framework */,
-				2AC9BCD21C37EC29003B8E9A /* CoreVideo.framework */,
-				2AC9BCD31C37EC29003B8E9A /* QTKit.framework */,
-			);
-			name = "system frameworks";
-			sourceTree = "<group>";
-		};
-		2AC9BCC01C37EBA4003B8E9A /* 3rd party frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2AC9BCC11C37EC24003B8E9A /* aubio.framework */,
-				2AC9BCC21C37EC24003B8E9A /* GLUT.framework */,
+				2AB7CB531C51373A002F1BA9 /* aubio.framework */,
+				2AB7CB541C51373A002F1BA9 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
 			sourceTree = "<group>";
 		};
-		2AC9BCEE1C37EC66003B8E9A /* Utils */ = {
+		2AB7CB341C513721002F1BA9 /* system frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AC9BCEF1C37EC66003B8E9A /* MathUtils.h */,
+				2AB7CB351C513730002F1BA9 /* Accelerate.framework */,
+				2AB7CB361C513730002F1BA9 /* AppKit.framework */,
+				2AB7CB371C513730002F1BA9 /* Cocoa.framework */,
+				2AB7CB381C513730002F1BA9 /* IOKit.framework */,
+				2AB7CB391C513730002F1BA9 /* AGL.framework */,
+				2AB7CB3A1C513730002F1BA9 /* ApplicationServices.framework */,
+				2AB7CB3B1C513730002F1BA9 /* AudioToolbox.framework */,
+				2AB7CB3C1C513730002F1BA9 /* Carbon.framework */,
+				2AB7CB3D1C513730002F1BA9 /* CoreAudio.framework */,
+				2AB7CB3E1C513730002F1BA9 /* CoreFoundation.framework */,
+				2AB7CB3F1C513730002F1BA9 /* CoreServices.framework */,
+				2AB7CB401C513730002F1BA9 /* OpenGL.framework */,
+				2AB7CB411C513730002F1BA9 /* QuickTime.framework */,
+				2AB7CB421C513730002F1BA9 /* CoreVideo.framework */,
+				2AB7CB431C513730002F1BA9 /* QTKit.framework */,
 			);
-			path = Utils;
+			name = "system frameworks";
 			sourceTree = "<group>";
 		};
-		2AC9BCF61C37EDAD003B8E9A /* PMAudioAnalysis */ = {
+		2AB7CB951C513958002F1BA9 /* PMAudioAnalysis */ = {
 			isa = PBXGroup;
 			children = (
-				2AC9BCF71C37EDAD003B8E9A /* PMAudioAnalyzer.cpp */,
-				2AC9BCF81C37EDAD003B8E9A /* PMAudioAnalyzer.hpp */,
-				2AC9BCF91C37EDAD003B8E9A /* PMAudioInParams.h */,
-				2AC9BCFA1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.cpp */,
-				2AC9BCFB1C37EDAD003B8E9A /* PMDeviceAudioAnalyzer.hpp */,
+				2AB7CB961C513958002F1BA9 /* PMAudioAnalyzer.cpp */,
+				2AB7CB971C513958002F1BA9 /* PMAudioAnalyzer.hpp */,
+				2AB7CB981C513958002F1BA9 /* PMAudioInParams.h */,
+				2AB7CB991C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp */,
+				2AB7CB9A1C513958002F1BA9 /* PMDeviceAudioAnalyzer.hpp */,
 			);
 			path = PMAudioAnalysis;
+			sourceTree = "<group>";
+		};
+		2AB7CBA31C513991002F1BA9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2AB7CBA41C513991002F1BA9 /* MathUtils.h */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		30CB364908817057B430D528 /* osc */ = {
@@ -434,14 +524,16 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				2AB7CB321C513706002F1BA9 /* frameworks */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				6948EE371B920CB800B5AC1A /* local_addons */,
-				2AC9BCBE1C37EB8B003B8E9A /* frameworks */,
 				E4B69B5B0A3A1756003C02F2 /* PedreraCelloAnalyzerDebug.app */,
+				2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */,
+				2AB7CB8F1C513776002F1BA9 /* PedreraCelloAnalyzer copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -449,14 +541,16 @@
 			isa = PBXGroup;
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1E0A3A1BDC003C02F2 /* CelloApp.cpp */,
-				E4B69E1F0A3A1BDC003C02F2 /* CelloApp.h */,
-				2AC9BCE31C37EC49003B8E9A /* XBDeviceParams.h */,
-				2AC9BCE41C37EC49003B8E9A /* XBDeviceParams.cpp */,
-				2AC9BCF61C37EDAD003B8E9A /* PMAudioAnalysis */,
-				2AC9BCEE1C37EC66003B8E9A /* Utils */,
-				2A68E8A81C3A0673005742B6 /* Defaults.h */,
-				214768D9C267E86005D51571 /* Shared */,
+				2AB7CB931C5138FE002F1BA9 /* CelloApp.h */,
+				2AB7CB921C5138FE002F1BA9 /* CelloApp.cpp */,
+				2AB7CBA51C513B5C002F1BA9 /* ViolinApp.h */,
+				2AB7CBA61C513B5C002F1BA9 /* ViolinApp.cpp */,
+				2AB7CB9F1C513973002F1BA9 /* XBDeviceParams.cpp */,
+				2AB7CBA01C513973002F1BA9 /* XBDeviceParams.h */,
+				2AB7CB901C513848002F1BA9 /* Defaults.h */,
+				2AB7CB911C513848002F1BA9 /* SharedConstants.h */,
+				2AB7CB951C513958002F1BA9 /* PMAudioAnalysis */,
+				2AB7CBA31C513991002F1BA9 /* Utils */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -496,6 +590,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2AB7CB571C513776002F1BA9 /* PedreraViolinAnalyzer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2AB7CB8B1C513776002F1BA9 /* Build configuration list for PBXNativeTarget "PedreraViolinAnalyzer" */;
+			buildPhases = (
+				2AB7CB5A1C513776002F1BA9 /* Sources */,
+				2AB7CB761C513776002F1BA9 /* Frameworks */,
+				2AB7CB891C513776002F1BA9 /* ShellScript */,
+				2AB7CB8A1C513776002F1BA9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2AB7CB581C513776002F1BA9 /* PBXTargetDependency */,
+			);
+			name = PedreraViolinAnalyzer;
+			productName = myOFApp;
+			productReference = 2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E4B69B5A0A3A1756003C02F2 /* PedreraCelloAnalyzer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "PedreraCelloAnalyzer" */;
@@ -523,7 +636,7 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "PedreraCelloAnalyzer" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "PedreraAudioAnalyzers" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -545,6 +658,7 @@
 			projectRoot = "";
 			targets = (
 				E4B69B5A0A3A1756003C02F2 /* PedreraCelloAnalyzer */,
+				2AB7CB571C513776002F1BA9 /* PedreraViolinAnalyzer */,
 			);
 		};
 /* End PBXProject section */
@@ -560,6 +674,19 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2AB7CB891C513776002F1BA9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\nrsync -aved \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\nrsync -aved ../../../libs/glut/lib/osx/GLUT.framework \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\"\n";
+		};
 		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -576,28 +703,61 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2AB7CB5A1C513776002F1BA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AB7CB5B1C513776002F1BA9 /* main.cpp in Sources */,
+				2AB7CB5D1C513776002F1BA9 /* ofxAubioBeat.cpp in Sources */,
+				2AB7CB5E1C513776002F1BA9 /* ofxAubioBlock.cpp in Sources */,
+				2AB7CB5F1C513776002F1BA9 /* ofxAubioMelBands.cpp in Sources */,
+				2AB7CB601C513776002F1BA9 /* ofxAubioOnset.cpp in Sources */,
+				2AB7CB611C513776002F1BA9 /* ofxAubioPitch.cpp in Sources */,
+				2AB7CBA71C513B5C002F1BA9 /* ViolinApp.cpp in Sources */,
+				2AB7CB621C513776002F1BA9 /* ofxBaseGui.cpp in Sources */,
+				2AB7CB631C513776002F1BA9 /* ofxButton.cpp in Sources */,
+				2AB7CB641C513776002F1BA9 /* ofxGuiGroup.cpp in Sources */,
+				2AB7CB651C513776002F1BA9 /* ofxLabel.cpp in Sources */,
+				2AB7CB661C513776002F1BA9 /* ofxPanel.cpp in Sources */,
+				2AB7CB671C513776002F1BA9 /* ofxSlider.cpp in Sources */,
+				2AB7CB681C513776002F1BA9 /* ofxSliderGroup.cpp in Sources */,
+				2AB7CB691C513776002F1BA9 /* ofxToggle.cpp in Sources */,
+				2AB7CB6A1C513776002F1BA9 /* ofxOscBundle.cpp in Sources */,
+				2AB7CB6B1C513776002F1BA9 /* ofxOscMessage.cpp in Sources */,
+				2AB7CB6C1C513776002F1BA9 /* ofxOscParameterSync.cpp in Sources */,
+				2AB7CBA21C513973002F1BA9 /* XBDeviceParams.cpp in Sources */,
+				2AB7CB6D1C513776002F1BA9 /* ofxOscReceiver.cpp in Sources */,
+				2AB7CB6E1C513776002F1BA9 /* ofxOscSender.cpp in Sources */,
+				2AB7CB6F1C513776002F1BA9 /* IpEndpointName.cpp in Sources */,
+				2AB7CB701C513776002F1BA9 /* NetworkingUtils.cpp in Sources */,
+				2AB7CB711C513776002F1BA9 /* UdpSocket.cpp in Sources */,
+				2AB7CB721C513776002F1BA9 /* OscOutboundPacketStream.cpp in Sources */,
+				2AB7CB9C1C513958002F1BA9 /* PMAudioAnalyzer.cpp in Sources */,
+				2AB7CB731C513776002F1BA9 /* OscPrintReceivedElements.cpp in Sources */,
+				2AB7CB741C513776002F1BA9 /* OscReceivedElements.cpp in Sources */,
+				2AB7CB751C513776002F1BA9 /* OscTypes.cpp in Sources */,
+				2AB7CB9E1C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E4B69B580A3A1756003C02F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				E4B69E210A3A1BDC003C02F2 /* CelloApp.cpp in Sources */,
 				479DCA850DD8BB469A777AD4 /* ofxAubioBeat.cpp in Sources */,
 				C60077973A257D8F44947E2E /* ofxAubioBlock.cpp in Sources */,
 				67383740F5CC47ED5F955A76 /* ofxAubioMelBands.cpp in Sources */,
-				2AC9BCE51C37EC49003B8E9A /* XBDeviceParams.cpp in Sources */,
 				9C7B8B4D99CDFC508E76CC3A /* ofxAubioOnset.cpp in Sources */,
+				2AB7CBA11C513973002F1BA9 /* XBDeviceParams.cpp in Sources */,
 				101D2DB773940813A5C898CD /* ofxAubioPitch.cpp in Sources */,
+				2AB7CB9D1C513958002F1BA9 /* PMDeviceAudioAnalyzer.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
 				5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */,
-				2AC9BCFE1C37EDBF003B8E9A /* PMAudioInParams.h in Sources */,
-				2AC9BCFC1C37EDBC003B8E9A /* PMAudioAnalyzer.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
-				2AC9BCFD1C37EDBE003B8E9A /* PMAudioAnalyzer.hpp in Sources */,
+				2AB7CB9B1C513958002F1BA9 /* PMAudioAnalyzer.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
-				2AC9BD001C37EDC1003B8E9A /* PMDeviceAudioAnalyzer.hpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
-				2AC9BCFF1C37EDC0003B8E9A /* PMDeviceAudioAnalyzer.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
@@ -605,6 +765,7 @@
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
+				2AB7CB941C5138FE002F1BA9 /* CelloApp.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
@@ -619,6 +780,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2AB7CB581C513776002F1BA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = openFrameworks;
+			targetProxy = 2AB7CB591C513776002F1BA9 /* PBXContainerItemProxy */;
+		};
 		E4EEB9AC138B136A00A80321 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = openFrameworks;
@@ -627,6 +793,89 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		2AB7CB8C1C513776002F1BA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(SRCROOT)/../../../addons/ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					INSTRUMENT_VIOLIN,
+					OF_DEBUG,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxAubio/src,
+					../../../addons/ofxGui/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+				);
+				ICON = "$(ICON_NAME_DEBUG)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "PedreraCelloAnalyzer copy-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2AB7CB8D1C513776002F1BA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(SRCROOT)/../../../addons/ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				GCC_PREPROCESSOR_DEFINITIONS = INSTRUMENT_VIOLIN;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxAubio/src,
+					../../../addons/ofxGui/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+				);
+				ICON = "$(ICON_NAME_RELEASE)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "PedreraCelloAnalyzer copy-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+			};
+			name = Release;
+		};
 		E4B69B4E0A3A1720003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
@@ -728,7 +977,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				GCC_PREPROCESSOR_DEFINITIONS = OF_DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					INSTRUMENT_CELLO,
+					OF_DEBUG,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
@@ -767,6 +1019,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
+				GCC_PREPROCESSOR_DEFINITIONS = INSTRUMENT_CELLO;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
@@ -788,14 +1041,23 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "PedreraCelloAnalyzer" */ = {
+		2AB7CB8B1C513776002F1BA9 /* Build configuration list for PBXNativeTarget "PedreraViolinAnalyzer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2AB7CB8C1C513776002F1BA9 /* Debug */,
+				2AB7CB8D1C513776002F1BA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "PedreraAudioAnalyzers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,

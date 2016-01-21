@@ -1,3 +1,0 @@
-ofxAubio
-ofxGui
-ofxOsc
