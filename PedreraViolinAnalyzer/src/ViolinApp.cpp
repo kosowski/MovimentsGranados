@@ -1,4 +1,4 @@
-#include "ofApp.h"
+#include "ViolinApp.h"
 #include "MathUtils.h"
 #include "../../Shared/OSCSettings.h"
 
@@ -51,7 +51,7 @@ static const float SILENCE_THRSHLD_MIN = 0.01, SILENCE_THRSHLD_MAX = 0.5;
 static const float SILENCE_LENGTH_MIN = 0, SILENCE_LENGTH_MAX = 1000;
 static const float ONSET_THRSHLD_MIN = 0.01, ONSET_THRSHLD_MAX = 1;
 
-void ofApp::setup()
+void ViolinApp::setup()
 {
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(81, 88, 111);
@@ -68,27 +68,27 @@ void ofApp::setup()
     oscSender.setup(OSC_VIOLIN_SENDER_HOST, OSC_VIOLIN_SENDER_PORT);
 }
 
-void ofApp::update()
+void ViolinApp::update()
 {
 }
 
-void ofApp::draw()
+void ViolinApp::draw()
 {
     guiDevices.draw();
     guiAnalysis.draw();
 }
 
-void ofApp::exit()
+void ViolinApp::exit()
 {
     guiDevices.saveToFile(DEVICE_SETTINGS_FILENAME);
     guiAnalysis.saveToFile(ANALYSIS_VIOLIN_FILENAME);
 }
 
-void ofApp::keyReleased(int key)
+void ViolinApp::keyReleased(int key)
 {
 }
 
-void ofApp::buildDevicesPanel()
+void ViolinApp::buildDevicesPanel()
 {
     vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
 
@@ -112,8 +112,8 @@ void ofApp::buildDevicesPanel()
     guiDevices.add(btnStartAnalysis.setup(STR_DEV_START));
     guiDevices.add(btnStopAnalysis.setup(STR_DEV_STOP));
 
-    btnStartAnalysis.addListener(this, &ofApp::startButtonPressed);
-    btnStopAnalysis.addListener(this, &ofApp::stopButtonPressed);
+    btnStartAnalysis.addListener(this, &ViolinApp::startButtonPressed);
+    btnStopAnalysis.addListener(this, &ViolinApp::stopButtonPressed);
 
     lblStatus.setDefaultWidth(GUI_DEV_WIDTH);
 
@@ -121,7 +121,7 @@ void ofApp::buildDevicesPanel()
     guiDevices.setWidthElements(GUI_DEV_WIDTH);
 }
 
-void ofApp::buildCelloAnalysisPanel()
+void ViolinApp::buildCelloAnalysisPanel()
 {
     guiAnalysis.setup("VIOLIN", ANALYSIS_VIOLIN_FILENAME);
     guiAnalysis.setPosition(ofGetWidth() - GUI_AN_WIDTH - GUI_MARGIN - 1, GUI_MARGIN);
@@ -160,7 +160,7 @@ void ofApp::buildCelloAnalysisPanel()
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
 }
 
-void ofApp::startButtonPressed()
+void ViolinApp::startButtonPressed()
 {
     unsigned int deviceID = 0;
     vector<unsigned int> enabledChannels;
@@ -196,10 +196,10 @@ void ofApp::startButtonPressed()
                 enabledChannels,
                 devices[deviceIndex].inputChannels);
 
-        ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ofApp::analyzerPitchChanged);
-        ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ofApp::analyzerEnergyChanged);
-        ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ofApp::analyzerSilenceStateChanged);
-        ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ofApp::analyzerOnsetDetected);
+        ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &ViolinApp::analyzerPitchChanged);
+        ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ViolinApp::analyzerEnergyChanged);
+        ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ViolinApp::analyzerSilenceStateChanged);
+        ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ViolinApp::analyzerOnsetDetected);
 
         // Init audio analyzers with GUI settings
 
@@ -216,16 +216,16 @@ void ofApp::startButtonPressed()
 
         // Register GUI events
         {
-            pitchSmoothAmount.addListener(this, &ofApp::guiPitchSmoothAmountChanged);
-            pitchMidiMin.addListener(this, &ofApp::guiPitchMinChanged);
-            pitchMidiMax.addListener(this, &ofApp::getPitchMaxChanged);
-            energySmoothAmount.addListener(this, &ofApp::guiEnergySmoothAmountChanged);
-            energyMin.addListener(this, &ofApp::guiEnergyMinChanged);
-            energyMax.addListener(this, &ofApp::guiEnergyMaxChanged);
-            digitalGain.addListener(this, &ofApp::guiDigitalGainChanged);
-            silenceThreshold.addListener(this, &ofApp::guiSilenceThresholdChanged);
-            silenceLength.addListener(this, &ofApp::guiSilenceLengthChanged);
-            onsetsThreshold.addListener(this, &ofApp::guiOnsetsThresholdChanged);
+            pitchSmoothAmount.addListener(this, &ViolinApp::guiPitchSmoothAmountChanged);
+            pitchMidiMin.addListener(this, &ViolinApp::guiPitchMinChanged);
+            pitchMidiMax.addListener(this, &ViolinApp::getPitchMaxChanged);
+            energySmoothAmount.addListener(this, &ViolinApp::guiEnergySmoothAmountChanged);
+            energyMin.addListener(this, &ViolinApp::guiEnergyMinChanged);
+            energyMax.addListener(this, &ViolinApp::guiEnergyMaxChanged);
+            digitalGain.addListener(this, &ViolinApp::guiDigitalGainChanged);
+            silenceThreshold.addListener(this, &ViolinApp::guiSilenceThresholdChanged);
+            silenceLength.addListener(this, &ViolinApp::guiSilenceLengthChanged);
+            onsetsThreshold.addListener(this, &ViolinApp::guiOnsetsThresholdChanged);
         }
 
         // Force initial audio analyzer values setup
@@ -259,7 +259,7 @@ void ofApp::startButtonPressed()
     }
 }
 
-void ofApp::stopButtonPressed()
+void ViolinApp::stopButtonPressed()
 {
     PMAudioAnalyzer::getInstance().stop();
 
@@ -275,49 +275,49 @@ void ofApp::stopButtonPressed()
         oscSender.sendMessage(m, false);
     }}
 
-void ofApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
+void ViolinApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
     float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
     (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
 }
 
-void ofApp::guiPitchMinChanged(float &pitch) {
+void ViolinApp::guiPitchMinChanged(float &pitch) {
     (*audioAnalyzers)[0]->setMinPitch(pitch);
 }
 
-void ofApp::getPitchMaxChanged(float &pitch) {
+void ViolinApp::getPitchMaxChanged(float &pitch) {
     (*audioAnalyzers)[0]->setMaxPitch(pitch);
 }
 
-void ofApp::guiEnergySmoothAmountChanged(float &smoothAmount) {
+void ViolinApp::guiEnergySmoothAmountChanged(float &smoothAmount) {
     float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
     (*audioAnalyzers)[0]->setDeltaEnergy(invertedSmoothAmount);
 }
 
-void ofApp::guiEnergyMinChanged(float &energy) {
+void ViolinApp::guiEnergyMinChanged(float &energy) {
     (*audioAnalyzers)[0]->setMinEnergy(energy);
 }
 
-void ofApp::guiEnergyMaxChanged(float &energy) {
+void ViolinApp::guiEnergyMaxChanged(float &energy) {
     (*audioAnalyzers)[0]->setMaxEnergy(energy);
 }
 
-void ofApp::guiDigitalGainChanged(float &digitalGain) {
+void ViolinApp::guiDigitalGainChanged(float &digitalGain) {
     (*audioAnalyzers)[0]->setDigitalGain(digitalGain);
 }
 
-void ofApp::guiSilenceThresholdChanged(float &threshold) {
+void ViolinApp::guiSilenceThresholdChanged(float &threshold) {
     (*audioAnalyzers)[0]->setSilenceThreshold(threshold);
 }
 
-void ofApp::guiSilenceLengthChanged(float &length) {
+void ViolinApp::guiSilenceLengthChanged(float &length) {
     (*audioAnalyzers)[0]->setSilenceQueueLength(length);
 }
 
-void ofApp::guiOnsetsThresholdChanged(float &threshold) {
+void ViolinApp::guiOnsetsThresholdChanged(float &threshold) {
     (*audioAnalyzers)[0]->setOnsetsThreshold(threshold);
 }
 
-void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
+void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
@@ -329,7 +329,7 @@ void ofApp::analyzerPitchChanged(pitchParams &pitchParams)
     oscSender.sendMessage(m, false);
 }
 
-void ofApp::analyzerEnergyChanged(energyParams &energyParams)
+void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 {
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
@@ -342,7 +342,7 @@ void ofApp::analyzerEnergyChanged(energyParams &energyParams)
     oscSender.sendMessage(m, false);
 }
 
-void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
+void ViolinApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 {
     silenceOn = silenceParams.isSilent;
 
@@ -354,7 +354,7 @@ void ofApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
     oscSender.sendMessage(m, false);
 }
 
-void ofApp::analyzerOnsetDetected(onsetParams &onsetParams)
+void ViolinApp::analyzerOnsetDetected(onsetParams &onsetParams)
 {
     onsetsOn = onsetParams.isOnset;
 

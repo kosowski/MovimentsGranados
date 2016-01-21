@@ -6,7 +6,7 @@
 #include "PMAudioAnalyzer.hpp"
 #include "XBDeviceParams.h"
 
-class ofApp : public ofBaseApp
+class CelloApp : public ofBaseApp
 {
 
 public:
@@ -14,7 +14,6 @@ public:
     void setup();
     void update();
     void draw();
-
     void exit();
 
     void keyReleased(int key);
@@ -30,7 +29,7 @@ private:
     ofxButton               btnStopAnalysis;
     ofxLabel                lblStatus;
 
-    // Audio analysis (violin)
+    // Audio analysis (cello)
     ofxPanel                guiAnalysis;
     ofParameterGroup        paramsPitch;
     ofParameter<float>      pitchCurrentNote;
