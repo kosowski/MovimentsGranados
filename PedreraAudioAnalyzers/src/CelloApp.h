@@ -52,6 +52,8 @@ private:
     ofParameter<float>      onsetsThreshold;
     ofParameter<bool>       onsetsOn;
 
+    bool guiAnalyzerCreated;
+    
     void buildDevicesPanel();
     void buildCelloAnalysisPanel();
 

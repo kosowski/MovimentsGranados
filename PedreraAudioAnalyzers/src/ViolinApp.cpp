@@ -12,6 +12,8 @@ void ViolinApp::setup()
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(81, 88, 111);
 
+    guiAnalyzerCreated = false;
+
     float silenceThreshold = 0;
     unsigned int silenceLength = 0;
     float onsetsThreshold = 0;
@@ -31,7 +33,7 @@ void ViolinApp::update()
 void ViolinApp::draw()
 {
     guiDevices.draw();
-    guiAnalysis.draw();
+    if (guiAnalyzerCreated) guiAnalysis.draw();
 }
 
 void ViolinApp::exit()
@@ -114,6 +116,8 @@ void ViolinApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
+
+    guiAnalyzerCreated = true;
 }
 
 void ViolinApp::startButtonPressed()
@@ -275,8 +279,14 @@ void ViolinApp::guiOnsetsThresholdChanged(float &threshold) {
 
 void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
+
+    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
+    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
+
     ofxOscMessage m;
     stringstream address;
     address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
@@ -287,8 +297,13 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
+
+    cout << "energyEnergy = " << energyEnergy << endl;
+    cout << "energySmoothed = " << energySmoothed << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -300,7 +315,11 @@ void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 
 void ViolinApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     silenceOn = silenceParams.isSilent;
+
+    cout << "silenceOn = " << silenceOn << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -312,7 +331,11 @@ void ViolinApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 
 void ViolinApp::analyzerOnsetDetected(onsetParams &onsetParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     onsetsOn = onsetParams.isOnset;
+
+    cout << "onsetsOn = " << onsetsOn << endl;
 
     ofxOscMessage m;
     stringstream address;

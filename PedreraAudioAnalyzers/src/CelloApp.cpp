@@ -12,6 +12,8 @@ void CelloApp::setup()
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(81, 88, 111);
 
+    guiAnalyzerCreated = false;
+
     float silenceThreshold = 0;
     unsigned int silenceLength = 0;
     float onsetsThreshold = 0;
@@ -30,7 +32,7 @@ void CelloApp::update()
 
 void CelloApp::draw()
 {
-    guiDevices.draw();
+    if (guiAnalyzerCreated) guiDevices.draw();
     guiAnalysis.draw();
 }
 
@@ -114,6 +116,8 @@ void CelloApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
+
+    guiAnalyzerCreated = true;
 }
 
 void CelloApp::startButtonPressed()
@@ -276,6 +280,8 @@ void CelloApp::guiOnsetsThresholdChanged(float &threshold) {
 
 void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
 
@@ -292,6 +298,8 @@ void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
 
 void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
 
@@ -308,6 +316,8 @@ void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
 
 void CelloApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     silenceOn = silenceParams.isSilent;
 
     cout << "silenceOn = " << silenceOn << endl;
@@ -322,6 +332,8 @@ void CelloApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 
 void CelloApp::analyzerOnsetDetected(onsetParams &onsetParams)
 {
+    if (!guiAnalyzerCreated) return;
+
     onsetsOn = onsetParams.isOnset;
 
     cout << "onsetsOn = " << onsetsOn << endl;
