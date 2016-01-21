@@ -15,18 +15,11 @@ public:
     virtual void setup();
 
     ofxGuiGroup directorGroup;
-    ofxFloatSlider springStrength;
-    ofxFloatSlider springDamping;
-    ofxFloatSlider drag;
-    ofxFloatSlider gravity;
-    ofxFloatSlider particleMass;
-    ofxFloatSlider mouseSlope;
-    ofxFloatSlider mouseStrength;
-    ofxFloatSlider fixedStrength;
-    ofxFloatSlider fixedDamping;
-    ofxFloatSlider fixedRestLength;
-    ofxFloatSlider restLength;
-    ofxFloatSlider xDamping;
+    ofxFloatSlider attractorStrength;
+    ofxFloatSlider attractorRadius;
+    ofxFloatSlider minPeriod;
+    ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
     
     ofxGuiGroup violinGroup;
     ofxFloatSlider violinBorderSize;

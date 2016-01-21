@@ -15,21 +15,13 @@ void XBScene1GUI::setup()
     XBBaseGUI::setup();
 
     directorGroup.setup("Director");
-    directorGroup.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-    directorGroup.add(springDamping.setup("damping", 0.0, 0.000, 0.201));
-    directorGroup.add(restLength.setup("restLength", 0.0f, -10.0f, 20.0f));
-
-    sceneGui.add(drag.setup("drag", 0.1, 0.01, 1.00));
-    directorGroup.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-    directorGroup.add(particleMass.setup("particleMass", 0.2, 0.0f, 1.00));
-    directorGroup.add(mouseStrength.setup("mouseStrength", -100000, -6000, -200000));
-    directorGroup.add(mouseSlope.setup("mouseSlope", 70, 60.0f, 260));
-    directorGroup.add(fixedStrength.setup("fixedStrength", 0.06, 0.01, 0.50));
-    directorGroup.add(fixedDamping.setup("fixedDamping",  0.00, 0.000, 0.201));
-    directorGroup.add(fixedRestLength.setup("fixedRestLength", 0.0f, 0.0f, 40.0f));
-
-    directorGroup.add(xDamping.setup("xDamping", 1.0f, 0.00, 1.00));
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
+    directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
+    directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     sceneGui.add(&directorGroup);
+
     
     pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.01, 0.000, 1.));

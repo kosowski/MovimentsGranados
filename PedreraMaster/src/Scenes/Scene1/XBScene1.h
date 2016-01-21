@@ -6,12 +6,11 @@
 #define PEDRERAMASTER_XBSCENE1_H
 
 #include "XBBaseScene.h"
-#include "ofxTraerPhysics.h"
 #include "ofxSvg.h"
 #include "BlurEffect.h"
 #include "ofxParticles.h"
+#include "Wave.h"
 
-using namespace  traer::physics ;
 
 class XBScene1 : public XBBaseScene
 {
@@ -25,7 +24,7 @@ public:
     void keyPressed(int key);
     void keyReleased(int key);
     
-    void initSystem();
+    void initWaves();
     void initLines();
     void initParticles();
     void initStones();
@@ -49,21 +48,16 @@ protected:
     unsigned int celloLineIndex = 0;
     ofPolyline currentCelloNote;
     ofPolyline celloLine;
-
     
     bool emitParticles;
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
     
-    ParticleSystem * 	physics;
-    vector<   Particle * > particles;
-    vector<   Spring * > visibleSprings;
-    Particle*			selectedParticle;
-    Particle* p_mouse;
-    
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
+    
+    vector<Wave> waves;
     
     BlurEffect blur;
 };

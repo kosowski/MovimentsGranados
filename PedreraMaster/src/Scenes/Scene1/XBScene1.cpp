@@ -5,9 +5,6 @@
 #include "XBScene1.h"
 #include "XBScene1GUI.h"
 
-#define NODE_SIZE 3
-#define GRID_X_RES 120
-#define GRID_Y_RES 10
 
 void XBScene1::setup(XBBaseGUI *_gui)
 {
@@ -16,8 +13,8 @@ void XBScene1::setup(XBBaseGUI *_gui)
     //ofSetBackgroundAuto(true);
     
     initLines();
-    initSystem();
     initParticles();
+    initWaves();
     initStones();
     
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
@@ -70,13 +67,15 @@ void XBScene1::update()
         }
     }
     
-    // director update
-    p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
-    physics->tick();
-    for ( int i = 0; i <particles.size(); ++i )
-    {
-        Particle* v = particles[i];
-        v->velocity.set(v->velocity.x * myGUI->xDamping,v->velocity.y ,0);
+    // update waves
+    for(int i=0; i< waves.size();i++){
+        float mouseX = ofGetMouseX() / (float)ofGetWidth();
+        float mouseY = ofGetMouseY() / (float)ofGetHeight();
+        waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise( ofGetElapsedTimeMillis() * 0.0005) - 0.5 );
+        float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * ( ofNoise( ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5 );
+        waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].update();
     }
 }
 
@@ -86,18 +85,24 @@ void XBScene1::drawIntoFBO()
     
     fbo.begin();
     {
-        ofBackground(0);
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
-        
-        // draw springs
-        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
-        for ( int i = 0; i < visibleSprings.size(); ++i )
-        {
-            Spring* e = visibleSprings[i];
-            Particle* a = e->getOneEnd();
-            Particle* b = e->getTheOtherEnd();
-            ofDrawLine( a->position.x, a->position.y, b->position.x, b->position.y );
+        if(showFacadeImage)
+            templateImage.draw(0,0);
+        else
+            ofBackground(0);
+        if(showTemplate){
+            ofSetColor(255);
+            svg.draw();
         }
+
+        // draw directors waves
+        ofPushStyle();
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+        ofSetLineWidth(myGUI->lineWidth);
+        for(Wave w:waves)
+            w.display();
+        ofPopStyle();
+        
         
         // draw expanding stones from piano
         for (int i=0; i<stonesToDraw.size(); i++) {
@@ -124,6 +129,11 @@ void XBScene1::drawIntoFBO()
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
         
+        // mask for removing the windows
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
         
         drawGUI();
         drawFadeRectangle();
@@ -177,11 +187,6 @@ void XBScene1::keyReleased(int key)
         case 'z':
         case 'Z':
         {
-            particles.clear();
-            visibleSprings.clear();
-            delete physics;
-            initSystem();
-            break;
         }
         case 'x':
         case 'X':
@@ -310,49 +315,40 @@ void XBScene1::initStones(){
     }
 }
 
-void XBScene1::initSystem()
+void XBScene1::initWaves()
 {
     XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    int spacing = 10;
     
-    physics	= new ParticleSystem( myGUI->gravity, myGUI->drag );
-    physics->clear();
+    // create horzontal waves
+    svg.load("resources/horizontalesv02.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        //cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back( Wave( l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
+        }
+    }
     
-    
-    p_mouse = physics->makeParticle(1.0, 0.0, 0.0, 0.0);
-    p_mouse->setFixed( true );
-    
-    
-    float gridStepX = (float)( (ofGetWindowWidth() / MAIN_WINDOW_SCALE) / GRID_X_RES );
-    float gridStepY = (float)( (ofGetWindowHeight() / MAIN_WINDOW_SCALE)  / GRID_Y_RES );
-    
-    for( int y=0; y<GRID_Y_RES; y++ ){
-        for( int x=0; x<GRID_X_RES; x++ ){
-            ofVec3f pos = ofVec3f( x * gridStepX , y * gridStepY , 0.0f );
-            
-            //free particle
-            Particle* p = physics->makeParticle( myGUI->particleMass, pos.x, pos.y, pos.z );
-            
-            // particles in the extremes are fixed
-            if(x== 0 || x == GRID_X_RES - 1)
-                p->setFixed(true);
-            // the rest are connected through a spring to their fixed particle
-            else{
-                //fixed particle to which free particle is attached through a spring
-                Particle* fixed = physics->makeParticle( myGUI->particleMass, pos.x, pos.y, pos.z );
-                fixed->setFixed( true );
-                
-                Spring* s = physics->makeSpring(fixed, p, myGUI->fixedStrength, myGUI->fixedDamping, myGUI->fixedRestLength);
-                //            visibleSprings.push_back(s);
-            }
-            
-            
-            physics->makeAttraction(p_mouse, p, myGUI->mouseStrength, myGUI->mouseSlope);
-            
-            particles.push_back( p );
-            if( x > 0 ){
-                Spring* s = physics->makeSpring( particles[y*GRID_X_RES + x - 1], particles[y*GRID_X_RES + x], myGUI->springStrength, myGUI->springDamping, gridStepX + myGUI->restLength);
-                visibleSprings.push_back(s);
-            }
+    // create vertical waves
+    svg.load("resources/verticalesv02.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back( Wave( l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
 }
