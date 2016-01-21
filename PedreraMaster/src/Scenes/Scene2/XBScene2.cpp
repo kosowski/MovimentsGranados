@@ -23,7 +23,7 @@ void XBScene2::setup(XBBaseGUI *_gui)
 //    initSystem();
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", pianoWindows, 2, 2);
-    initWindows("resources/Esc2Violin(revisar).svg", violinWindows, 3, 10);
+    initWindows("resources/Esc2Violinv02.svg", violinWindows, 1, 10);
     
     windowMask.load("resources/ventanas.png");
 }
