@@ -29,8 +29,7 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - ofxGUI (already part of OF)
 - ofxOSC (already part of OF)
 
-### PedreraCelloAnalyzer and PedreraViolinAnalyzer
+### PedreraAudioAnalyzers
 - [ofxAubio](https://github.com/aubio/ofxAubio)
 - ofxGUI (already part of OF)
 - ofxOSC (already part of OF)
-
