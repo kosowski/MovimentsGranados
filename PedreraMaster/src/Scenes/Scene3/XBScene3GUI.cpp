@@ -29,8 +29,8 @@ void XBScene3GUI::setup()
     particlesGroup.setup("Particles");
     particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     particlesGroup.add(particleLife.setup("Particle life", 30, 1, 60));
-    particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,50), ofVec2f(0,0), ofVec2f(150,150)));
-    particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(80,5), ofVec2f(0,0), ofVec2f(150,150)));
+    particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
+    particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(10,0), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(&particlesGroup);
     
     pianoGroup.setup("Piano");

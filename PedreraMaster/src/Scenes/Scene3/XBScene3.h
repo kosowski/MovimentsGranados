@@ -7,6 +7,7 @@
 #define NUM_WAVES 1
 
 #include "XBBaseScene.h"
+#include "ofxBox2d.h"
 #include "Vehicle.h"
 #include "ofxParticles.h"
 #include "BlurEffect.h"
@@ -14,12 +15,13 @@
 #include "Wave.h"
 
 
+
 class XBScene3 : public XBBaseScene
 {
 public:
-
+    
     XBScene3(const string &name) : XBBaseScene(name) {}
-
+    
     virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();
@@ -29,7 +31,8 @@ public:
     void initParticles();
     void initPaths();
     void initWaves();
-
+    void initPhysics();
+    
     Vehicle v, x;
     ofPolyline vPath;
     float vPathIndex = 0;
@@ -44,8 +47,12 @@ public:
     ofxSVG svg;
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
- 
+    
     vector<Wave> waves;
+    
+    ofxBox2d  box2d;
+    vector<shared_ptr<ofxBox2dCircle> > circles;
+    vector<shared_ptr<ofxBox2dEdge> > edges;
     
     BlurEffect blur;
 };

@@ -20,6 +20,7 @@ void XBScene3::setup(XBBaseGUI *_gui)
     v.setup(vPath.getPointAtIndexInterpolated(vPathIndex).x, vPath.getPointAtIndexInterpolated(vPathIndex).y);
     x.setup(xPath.getPointAtIndexInterpolated(xPathIndex).x, xPath.getPointAtIndexInterpolated(xPathIndex).y);
 
+    initPhysics();
     initWaves();
     initParticles();
     initSVG();
@@ -60,29 +61,32 @@ void XBScene3::update()
     
     //update emitters
     if(emitParticles){
-        //GUI related
-        vEmitter.size = myGUI->particleSize;
-        vEmitter.setVelocity(myGUI->particleVelocity);
-        vEmitter.velSpread = myGUI->particleSpread;
-        vEmitter.life = myGUI->particleLife;
-        vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-
-        xEmitter.size = myGUI->particleSize;
-        xEmitter.setVelocity(myGUI->particleVelocity);
-        xEmitter.velSpread = myGUI->particleSpread;
-        xEmitter.life = myGUI->particleLife;
-        xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+        // update box2 particles
+        shared_ptr<ofxBox2dCircle> c = shared_ptr<ofxBox2dCircle>(new ofxBox2dCircle);
+        c.get()->setPhysics(0.2, 0.2, 0.002);
+        c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize);
+        ofPoint vel = myGUI->particleVelocity;
+        ofPoint spread = myGUI->particleSpread;
+        c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        circles.push_back(c);
         
-        //update emitters following creatures
-        vEmitter.setPosition(v.getLocation());
-        particleSystem.addParticles(vEmitter);
+        shared_ptr<ofxBox2dCircle> c2 = shared_ptr<ofxBox2dCircle>(new ofxBox2dCircle);
+        c2.get()->setPhysics(0.2, 0.2, 0.002);
+        c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize);
+        c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        circles.push_back(c2);
         
-        xEmitter.setPosition(x.getLocation());
-        particleSystem.addParticles(xEmitter);
+        box2d.update();
         
-        // update particle system
-        float dt = min(ofGetLastFrameTime(), 1.0/10.0);
-        particleSystem.update(dt, 1.);
+        //ofRemove(circles, ofxBox2dBaseShape::shouldRemoveOffScreen);
+        vector <shared_ptr<ofxBox2dCircle>>::iterator iter = circles.begin();
+        while (iter != circles.end()) {
+            if ( ! iter->get()->alive) {
+                box2d.world->DestroyBody(iter->get()->body);
+                iter = circles.erase(iter);
+            }  
+            else ++iter;  
+        }
     }
     
     // update piano's stones
@@ -151,7 +155,12 @@ void XBScene3::drawIntoFBO()
         //draw particles from violin and cello
         if(emitParticles){
             ofEnableBlendMode(OF_BLENDMODE_ADD);
-            particleSystem.draw(pTex);
+//            particleSystem.draw(pTex);
+            for(int i=0; i<circles.size(); i++) {
+                ofFill();
+                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+                circles[i].get()->draw();
+            }
         }
         
         // draw violin and cello
@@ -327,6 +336,35 @@ void XBScene3::initWaves(){
         for(int j=0;j<(int)lines.size();j++){
             ofPolyline l(lines[j].getResampledBySpacing(spacing));
              waves.push_back( Wave( l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
+        }
+    }
+}
+
+void XBScene3::initPhysics()
+{
+    // Box2d
+    box2d.init();
+    box2d.setGravity(0, 30);
+    box2d.createGround();
+    box2d.setFPS(60.0);
+    box2d.registerGrabbing();
+    
+    int spacing = 40;
+    // create horzontal waves
+    svg.load("resources/ventanas.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline l = lines[j].getResampledBySpacing(spacing);
+            shared_ptr <ofxBox2dEdge> edge = shared_ptr<ofxBox2dEdge>(new ofxBox2dEdge);
+            edge.get()->addVertexes(l);
+            edge.get()->create(box2d.getWorld());
+            edges.push_back(edge);
         }
     }
 }
