@@ -180,7 +180,7 @@
 		2AB7CB431C513730002F1BA9 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		2AB7CB531C51373A002F1BA9 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = aubio.framework; path = "../../../addons/ofxAudioAnalyzer/example-basicInput/aubio.framework"; sourceTree = "<group>"; };
 		2AB7CB541C51373A002F1BA9 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
-		2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedreraViolinAnalyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzerDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedreraViolinAnalyzerDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AB7CB8F1C513776002F1BA9 /* PedreraCelloAnalyzer copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PedreraCelloAnalyzer copy-Info.plist"; path = "/Users/miquelsoler/Dev/of_v0.9.0_osx_release/apps/MovimentsGranados/PedreraAudioAnalyzers/PedreraCelloAnalyzer copy-Info.plist"; sourceTree = "<absolute>"; };
 		2AB7CB901C513848002F1BA9 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		2AB7CB911C513848002F1BA9 /* SharedConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedConstants.h; sourceTree = "<group>"; };
@@ -532,7 +532,7 @@
 				BB4B014C10F69532006C3DED /* addons */,
 				6948EE371B920CB800B5AC1A /* local_addons */,
 				E4B69B5B0A3A1756003C02F2 /* PedreraCelloAnalyzerDebug.app */,
-				2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */,
+				2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzerDebug.app */,
 				2AB7CB8F1C513776002F1BA9 /* PedreraCelloAnalyzer copy-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -606,7 +606,7 @@
 			);
 			name = PedreraViolinAnalyzer;
 			productName = myOFApp;
-			productReference = 2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzer.app */;
+			productReference = 2AB7CB8E1C513776002F1BA9 /* PedreraViolinAnalyzerDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E4B69B5A0A3A1756003C02F2 /* PedreraCelloAnalyzer */ = {
@@ -831,7 +831,7 @@
 				INFOPLIST_FILE = "PedreraCelloAnalyzer copy-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
