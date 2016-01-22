@@ -61,32 +61,28 @@ void XBScene3::update()
     
     //update emitters
     if(emitParticles){
+        ofRemove(circles, CustomBox2dParticle::shouldRemove);
+
         // update box2 particles
-        shared_ptr<ofxBox2dCircle> c = shared_ptr<ofxBox2dCircle>(new ofxBox2dCircle);
+        shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
         c.get()->setPhysics(0.2, 0.2, 0.002);
-        c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize);
+        c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
         ofPoint vel = myGUI->particleVelocity;
         ofPoint spread = myGUI->particleSpread;
         c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
         circles.push_back(c);
         
-        shared_ptr<ofxBox2dCircle> c2 = shared_ptr<ofxBox2dCircle>(new ofxBox2dCircle);
+        shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
         c2.get()->setPhysics(0.2, 0.2, 0.002);
-        c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize);
+        c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
         c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
         circles.push_back(c2);
         
+        for(int i=0; i<circles.size(); i++)
+            circles[i].get()->update();
         box2d.update();
-        
-        //ofRemove(circles, ofxBox2dBaseShape::shouldRemoveOffScreen);
-        vector <shared_ptr<ofxBox2dCircle>>::iterator iter = circles.begin();
-        while (iter != circles.end()) {
-            if ( ! iter->get()->alive) {
-                box2d.world->DestroyBody(iter->get()->body);
-                iter = circles.erase(iter);
-            }  
-            else ++iter;  
-        }
     }
     
     // update piano's stones
@@ -155,11 +151,9 @@ void XBScene3::drawIntoFBO()
         //draw particles from violin and cello
         if(emitParticles){
             ofEnableBlendMode(OF_BLENDMODE_ADD);
-//            particleSystem.draw(pTex);
             for(int i=0; i<circles.size(); i++) {
                 ofFill();
-                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-                circles[i].get()->draw();
+                circles[i].get()->draw(pTex);
             }
         }
         
@@ -297,7 +291,6 @@ void XBScene3::initParticles(){
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
     
-    ofLoadImage(pTex, "resources/particle.png");
 }
 
 void XBScene3::initWaves(){
@@ -342,6 +335,7 @@ void XBScene3::initWaves(){
 
 void XBScene3::initPhysics()
 {
+    ofLoadImage(pTex, "resources/particle.png");
     // Box2d
     box2d.init();
     box2d.setGravity(0, 30);
