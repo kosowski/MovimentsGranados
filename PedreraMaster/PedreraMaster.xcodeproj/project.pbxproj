@@ -332,8 +332,6 @@
 		66162BCA1C51835400EF3AE0 /* ofxBox2dRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBox2dRect.cpp; sourceTree = "<group>"; };
 		66162BCB1C51835400EF3AE0 /* ofxBox2dRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRect.h; sourceTree = "<group>"; };
 		66162BCC1C51835400EF3AE0 /* ofxBox2dRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRender.h; sourceTree = "<group>"; };
-		66162BCD1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBox2dRevoluteJoint.cpp; sourceTree = "<group>"; };
-		66162BCE1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRevoluteJoint.h; sourceTree = "<group>"; };
 		66162BCF1C51835400EF3AE0 /* ofxBox2dUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dUtils.h; sourceTree = "<group>"; };
 		6626DFF41C443A27001E40C2 /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
 		6626DFF51C443A27001E40C2 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
@@ -827,8 +825,6 @@
 				66162BCA1C51835400EF3AE0 /* ofxBox2dRect.cpp */,
 				66162BCB1C51835400EF3AE0 /* ofxBox2dRect.h */,
 				66162BCC1C51835400EF3AE0 /* ofxBox2dRender.h */,
-				66162BCD1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp */,
-				66162BCE1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.h */,
 				66162BCF1C51835400EF3AE0 /* ofxBox2dUtils.h */,
 			);
 			path = src;

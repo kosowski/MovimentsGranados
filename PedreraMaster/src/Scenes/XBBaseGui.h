@@ -16,6 +16,7 @@ public:
     XBBaseGUI();
     virtual void setup();
     virtual void draw();
+    void drawSettingsSaved();
 
     ofxPanel sceneGui;
     ofxPanel colorGui;
@@ -79,6 +80,12 @@ protected:
     void colorPianoHChanged(int &newH);
     void colorPianoSChanged(int &newS);
     void colorPianoBChanged(int &newB);
+
+    bool showSavedMessage;
+    float showSavedStartTime;
+    string savePressedMessage;
+    void saveScenePressed();
+    void saveColorsPressed();
 
 private:
 

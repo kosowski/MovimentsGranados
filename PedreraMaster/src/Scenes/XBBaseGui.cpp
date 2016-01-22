@@ -3,6 +3,7 @@
 //
 
 #include "XBBaseGUI.h"
+#include "ofMain.h"
 
 static const string strSceneGuiTitle = "SCENE SETTINGS";
 static const string strColorGuiTitle = "COLOR SETTINGS";
@@ -37,6 +38,7 @@ static const int maxBrightness      = 100;
 static const int minAlpha           = 0;
 static const int maxAlpha           = 255;
 
+static const float maxSavedMessageTime = 3.0f;
 
 XBBaseGUI::XBBaseGUI()
 {
@@ -99,12 +101,37 @@ void XBBaseGUI::setup()
 
     colorGui.setSize(colorGuiWidth, colorGuiWidth);
     colorGui.setWidthElements(colorGuiWidth);
+
+    ofAddListener(sceneGui.savePressedE, this, &XBBaseGUI::saveScenePressed);
+    ofAddListener(colorGui.savePressedE, this, &XBBaseGUI::saveColorsPressed);
+
+    showSavedMessage = false;
 }
 
 void XBBaseGUI::draw()
 {
     sceneGui.draw();
     colorGui.draw();
+
+    if (showSavedMessage) drawSettingsSaved();
+}
+
+void XBBaseGUI::drawSettingsSaved()
+{
+    if (showSavedMessage)
+    {
+        float t = ofGetElapsedTimef();
+        if (t - showSavedStartTime < maxSavedMessageTime)
+        {
+            ofSetColor(ofColor::white);
+            ofDrawBitmapString(savePressedMessage, ofGetWidth()-180, ofGetHeight() - 15);
+            ofDrawBitmapString(savePressedMessage, ofGetWidth()-179, ofGetHeight() - 15);
+        }
+        else
+        {
+            showSavedMessage = false;
+        }
+    }
 }
 
 void XBBaseGUI::loadSettings()
@@ -210,4 +237,22 @@ ofColor XBBaseGUI::HSBtoRGB(float h, float s, float b)
     float myB = ofMap(b, minBrightness, maxBrightness, 0, 255);
 
     return ofColor::fromHsb(myH, myS, myB);
+}
+
+void XBBaseGUI::saveScenePressed()
+{
+    cout << "Save Scene pressed" << endl;
+
+    showSavedMessage = true;
+    savePressedMessage = "Scene Settings Saved!";
+    showSavedStartTime = ofGetElapsedTimef();
+}
+
+void XBBaseGUI::saveColorsPressed()
+{
+    cout << "Save colors pressed" << endl;
+
+    showSavedMessage = true;
+    savePressedMessage = "Color Settings Saved!";
+    showSavedStartTime = ofGetElapsedTimef();
 }
