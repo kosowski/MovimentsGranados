@@ -7,6 +7,7 @@
 #define NUM_WAVES 1
 
 #include "XBBaseScene.h"
+#include "CustomBox2dParticle.h"
 #include "ofxBox2d.h"
 #include "Vehicle.h"
 #include "ofxParticles.h"
@@ -51,7 +52,7 @@ public:
     vector<Wave> waves;
     
     ofxBox2d  box2d;
-    vector<shared_ptr<ofxBox2dCircle> > circles;
+    vector<shared_ptr<CustomBox2dParticle> > circles;
     vector<shared_ptr<ofxBox2dEdge> > edges;
     
     BlurEffect blur;
