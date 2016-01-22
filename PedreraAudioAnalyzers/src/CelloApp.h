@@ -26,7 +26,6 @@ private:
     ofxPanel                guiDevices;
     vector<XBDeviceParams>  deviceParams;
     ofxButton               btnStartAnalysis;
-    ofxButton               btnStopAnalysis;
     ofxLabel                lblStatus;
 
     // Audio analysis (cello)
@@ -60,7 +59,6 @@ private:
     // GUI EVENTS
 
     void startButtonPressed();
-    void stopButtonPressed();
 
     void guiPitchSmoothAmountChanged(float &smoothAmount);
     void guiPitchMinChanged(float &pitch);

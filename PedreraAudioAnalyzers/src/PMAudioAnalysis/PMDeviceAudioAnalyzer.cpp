@@ -99,6 +99,7 @@ void PMDeviceAudioAnalyzer::clear()
 
 void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
+    cout << "nChannels = " << nChannels << endl;
     for (int k=0; k<channelNumbers.size(); ++k)
     {
         /**/
@@ -147,7 +148,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         // SILENCE
         ////////////
 
-        float absMean = getAbsMean(channelInput,bufferSize);
+        float absMean = getAbsMean(channelInput, bufferSize);
 
         bool nowIsSilent = (eParams.smoothedEnergy < silenceThreshold);
 
@@ -226,16 +227,21 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         {
             // Raw Energy
             eParams.energy = absMean;
+            cout << "absMean = " << absMean << endl;
 
             // Smoothed and Mapped Energy = energySmoothed
             float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
             eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,true);
 
+            oldEnergy = energyDelted;
+
             if ((absMean == absMean) && (eParams.smoothedEnergy = eParams.smoothedEnergy))
             {
                 // Comparison to make sure absMean is not a NaN.
-                oldEnergy = energyDelted;
                 ofNotifyEvent(eventEnergyChanged, eParams, this);
+            } else
+            {
+//                cout << "absMean or smoothedEnergy is NaN" << endl;
             }
         }
 
@@ -286,12 +292,14 @@ float PMDeviceAudioAnalyzer::getRms(float *input, int bufferSize)
 
 float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
 {
+    cout << "chn  size = " << channelNumbers.size() << endl;
+    cout << "buff size = " << bufferSize << endl;
     float sum = 0.0f;
     for (int i=0; i<bufferSize; ++i)
     {
         for (int j=0; j<channelNumbers.size(); ++j)
         {
-            float current = abs(input[(i * inChannels) + channelNumbers[j]]*digitalGain);
+            float current = abs(input[(i * 1) + channelNumbers[j]]*digitalGain);
             //actual = ofMap(actual,eParams.min,eParams.max,0,1,true);
             sum = sum + current;
         }

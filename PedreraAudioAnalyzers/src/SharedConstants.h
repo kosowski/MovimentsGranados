@@ -44,7 +44,7 @@ static const string STR_ONSETS_STATUS          = "Current Status";
 
 static const float PITCH_MIN = 0, PITCH_MAX = 127;
 static const float PITCH_SMOOTH_MIN = 0.1, PITCH_SMOOTH_MAX = 1;
-static const float ENERGY_MIN = 0, ENERGY_MAX = 3;
+static const float ENERGY_MIN = 0.01, ENERGY_MAX = 10;
 static const float ENERGY_SMOOTH_MIN = 0.1, ENERGY_SMOOTH_MAX = 1;
 static const float GAIN_MIN = 1, GAIN_MAX = 10;
 static const float SILENCE_THRSHLD_MIN = 0.01, SILENCE_THRSHLD_MAX = 0.5;

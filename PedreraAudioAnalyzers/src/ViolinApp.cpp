@@ -79,10 +79,8 @@ void ViolinApp::buildDevicesPanel()
     guiDevices.add(lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF));
     lblStatus.setBackgroundColor(ofColor::darkRed);
     guiDevices.add(btnStartAnalysis.setup(STR_DEV_START));
-    guiDevices.add(btnStopAnalysis.setup(STR_DEV_STOP));
 
     btnStartAnalysis.addListener(this, &ViolinApp::startButtonPressed);
-    btnStopAnalysis.addListener(this, &ViolinApp::stopButtonPressed);
 
     lblStatus.setDefaultWidth(GUI_DEV_WIDTH);
 
@@ -127,6 +125,11 @@ void ViolinApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
+
+    pitchCurrentNote = 0;
+    pitchSmoothedNote = 0;
+    energyEnergy = 0;
+    energySmoothed = 0;
 }
 
 void ViolinApp::startButtonPressed()
@@ -228,22 +231,6 @@ void ViolinApp::startButtonPressed()
     }
 }
 
-void ViolinApp::stopButtonPressed()
-{
-    PMAudioAnalyzer::getInstance().stop();
-
-    lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF);
-    lblStatus.setBackgroundColor(ofColor::darkRed);
-
-    // Send "stop" OSC message
-    {
-        ofxOscMessage m;
-        stringstream address;
-        address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_STOPPED;
-        m.setAddress(address.str());
-        oscSender.sendMessage(m, false);
-    }}
-
 void ViolinApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
     float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
     (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
@@ -293,8 +280,8 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
 
-    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
-    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
+//    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
+//    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -308,14 +295,14 @@ void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 {
     if (!guiAnalyzerCreated) return;
 
-    cout << "energyParams.energy = " << energyParams.energy << endl;
-    cout << "energyParams.smoothedEnergy = " << energyParams.smoothedEnergy << endl;
+//    cout << "energyParams.energy = " << energyParams.energy << endl;
+//    cout << "energyParams.smoothedEnergy = " << energyParams.smoothedEnergy << endl;
 
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
 
-    cout << "energyEnergy = " << energyEnergy << endl;
-    cout << "energySmoothed = " << energySmoothed << endl;
+//    cout << "energyEnergy = " << energyEnergy << endl;
+//    cout << "energySmoothed = " << energySmoothed << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -331,7 +318,7 @@ void ViolinApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
 
     silenceOn = silenceParams.isSilent;
 
-    cout << "silenceOn = " << silenceOn << endl;
+//    cout << "silenceOn = " << silenceOn << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -347,7 +334,7 @@ void ViolinApp::analyzerOnsetDetected(onsetParams &onsetParams)
 
     onsetsOn = onsetParams.isOnset;
 
-    cout << "onsetsOn = " << onsetsOn << endl;
+//    cout << "onsetsOn = " << onsetsOn << endl;
 
     ofxOscMessage m;
     stringstream address;
