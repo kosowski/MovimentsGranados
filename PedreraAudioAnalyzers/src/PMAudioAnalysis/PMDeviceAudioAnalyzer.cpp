@@ -231,9 +231,12 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
             float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
             eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,true);
 
-            oldEnergy = energyDelted;
-
-            ofNotifyEvent(eventEnergyChanged, eParams, this);
+            if ((absMean == absMean) && (eParams.smoothedEnergy = eParams.smoothedEnergy))
+            {
+                // Comparison to make sure absMean is not a NaN.
+                oldEnergy = energyDelted;
+                ofNotifyEvent(eventEnergyChanged, eParams, this);
+            }
         }
 
         // Shhhht

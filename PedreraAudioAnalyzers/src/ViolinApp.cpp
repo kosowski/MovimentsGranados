@@ -22,8 +22,11 @@ void ViolinApp::setup()
 
     buildDevicesPanel();
     buildCelloAnalysisPanel();
+    guiAnalyzerCreated = true;
 
     oscSender.setup(OSC_VIOLIN_SENDER_HOST, OSC_VIOLIN_SENDER_PORT);
+
+    deviceAudioAnalyzer = nullptr;
 }
 
 void ViolinApp::update()
@@ -38,6 +41,14 @@ void ViolinApp::draw()
 
 void ViolinApp::exit()
 {
+    if (deviceAudioAnalyzer != nullptr)
+    {
+        ofRemoveListener(deviceAudioAnalyzer->eventPitchChanged, this, &ViolinApp::analyzerPitchChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventEnergyChanged, this, &ViolinApp::analyzerEnergyChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &ViolinApp::analyzerSilenceStateChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &ViolinApp::analyzerOnsetDetected);
+    }
+
     guiDevices.saveToFile(DEVICE_SETTINGS_FILENAME);
     guiAnalysis.saveToFile(ANALYSIS_VIOLIN_FILENAME);
 }
@@ -116,8 +127,6 @@ void ViolinApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
-
-    guiAnalyzerCreated = true;
 }
 
 void ViolinApp::startButtonPressed()
@@ -148,7 +157,7 @@ void ViolinApp::startButtonPressed()
         }
 
         unsigned int audioInputIndex = 0;
-        PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
+        deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
                 devices[deviceIndex].deviceID,
                 enabledChannels[0],
                 devices[deviceIndex].outputChannels,
@@ -298,6 +307,9 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 {
     if (!guiAnalyzerCreated) return;
+
+    cout << "energyParams.energy = " << energyParams.energy << endl;
+    cout << "energyParams.smoothedEnergy = " << energyParams.smoothedEnergy << endl;
 
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
