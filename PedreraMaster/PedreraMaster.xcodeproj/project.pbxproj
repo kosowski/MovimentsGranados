@@ -91,7 +91,6 @@
 		66162C2B1C51835400EF3AE0 /* ofxBox2dJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66162BC51C51835400EF3AE0 /* ofxBox2dJoint.cpp */; };
 		66162C2C1C51835400EF3AE0 /* ofxBox2dPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66162BC71C51835400EF3AE0 /* ofxBox2dPolygon.cpp */; };
 		66162C2D1C51835400EF3AE0 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66162BCA1C51835400EF3AE0 /* ofxBox2dRect.cpp */; };
-		66162C2E1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66162BCD1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp */; };
 		6626DFF61C443A27001E40C2 /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6626DFF41C443A27001E40C2 /* Wave.cpp */; };
 		662B18811C405DF100004722 /* Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187D1C405DF100004722 /* Rope.cpp */; };
 		662B18821C405DF100004722 /* Vehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187F1C405DF100004722 /* Vehicle.cpp */; };
@@ -334,8 +333,6 @@
 		66162BCA1C51835400EF3AE0 /* ofxBox2dRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBox2dRect.cpp; sourceTree = "<group>"; };
 		66162BCB1C51835400EF3AE0 /* ofxBox2dRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRect.h; sourceTree = "<group>"; };
 		66162BCC1C51835400EF3AE0 /* ofxBox2dRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRender.h; sourceTree = "<group>"; };
-		66162BCD1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBox2dRevoluteJoint.cpp; sourceTree = "<group>"; };
-		66162BCE1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRevoluteJoint.h; sourceTree = "<group>"; };
 		66162BCF1C51835400EF3AE0 /* ofxBox2dUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dUtils.h; sourceTree = "<group>"; };
 		6626DFF41C443A27001E40C2 /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
 		6626DFF51C443A27001E40C2 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
@@ -830,8 +827,6 @@
 				66162BCA1C51835400EF3AE0 /* ofxBox2dRect.cpp */,
 				66162BCB1C51835400EF3AE0 /* ofxBox2dRect.h */,
 				66162BCC1C51835400EF3AE0 /* ofxBox2dRender.h */,
-				66162BCD1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp */,
-				66162BCE1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.h */,
 				66162BCF1C51835400EF3AE0 /* ofxBox2dUtils.h */,
 			);
 			path = src;
@@ -1238,7 +1233,6 @@
 				6659B7091C3FE15500B8285C /* ofxGuiGroup.cpp in Sources */,
 				66162C1E1C51835400EF3AE0 /* b2PulleyJoint.cpp in Sources */,
 				660FB9E71C47C895000BBF02 /* BlurEffect.cpp in Sources */,
-				66162C2E1C51835400EF3AE0 /* ofxBox2dRevoluteJoint.cpp in Sources */,
 				66162C171C51835400EF3AE0 /* b2DistanceJoint.cpp in Sources */,
 				66162BFE1C51835400EF3AE0 /* b2ChainShape.cpp in Sources */,
 				2147662A8D4FFACF9FAAF319 /* XBBaseGui.cpp in Sources */,

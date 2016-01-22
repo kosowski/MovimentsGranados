@@ -22,8 +22,11 @@ void CelloApp::setup()
 
     buildDevicesPanel();
     buildCelloAnalysisPanel();
+    guiAnalyzerCreated = true;
 
     oscSender.setup(OSC_CELLO_SENDER_HOST, OSC_CELLO_SENDER_PORT);
+
+    deviceAudioAnalyzer = nullptr;
 }
 
 void CelloApp::update()
@@ -32,12 +35,20 @@ void CelloApp::update()
 
 void CelloApp::draw()
 {
-    if (guiAnalyzerCreated) guiDevices.draw();
-    guiAnalysis.draw();
+    guiDevices.draw();
+    if (guiAnalyzerCreated) guiAnalysis.draw();
 }
 
 void CelloApp::exit()
 {
+    if (deviceAudioAnalyzer != nullptr)
+    {
+        ofRemoveListener(deviceAudioAnalyzer->eventPitchChanged, this, &CelloApp::analyzerPitchChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventEnergyChanged, this, &CelloApp::analyzerEnergyChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &CelloApp::analyzerSilenceStateChanged);
+        ofRemoveListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &CelloApp::analyzerOnsetDetected);
+    }
+
     guiDevices.saveToFile(DEVICE_SETTINGS_FILENAME);
     guiAnalysis.saveToFile(ANALYSIS_CELLO_FILENAME);
 }
@@ -116,8 +127,6 @@ void CelloApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
-
-    guiAnalyzerCreated = true;
 }
 
 void CelloApp::startButtonPressed()
@@ -148,7 +157,7 @@ void CelloApp::startButtonPressed()
         }
 
         unsigned int audioInputIndex = 0;
-        PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
+        deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex,
                 devices[deviceIndex].deviceID,
                 enabledChannels[0],
                 devices[deviceIndex].outputChannels,
