@@ -47,6 +47,10 @@ public:
     void setup(b2World * b2dworld, float x, float y, float r, int l) {
         ofxBox2dCircle::setup(b2dworld, x, y, r);
         life = l;
+        b2Filter f;
+        f.categoryBits = 0x0002;
+        f.maskBits =0x0001;
+        setFilterData(f);
     };
     
     void setColor(ofColor col){
