@@ -213,6 +213,7 @@
 		50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
 		63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
+		660F191C1C524952007FC7C3 /* CustomBox2dParticle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomBox2dParticle.h; sourceTree = "<group>"; };
 		660FB9E51C47C743000BBF02 /* BlurEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurEffect.h; sourceTree = "<group>"; };
 		660FB9E61C47C895000BBF02 /* BlurEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlurEffect.cpp; sourceTree = "<group>"; };
 		66162B4B1C51835400EF3AE0 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
@@ -485,6 +486,7 @@
 				6626DFF41C443A27001E40C2 /* Wave.cpp */,
 				660FB9E51C47C743000BBF02 /* BlurEffect.h */,
 				660FB9E61C47C895000BBF02 /* BlurEffect.cpp */,
+				660F191C1C524952007FC7C3 /* CustomBox2dParticle.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
