@@ -208,7 +208,8 @@ void XBScene1::keyReleased(int key)
 
 void XBScene1::initLines(){
     // load vertical lines
-    svg.load("resources/verticales.svg");
+//    svg.load("resources/verticales.svg");
+    svg.load("resources/verticales_v03_pocas_lineas.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
         cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;

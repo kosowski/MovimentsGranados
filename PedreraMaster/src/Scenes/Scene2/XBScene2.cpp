@@ -53,18 +53,18 @@ void XBScene2::drawIntoFBO()
         else
             ofBackground(0);
         // draw springs
-//        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorB, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
-//        for (int i = 0; i < visibleSprings.size(); ++i) {
-//            Spring *e = visibleSprings[i];
-//            Particle *a = e->getOneEnd();
-//            Particle *b = e->getTheOtherEnd();
-//            ofDrawLine(a->position.x, a->position.y, b->position.x, b->position.y);
-//        }
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorB, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+        for (int i = 0; i < visibleSprings.size(); ++i) {
+            Spring *e = visibleSprings[i];
+            Particle *a = e->getOneEnd();
+            Particle *b = e->getTheOtherEnd();
+            ofDrawLine(a->position.x, a->position.y, b->position.x, b->position.y);
+        }
         
-//        ofPushStyle();
-//        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-//        mask.draw(0, 0);
-//        ofPopStyle();
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
 
         
         //draw cello windows
