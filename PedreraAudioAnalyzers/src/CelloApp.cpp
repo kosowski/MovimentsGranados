@@ -79,10 +79,8 @@ void CelloApp::buildDevicesPanel()
     guiDevices.add(lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF));
     lblStatus.setBackgroundColor(ofColor::darkRed);
     guiDevices.add(btnStartAnalysis.setup(STR_DEV_START));
-    guiDevices.add(btnStopAnalysis.setup(STR_DEV_STOP));
 
     btnStartAnalysis.addListener(this, &CelloApp::startButtonPressed);
-    btnStopAnalysis.addListener(this, &CelloApp::stopButtonPressed);
 
     lblStatus.setDefaultWidth(GUI_DEV_WIDTH);
 
@@ -127,6 +125,11 @@ void CelloApp::buildCelloAnalysisPanel()
 
     guiAnalysis.setSize(GUI_AN_WIDTH, GUI_AN_WIDTH);
     guiAnalysis.setWidthElements(GUI_AN_WIDTH);
+
+    pitchCurrentNote = 0;
+    pitchSmoothedNote = 0;
+    energyEnergy = 0;
+    energySmoothed = 0;
 }
 
 void CelloApp::startButtonPressed()
@@ -225,23 +228,6 @@ void CelloApp::startButtonPressed()
 
         lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_ON);
         lblStatus.setBackgroundColor(ofColor::darkGreen);
-    }
-}
-
-void CelloApp::stopButtonPressed()
-{
-    PMAudioAnalyzer::getInstance().stop();
-
-    lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF);
-    lblStatus.setBackgroundColor(ofColor::darkRed);
-
-    // Send "stop" OSC message
-    {
-        ofxOscMessage m;
-        stringstream address;
-        address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_STOPPED;
-        m.setAddress(address.str());
-        oscSender.sendMessage(m, false);
     }
 }
 
