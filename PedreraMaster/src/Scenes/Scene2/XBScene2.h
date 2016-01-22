@@ -23,7 +23,14 @@ public:
     virtual void drawIntoFBO();
     void keyReleased(int key);
     void keyPressed(int key);
+    void onViolinPitchChanged(float &pitch);
+    void onViolinEnergyChanged(float &energy);
+    void onCelloPitchChanged(float &pitch);
+    void onCelloEnergyChanged(float &energy);
+    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
+    void onPianoNoteOff(int &noteOff);
     
+
     void initSystem();
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
@@ -44,6 +51,18 @@ public:
     Particle* p_mouse;
     
     ofColor directorColor;
+    
+    bool fakeCelloEvent = false;
+    float celloNote;
+    float celloEnergy = 0;
+    bool fakePianoEvent = false;
+    float pianoNote;
+    float pianoEnergy = 0;
+    bool fakeViolinEvent = false;
+    float violinNote;
+    float violinEnergy = 0;
+    
+    float energyThreshold = 0.01;
 };
 
 

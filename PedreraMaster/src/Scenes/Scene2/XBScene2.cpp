@@ -9,12 +9,6 @@
 #define GRID_X_RES 40
 #define GRID_Y_RES 40
 
-bool fakeCelloEvent = false;
-float celloNote;
-bool fakePianoEvent = false;
-float pianoNote;
-bool fakeViolinEvent = false;
-float violinNote;
 
 void XBScene2::setup(XBBaseGUI *_gui)
 {
@@ -68,45 +62,34 @@ void XBScene2::drawIntoFBO()
 
         
         //draw cello windows
-        if(fakeCelloEvent){
+        if(fakeCelloEvent || celloEnergy > energyThreshold){
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
             drawWindow(celloNote, celloWindows);
             ofPopStyle();
         }
-//        ofNoFill();
-//        for(ofRectangle c:celloWindows)
-//            ofDrawRectangle(c);
-        
+
         //draw piano windows
-        if(fakePianoEvent){
+        if(fakePianoEvent || pianoEnergy > energyThreshold){
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
             drawWindow(pianoNote, pianoWindows);
             ofPopStyle();
         }
 
-//        ofNoFill();
-//        for(ofRectangle c:pianoWindows)
-//            ofDrawRectangle(c);
-        
         //draw violin windows
-        if(fakeViolinEvent){
+        if(fakeViolinEvent || violinEnergy > energyThreshold){
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
             drawWindow(violinNote, violinWindows);
             ofPopStyle();
         }
         
-//        ofNoFill();
-//        for(ofRectangle c:violinWindows)
-//            ofDrawRectangle(c);
-   
         // mask windows outsides
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        windowMask.draw(0, 0);
-        ofPopStyle();
+//        ofPushStyle();
+//        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+//        windowMask.draw(0, 0);
+//        ofPopStyle();
         
         drawGUI();
         drawFadeRectangle();
@@ -115,32 +98,67 @@ void XBScene2::drawIntoFBO()
 }
 
 void XBScene2::drawWindow(float note, vector<ofRectangle>& windows){
-    int currentWindow;
+    int currentWindow = 0;
     float mappedPitch;
     if(note < 0.25){
         currentWindow = 0;
         mappedPitch = ofMap(note, 0, 0.25, 0, 1);
     }
-    else if(note > 0.25 && note < 0.5){
+    else if(note >= 0.25 && note < 0.5){
         currentWindow = 1;
         mappedPitch = ofMap(note, 0.25, 0.5, 0, 1);
     }
-    else if(note > 0.5 && note < 0.75){
+    else if(note >= 0.5 && note < 0.75){
         currentWindow = 2;
         mappedPitch = ofMap(note, 0.5, 0.75, 0, 1);
     }
-    else if(note > 0.75 ){
+    else if(note >= 0.75 ){
         currentWindow = 3;
         mappedPitch = ofMap(note, 0.75, 1, 0, 1);
     }
     ofRectangle window = windows[currentWindow];
-    ofNoFill();
-    ofDrawRectangle(window);
+//    ofNoFill();
+//    ofDrawRectangle(window);
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
     ofDrawRectangle(window.x, y, window.width, 10);
 //    ofDrawBitmapString("Current cello pitch " + ofToString(celloNote) + " current window " + ofToString(currentWindow), ofGetWidth()/2,100);
 }
+
+//--------------------------------------------------------------
+
+void XBScene2::onViolinPitchChanged(float &pitch) {
+    violinNote = pitch;
+}
+void XBScene2::onViolinEnergyChanged(float &energy) {
+    if(energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBScene2::onCelloPitchChanged(float &pitch) {
+    celloNote = pitch;
+}
+void XBScene2::onCelloEnergyChanged(float &energy) {
+    if(energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {
+//    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
+    pianoNote = noteOn.pitch;
+    pianoEnergy = noteOn.velocity;
+}
+
+void XBScene2::onPianoNoteOff(int &noteOff) {
+    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
+}
+
+
 
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key){
