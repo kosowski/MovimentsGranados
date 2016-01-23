@@ -29,27 +29,27 @@ void XBScene1::update()
     XBScene1GUI *myGUI = (XBScene1GUI *)gui;
     
     // increase time marker
-    violinTimeIndex--;
+    violinTimeIndex-= myGUI->timeIncrement;
     if(violinTimeIndex < 0)
         violinTimeIndex =  ofGetHeight() / MAIN_WINDOW_SCALE;
 
-    if(violinLineIndex == 0)
+    if(violinLineIndex <= 0)
         currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
     
-    celloTimeIndex++;
+    celloTimeIndex+= myGUI->timeIncrement;
     if(celloTimeIndex > ofGetWidth() / MAIN_WINDOW_SCALE){
         celloTimeIndex =  0;
         currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
     }
     
     // if note ON, update emitter location along the current line
-    if(fakeEvent){
+    if(fakeEvent || violinEnergy > energyThreshold){
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
         violinLineIndex++;
         vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
         particleSystem.addParticles(vEmitter);
     }
-    if(fakeCelloEvent){
+    if(fakeCelloEvent || celloEnergy > energyThreshold){
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
         celloLineIndex++;
         xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex));
@@ -125,7 +125,7 @@ void XBScene1::drawIntoFBO()
         }
         
         // if cello is under a window, paint it
-        if(fakeCelloEvent){
+        if(fakeCelloEvent || celloEnergy > energyThreshold){
             for(ofPolyline pl:windowsOutlines){
                 if(pl.inside(xEmitter.positionStart)){
                     ofPushStyle();
@@ -138,7 +138,7 @@ void XBScene1::drawIntoFBO()
         }
         
         // if violin is under a window, paint it
-        if(fakeEvent){
+        if(fakeEvent || violinEnergy > energyThreshold){
             for(ofPolyline pl:windowsOutlines){
                 if(pl.inside(vEmitter.positionStart)){
                     ofPushStyle();
@@ -173,7 +173,50 @@ void XBScene1::drawIntoFBO()
     blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
+//--------------------------------------------------------------
 
+void XBScene1::onViolinPitchChanged(float &pitch) {
+    int wichLine = floor(pitch * (verticalLines.size() - 1) );
+    currentViolinNote = verticalLines[wichLine];
+    violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
+}
+
+void XBScene1::onViolinEnergyChanged(float &energy) {
+    if(energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBScene1::onCelloPitchChanged(float &pitch) {
+    int wichLine = floor(pitch * (horizontalLines.size() - 1) );;
+    currentCelloNote = horizontalLines[wichLine];
+    celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+}
+
+void XBScene1::onCelloEnergyChanged(float &energy) {
+    if(energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {
+    XBScene1GUI *myGUI = (XBScene1GUI *)gui;
+    
+    int wichLine = floor(noteOn.pitch * (stones.size() - 1) );;
+    expandingPolyLine e = stones[wichLine];
+    e.life= 1;
+    e.amplitude = myGUI->stoneGrowFactor;
+    stonesToDraw.push_back(e);
+}
+
+void XBScene1::onPianoNoteOff(int &noteOff) {
+    cout << "Piano NoteOff: p=" << noteOff << endl;
+}
+
+
+//--------------------------------------------------------------
 int XBScene1::findIntersectionVertical(ofPolyline &line, int posY){
     //TODO get closer at first, check the posY with the length of the line, so if it is higher than half the length we start comparing at the middle of the line
     //loop through polyline points, when posY changes from lower to higher from the y component of the polyline point

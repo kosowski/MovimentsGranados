@@ -24,6 +24,7 @@ public:
     ofxGuiGroup violinGroup;
     ofxFloatSlider violinBorderSize;
     ofxFloatSlider ViolinBorderFade;
+    ofxFloatSlider timeIncrement;
     ofxToggle showTimeMarker;
     
     ofxFloatSlider particleSize;

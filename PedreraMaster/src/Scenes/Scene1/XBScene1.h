@@ -24,6 +24,13 @@ public:
     void keyPressed(int key);
     void keyReleased(int key);
     
+    void onViolinPitchChanged(float &pitch);
+    void onViolinEnergyChanged(float &energy);
+    void onCelloPitchChanged(float &pitch);
+    void onCelloEnergyChanged(float &energy);
+    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
+    void onPianoNoteOff(int &noteOff);
+    
     void initWaves();
     void initLines();
     void initParticles();
@@ -64,6 +71,10 @@ protected:
     vector<Wave> waves;
     
     BlurEffect blur;
+    
+    float celloEnergy = 0;
+    float violinEnergy = 0;
+    float energyThreshold = 0.01;
 };
 
 
