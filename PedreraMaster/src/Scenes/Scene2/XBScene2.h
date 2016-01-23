@@ -37,6 +37,7 @@ public:
     
     void drawWindow(float note, vector<ofRectangle>& windows);
     
+    ofFbo auxFbo;
     ofxSVG svg;
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
