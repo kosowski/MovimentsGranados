@@ -28,6 +28,7 @@ public:
     void initLines();
     void initParticles();
     void initStones();
+    void initWindows();
     void updateEmitters();
     
 protected:
@@ -43,7 +44,7 @@ protected:
     bool fakeEvent = false;
     bool fakeCelloEvent = false;
     
-    vector<ofPolyline> linesToDraw;
+    vector<ofPolyline> windowsOutlines;
     unsigned int violinLineIndex = 0;
     ofPolyline currentViolinNote;
     ofPolyline violinLine;

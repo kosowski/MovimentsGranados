@@ -5,11 +5,13 @@
 #include "XBScene1.h"
 #include "XBScene1GUI.h"
 
+bool maskWindows = true;
 
 void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
     
+    initWindows();
     initParticles();
     initWaves();
     initStones();
@@ -115,23 +117,53 @@ void XBScene1::drawIntoFBO()
             ofPopMatrix();
         }
         
-        // draw particles
+        // draw time markers
         if(myGUI->showTimeMarker){
             ofSetColor(220);
             ofDrawLine(0,violinTimeIndex, ofGetWidth() /MAIN_WINDOW_SCALE, violinTimeIndex);
             ofDrawLine(celloTimeIndex, 0, celloTimeIndex, ofGetHeight() / MAIN_WINDOW_SCALE);
         }
+        
+        // if cello is under a window, paint it
+        if(fakeCelloEvent){
+            for(ofPolyline pl:windowsOutlines){
+                if(pl.inside(xEmitter.positionStart)){
+                    ofPushStyle();
+                    ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+                    pl.draw();
+                    ofPopStyle();
+                    break;
+                }
+            }
+        }
+        
+        // if violin is under a window, paint it
+        if(fakeEvent){
+            for(ofPolyline pl:windowsOutlines){
+                if(pl.inside(vEmitter.positionStart)){
+                    ofPushStyle();
+                    ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+                    pl.draw();
+                    ofPopStyle();
+                    break;
+                }
+            }
+        }
+        
+        //draw particles
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         particleSystem.draw(pTex);
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
         
-        // mask for removing the windows
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
-        ofPopStyle();
+         // mask for removing the windows
+        if(maskWindows == true){
+            ofPushStyle();
+            ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+            mask.draw(0, 0);
+            ofPopStyle();
+        }
         
         drawGUI();
         drawFadeRectangle();
@@ -195,6 +227,8 @@ void XBScene1::keyPressed(int key){
         e.amplitude = myGUI->stoneGrowFactor;
         stonesToDraw.push_back(e);
     }
+    else if(key == 'm')
+        maskWindows = !maskWindows;
 
 }
 
@@ -212,8 +246,6 @@ void XBScene1::keyReleased(int key)
         case 'X':
         {
             fakeEvent = false;
-//            linesToDraw.push_back(violinLine);
-//            violinLine.clear();
         }
         case 'c':
         case 'C':
@@ -272,6 +304,23 @@ void XBScene1::initLines(){
                 }
             }
             verticalLines.push_back(pl);
+        }
+    }
+}
+
+void XBScene1::initWindows(){
+    int spacing = 10;
+    svg.load("resources/ventanas.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            l.close();
+            windowsOutlines.push_back(l);
         }
     }
 }
