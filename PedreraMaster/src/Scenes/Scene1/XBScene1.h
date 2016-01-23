@@ -31,6 +31,9 @@ public:
     void updateEmitters();
     
 protected:
+    int findIntersectionVertical(ofPolyline &line, int posY);
+    int findIntersectionHorizontal(ofPolyline &line, int posX);
+        
     ofxSVG svg;
     vector<ofPolyline> verticalLines;
     vector<ofPolyline> horizontalLines;

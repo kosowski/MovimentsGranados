@@ -10,12 +10,10 @@ void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
     
-    //ofSetBackgroundAuto(true);
-    
-    initLines();
     initParticles();
     initWaves();
     initStones();
+    initLines();
     
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0 );
 }
@@ -143,6 +141,30 @@ void XBScene1::drawIntoFBO()
     blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
+
+int XBScene1::findIntersectionVertical(ofPolyline &line, int posY){
+    //TODO get closer at first, check the posY with the length of the line, so if it is higher than half the length we start comparing at the middle of the line
+    //loop through polyline points, when posY changes from lower to higher from the y component of the polyline point
+    vector<ofPoint> vertices = line.getVertices();
+    for (int i=0; i< vertices.size(); i++) {
+        if(posY < vertices[i].y)
+            continue;
+        else
+            return i;
+    }
+}
+
+int XBScene1::findIntersectionHorizontal(ofPolyline &line, int posX){
+    //loop through polyline points, left to right, when posX changes from  higher to lower from the x component of the polyline point
+    vector<ofPoint> vertices = line.getVertices();
+    for (int i=0; i< vertices.size(); i++) {
+        if(posX > vertices[i].x)
+            continue;
+        else
+            return i;
+    }
+}
+
 //--------------------------------------------------------------
 void XBScene1::keyPressed(int key){
     XBBaseScene::keyPressed(key);
@@ -154,8 +176,7 @@ void XBScene1::keyPressed(int key){
             int wichLine = (int) ofRandom( verticalLines.size());
             //            cout << "Line changed to " << ofToString(wichLine) << endl;
             currentViolinNote = verticalLines[wichLine];
-            //TODO: find a better way to do this
-            ofPoint startPoint = currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+            violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
         }
     }
     else if(key == 'c'){
@@ -164,8 +185,7 @@ void XBScene1::keyPressed(int key){
             int wichLine = (int) ofRandom( horizontalLines.size());
             //            cout << "Line changed to " << ofToString(wichLine) << endl;
             currentCelloNote = horizontalLines[wichLine];
-            //TODO: find a better way to do this
-            ofPoint startPoint = currentCelloNote.getClosestPoint(ofPoint( celloTimeIndex, 0), &celloLineIndex);
+            celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
         }
     }
     else if(key == 'v'){
@@ -207,31 +227,6 @@ void XBScene1::keyReleased(int key)
 }
 
 void XBScene1::initLines(){
-    // load vertical lines
-//    svg.load("resources/verticales.svg");
-    svg.load("resources/verticales_v03_pocas_lineas.svg");
-    for (int i = 0; i < svg.getNumPath(); i++){
-        ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
-        // svg defaults to non zero winding which doesn't look so good as contours
-        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
-        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
-        
-        for(int j=0;j<(int)lines.size();j++){
-            ofPolyline pl = lines[j].getResampledBySpacing(1);
-            vector<ofPoint> points = pl.getVertices();
-            //check path direction
-            if(points.size() > 51){
-                if(points[0].y < points[50].y){ //check if the order is top to bottom, we dont want that
-                    std::reverse(points.begin(), points.end());
-                    pl.clear();
-                    pl.addVertices(points);
-                }
-            }
-            verticalLines.push_back(pl);
-        }
-    }
-    
     // LOAD HORIZINTAL LINES
     svg.load("resources/horizontales.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
@@ -253,6 +248,30 @@ void XBScene1::initLines(){
                 }
             }
             horizontalLines.push_back(pl);
+        }
+    }
+    // load vertical lines
+    //    svg.load("resources/verticales.svg");
+    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    for (int i = 0; i < svg.getNumPath(); i++){
+        ofPath p = svg.getPathAt(i);
+        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
+        
+        for(int j=0;j<(int)lines.size();j++){
+            ofPolyline pl = lines[j].getResampledBySpacing(1);
+            vector<ofPoint> points = pl.getVertices();
+            //check path direction
+            if(points.size() > 51){
+                if(points[0].y < points[50].y){ //check if the order is top to bottom, we dont want that
+                    std::reverse(points.begin(), points.end());
+                    pl.clear();
+                    pl.addVertices(points);
+                }
+            }
+            verticalLines.push_back(pl);
         }
     }
 }
@@ -286,7 +305,7 @@ void XBScene1::initStones(){
     svg.load("resources/Esc1Piano.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
@@ -342,7 +361,7 @@ void XBScene1::initWaves()
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
