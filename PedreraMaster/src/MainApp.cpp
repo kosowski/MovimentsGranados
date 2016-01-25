@@ -38,17 +38,20 @@ void MainApp::setup()
     scene1->setup(guiApp->getGuiForSceneIndex(0));
     sceneManager.addScene(scene1);
     XBScene2 *scene2 = new XBScene2("Scene 2");
-    scene2->setup(guiApp->getGuiForSceneIndex(1));
+//    scene2->setup(guiApp->getGuiForSceneIndex(1));
     sceneManager.addScene(scene2);
     XBScene3 *scene3 = new XBScene3("Scene 3");
-    scene3->setup(guiApp->getGuiForSceneIndex(2));
+//    scene3->setup(guiApp->getGuiForSceneIndex(2));
     sceneManager.addScene(scene3);
     XBScene4 *scene4 = new XBScene4("Scene 4");
-    scene4->setup(guiApp->getGuiForSceneIndex(3));
+//    scene4->setup(guiApp->getGuiForSceneIndex(3));
     sceneManager.addScene(scene4);
 
     // Start with scene 0
     sceneManager.setup(0);
+    
+    //setup syphon server
+    syphonServer.setName("MovimentsGranados");
 }
 
 void MainApp::update()
@@ -65,6 +68,8 @@ void MainApp::draw()
         ofSetColor(ofColor::white);
         ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, ofGetHeight() - 15);
     }
+    
+    syphonServer.publishScreen();
 }
 
 void MainApp::exit()

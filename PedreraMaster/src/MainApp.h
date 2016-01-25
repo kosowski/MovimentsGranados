@@ -6,6 +6,7 @@
 #include "ofMain.h"
 #include "GUIApp.h"
 #include "XBSceneManager.h"
+#include "ofxSyphon.h"
 
 class MainApp : public ofBaseApp
 {
@@ -28,6 +29,8 @@ private:
     XBSceneManager sceneManager;
     shared_ptr<GUIApp> guiApp;
 
+    ofxSyphonServer syphonServer;
+    
     bool showFPS;
 };
 
