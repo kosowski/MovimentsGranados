@@ -14,17 +14,24 @@ void XBScene4GUI::setup()
 {
     XBBaseGUI::setup();
 
-    sceneGui.add(lineWidth.setup("Line width", 4.0f, 1.0f, 40.0f));
-    sceneGui.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
-    sceneGui.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
-
-    sceneGui.add(attractorStrength.setup("attractorStrength",  7, 0.0, 10.0));
-    sceneGui.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
-
+    pianoGroup.setup("Piano");
+    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
+    pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));
+    pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
+    pianoGroup.add(stoneTime.setup("Duration", 2, 0.0, 5.0));
+    pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
+    sceneGui.add(&pianoGroup);
+    
+    directorGroup.setup("Director");
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
+    directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    
+    directorGroup.add(attractorStrength.setup("attractorStrength",  5, 0.0, 10.0));
+    directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    sceneGui.add(&directorGroup);
+    
     sceneGui.add(blurAmount.setup("Blur amount", 0, 0, 8));
     
-    sceneGui.add(alpha.setup("Alpha", 255, 0, 255));
-    sceneGui.add(enableSmooth.setup("Smooth", false));
-
     loadSettings();
 }

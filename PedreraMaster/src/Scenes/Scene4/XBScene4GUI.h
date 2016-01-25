@@ -14,14 +14,23 @@ public:
     XBScene4GUI();
     virtual void setup();
 
+    ofxGuiGroup pianoGroup;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
+    
+    ofxGuiGroup directorGroup;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
-    ofxFloatSlider alpha;
+    
     ofxIntSlider blurAmount;
     ofxToggle enableSmooth;
+    
 };
 
 

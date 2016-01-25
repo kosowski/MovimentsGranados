@@ -9,9 +9,8 @@
 #include "ofxGui.h"
 #include "Wave.h"
 #include "BlurEffect.h"
-
-
-#define NUM_WAVES 10
+#include "ofxMaskedGrayScott.h"
+#include "ofxSvg.h"
 
 class XBScene4 : public XBBaseScene
 {
@@ -24,9 +23,18 @@ public:
     virtual void drawIntoFBO();
     void keyReleased(int key);
     
-    void initSystem();
+    void initReactionDiffusion();
+    void initWaves();
+    void initSVG();
+    
+    ofxSVG svg;
+    vector<expandingPolyLine> stones;
+    vector<expandingPolyLine> stonesToDraw;
     
     vector<Wave> waves;
+    
+    ofxMaskedGrayScott gray;
+    ofShader convertToBW;
 
     BlurEffect blur;
 };
