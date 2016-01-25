@@ -19,6 +19,7 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - [ofxSvg-PM](https://github.com/miquelsoler/ofxSvg-PM)
 - [ofxBox2d](https://github.com/vanderlin/ofxBox2d)
 - [ofxSyphon](https://github.com/astellato/ofxSyphon)
+- [ofxFX](https://github.com/jeonghopark/ofxFX)
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)
