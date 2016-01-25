@@ -216,7 +216,7 @@ void XBScene3::initPaths(){
     svg.load("resources/caminosEscena3.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
@@ -239,7 +239,7 @@ void XBScene3::initSVG()
     svg.load("resources/Esc3y4Piano.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
@@ -305,7 +305,7 @@ void XBScene3::initWaves(){
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
@@ -321,7 +321,7 @@ void XBScene3::initWaves(){
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
