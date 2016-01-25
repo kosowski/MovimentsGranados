@@ -74,6 +74,13 @@ void CelloApp::buildDevicesPanel()
         deviceParams.push_back(devParams);
     }
 
+    ofFile file(DEVICE_SETTINGS_FILENAME);
+    bool fileExists = file.exists();
+    cout << "File " << DEVICE_SETTINGS_FILENAME << " exists? " << fileExists << endl;
+    cout << "File hidden? " << file.isHidden() << endl;
+    cout << "File is file? " << file.isFile() << endl;
+
+
     guiDevices.loadFromFile(DEVICE_SETTINGS_FILENAME);
 
     guiDevices.add(lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF));
