@@ -200,8 +200,8 @@ void XBScene3::onCelloEnergyChanged(float &energy)
 void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
-    pianoNote = noteOn.pitch;
-    pianoEnergy = noteOn.velocity;
+    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
+    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
     
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
     

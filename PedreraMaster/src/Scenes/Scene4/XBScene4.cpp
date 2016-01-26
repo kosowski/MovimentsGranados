@@ -164,8 +164,8 @@ void XBScene4::onCelloEnergyChanged(float &energy)
 void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
-    pianoNote = noteOn.pitch;
-    pianoEnergy = noteOn.velocity;
+    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
+    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
 }
 
 void XBScene4::onPianoNoteOff(int &noteOff)
