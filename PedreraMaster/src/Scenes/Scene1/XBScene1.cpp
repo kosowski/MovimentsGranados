@@ -176,7 +176,7 @@ void XBScene1::drawIntoFBO()
 
 void XBScene1::onViolinPitchChanged(float &pitch)
 {
-    int wichLine = floor(pitch * (verticalLines.size() - 1));
+    int wichLine = floor((pitch / MAX_MIDI_VALUE) * (verticalLines.size() - 1));
     currentViolinNote = verticalLines[wichLine];
     violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
 }
