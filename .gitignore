@@ -120,3 +120,5 @@ PerdreraMaster/bin/data/Settings/*.xml
 !PedreraKinectSender/bin/data/openni/config/modules.xml
 
 *.exe
+PedreraKinectV2Sender_Win/bin/ofxKinectForWindows2Lib.lib
+PedreraKinectV2Sender_Win/kinect2HandsSender.VC.opendb
