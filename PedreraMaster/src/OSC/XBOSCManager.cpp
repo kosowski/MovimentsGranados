@@ -128,6 +128,16 @@ void XBOSCManager::handleKinectMessages()
         ofxOscMessage msg;
         kinectReceiver.getNextMessage(&msg);
         string address = msg.getAddress();
+
+        if (msg.getAddress() == kinectAddrLeftPosition) {
+            cout << "[KINECT] LH Pos = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
+        } else if (msg.getAddress() == kinectAddrLeftVelocity) {
+            cout << "[KINECT] LH Vel = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
+        } else if (msg.getAddress() == kinectAddrRightPosition) {
+            cout << "[KINECT] RH Pos = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
+        } else if (msg.getAddress() == kinectAddrRightVelocity) {
+            cout << "[KINECT] RH Vel = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
+        }
     }
 }
 
@@ -206,4 +216,19 @@ void XBOSCManager::buildPianoReceiverAddresses()
 
 void XBOSCManager::buildKinectReceiverAddresses()
 {
+    stringstream ssKinectAddrLeftPosition;
+    ssKinectAddrLeftPosition << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_POSITION;
+    kinectAddrLeftPosition = ssKinectAddrLeftPosition.str();
+
+    stringstream ssKinectAddrLeftVelocity;
+    ssKinectAddrLeftVelocity << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
+    kinectAddrLeftVelocity = ssKinectAddrLeftVelocity.str();
+
+    stringstream ssKinectAddrRightPosition;
+    ssKinectAddrRightPosition << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_RHAND << OSC_KINECT_ADDR_POSITION;
+    kinectAddrRightPosition = ssKinectAddrRightPosition.str();
+
+    stringstream ssKinectAddrRightVelocity;
+    ssKinectAddrRightVelocity << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_RHAND << OSC_KINECT_ADDR_VELOCITY;
+    kinectAddrRightVelocity = ssKinectAddrRightVelocity.str();
 }

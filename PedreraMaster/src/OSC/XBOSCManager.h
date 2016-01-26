@@ -84,6 +84,10 @@ private:
     string pianoAddrNoteOff;
 
     ofxOscReceiver kinectReceiver;
+    string kinectAddrLeftPosition;
+    string kinectAddrLeftVelocity;
+    string kinectAddrRightPosition;
+    string kinectAddrRightVelocity;
 };
 
 
