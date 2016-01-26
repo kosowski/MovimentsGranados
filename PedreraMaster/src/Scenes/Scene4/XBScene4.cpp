@@ -130,8 +130,49 @@ void XBScene4::keyReleased(int key){
         e.amplitude = myGUI->stoneGrowFactor;
         stonesToDraw.push_back(e);
     }
+    else if(key == 'm')
+        convertToBW.load("resources/shaders/convertToBW");
 }
 
+//--------------------------------------------------------------
+void XBScene4::onViolinPitchChanged(float &pitch)
+{
+    violinNote = pitch;
+}
+
+void XBScene4::onViolinEnergyChanged(float &energy)
+{
+    if (energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBScene4::onCelloPitchChanged(float &pitch)
+{
+    celloNote = pitch;
+}
+
+void XBScene4::onCelloEnergyChanged(float &energy)
+{
+    if (energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
+    pianoNote = noteOn.pitch;
+    pianoEnergy = noteOn.velocity;
+}
+
+void XBScene4::onPianoNoteOff(int &noteOff)
+{
+    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
+}
 void XBScene4::initReactionDiffusion(){
     gray.allocate(ofGetWidth(), ofGetHeight());
     

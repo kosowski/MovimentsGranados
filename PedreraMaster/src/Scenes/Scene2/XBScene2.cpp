@@ -150,7 +150,6 @@ void XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
 }
 
 //--------------------------------------------------------------
-
 void XBScene2::onViolinPitchChanged(float &pitch)
 {
     violinNote = pitch;

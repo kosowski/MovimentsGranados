@@ -28,11 +28,32 @@ public:
     virtual void drawIntoFBO();
     virtual void drawGUI();
     void keyReleased(int key);
+    void onViolinPitchChanged(float &pitch);
+    void onViolinEnergyChanged(float &energy);
+    void onCelloPitchChanged(float &pitch);
+    void onCelloEnergyChanged(float &energy);
+    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
+    void onPianoNoteOff(int &noteOff);
+
     void initSVG();
     void initParticles();
     void initPaths();
     void initWaves();
     void initPhysics();
+    
+    
+    bool fakeCelloEvent = false;
+    float celloNote;
+    float celloEnergy = 0;
+    bool fakePianoEvent = false;
+    float pianoNote;
+    float pianoEnergy = 0;
+    bool fakeViolinEvent = false;
+    float violinNote;
+    float violinEnergy = 0;
+    
+    float energyThreshold = 0.01;
+
     
     Vehicle v, x;
     ofPolyline vPath;

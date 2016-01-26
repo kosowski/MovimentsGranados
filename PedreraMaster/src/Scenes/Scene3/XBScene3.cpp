@@ -213,6 +213,46 @@ void XBScene3::keyReleased(int key)
     }
 }
 
+//--------------------------------------------------------------
+void XBScene3::onViolinPitchChanged(float &pitch)
+{
+    violinNote = pitch;
+}
+
+void XBScene3::onViolinEnergyChanged(float &energy)
+{
+    if (energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBScene3::onCelloPitchChanged(float &pitch)
+{
+    celloNote = pitch;
+}
+
+void XBScene3::onCelloEnergyChanged(float &energy)
+{
+    if (energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
+    pianoNote = noteOn.pitch;
+    pianoEnergy = noteOn.velocity;
+}
+
+void XBScene3::onPianoNoteOff(int &noteOff)
+{
+    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
+}
+
 void XBScene3::initPaths()
 {
     svg.load("resources/caminosEscena3.svg");
