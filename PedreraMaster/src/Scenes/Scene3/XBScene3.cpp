@@ -112,8 +112,14 @@ void XBScene3::drawIntoFBO()
         if (myGUI->showPath) {
             ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
             vPath.draw();
+            ofPoint p = vPath.getPointAtIndexInterpolated(vPathIndex);
+            ofSetColor(255);
+            ofDrawCircle(p.x, p.y, 10);
             ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
             xPath.draw();
+            p = xPath.getPointAtIndexInterpolated(xPathIndex);
+            ofSetColor(255);
+            ofDrawCircle(p.x, p.y, 10);
         }
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         v.draw();
@@ -344,7 +350,7 @@ void XBScene3::initPhysics()
     box2d.setGravity(0, 30);
     box2d.createGround();
     box2d.setFPS(60.0);
-    box2d.registerGrabbing();
+//    box2d.registerGrabbing();
 
     int spacing = 40;
     // create horzontal waves
@@ -391,10 +397,17 @@ void XBScene3::updateVioinCello(){
     ofPoint xTarget = xPath.getPointAtIndexInterpolated(xPathIndex);
     x.seek(xTarget);
     x.update();
-    v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-    x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
     
-    //update emitters
+    if(myGUI->linkAudio){
+        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
+        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
+    }
+    else{
+        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA ));
+        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA ));
+    }
+        
+        //update emitters
     if (emitParticles) {
         ofRemove(circles, CustomBox2dParticle::shouldRemove);
         
