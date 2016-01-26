@@ -67,8 +67,8 @@ protected:
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
-    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) { cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl; };
-    virtual void onPianoNoteOff(int &noteOff) { cout << "Piano NoteOff: p=" << noteOff << endl; };
+    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {};
+    virtual void onPianoNoteOff(int &noteOff) {};
 
 private:
 
