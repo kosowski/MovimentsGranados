@@ -208,7 +208,7 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
 
-    int wichLine = floor(noteOn.pitch * (stones.size() - 1));;
+    int wichLine = floor((noteOn.pitch / MAX_MIDI_VALUE) * (stones.size() - 1));;
     expandingPolyLine e = stones[wichLine];
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
