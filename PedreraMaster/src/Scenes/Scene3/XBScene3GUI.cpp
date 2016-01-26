@@ -14,7 +14,7 @@ void XBScene3GUI::setup()
 {
     XBBaseGUI::setup();
 
-    creaturesGroup.setup("Violin & cello");
+    creaturesGroup.setup("ViolinAndCello");
     creaturesGroup.add(size.setup("Size", 10.0, 1.0, 20));
     creaturesGroup.add(maxSpeed.setup("Speed", 1.0, 0.0, 10));
     creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));
@@ -31,13 +31,13 @@ void XBScene3GUI::setup()
     particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     particlesGroup.add(particleLife.setup("Particle life", 60, 1, 200));
     particlesGroup.add(maxDistance.setup("Max distance", 1000, 1, 2000));
-    particlesGroup.add(maxParticles.setup("Max particles", 1, 1, 200));
+    particlesGroup.add(maxParticles.setup("Max particles", 1, 1, 20));
     particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
     particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(10,0), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(&particlesGroup);
     
     pianoGroup.setup("Piano");
-    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
+    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, -1.000, 1.));
     pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));
     pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
     pianoGroup.add(stoneTime.setup("Duration", 2, 0.0, 5.0));
