@@ -41,6 +41,7 @@ public:
     void initWaves();
     void initPhysics();
     
+    void updateVioinCello();
     
     bool fakeCelloEvent = false;
     float celloNote;

@@ -34,56 +34,7 @@ void XBScene3::update()
 
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    // update violin and cello positions and colours
-    vPathIndex += myGUI->pathSpeed;
-    v.setSize(myGUI->size);
-    v.setMaxForce(myGUI->maxForce);
-    v.setMaxSpeed(myGUI->maxSpeed);
-    v.setTailStiffness(myGUI->stiffness);
-    v.setTailDamping(myGUI->damping);
-    v.setMass(myGUI->mass);
-    ofPoint vTarget = vPath.getPointAtIndexInterpolated(vPathIndex);
-    v.seek(vTarget);
-    v.update();
-
-    xPathIndex += myGUI->pathSpeed;
-    x.setSize(myGUI->size);
-    x.setMaxForce(myGUI->maxForce);
-    x.setMaxSpeed(myGUI->maxSpeed);
-    x.setTailStiffness(myGUI->stiffness);
-    x.setTailDamping(myGUI->damping);
-    x.setMass(myGUI->mass);
-    ofPoint xTarget = xPath.getPointAtIndexInterpolated(xPathIndex);
-    x.seek(xTarget);
-    x.update();
-    v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-    x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-
-    //update emitters
-    if (emitParticles) {
-        ofRemove(circles, CustomBox2dParticle::shouldRemove);
-
-        // update box2 particles
-        shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
-        c.get()->setPhysics(0.2, 0.2, 0.002);
-        c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
-        ofPoint vel = myGUI->particleVelocity;
-        ofPoint spread = myGUI->particleSpread;
-        c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-        c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-        circles.push_back(c);
-
-        shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
-        c2.get()->setPhysics(0.2, 0.2, 0.002);
-        c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
-        c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-        c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-        circles.push_back(c2);
-
-        for (int i = 0; i < circles.size(); i++)
-            circles[i].get()->update();
-        box2d.update();
-    }
+    updateVioinCello();
 
     // update piano's stones
     for (int i = 0; i < stonesToDraw.size(); i++) {
@@ -245,6 +196,14 @@ void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
     pianoNote = noteOn.pitch;
     pianoEnergy = noteOn.velocity;
+    
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    
+    int wichLine = floor(noteOn.pitch * (stones.size() - 1));;
+    expandingPolyLine e = stones[wichLine];
+    e.life = 1;
+    e.amplitude = myGUI->stoneGrowFactor;
+    stonesToDraw.push_back(e);
 }
 
 void XBScene3::onPianoNoteOff(int &noteOff)
@@ -404,6 +363,66 @@ void XBScene3::initPhysics()
             edge.get()->create(box2d.getWorld());
             edges.push_back(edge);
         }
+    }
+}
+
+void XBScene3::updateVioinCello(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+
+    // update violin and cello positions and colours
+    vPathIndex += myGUI->pathSpeed;
+    v.setSize(myGUI->size);
+    v.setMaxForce(myGUI->maxForce);
+    v.setMaxSpeed(myGUI->maxSpeed);
+    v.setTailStiffness(myGUI->stiffness);
+    v.setTailDamping(myGUI->damping);
+    v.setMass(myGUI->mass);
+    ofPoint vTarget = vPath.getPointAtIndexInterpolated(vPathIndex);
+    v.seek(vTarget);
+    v.update();
+    
+    xPathIndex += myGUI->pathSpeed;
+    x.setSize(myGUI->size);
+    x.setMaxForce(myGUI->maxForce);
+    x.setMaxSpeed(myGUI->maxSpeed);
+    x.setTailStiffness(myGUI->stiffness);
+    x.setTailDamping(myGUI->damping);
+    x.setMass(myGUI->mass);
+    ofPoint xTarget = xPath.getPointAtIndexInterpolated(xPathIndex);
+    x.seek(xTarget);
+    x.update();
+    v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+    x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+    
+    //update emitters
+    if (emitParticles) {
+        ofRemove(circles, CustomBox2dParticle::shouldRemove);
+        
+        float dist = x.getLocation().distance(v.getLocation());
+        int numParticles = floor(ofMap(dist, 0, myGUI->maxDistance, 1, myGUI->maxParticles));
+        cout << "Adding " << ofToString(numParticles) << " particles" << endl;
+        // update box2 particles
+        for(int i = 0; i< numParticles; i++){
+            shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
+            c.get()->setPhysics(0.2, 0.2, 0.002);
+            c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
+            ofPoint vel = myGUI->particleVelocity;
+            ofPoint spread = myGUI->particleSpread;
+            c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+            circles.push_back(c);
+            
+            shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
+            c2.get()->setPhysics(0.2, 0.2, 0.002);
+            c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
+            c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+            circles.push_back(c2);
+        }
+        
+        for (int i = 0; i < circles.size(); i++)
+            circles[i].get()->update();
+        box2d.update();
     }
 }
 

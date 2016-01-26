@@ -29,6 +29,8 @@ void XBScene3GUI::setup()
     particlesGroup.setup("Particles");
     particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     particlesGroup.add(particleLife.setup("Particle life", 60, 1, 200));
+    particlesGroup.add(maxDistance.setup("Max distance", 1000, 1, 2000));
+    particlesGroup.add(maxParticles.setup("Max particles", 1, 1, 200));
     particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
     particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(10,0), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(&particlesGroup);

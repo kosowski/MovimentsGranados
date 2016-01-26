@@ -27,6 +27,8 @@ public:
     ofxGuiGroup particlesGroup;
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
+    ofxFloatSlider maxParticles;
+    ofxFloatSlider maxDistance;
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
     ofxFloatSlider blurAmount;
