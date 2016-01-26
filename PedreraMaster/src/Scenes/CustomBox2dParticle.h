@@ -25,7 +25,7 @@ public:
     ofColor color;
 //    ofTexture texture;
     void update(){
-        cout << "update custom particle" << endl;
+//        cout << "update custom particle" << endl;
         life--;
         if(life<0)
             alive = false;
