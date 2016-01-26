@@ -96,12 +96,14 @@ void ofApp::startButtonPressed()
 
     if (!found) return;
 
-    cout << endl << "Opening port " << portList[portIndex] << endl;
+//    cout << endl << "Opening port " << portList[portIndex] << endl;
 
-    midiIn.openVirtualPort(portList[portIndex]);
+    midiIn.openPort(portList[portIndex]);
+//    midiIn.openVirtualPort(portList[portIndex]);
     bool ignoreSysex = false;
     bool ignoreTiming = true;
     bool ignoreSense = false;
+
 
     midiIn.ignoreTypes(ignoreSysex, ignoreTiming, ignoreSense);
 
