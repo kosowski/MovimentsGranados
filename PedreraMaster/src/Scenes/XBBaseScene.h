@@ -11,6 +11,8 @@
 #include "ofxGui.h"
 #include "Defaults.h"
 
+static const float MAX_MIDI_VALUE = 127.0f;
+
 class XBBaseScene
 {
 public:

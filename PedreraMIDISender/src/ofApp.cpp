@@ -104,9 +104,7 @@ void ofApp::startButtonPressed()
     bool ignoreTiming = true;
     bool ignoreSense = false;
 
-
     midiIn.ignoreTypes(ignoreSysex, ignoreTiming, ignoreSense);
-
     midiIn.addListener(this);
 
 #ifdef OF_DEBUG
