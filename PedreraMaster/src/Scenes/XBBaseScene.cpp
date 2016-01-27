@@ -110,4 +110,9 @@ void XBBaseScene::subscribeToPianoEvents()
 
 void XBBaseScene::subscribeToKinectEvents()
 {
+    XBOSCManager &oscManager = XBOSCManager::getInstance();
+    ofAddListener(oscManager.eventKinectLPosition, this, &XBBaseScene::onKinectLPositionChanged);
+    ofAddListener(oscManager.eventKinectLVelocity, this, &XBBaseScene::onKinectLVelocityChanged);
+    ofAddListener(oscManager.eventKinectRPosition, this, &XBBaseScene::onKinectRPositionChanged);
+    ofAddListener(oscManager.eventKinectRVelocity, this, &XBBaseScene::onKinectRVelocityChanged);
 }

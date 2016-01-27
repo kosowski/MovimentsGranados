@@ -70,6 +70,11 @@ protected:
     virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {};
     virtual void onPianoNoteOff(int &noteOff) {};
 
+    virtual void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {};
+    virtual void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel) {};
+    virtual void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos) {};
+    virtual void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel) {};
+
 private:
 
     string name;
