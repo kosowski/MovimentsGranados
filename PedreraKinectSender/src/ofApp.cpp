@@ -97,7 +97,7 @@ void ofApp::handleStateChanges()
 
             ofxOscMessage m;
             stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
             m.setAddress(address.str());
             m.addStringArg(OSC_KINECT_STATE_SETUP);
             oscSender.sendMessage(m, false);
@@ -110,7 +110,7 @@ void ofApp::handleStateChanges()
 
             ofxOscMessage m;
             stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
             m.setAddress(address.str());
             m.addStringArg(OSC_KINECT_STATE_DETECTING);
             oscSender.sendMessage(m, false);
@@ -123,7 +123,7 @@ void ofApp::handleStateChanges()
 
             ofxOscMessage m;
             stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE;
+            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
             m.setAddress(address.str());
             m.addStringArg(OSC_KINECT_STATE_CAPTURING);
             oscSender.sendMessage(m, false);
@@ -189,4 +189,14 @@ void ofApp::sendHandInfo()
 
 void ofApp::resetKinect(){
     kinectAvailable = motionExtractor->reset(kinectAvailable);
+}
+
+void ofApp::keyPressed(int key){
+    if(key == ' '){
+        ofxOscMessage positionDetected;
+        stringstream posDetect_address;
+        posDetect_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE_POSITIONED;
+        positionDetected.setAddress(posDetect_address.str());
+        oscSender.sendMessage(positionDetected, false);
+    }
 }

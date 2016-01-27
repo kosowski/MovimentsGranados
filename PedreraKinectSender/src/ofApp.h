@@ -20,6 +20,8 @@ public:
     void update();
     void draw();
     void exit();
+    
+    void keyPressed(int key);
 
     void handleStateChanges();
     void userDetection(bool &hasUser);
