@@ -14,15 +14,12 @@ public:
     XBScene2GUI();
     virtual void setup();
 
-    ofxFloatSlider springStrength;
-    ofxFloatSlider springDamping;
-    ofxFloatSlider drag;
-    ofxFloatSlider gravity;
-    ofxFloatSlider particleMass;
-    ofxFloatSlider mouseSlope;
-    ofxFloatSlider mouseStrength;
-    ofxFloatSlider fixedStrength;
-    ofxFloatSlider fixedDamping;
+    ofxGuiGroup directorGroup;
+    ofxFloatSlider attractorStrength;
+    ofxFloatSlider attractorRadius;
+    ofxFloatSlider minPeriod;
+    ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
 };
 
 

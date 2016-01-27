@@ -14,15 +14,13 @@ void XBScene2GUI::setup()
 {
     XBBaseGUI::setup();
 
-    sceneGui.add(springStrength.setup("strength", 0.03, 0.01, 0.50));
-    sceneGui.add(springDamping.setup("damping", 0.01, 0.000, 0.201));
-    sceneGui.add(drag.setup("drag", 0.1, 0.01, 1.00));
-    sceneGui.add(gravity.setup("gravity", 0.0, 0.00, 1.00));
-    sceneGui.add(particleMass.setup("particleMass", 0.2f, 0.0f, 1.0f));
-    sceneGui.add(mouseStrength.setup("mouseStrength", -96000, -6000, -200000));
-    sceneGui.add(mouseSlope.setup("mouseSlope", 160, 60.0f, 260));
-    sceneGui.add(fixedStrength.setup("fixedStrength", 0.03, 0.01, 0.50));
-    sceneGui.add(fixedDamping.setup("fixedDamping", 0.01, 0.000, 0.201));
-
+    directorGroup.setup("Director");
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
+    directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
+    directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    sceneGui.add(&directorGroup);
+    
     loadSettings();
 }
