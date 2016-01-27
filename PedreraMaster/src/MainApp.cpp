@@ -3,8 +3,9 @@
 #include "XBScene2.h"
 #include "XBScene3.h"
 #include "XBScene4.h"
+#include "XBScene5.h"
+#include "XBScene6.h"
 #include "../../Shared/OSCSettings.h"
-#include "Defaults.h"
 
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
 
@@ -34,18 +35,25 @@ void MainApp::setup()
 
     XBOSCManager::getInstance().init(OSC_CELLO_SENDER_PORT, OSC_VIOLIN_SENDER_PORT, OSC_PIANO_SENDER_PORT, OSC_KINECT_SENDER_PORT);
 
+    int sceneIndex = 0;
     XBScene1 *scene1 = new XBScene1("Scene 1");
-    scene1->setup(guiApp->getGuiForSceneIndex(0));
+    scene1->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
     sceneManager.addScene(scene1);
     XBScene2 *scene2 = new XBScene2("Scene 2");
-    scene2->setup(guiApp->getGuiForSceneIndex(1));
+    scene2->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
     sceneManager.addScene(scene2);
     XBScene3 *scene3 = new XBScene3("Scene 3");
-    scene3->setup(guiApp->getGuiForSceneIndex(2));
+    scene3->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
     sceneManager.addScene(scene3);
     XBScene4 *scene4 = new XBScene4("Scene 4");
-    scene4->setup(guiApp->getGuiForSceneIndex(3));
+    scene4->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
     sceneManager.addScene(scene4);
+    XBScene5 *scene5 = new XBScene5("Scene 5");
+    scene5->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
+    sceneManager.addScene(scene5);
+    XBScene6 *scene6 = new XBScene6("Scene 6");
+    scene6->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
+    sceneManager.addScene(scene6);
 
     // Start with scene 0
     sceneManager.setup(0);
@@ -105,6 +113,10 @@ void MainApp::keyReleased(int key)
             sceneManager.goToScene(2); break;
         case '4':
             sceneManager.goToScene(3); break;
+        case '5':
+            sceneManager.goToScene(4); break;
+        case '6':
+            sceneManager.goToScene(5); break;
         default: break;
     }
     sceneManager.keyReleased(key);
