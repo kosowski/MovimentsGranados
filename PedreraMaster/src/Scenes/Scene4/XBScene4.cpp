@@ -9,6 +9,14 @@ void XBScene4::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
     
+    auxFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
+    auxFbo.begin();
+    ofClear(0);
+    auxFbo.end();
+    windowMask.load("resources/Esc2_fade_Completo.png");
+    
+    initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
+    initWindows("resources/Esc2Piano.svg", violinWindows, 2, 2);
     initWaves();
     initSVG();
     initReactionDiffusion();
@@ -51,6 +59,37 @@ void XBScene4::update()
 void XBScene4::drawIntoFBO()
 {
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
+    
+    auxFbo.begin();
+    {
+        ofPushMatrix();
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        
+        ofBackground(0);
+        //draw cello windows
+        if (fakeCelloEvent || celloEnergy > energyThreshold) {
+            ofPushStyle();
+            ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
+            drawWindow(celloNote, celloWindows);
+            ofPopStyle();
+        }
+        
+        //draw violin windows
+        if (fakeViolinEvent || violinEnergy > energyThreshold) {
+            ofPushStyle();
+            ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
+            drawWindow(violinNote, violinWindows);
+            ofPopStyle();
+        }
+        // mask windows outsides
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        windowMask.draw(0, 0);
+        ofPopStyle();
+        
+        ofPopMatrix();
+    }
+    auxFbo.end();
     
     fbo.begin();
     {
@@ -104,10 +143,15 @@ void XBScene4::drawIntoFBO()
         mask.draw(0, 0);
         ofPopStyle();
         
+        ofPopMatrix();
+        
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        auxFbo.draw(0, 0);
+        ofPopStyle();
+        
         drawGUI();
         drawFadeRectangle();
-        
-        ofPopMatrix();
         
     }
     fbo.end();
@@ -115,11 +159,66 @@ void XBScene4::drawIntoFBO()
     blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
+void XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
+{
+    int currentWindow = 0;
+    float mappedPitch;
+    if (note < 0.25) {
+        currentWindow = 0;
+        mappedPitch = ofMap(note, 0, 0.25, 0, 1);
+    }
+    else if (note >= 0.25 && note < 0.5) {
+        currentWindow = 1;
+        mappedPitch = ofMap(note, 0.25, 0.5, 0, 1);
+    }
+    else if (note >= 0.5 && note < 0.75) {
+        currentWindow = 2;
+        mappedPitch = ofMap(note, 0.5, 0.75, 0, 1);
+    }
+    else if (note >= 0.75) {
+        currentWindow = 3;
+        mappedPitch = ofMap(note, 0.75, 1, 0, 1);
+    }
+    ofRectangle window = windows[currentWindow];
+    //    ofNoFill();
+    //    ofDrawRectangle(window);
+    ofFill();
+    float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
+    ofDrawRectangle(window.x, y, window.width, 10);
+}
+
+//--------------------------------------------------------------
+void XBScene4::keyPressed(int key)
+{
+    switch(key)
+    {
+        case 'c':
+        case 'C':
+        {
+            if (!fakeCelloEvent) {
+                fakeCelloEvent = true;
+                celloNote = ofRandom(1);
+            }
+            break;
+        }
+        case 'x':
+        case 'X':
+        {
+            if (!fakeViolinEvent) {
+                fakeViolinEvent = true;
+                violinNote = ofRandom(1);
+            }
+            break;
+        }
+        default: break;
+    }
+}
+
 void XBScene4::keyReleased(int key){
     XBBaseScene::keyReleased(key);
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-
-    switch (key)
+    
+    switch(key)
     {
         case 'z':
         case 'Z':
@@ -128,6 +227,7 @@ void XBScene4::keyReleased(int key){
             initWaves();
             break;
         }
+    
         case 'v':
         case 'V':
         {
@@ -137,13 +237,18 @@ void XBScene4::keyReleased(int key){
             stonesToDraw.push_back(e);
             break;
         }
+        case 'x':
+        case 'X':
+            fakeViolinEvent = false;
+            break;
+        case 'c':
+        case 'C':
+            fakeCelloEvent = false;
+            break;
         case 'm':
         case 'M':
-        {
             convertToBW.load("resources/shaders/convertToBW");
             break;
-        }
-        default: break;
     }
 }
 
@@ -284,4 +389,45 @@ void XBScene4::initSVG()
             stones.push_back(epl);
         }
     }
+}
+
+void XBScene4::initWindows(string name, vector<ofRectangle> &vectorWindows, int startIndex, int arrangFloor)
+{
+    svg.load(name);
+    //    int startIndex = 2; //skip full frame and first balcony
+    for (int i = startIndex; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        // svg defaults to non zero win/Users/nacho/Downloads/Esc2Cello.svgding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            pl.close();
+            vectorWindows.push_back(pl.getBoundingBox());
+        }
+    }
+    arrangeWindows(arrangFloor, vectorWindows);
+}
+
+void XBScene4::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
+{
+    vector<ofRectangle> arranged;
+    for (int i = 0; i < elements.size(); i++) {
+        if (i == indexToMerge) {
+            ofRectangle r3 = elements[i];
+            ofRectangle r4 = elements[i + 1];
+            float xMin = r3.getMinX() < r4.getMinX() ? r3.getMinX() : r4.getMinX();
+            float yMin = r3.getMinY() < r4.getMinY() ? r3.getMinY() : r4.getMinY();
+            float xMax = r3.getMaxX() > r4.getMaxX() ? r3.getMaxX() : r4.getMaxX();
+            float yMax = r3.getMaxY() > r4.getMaxY() ? r3.getMaxY() : r4.getMaxY();
+            ofRectangle combined(xMin, yMin, xMax - xMin, yMax - yMin);
+            arranged.push_back(combined);
+            i++;
+        }
+        else
+            arranged.push_back(elements[i]);
+    }
+    elements.clear();
+    elements = arranged;
 }
