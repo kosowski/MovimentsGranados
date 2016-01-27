@@ -85,14 +85,14 @@ void XBScene4::drawIntoFBO()
         
         // draw expanding stones from piano
         ofPushStyle();
-        for (int i=0; i<stonesToDraw.size(); i++) {
+        for (int i = 0; i < stonesToDraw.size(); i++) {
             expandingPolyLine &e = stonesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
             //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-            ofScale( 1 +  e.amplitude * sin(myGUI->stoneFrequency * e.life),
-                    1 + e.amplitude * sin(myGUI->stoneFrequency * e.life ) );
-            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255) ) );
+            ofScale(1 + e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                    1 + e.amplitude * sin(myGUI->stoneFrequency * e.life));
+            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
@@ -123,8 +123,7 @@ void XBScene4::keyReleased(int key){
         waves.clear();
         initWaves();
     }
-    else if(key == 'x'){
-        //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
+    else if(key == 'v'){
         expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
         e.life= 1;
         e.amplitude = myGUI->stoneGrowFactor;
@@ -163,9 +162,16 @@ void XBScene4::onCelloEnergyChanged(float &energy)
 
 void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
-    //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
     pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
+    
+    XBScene4GUI *myGUI = (XBScene4GUI *) gui;
+    
+    int wichLine = floor((noteOn.pitch / MAX_MIDI_VALUE) * (stones.size() - 1));;
+    expandingPolyLine e = stones[wichLine];
+    e.life = 1;
+    e.amplitude = myGUI->stoneGrowFactor;
+    stonesToDraw.push_back(e);
 }
 
 void XBScene4::onPianoNoteOff(int &noteOff)
