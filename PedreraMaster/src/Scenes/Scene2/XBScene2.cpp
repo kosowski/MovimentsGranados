@@ -19,7 +19,7 @@ void XBScene2::setup(XBBaseGUI *_gui)
     ofClear(0);
     auxFbo.end();
 
-    initSystem();
+    initWaves();
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", pianoWindows, 2, 2);
     initWindows("resources/Esc2Violinv02.svg", violinWindows, 1, 10);
@@ -32,9 +32,25 @@ void XBScene2::update()
 {
     XBBaseScene::update();
 
-    p_mouse->position.set(ofGetMouseX(), ofGetMouseY(), 0);
-    //physics->setGravity( gravityDir.x, gravityDir.y, gravityDir.z );
-    physics->tick();
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // update waves
+    for (int i = 0; i < waves.size(); i++) {
+        // if simulate mode ON, use the mouse
+        if(myGUI->simulateHands){
+            float mouseX = ofGetMouseX() / (float) ofGetWidth();
+            float mouseY = ofGetMouseY() / (float) ofGetHeight();
+            float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+            float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+            waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+            waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
+        }
+        // else, use the data from kinect
+        else{
+            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        }
+        waves[i].update();
+    }
 }
 
 void XBScene2::drawIntoFBO()
@@ -92,15 +108,12 @@ void XBScene2::drawIntoFBO()
         else
             ofBackground(0);
         
-        // draw springs
+        // draw directors waves
         ofPushStyle();
-        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorB, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
-        for (int i = 0; i < visibleSprings.size(); ++i) {
-            Spring *e = visibleSprings[i];
-            Particle *a = e->getOneEnd();
-            Particle *b = e->getTheOtherEnd();
-            ofDrawLine(a->position.x, a->position.y, b->position.x, b->position.y);
-        }
+        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+        ofSetLineWidth(myGUI->lineWidth);
+        for (Wave w:waves)
+            w.display();
         ofPopStyle();
         
         // apply mask to remove windows interiors
@@ -192,6 +205,18 @@ void XBScene2::onPianoNoteOff(int &noteOff)
     pianoEnergy = 0;
 }
 
+void XBScene2::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {
+    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
+}
+void XBScene2::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel){
+    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
+}
+void XBScene2::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos){
+    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
+}
+void XBScene2::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel){
+    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
+}
 
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)
@@ -236,10 +261,8 @@ void XBScene2::keyReleased(int key)
     switch (key) {
         case 'z':
         case 'Z': {
-            particles.clear();
-            visibleSprings.clear();
-            delete physics;
-            initSystem();
+            waves.clear();
+            initWaves();
             break;
         }
         case 'c':
@@ -301,45 +324,41 @@ void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
     elements = arranged;
 }
 
-void XBScene2::initSystem()
+void XBScene2::initWaves()
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-
-    physics = new ParticleSystem(myGUI->gravity, myGUI->drag);
-    physics->clear();
-
-    p_mouse = physics->makeParticle(1.0, 0.0, 0.0, 0.0);
-    p_mouse->setFixed(true);
-
-
-    float gridStepX = (float) (ofGetWindowWidth() / MAIN_WINDOW_SCALE / GRID_X_RES);
-    float gridStepY = (float) (ofGetWindowHeight() / MAIN_WINDOW_SCALE / GRID_Y_RES);
-
-    for (int y = 0; y < GRID_Y_RES; y++) {
-        for (int x = 0; x < GRID_X_RES; x++) {
-            ofVec3f pos = ofVec3f(x * gridStepX, y * gridStepY, 0.0f);
-            Particle *p = physics->makeParticle(myGUI->particleMass, pos.x, pos.y, pos.z);
-
-            //fixed particle to which free particle is attached through a spring
-            Particle *fixed = physics->makeParticle(myGUI->particleMass, pos.x, pos.y, pos.z);
-            fixed->setFixed(true);
-            physics->makeSpring(fixed, p, myGUI->fixedStrength, myGUI->fixedDamping, 2.0);
-
-            physics->makeAttraction(p_mouse, p, myGUI->mouseStrength, myGUI->mouseSlope);
-
-            particles.push_back(p);
-            if (x > 0) {
-                Spring *s = physics->makeSpring(particles[y * GRID_X_RES + x - 1], particles[y * GRID_X_RES + x], myGUI->springStrength, myGUI->springDamping, gridStepX);
-                visibleSprings.push_back(s);
-            }
+    int spacing = 10;
+    
+    // create horzontal waves
+    svg.load("resources/horizontalesv02.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
         }
     }
-
-
-    for (int y = 1; y < GRID_Y_RES; y++) {
-        for (int x = 0; x < GRID_X_RES; x++) {
-            Spring *s = physics->makeSpring(particles[(y - 1) * GRID_X_RES + x], particles[y * GRID_X_RES + x], myGUI->springStrength, myGUI->springDamping, gridStepY);
-            visibleSprings.push_back(s);
+    
+    // create vertical waves
+    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
 }
+

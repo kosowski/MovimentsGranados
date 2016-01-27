@@ -7,6 +7,7 @@
 
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
+#include "Wave.h"
 
 using namespace  traer::physics ;
 
@@ -27,10 +28,15 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
+    void onKinectStateChanged(string &kState) {};
+    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
+    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel);
+    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos);
+    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
 
 private:
 
-    void initSystem();
+    void initWaves();
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     
@@ -44,11 +50,7 @@ private:
     vector<ofPolyline> celloLines;
     ofImage windowMask;
     
-    ParticleSystem * 	physics;
-    vector<   Particle * > particles;
-    vector<   Spring * > visibleSprings;
-    Particle*			selectedParticle;
-    Particle* p_mouse;
+   vector<Wave> waves;
     
     ofColor directorColor;
     
@@ -61,8 +63,9 @@ private:
     bool fakeViolinEvent = false;
     float violinNote;
     float violinEnergy = 0;
-    
     float energyThreshold = 0.01;
+    kinectHand leftHand;
+    kinectHand rightHand;
 };
 
 
