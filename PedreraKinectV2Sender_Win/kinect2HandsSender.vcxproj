@@ -200,6 +200,7 @@
     <ClCompile Include="src\PMMotionExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Shared\OSCSettings.h" />
     <ClInclude Include="src\Defaults.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
@@ -231,7 +232,6 @@
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
-    <ClInclude Include="src\OSCSettings.h" />
     <ClInclude Include="src\PMMotionExtractor.hpp" />
   </ItemGroup>
   <ItemGroup>
