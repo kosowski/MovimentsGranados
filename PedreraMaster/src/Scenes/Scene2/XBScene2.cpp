@@ -90,8 +90,14 @@ void XBScene2::drawIntoFBO()
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
             int windowIndex = drawWindow(celloNote, celloWindows);
-            if(ofGetFrameNum() % myGUI->windowFrequency == 0)
+            if(ofGetFrameNum() % myGUI->windowFrequency == 0){
+                if(windowIndex == 2){ // if third floor, light up two windows
+                    celloOutlinesToDraw.push_back(celloOutlines[windowIndex+1]);
+                }
+                else if(windowIndex==3) // if fourth floor, increment one to skip double window
+                    windowIndex++;
                 celloOutlinesToDraw.push_back(celloOutlines[windowIndex]);
+            }
             ofPopStyle();
         }
 
@@ -100,8 +106,14 @@ void XBScene2::drawIntoFBO()
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
              int windowIndex = drawWindow(pianoNote, pianoWindows);
-             if(ofGetFrameNum() % myGUI->windowFrequency == 0)
-            pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex]);
+            if(ofGetFrameNum() % myGUI->windowFrequency == 0){
+                if(windowIndex == 2){ // if third floor, light up two windows
+                    pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex+1]);
+                }
+                else if(windowIndex==3) // if fourth floor, increment one to skip double window
+                    windowIndex++;
+                pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex]);
+            }
             ofPopStyle();
         }
 
