@@ -81,6 +81,11 @@ private:
     string name;
 };
 
+struct kinectHand{
+    ofVec3f pos;
+    ofVec3f velocity;
+};
+
 struct expandingPolyLine{
     ofPolyline line;
     ofPath path;
