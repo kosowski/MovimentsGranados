@@ -22,5 +22,11 @@ void XBScene2GUI::setup()
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     sceneGui.add(&directorGroup);
     
+    windowGroup.setup("Window");
+    windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
+    windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
+    windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));
+    sceneGui.add(&windowGroup);
+
     loadSettings();
 }

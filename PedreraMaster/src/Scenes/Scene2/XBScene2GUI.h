@@ -20,6 +20,11 @@ public:
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
+    
+    ofxGuiGroup windowGroup;
+    ofxFloatSlider alphaFactor;
+    ofxFloatSlider growFactor;
+    ofxIntSlider windowFrequency;
 };
 
 
