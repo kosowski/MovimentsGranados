@@ -129,14 +129,33 @@ void XBOSCManager::handleKinectMessages()
         kinectReceiver.getNextMessage(&msg);
         string address = msg.getAddress();
 
-        if (msg.getAddress() == kinectAddrLeftPosition) {
-            cout << "[KINECT] LH Pos = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
-        } else if (msg.getAddress() == kinectAddrLeftVelocity) {
-            cout << "[KINECT] LH Vel = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
-        } else if (msg.getAddress() == kinectAddrRightPosition) {
-            cout << "[KINECT] RH Pos = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
-        } else if (msg.getAddress() == kinectAddrRightVelocity) {
-            cout << "[KINECT] RH Vel = (" << msg.getArgAsFloat(0) << ", " << msg.getArgAsFloat(1) << ", " << msg.getArgAsFloat(2) << ")" << endl;
+        if (address == kinectAddrState) {
+            string description = msg.getArgAsString(0);
+            ofNotifyEvent(eventKinectStateChanged, description);
+        } else if (address == kinectAddrLeftPosition) {
+            KinectPosVelArgs args;
+            args.x = msg.getArgAsFloat(0);
+            args.y = msg.getArgAsFloat(1);
+            args.z = msg.getArgAsFloat(2);
+            ofNotifyEvent(eventKinectLPosition, args);
+        } else if (address == kinectAddrLeftVelocity) {
+            KinectPosVelArgs args;
+            args.x = msg.getArgAsFloat(0);
+            args.y = msg.getArgAsFloat(1);
+            args.z = msg.getArgAsFloat(2);
+            ofNotifyEvent(eventKinectLVelocity, args);
+        } else if (address == kinectAddrRightPosition) {
+            KinectPosVelArgs args;
+            args.x = msg.getArgAsFloat(0);
+            args.y = msg.getArgAsFloat(1);
+            args.z = msg.getArgAsFloat(2);
+            ofNotifyEvent(eventKinectRPosition, args);
+        } else if (address == kinectAddrRightVelocity) {
+            KinectPosVelArgs args;
+            args.x = msg.getArgAsFloat(0);
+            args.y = msg.getArgAsFloat(1);
+            args.z = msg.getArgAsFloat(2);
+            ofNotifyEvent(eventKinectRVelocity, args);
         }
     }
 }
@@ -216,6 +235,10 @@ void XBOSCManager::buildPianoReceiverAddresses()
 
 void XBOSCManager::buildKinectReceiverAddresses()
 {
+    stringstream ssKinectAddrState;
+    ssKinectAddrState << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
+    kinectAddrState = ssKinectAddrState.str();
+
     stringstream ssKinectAddrLeftPosition;
     ssKinectAddrLeftPosition << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_POSITION;
     kinectAddrLeftPosition = ssKinectAddrLeftPosition.str();

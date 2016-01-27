@@ -23,6 +23,7 @@ public:
     void draw();
     void exit();
 
+    void keyPressed(int key);
     void keyReleased(int key);
 
     void setSceneManager(XBSceneManager *_sceneManager) { sceneManager = _sceneManager; };

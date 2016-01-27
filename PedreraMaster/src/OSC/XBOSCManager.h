@@ -47,6 +47,20 @@ public:
     ofEvent<PianoNoteOnArgs>    eventPianoNoteOn;
     ofEvent<int>                eventPianoNoteOff;
 
+    // Kinect events
+    class KinectPosVelArgs : public ofEventArgs
+    {
+    public:
+        float x;
+        float y;
+        float z;
+    };
+    ofEvent<string>             eventKinectStateChanged;
+    ofEvent<KinectPosVelArgs>   eventKinectLPosition;
+    ofEvent<KinectPosVelArgs>   eventKinectLVelocity;
+    ofEvent<KinectPosVelArgs>   eventKinectRPosition;
+    ofEvent<KinectPosVelArgs>   eventKinectRVelocity;
+
 private:
 
     XBOSCManager() {};
@@ -84,6 +98,7 @@ private:
     string pianoAddrNoteOff;
 
     ofxOscReceiver kinectReceiver;
+    string kinectAddrState;
     string kinectAddrLeftPosition;
     string kinectAddrLeftVelocity;
     string kinectAddrRightPosition;

@@ -1,5 +1,5 @@
 #include "ofApp.h"
-#include "OSCSettings.h"
+#include "../../Shared/OSCSettings.h"
 #include "Defaults.h"
 
 static const string STR_APP_TITLE           = "KINECT DETECTOR";
