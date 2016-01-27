@@ -48,12 +48,20 @@ void XBScene3::update()
 
     // update waves
     for (int i = 0; i < waves.size(); i++) {
-        float mouseX = ofGetMouseX() / (float) ofGetWidth();
-        float mouseY = ofGetMouseY() / (float) ofGetHeight();
-        waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-        float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
-        waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
+        // if simulate mode ON, use the mouse
+        if(myGUI->simulateHands){
+            float mouseX = ofGetMouseX() / (float) ofGetWidth();
+            float mouseY = ofGetMouseY() / (float) ofGetHeight();
+            float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+            float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+            waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+            waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
+        }
+        // else, use the data from kinect
+        else{
+            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        }
         waves[i].update();
     }
 
@@ -229,6 +237,19 @@ void XBScene3::onPianoNoteOff(int &noteOff)
 {
     cout << "Piano NoteOff: p=" << noteOff << endl;
     pianoEnergy = 0;
+}
+
+void XBScene3::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {
+    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
+}
+void XBScene3::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel){
+    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
+}
+void XBScene3::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos){
+    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
+}
+void XBScene3::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel){
+    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
 }
 
 void XBScene3::initPaths()

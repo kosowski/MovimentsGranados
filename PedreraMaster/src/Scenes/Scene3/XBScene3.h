@@ -33,6 +33,11 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
+    void onKinectStateChanged(string &kState) {};
+    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
+    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel);
+    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos);
+    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
 
 private:
 
@@ -53,9 +58,9 @@ private:
     bool fakeViolinEvent = false;
     float violinNote;
     float violinEnergy = 0;
-    
     float energyThreshold = 0.01;
-
+    kinectHand leftHand;
+    kinectHand rightHand;
     
     Vehicle v, x;
     ofPolyline vPath;
