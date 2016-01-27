@@ -6,7 +6,6 @@
 #define PEDRERAMASTER_XBSCENE1_H
 
 #include "XBBaseScene.h"
-#include "ofxSvg.h"
 #include "BlurEffect.h"
 #include "ofxParticles.h"
 #include "Wave.h"

@@ -12,7 +12,6 @@
 #include "Vehicle.h"
 #include "ofxParticles.h"
 #include "BlurEffect.h"
-#include "ofxSvg.h"
 #include "Wave.h"
 
 

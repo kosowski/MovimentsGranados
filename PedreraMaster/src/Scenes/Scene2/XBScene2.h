@@ -7,8 +7,6 @@
 
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
-#include "ofxGui.h"
-#include "ofxSvg.h"
 
 using namespace  traer::physics ;
 

@@ -6,11 +6,9 @@
 #define PEDRERAMASTER_XBSCENE4_H
 
 #include "XBBaseScene.h"
-#include "ofxGui.h"
 #include "Wave.h"
 #include "BlurEffect.h"
 #include "ofxMaskedGrayScott.h"
-#include "ofxSvg.h"
 
 class XBScene4 : public XBBaseScene
 {
