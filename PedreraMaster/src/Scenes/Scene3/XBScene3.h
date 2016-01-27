@@ -34,6 +34,8 @@ public:
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
 
+private:
+
     void initSVG();
     void initParticles();
     void initPaths();

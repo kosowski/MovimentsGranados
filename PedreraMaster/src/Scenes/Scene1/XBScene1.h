@@ -37,7 +37,8 @@ public:
     void initWindows();
     void updateEmitters();
     
-protected:
+private:
+
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
         

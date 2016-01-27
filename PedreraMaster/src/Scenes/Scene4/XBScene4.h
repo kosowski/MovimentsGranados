@@ -27,8 +27,9 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
-    
-protected:
+
+private:
+
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void drawWindow(float note, vector<ofRectangle>& windows);
