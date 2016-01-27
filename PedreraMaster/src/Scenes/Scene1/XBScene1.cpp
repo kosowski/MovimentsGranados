@@ -136,6 +136,7 @@ void XBScene1::drawIntoFBO()
             for (ofPolyline pl:windowsOutlines) {
                 if (pl.inside(xEmitter.positionStart)) {
                     ofPushStyle();
+                    ofSetLineWidth(4);
                     ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
                     pl.draw();
                     ofPopStyle();
@@ -149,6 +150,7 @@ void XBScene1::drawIntoFBO()
             for (ofPolyline pl:windowsOutlines) {
                 if (pl.inside(vEmitter.positionStart)) {
                     ofPushStyle();
+                    ofSetLineWidth(4);
                     ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
                     pl.draw();
                     ofPopStyle();
