@@ -108,6 +108,9 @@
     <Filter Include="addons\ofxOsc\libs\oscpack\src\osc">
       <UniqueIdentifier>{EDACB89C-9768-9551-4D41-B590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{83434ef5-c8fd-40a9-9ff8-d24cc500d379}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -206,8 +209,8 @@
     <ClInclude Include="src\PMMotionExtractor.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\OSCSettings.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Shared\OSCSettings.h">
+      <Filter>Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
