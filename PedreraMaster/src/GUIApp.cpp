@@ -86,6 +86,23 @@ void GUIApp::exit()
 //        guis[i]->saveSettings();
 }
 
+void GUIApp::keyPressed(int key)
+{
+    switch(key)
+    {
+        case 'x':
+        case 'X':
+        case 'c':
+        case 'C':
+        case 'v':
+        case 'V':
+        case 'm':
+        case 'M':
+            mainApp->keyPressed(key);
+        default: break;
+    }
+}
+
 void GUIApp::keyReleased(int key)
 {
     switch (key)

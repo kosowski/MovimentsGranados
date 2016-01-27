@@ -253,34 +253,50 @@ void XBScene1::keyPressed(int key)
     XBBaseScene::keyPressed(key);
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
 
-    if (key == 'x') {
-        if (fakeEvent == false) {
-            fakeEvent = true;
-            int wichLine = (int) ofRandom(verticalLines.size());
-            //            cout << "Line changed to " << ofToString(wichLine) << endl;
-            currentViolinNote = verticalLines[wichLine];
-            violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
+    switch(key)
+    {
+        case 'x':
+        case 'X':
+        {
+            if (!fakeEvent) {
+                fakeEvent = true;
+                int wichLine = (int) ofRandom(verticalLines.size());
+                //            cout << "Line changed to " << ofToString(wichLine) << endl;
+                currentViolinNote = verticalLines[wichLine];
+                violinLineIndex = (unsigned int)findIntersectionVertical(currentViolinNote, violinTimeIndex);
+            }
+            break;
         }
-    }
-    else if (key == 'c') {
-        if (fakeCelloEvent == false) {
-            fakeCelloEvent = true;
-            int wichLine = (int) ofRandom(horizontalLines.size());
-            //            cout << "Line changed to " << ofToString(wichLine) << endl;
-            currentCelloNote = horizontalLines[wichLine];
-            celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+        case 'c':
+        case 'C':
+        {
+            if (!fakeCelloEvent) {
+                fakeCelloEvent = true;
+                int wichLine = (int) ofRandom(horizontalLines.size());
+                //            cout << "Line changed to " << ofToString(wichLine) << endl;
+                currentCelloNote = horizontalLines[wichLine];
+                celloLineIndex = (unsigned int)findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+            }
+            break;
         }
+        case 'v':
+        case 'V':
+        {
+            //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
+            expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
+            e.life = 1;
+            e.amplitude = myGUI->stoneGrowFactor;
+            stonesToDraw.push_back(e);
+            break;
+        }
+        case 'm':
+        case 'M':
+        {
+            maskWindows = !maskWindows;
+            break;
+        }
+        default: break;
     }
-    else if (key == 'v') {
-        //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
-        expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
-        e.life = 1;
-        e.amplitude = myGUI->stoneGrowFactor;
-        stonesToDraw.push_back(e);
-    }
-    else if (key == 'm')
-        maskWindows = !maskWindows;
-
 }
 
 void XBScene1::keyReleased(int key)

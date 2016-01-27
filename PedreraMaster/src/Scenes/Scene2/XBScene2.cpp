@@ -193,23 +193,36 @@ void XBScene2::onPianoNoteOff(int &noteOff)
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)
 {
-    if (key == 'c') {
-        if (fakeCelloEvent == false) {
-            fakeCelloEvent = true;
-            celloNote = ofRandom(1);
+    switch(key)
+    {
+        case 'c':
+        case 'C':
+        {
+            if (!fakeCelloEvent) {
+                fakeCelloEvent = true;
+                celloNote = ofRandom(1);
+            }
+            break;
         }
-    }
-    else if (key == 'v') {
-        if (fakePianoEvent == false) {
-            fakePianoEvent = true;
-            pianoNote = ofRandom(1);
+        case 'v':
+        case 'V':
+        {
+            if (!fakePianoEvent) {
+                fakePianoEvent = true;
+                pianoNote = ofRandom(1);
+            }
+            break;
         }
-    }
-    else if (key == 'x') {
-        if (fakeViolinEvent == false) {
-            fakeViolinEvent = true;
-            violinNote = ofRandom(1);
+        case 'x':
+        case 'X':
+        {
+            if (!fakeViolinEvent) {
+                fakeViolinEvent = true;
+                violinNote = ofRandom(1);
+            }
+            break;
         }
+        default: break;
     }
 }
 
