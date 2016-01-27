@@ -3,7 +3,6 @@
 //
 
 #include "GUIApp.h"
-#include "Defaults.h"
 #include "MainApp.h"
 
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS [GUI]";
@@ -45,6 +44,12 @@ void GUIApp::setup()
     XBScene4GUI *s4GUI = new XBScene4GUI();
     s4GUI->setup();
     guis.push_back(s4GUI);
+    XBScene5GUI *s5GUI = new XBScene5GUI();
+    s5GUI->setup();
+    guis.push_back(s5GUI);
+    XBScene6GUI *s6GUI = new XBScene6GUI();
+    s6GUI->setup();
+    guis.push_back(s6GUI);
 
     ofAddListener(sceneManager->eventSceneChanged, this, &GUIApp::sceneChanged);
 
@@ -64,20 +69,28 @@ void GUIApp::draw()
     if (currentGuiIndex >= 0)
         guis[currentGuiIndex]->draw();
 
-    // Show keys info
-    {
-        int msgHeight = 16;
-        float xMargin = 10;
-        float yMargin = 10;
+    drawLegend();
+    drawSceneName();
+}
 
-        float posX = xMargin;
-        float posY = ofGetHeight() - (legendMessages.size() * msgHeight) - yMargin;
+void GUIApp::drawLegend()
+{
+    int msgHeight = 16;
+    float xMargin = 10;
+    float yMargin = 10;
 
-        for (int i=0; i<legendMessages.size(); ++i) {
-            ofDrawBitmapString(legendMessages[i], posX, posY);
-            posY += msgHeight;
-        }
+    float posX = xMargin;
+    float posY = ofGetHeight() - (legendMessages.size() * msgHeight) - yMargin;
+
+    for (int i=0; i<legendMessages.size(); ++i) {
+        ofDrawBitmapString(legendMessages[i], posX, posY);
+        posY += msgHeight;
     }
+}
+
+void GUIApp::drawSceneName()
+{
+    ofDrawBitmapStringHighlight(sceneManager->getCurrentScene()->getName(), ofGetWidth() - 75, ofGetHeight() - 10);
 }
 
 void GUIApp::exit()
@@ -88,38 +101,12 @@ void GUIApp::exit()
 
 void GUIApp::keyPressed(int key)
 {
-    switch(key)
-    {
-        case 'x':
-        case 'X':
-        case 'c':
-        case 'C':
-        case 'v':
-        case 'V':
-        case 'm':
-        case 'M':
-            mainApp->keyPressed(key);
-        default: break;
-    }
+    mainApp->keyPressed(key);
 }
 
 void GUIApp::keyReleased(int key)
 {
-    switch (key)
-    {
-        case OF_KEY_LEFT:
-        case OF_KEY_DOWN:
-        case OF_KEY_RIGHT:
-        case OF_KEY_UP:
-        case 'f':
-        case 'F':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-            mainApp->keyReleased(key);
-        default: break;
-    }
+    mainApp->keyReleased(key);
 }
 
 XBBaseGUI *GUIApp::getGuiForSceneIndex(int sceneIndex)

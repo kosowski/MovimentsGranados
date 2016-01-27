@@ -8,7 +8,7 @@
 #include "ofMain.h"
 #include "XBBaseGUI.h"
 #include "XBOSCManager.h"
-#include "ofxGui.h"
+#include "ofxSvg.h"
 #include "Defaults.h"
 
 static const float MAX_MIDI_VALUE = 127.0f;

@@ -124,8 +124,8 @@ void XBBaseGUI::drawSettingsSaved()
         if (t - showSavedStartTime < maxSavedMessageTime)
         {
             ofSetColor(ofColor::white);
-            ofDrawBitmapString(savePressedMessage, ofGetWidth()-180, ofGetHeight() - 15);
-            ofDrawBitmapString(savePressedMessage, ofGetWidth()-179, ofGetHeight() - 15);
+            ofDrawBitmapString(savePressedMessage, ofGetWidth()-180, ofGetHeight() - 35);
+            ofDrawBitmapString(savePressedMessage, ofGetWidth()-179, ofGetHeight() - 35);
         }
         else
         {

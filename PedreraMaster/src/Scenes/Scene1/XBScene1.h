@@ -6,7 +6,6 @@
 #define PEDRERAMASTER_XBSCENE1_H
 
 #include "XBBaseScene.h"
-#include "ofxSvg.h"
 #include "BlurEffect.h"
 #include "ofxParticles.h"
 #include "Wave.h"
@@ -38,7 +37,8 @@ public:
     void initWindows();
     void updateEmitters();
     
-protected:
+private:
+
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
         

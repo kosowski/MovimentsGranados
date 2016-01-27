@@ -7,8 +7,6 @@
 
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
-#include "ofxGui.h"
-#include "ofxSvg.h"
 
 using namespace  traer::physics ;
 
@@ -29,7 +27,8 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
-    
+
+private:
 
     void initSystem();
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);

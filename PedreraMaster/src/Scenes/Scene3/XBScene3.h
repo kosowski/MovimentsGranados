@@ -12,7 +12,6 @@
 #include "Vehicle.h"
 #include "ofxParticles.h"
 #include "BlurEffect.h"
-#include "ofxSvg.h"
 #include "Wave.h"
 
 
@@ -34,6 +33,8 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
+
+private:
 
     void initSVG();
     void initParticles();

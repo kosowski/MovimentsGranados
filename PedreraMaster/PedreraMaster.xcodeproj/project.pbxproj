@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		214760457DCB87685487ECCB /* XBScene5GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214762178DD089E121BE3345 /* XBScene5GUI.cpp */; };
 		214760DB796EA0C9572BC558 /* XBScene1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214764A72FFCD45BBAC06128 /* XBScene1.cpp */; };
+		214761B0684B945B3B43DFDA /* XBScene6.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476B42F5F063EF7C5AECAF /* XBScene6.cpp */; };
 		214763101014E1552EC054B2 /* XBSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */; };
 		21476354B8F0C4325D82467F /* XBScene1GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214764C341C5CA54E348762F /* XBScene1GUI.cpp */; };
 		21476396328FCF7C0EA5A01B /* XBScene2GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */; };
@@ -17,7 +19,9 @@
 		214766EA83E12EC7D36BF89C /* XBScene3GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */; };
 		2147692A359B4CBD11D431BD /* GUIApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214767E46A8462F4E616A97A /* GUIApp.cpp */; };
 		21476979746B32EBBBF8CCB5 /* XBBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214768EA36A596B0A3391931 /* XBBaseScene.cpp */; };
+		214769D267858DF0553994F0 /* XBScene6GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214769766EACF82FCF45AF4C /* XBScene6GUI.cpp */; };
 		21476A37847B388C4E321B90 /* XBScene4GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */; };
+		21476BE971C8D8B08FCA2B1E /* XBScene5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476486C15F7BD5E19230E0 /* XBScene5.cpp */; };
 		21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */; };
 		21476DBE1D97923486A7ABA1 /* XBScene2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */; };
 		21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214762A363D919020F64E5B8 /* XBOSCManager.cpp */; };
@@ -168,12 +172,17 @@
 		214760908A1992B269B2EFE3 /* data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
 		214761088AC0A8B723CC52C3 /* Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		2147617FBC02B546C344BAC8 /* XBScene1GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1GUI.h; sourceTree = "<group>"; };
+		214762178DD089E121BE3345 /* XBScene5GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene5GUI.cpp; sourceTree = "<group>"; };
 		21476259C699FCFC880F32B2 /* GUIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIApp.h; sourceTree = "<group>"; };
 		214762A363D919020F64E5B8 /* XBOSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBOSCManager.cpp; sourceTree = "<group>"; };
+		214762C47E3482C9E70146D9 /* XBScene5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene5.h; sourceTree = "<group>"; };
 		214762E2D9D203239903B85A /* XBScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene2.h; sourceTree = "<group>"; };
 		2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene3GUI.cpp; sourceTree = "<group>"; };
+		2147641E99DFE2DD76C07735 /* XBScene6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene6.h; sourceTree = "<group>"; };
+		21476486C15F7BD5E19230E0 /* XBScene5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene5.cpp; sourceTree = "<group>"; };
 		214764A72FFCD45BBAC06128 /* XBScene1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene1.cpp; sourceTree = "<group>"; };
 		214764C341C5CA54E348762F /* XBScene1GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene1GUI.cpp; sourceTree = "<group>"; };
+		2147651C8F24CDC5C5D6D780 /* XBScene6GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene6GUI.h; sourceTree = "<group>"; };
 		214765866958D847D3A12F01 /* XBScene3GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3GUI.h; sourceTree = "<group>"; };
 		214765B8C2E92E7DC2846428 /* XBScene4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene4.h; sourceTree = "<group>"; };
 		214766DA528D8DC7B2126899 /* XBScene4GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene4GUI.cpp; sourceTree = "<group>"; };
@@ -184,13 +193,16 @@
 		214768EA36A596B0A3391931 /* XBBaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseScene.cpp; sourceTree = "<group>"; };
 		21476901AA2FBE51D6FE2F18 /* XBScene3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene3.h; sourceTree = "<group>"; };
 		214769380F508C291232B6EF /* XBScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1.h; sourceTree = "<group>"; };
+		214769766EACF82FCF45AF4C /* XBScene6GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene6GUI.cpp; sourceTree = "<group>"; };
 		21476A40F5757F1B800038BA /* XBBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBBaseScene.h; sourceTree = "<group>"; };
 		21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene2GUI.cpp; sourceTree = "<group>"; };
 		21476B2D5110E0A3A73E969E /* XBOSCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBOSCManager.h; sourceTree = "<group>"; };
+		21476B42F5F063EF7C5AECAF /* XBScene6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene6.cpp; sourceTree = "<group>"; };
 		21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBSceneManager.cpp; sourceTree = "<group>"; };
 		21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene2.cpp; sourceTree = "<group>"; };
 		21476C885558C407FE930F0E /* Shared */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = Shared; path = ../../Shared; sourceTree = "<group>"; };
 		21476D7D75555C4AE6056C8A /* XBSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBSceneManager.h; sourceTree = "<group>"; };
+		21476D9979C5679225384525 /* XBScene5GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene5GUI.h; sourceTree = "<group>"; };
 		21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene3.cpp; sourceTree = "<group>"; };
 		21476F4D5CB49F867A9EC844 /* XBBaseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBBaseGui.cpp; sourceTree = "<group>"; };
 		21476FA3C9BFA50AFC86668A /* XBBaseGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBBaseGui.h; sourceTree = "<group>"; };
@@ -532,6 +544,8 @@
 				21476C800E7D9E82E7D59363 /* Scene2 */,
 				21476F2EA52598B8CB87246C /* Scene3 */,
 				214768CB488FBA5AD8F34C59 /* Scene4 */,
+				21476DF0F0086A1797E6C022 /* Scene5 */,
+				21476D97D8285E777F6700FD /* Scene6 */,
 				662B187E1C405DF100004722 /* Rope.h */,
 				662B187D1C405DF100004722 /* Rope.cpp */,
 				662B18801C405DF100004722 /* Vehicle.h */,
@@ -544,6 +558,28 @@
 				665FC0A51C56B12100BCD157 /* ofxMaskedGrayScott.h */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		21476D97D8285E777F6700FD /* Scene6 */ = {
+			isa = PBXGroup;
+			children = (
+				21476B42F5F063EF7C5AECAF /* XBScene6.cpp */,
+				2147641E99DFE2DD76C07735 /* XBScene6.h */,
+				214769766EACF82FCF45AF4C /* XBScene6GUI.cpp */,
+				2147651C8F24CDC5C5D6D780 /* XBScene6GUI.h */,
+			);
+			path = Scene6;
+			sourceTree = "<group>";
+		};
+		21476DF0F0086A1797E6C022 /* Scene5 */ = {
+			isa = PBXGroup;
+			children = (
+				21476486C15F7BD5E19230E0 /* XBScene5.cpp */,
+				214762C47E3482C9E70146D9 /* XBScene5.h */,
+				214762178DD089E121BE3345 /* XBScene5GUI.cpp */,
+				21476D9979C5679225384525 /* XBScene5GUI.h */,
+			);
+			path = Scene5;
 			sourceTree = "<group>";
 		};
 		21476E8F52179BE6F92AFAA1 /* OSC */ = {
@@ -1487,6 +1523,10 @@
 				2147643B75FD4078E237C224 /* XBScene4.cpp in Sources */,
 				66162C221C51835400EF3AE0 /* b2WheelJoint.cpp in Sources */,
 				21476A37847B388C4E321B90 /* XBScene4GUI.cpp in Sources */,
+				21476BE971C8D8B08FCA2B1E /* XBScene5.cpp in Sources */,
+				214760457DCB87685487ECCB /* XBScene5GUI.cpp in Sources */,
+				214761B0684B945B3B43DFDA /* XBScene6.cpp in Sources */,
+				214769D267858DF0553994F0 /* XBScene6GUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1702,7 +1742,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};

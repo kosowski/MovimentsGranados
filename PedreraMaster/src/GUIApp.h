@@ -11,6 +11,8 @@
 #include "XBScene2GUI.h"
 #include "XBScene3GUI.h"
 #include "XBScene4GUI.h"
+#include "XBScene5GUI.h"
+#include "XBScene6GUI.h"
 
 class MainApp;
 
@@ -21,6 +23,9 @@ public:
     void setup();
     void update();
     void draw();
+    void drawLegend();
+    void drawSceneName();
+
     void exit();
 
     void keyPressed(int key);

@@ -6,11 +6,9 @@
 #define PEDRERAMASTER_XBSCENE4_H
 
 #include "XBBaseScene.h"
-#include "ofxGui.h"
 #include "Wave.h"
 #include "BlurEffect.h"
 #include "ofxMaskedGrayScott.h"
-#include "ofxSvg.h"
 
 class XBScene4 : public XBBaseScene
 {
@@ -29,8 +27,9 @@ public:
     void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
-    
-protected:
+
+private:
+
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void drawWindow(float note, vector<ofRectangle>& windows);
