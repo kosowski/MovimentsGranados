@@ -5,9 +5,14 @@
 #ifndef PEDRERAMASTER_XBSCENE6GUI_H
 #define PEDRERAMASTER_XBSCENE6GUI_H
 
+#include "XBBaseGUI.h"
 
-class XBScene6GUI
+class XBScene6GUI : public XBBaseGUI
 {
+public:
+
+    XBScene6GUI();
+    virtual void setup();
 
 };
 

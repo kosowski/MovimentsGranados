@@ -5,9 +5,20 @@
 #ifndef PEDRERAMASTER_XBSCENE6_H
 #define PEDRERAMASTER_XBSCENE6_H
 
+#include "XBBaseScene.h"
 
-class XBScene6
+
+class XBScene6 : public XBBaseScene
 {
+public:
+
+    XBScene6(const string &name) : XBBaseScene(name) {}
+
+    virtual void setup(XBBaseGUI *gui);
+    virtual void update();
+    virtual void drawIntoFBO();
+
+private:
 
 };
 
