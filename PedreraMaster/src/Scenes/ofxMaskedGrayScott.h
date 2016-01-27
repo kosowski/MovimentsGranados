@@ -136,8 +136,6 @@ public:
     float getDiffV(){return diffV;};
     float getK(){return k;};
     float getF(){return f;};
-    float getPasses(){ return passes;};
-    void setPasses(int pass){ passes = pass;}
     
     void update(){
         for( int i = 0; i < passes ; i++ ){
