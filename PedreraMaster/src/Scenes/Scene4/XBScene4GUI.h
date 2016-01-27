@@ -17,6 +17,8 @@ public:
     ofxGuiGroup violinGroup;
     ofxIntSlider minViolinSpeed;
     ofxIntSlider maxViolinSpeed;
+    ofxFloatSlider violinK;
+    ofxFloatSlider violinF;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
