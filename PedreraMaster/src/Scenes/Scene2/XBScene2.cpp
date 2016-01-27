@@ -23,7 +23,10 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", pianoWindows, 2, 2);
     initWindows("resources/Esc2Violinv02.svg", violinWindows, 1, 10);
-
+    
+    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
+    initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
+    
     windowMask.load("resources/Esc2_fade_Completo.png");
 }
 
@@ -51,6 +54,24 @@ void XBScene2::update()
         }
         waves[i].update();
     }
+    
+    // update cello windows
+    for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
+        celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (celloOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            celloOutlinesToDraw.erase(celloOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+    
+    // update piano windows
+    for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
+        pianoOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (pianoOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            pianoOutlinesToDraw.erase(pianoOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
 }
 
 void XBScene2::drawIntoFBO()
@@ -68,7 +89,9 @@ void XBScene2::drawIntoFBO()
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
-            drawWindow(celloNote, celloWindows);
+            int windowIndex = drawWindow(celloNote, celloWindows);
+            if(ofGetFrameNum() % myGUI->windowFrequency == 0)
+                celloOutlinesToDraw.push_back(celloOutlines[windowIndex]);
             ofPopStyle();
         }
 
@@ -76,7 +99,9 @@ void XBScene2::drawIntoFBO()
         if (fakePianoEvent || pianoEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
-            drawWindow(pianoNote, pianoWindows);
+             int windowIndex = drawWindow(pianoNote, pianoWindows);
+             if(ofGetFrameNum() % myGUI->windowFrequency == 0)
+            pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex]);
             ofPopStyle();
         }
 
@@ -87,7 +112,7 @@ void XBScene2::drawIntoFBO()
             drawWindow(violinNote, violinWindows);
             ofPopStyle();
         }
-
+        
         // mask windows outsides
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
@@ -116,13 +141,41 @@ void XBScene2::drawIntoFBO()
             w.display();
         ofPopStyle();
         
+        // draw expanding piano windows
+        ofPushStyle();
+        for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
+            expandingPolyLine &e = pianoOutlinesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
+            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->alphaFactor, 0, 255)));
+            e.path.draw();
+            ofPopMatrix();
+        }
+        ofPopStyle();
+        
+        // draw expanding cello windows
+        ofPushStyle();
+        for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
+            expandingPolyLine &e = celloOutlinesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+            e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor , 0, 255)));
+            e.path.draw();
+            ofPopMatrix();
+        }
+        ofPopStyle();
+        
+        
         // apply mask to remove windows interiors
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
         ofPopStyle();
+    
         ofPopMatrix();
-
+        
         // add fbo with windows contents
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -137,7 +190,7 @@ void XBScene2::drawIntoFBO()
     fbo.end();
 }
 
-void XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
+int XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
 {
     int currentWindow = 0;
     float mappedPitch;
@@ -163,6 +216,7 @@ void XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
     ofDrawRectangle(window.x, y, window.width, 10);
+    return currentWindow;
 }
 
 //--------------------------------------------------------------
@@ -322,6 +376,40 @@ void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
     }
     elements.clear();
     elements = arranged;
+}
+
+void XBScene2::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows){
+    svg.load(name);
+    for (int i = 2; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k = 0; k < points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if (i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            vectorWindows.push_back(epl);
+        }
+    }
 }
 
 void XBScene2::initWaves()
