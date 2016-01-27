@@ -79,7 +79,7 @@ private:
     
     float celloEnergy = 0;
     float violinEnergy = 0;
-    float energyThreshold = 0.01;
+    float energyThreshold = 0.0;
     kinectHand leftHand;
     kinectHand rightHand;
 };

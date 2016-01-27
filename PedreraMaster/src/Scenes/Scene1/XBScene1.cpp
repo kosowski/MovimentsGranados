@@ -157,7 +157,7 @@ void XBScene1::drawIntoFBO()
             }
         }
 
-        //draw particles
+        //draw particles from violin and cello
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         particleSystem.draw(pTex);
@@ -184,7 +184,7 @@ void XBScene1::drawIntoFBO()
 
 void XBScene1::onViolinPitchChanged(float &pitch)
 {
-    int wichLine = floor((pitch / MAX_MIDI_VALUE) * (verticalLines.size() - 1));
+    int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
     currentViolinNote = verticalLines[wichLine];
     violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
 }
@@ -199,7 +199,7 @@ void XBScene1::onViolinEnergyChanged(float &energy)
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
-    int wichLine = floor(pitch * (horizontalLines.size() - 1));;
+    int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
     currentCelloNote = horizontalLines[wichLine];
     celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
 }
@@ -348,8 +348,8 @@ void XBScene1::keyReleased(int key)
 void XBScene1::initLines()
 {
     // LOAD HORIZINTAL LINES
-    svg.load("resources/horizontales.svg");
-    for (int i = 0; i < svg.getNumPath(); i++) {
+    svg.load("resources/horizontalesv03.svg");
+    for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
@@ -372,7 +372,7 @@ void XBScene1::initLines()
     // load vertical lines
     //    svg.load("resources/verticales.svg");
     svg.load("resources/verticales_v03_pocas_lineas.svg");
-    for (int i = 0; i < svg.getNumPath(); i++) {
+    for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
 //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -480,7 +480,7 @@ void XBScene1::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv02.svg");
+    svg.load("resources/horizontalesv03.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
