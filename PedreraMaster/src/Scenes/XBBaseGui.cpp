@@ -48,6 +48,7 @@ void XBBaseGUI::setup()
 {
     sceneGui.setup(strSceneGuiTitle, STR_SETTINGS_BASEPATH + sceneSettingsFilename);
     sceneGui.setPosition(scenePosX, scenePosY);
+    sceneGui.add(simulateHands.setup("Simulate hands", false));
 
     colorGui.setup(strColorGuiTitle, STR_SETTINGS_BASEPATH + colorSettingsFilename);
     colorGui.setPosition(colorsPosX, colorsPosY);

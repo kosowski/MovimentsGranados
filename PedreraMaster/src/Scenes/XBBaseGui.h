@@ -41,6 +41,8 @@ public:
     int rgbColorPianoB;
     ofxIntSlider colorPianoA;
 
+    ofxToggle simulateHands;
+    
     void loadSettings();
     void saveSettings();
 
