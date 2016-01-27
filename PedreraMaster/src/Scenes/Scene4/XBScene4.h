@@ -15,12 +15,13 @@
 class XBScene4 : public XBBaseScene
 {
 public:
-
+    
     XBScene4(const string &name) : XBBaseScene(name) {}
-
+    
     virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();
+    void keyPressed(int key);
     void keyReleased(int key);
     void onViolinPitchChanged(float &pitch);
     void onViolinEnergyChanged(float &energy);
@@ -29,10 +30,13 @@ public:
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
     void onPianoNoteOff(int &noteOff);
     
+protected:
+    void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
+    void arrangeWindows(int index, vector<ofRectangle>& elements);
+    void drawWindow(float note, vector<ofRectangle>& windows);
     void initReactionDiffusion();
     void initWaves();
     void initSVG();
-
     
     bool fakeCelloEvent = false;
     float celloNote;
@@ -45,16 +49,21 @@ public:
     float violinEnergy = 0;
     
     float energyThreshold = 0.01;
-
+    
+    ofFbo auxFbo;
+    ofImage windowMask;
     ofxSVG svg;
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
     
     vector<Wave> waves;
     
+    vector<ofRectangle> celloWindows;
+    vector<ofRectangle> violinWindows;
+    
     ofxMaskedGrayScott gray;
     ofShader convertToBW;
-
+    
     BlurEffect blur;
 };
 
