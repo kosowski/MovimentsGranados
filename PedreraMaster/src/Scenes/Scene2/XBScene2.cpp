@@ -91,7 +91,9 @@ void XBScene2::drawIntoFBO()
             templateImage.draw(0, 0);
         else
             ofBackground(0);
+        
         // draw springs
+        ofPushStyle();
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorB, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         for (int i = 0; i < visibleSprings.size(); ++i) {
             Spring *e = visibleSprings[i];
@@ -99,15 +101,16 @@ void XBScene2::drawIntoFBO()
             Particle *b = e->getTheOtherEnd();
             ofDrawLine(a->position.x, a->position.y, b->position.x, b->position.y);
         }
-
+        ofPopStyle();
+        
         // apply mask to remove windows interiors
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
         ofPopStyle();
         ofPopMatrix();
-//
-//        // add fbo with windows contents
+
+        // add fbo with windows contents
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         auxFbo.draw(0, 0);
