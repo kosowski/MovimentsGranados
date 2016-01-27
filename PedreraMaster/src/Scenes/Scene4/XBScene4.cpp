@@ -53,6 +53,7 @@ void XBScene4::update()
     // update reaction diffusion
     gray.setK( ofMap(ofGetMouseX(),0,640,0.005,0.095,true) );
     gray.setF( ofMap(ofGetMouseY(),0,480,0.01,0.028,true) );
+    gray.setPasses( (int)ofMap(violinEnergy,0,1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
     gray.update();
 }
 
@@ -107,9 +108,13 @@ void XBScene4::drawIntoFBO()
         ofPopMatrix();
         
         // draw reaction diffusion with shader to convert it to B&W with transparency
+        ofPushStyle();
         convertToBW.begin();
-        gray.draw();
+        ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
+        gray.draw(0,0);
         convertToBW.end();
+        ofPopStyle();
+        
         ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
         
