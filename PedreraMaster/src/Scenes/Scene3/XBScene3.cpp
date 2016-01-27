@@ -41,8 +41,8 @@ void XBScene3::update()
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
         stonesToDraw[i].amplitude *= myGUI->stoneDamping;
         if (stonesToDraw[i].life > ofGetFrameRate() * myGUI->stoneTime) {
-            stonesToDraw.erase(stonesToDraw.begin() + i); // fixed this erase call
-            i--; // new code to keep i index valid
+            stonesToDraw.erase(stonesToDraw.begin() + i);
+            i--; // keep i index valid
         }
     }
 
