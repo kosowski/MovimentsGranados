@@ -159,13 +159,6 @@ void XBScene1::drawIntoFBO()
             }
         }
 
-        //draw particles from violin and cello
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        particleSystem.draw(pTex);
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofPopStyle();
-
         // mask for removing the windows
         if (maskWindows == true) {
             ofPushStyle();
@@ -173,6 +166,13 @@ void XBScene1::drawIntoFBO()
             mask.draw(0, 0);
             ofPopStyle();
         }
+        
+        //draw particles from violin and cello
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        particleSystem.draw(pTex);
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofPopStyle();
 
         drawGUI();
         drawFadeRectangle();
