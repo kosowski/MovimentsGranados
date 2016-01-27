@@ -290,6 +290,8 @@ void XBScene1::keyReleased(int key)
     switch (key) {
         case 'z':
         case 'Z': {
+            waves.clear();
+            initWaves();
         }
         case 'x':
         case 'X': {
