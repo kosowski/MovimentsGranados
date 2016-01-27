@@ -23,6 +23,9 @@ public:
     void setup();
     void update();
     void draw();
+    void drawLegend();
+    void drawSceneName();
+
     void exit();
 
     void keyPressed(int key);

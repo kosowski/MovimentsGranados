@@ -69,20 +69,28 @@ void GUIApp::draw()
     if (currentGuiIndex >= 0)
         guis[currentGuiIndex]->draw();
 
-    // Show legend
-    {
-        int msgHeight = 16;
-        float xMargin = 10;
-        float yMargin = 10;
+    drawLegend();
+    drawSceneName();
+}
 
-        float posX = xMargin;
-        float posY = ofGetHeight() - (legendMessages.size() * msgHeight) - yMargin;
+void GUIApp::drawLegend()
+{
+    int msgHeight = 16;
+    float xMargin = 10;
+    float yMargin = 10;
 
-        for (int i=0; i<legendMessages.size(); ++i) {
-            ofDrawBitmapString(legendMessages[i], posX, posY);
-            posY += msgHeight;
-        }
+    float posX = xMargin;
+    float posY = ofGetHeight() - (legendMessages.size() * msgHeight) - yMargin;
+
+    for (int i=0; i<legendMessages.size(); ++i) {
+        ofDrawBitmapString(legendMessages[i], posX, posY);
+        posY += msgHeight;
     }
+}
+
+void GUIApp::drawSceneName()
+{
+    ofDrawBitmapStringHighlight(sceneManager->getCurrentScene()->getName(), ofGetWidth() - 75, ofGetHeight() - 10);
 }
 
 void GUIApp::exit()

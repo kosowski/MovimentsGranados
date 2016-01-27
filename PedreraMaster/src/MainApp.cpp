@@ -53,7 +53,7 @@ void MainApp::setup()
     sceneManager.addScene(scene5);
     XBScene6 *scene6 = new XBScene6("Scene 6");
     scene6->setup(guiApp->getGuiForSceneIndex(sceneIndex++));
-    sceneManager.addScene(scene5);
+    sceneManager.addScene(scene6);
 
     // Start with scene 0
     sceneManager.setup(0);
