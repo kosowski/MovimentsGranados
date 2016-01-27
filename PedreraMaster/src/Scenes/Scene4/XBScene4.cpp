@@ -118,20 +118,34 @@ void XBScene4::drawIntoFBO()
 void XBScene4::keyReleased(int key){
     XBBaseScene::keyReleased(key);
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-    
-    if(key == 'z'){
-        waves.clear();
-        initWaves();
+
+    switch (key)
+    {
+        case 'z':
+        case 'Z':
+        {
+            waves.clear();
+            initWaves();
+            break;
+        }
+        case 'x':
+        case 'X':
+        {
+            //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
+            expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
+            e.life= 1;
+            e.amplitude = myGUI->stoneGrowFactor;
+            stonesToDraw.push_back(e);
+            break;
+        }
+        case 'm':
+        case 'M':
+        {
+            convertToBW.load("resources/shaders/convertToBW");
+            break;
+        }
+        default: break;
     }
-    else if(key == 'x'){
-        //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
-        expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
-        e.life= 1;
-        e.amplitude = myGUI->stoneGrowFactor;
-        stonesToDraw.push_back(e);
-    }
-    else if(key == 'm')
-        convertToBW.load("resources/shaders/convertToBW");
 }
 
 //--------------------------------------------------------------
