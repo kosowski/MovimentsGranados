@@ -181,7 +181,6 @@ void XBScene3::keyReleased(int key)
         }
         default: break;
     }
-    }
 }
 
 //--------------------------------------------------------------
