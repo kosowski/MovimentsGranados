@@ -68,7 +68,6 @@ private:
     ofPolyline xPath;
     float xPathIndex = 0;
     
-    bool emitParticles;
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;

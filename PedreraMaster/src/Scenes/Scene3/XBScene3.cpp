@@ -106,15 +106,15 @@ void XBScene3::drawIntoFBO()
         }
         ofPopStyle();
 
-        ofPushStyle();
+        
         //draw particles from violin and cello
-        if (emitParticles) {
-            ofEnableBlendMode(OF_BLENDMODE_ADD);
-            for (int i = 0; i < circles.size(); i++) {
-                ofFill();
-                circles[i].get()->draw(pTex);
-            }
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        for (int i = 0; i < circles.size(); i++) {
+            ofFill();
+            circles[i].get()->draw(pTex);
         }
+        ofPopStyle();
 
         // draw violin and cello
         if (myGUI->showPath) {
@@ -164,16 +164,9 @@ void XBScene3::keyReleased(int key)
 
     switch (key)
     {
-        case 'p':
-        case 'P':
-        {
-            emitParticles = !emitParticles;
-            break;
-        }
         case 'x':
         case 'X':
         {
-//        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
             expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
             e.life = 1;
             e.amplitude = myGUI->stoneGrowFactor;
@@ -314,7 +307,6 @@ void XBScene3::initParticles()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     vEmitter.setVelocity(myGUI->particleVelocity);
     vEmitter.velSpread = myGUI->particleSpread;
@@ -441,13 +433,15 @@ void XBScene3::updateVioinCello(){
         x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA ));
     }
         
-        //update emitters
-    if (emitParticles) {
-        ofRemove(circles, CustomBox2dParticle::shouldRemove);
-        
-        float dist = x.getLocation().distance(v.getLocation());
-        int numParticles = floor(ofMap(dist, 0, myGUI->maxDistance, 1, myGUI->maxParticles));
-        cout << "Adding " << ofToString(numParticles) << " particles" << endl;
+    //update particles emitters
+    float dist = x.getLocation().distance(v.getLocation());
+    cout << "Distance " << ofToString(dist) << endl;
+    if (dist < myGUI->maxDistance) {
+        float numParticles = ofMap(dist, 0, myGUI->maxDistance, myGUI->maxParticles, 0);
+        if(numParticles < 1.f && numParticles > 0.f)
+            numParticles = ofGetFrameNum() % 2;
+        numParticles = floor(numParticles);
+//        cout << "Adding " << ofToString(numParticles) << " particles" << endl;
         // update box2 particles
         for(int i = 0; i< numParticles; i++){
             shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
@@ -466,10 +460,11 @@ void XBScene3::updateVioinCello(){
             c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
             circles.push_back(c2);
         }
-        
-        for (int i = 0; i < circles.size(); i++)
-            circles[i].get()->update();
-        box2d.update();
     }
+    // update particles
+    ofRemove(circles, CustomBox2dParticle::shouldRemove);
+    for (int i = 0; i < circles.size(); i++)
+        circles[i].get()->update();
+    box2d.update();
 }
 
