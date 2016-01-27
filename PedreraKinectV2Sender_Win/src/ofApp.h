@@ -39,6 +39,7 @@ private:
     ofxToggle showHands;
 
     ofxOscSender oscSender;
+	ofxOscSender oscSender_Max;
     
     PMMotionExtractor* motionExtractor;
     
