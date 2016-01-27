@@ -14,6 +14,10 @@ public:
     XBScene4GUI();
     virtual void setup();
 
+    ofxGuiGroup violinGroup;
+    ofxIntSlider minViolinSpeed;
+    ofxIntSlider maxViolinSpeed;
+    
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
     ofxFloatSlider stoneDamping;

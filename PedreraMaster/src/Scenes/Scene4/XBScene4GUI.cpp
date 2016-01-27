@@ -14,6 +14,12 @@ void XBScene4GUI::setup()
 {
     XBBaseGUI::setup();
 
+    violinGroup.setup("Violin");
+    violinGroup.add(minViolinSpeed.setup("Vioin min speed", 1, 0, 10));
+    violinGroup.add(maxViolinSpeed.setup("Vioin max speed", 6, 0, 20));
+    sceneGui.add(&violinGroup);
+
+    
     pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
     pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));
