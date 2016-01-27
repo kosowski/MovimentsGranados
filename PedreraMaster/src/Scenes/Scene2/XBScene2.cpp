@@ -91,7 +91,9 @@ void XBScene2::drawIntoFBO()
             templateImage.draw(0, 0);
         else
             ofBackground(0);
+        
         // draw springs
+        ofPushStyle();
         ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorB, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
         for (int i = 0; i < visibleSprings.size(); ++i) {
             Spring *e = visibleSprings[i];
@@ -99,15 +101,16 @@ void XBScene2::drawIntoFBO()
             Particle *b = e->getTheOtherEnd();
             ofDrawLine(a->position.x, a->position.y, b->position.x, b->position.y);
         }
-
+        ofPopStyle();
+        
         // apply mask to remove windows interiors
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
         ofPopStyle();
         ofPopMatrix();
-//
-//        // add fbo with windows contents
+
+        // add fbo with windows contents
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         auxFbo.draw(0, 0);
@@ -193,23 +196,36 @@ void XBScene2::onPianoNoteOff(int &noteOff)
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)
 {
-    if (key == 'c') {
-        if (fakeCelloEvent == false) {
-            fakeCelloEvent = true;
-            celloNote = ofRandom(1);
+    switch(key)
+    {
+        case 'c':
+        case 'C':
+        {
+            if (!fakeCelloEvent) {
+                fakeCelloEvent = true;
+                celloNote = ofRandom(1);
+            }
+            break;
         }
-    }
-    else if (key == 'v') {
-        if (fakePianoEvent == false) {
-            fakePianoEvent = true;
-            pianoNote = ofRandom(1);
+        case 'v':
+        case 'V':
+        {
+            if (!fakePianoEvent) {
+                fakePianoEvent = true;
+                pianoNote = ofRandom(1);
+            }
+            break;
         }
-    }
-    else if (key == 'x') {
-        if (fakeViolinEvent == false) {
-            fakeViolinEvent = true;
-            violinNote = ofRandom(1);
+        case 'x':
+        case 'X':
+        {
+            if (!fakeViolinEvent) {
+                fakeViolinEvent = true;
+                violinNote = ofRandom(1);
+            }
+            break;
         }
+        default: break;
     }
 }
 

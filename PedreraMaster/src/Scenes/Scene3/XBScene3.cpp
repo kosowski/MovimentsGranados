@@ -154,19 +154,32 @@ void XBScene3::keyReleased(int key)
 
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    if (key == 'p') {
-        emitParticles = !emitParticles;
-    }
-    else if (key == 'x') {
+    switch (key)
+    {
+        case 'p':
+        case 'P':
+        {
+            emitParticles = !emitParticles;
+            break;
+        }
+        case 'x':
+        case 'X':
+        {
 //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
-        expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
-        e.life = 1;
-        e.amplitude = myGUI->stoneGrowFactor;
-        stonesToDraw.push_back(e);
-    }
-    else if (key == 'z') {
-        waves.clear();
-        initWaves();
+            expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
+            e.life = 1;
+            e.amplitude = myGUI->stoneGrowFactor;
+            stonesToDraw.push_back(e);
+            break;
+        }
+        case 'z':
+        case 'Z':
+        {
+            waves.clear();
+            initWaves();
+            break;
+        }
+        default: break;
     }
 }
 
