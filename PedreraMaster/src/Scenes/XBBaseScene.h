@@ -20,6 +20,7 @@ public:
     XBBaseScene(string name);
 
     virtual void setup(XBBaseGUI *gui);
+    virtual void enteredScene() {};
     virtual void update() {};
     virtual void drawIntoFBO() = 0;
     virtual void drawGUI();

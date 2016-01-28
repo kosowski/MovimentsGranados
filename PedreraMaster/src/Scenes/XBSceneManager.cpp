@@ -21,6 +21,7 @@ void XBSceneManager::setup(int initialScene)
 {
     currentSceneIndex = nextSceneIndex = initialScene;
     Tweenzor::init();
+    scenes[currentSceneIndex]->enteredScene();
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 
@@ -92,6 +93,7 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
             state = SCENESTATE_OnScene;
             currentSceneIndex = sceneIndex;
             scenes[currentSceneIndex]->setFBOAlpha(255.0f);
+            scenes[currentSceneIndex]->enteredScene();
             ofNotifyEvent(eventSceneChanged, currentSceneIndex);
             break;
         }
@@ -154,6 +156,7 @@ void XBSceneManager::onFadeComplete(float *arg)
 
     state = SCENESTATE_OnScene;
     currentSceneIndex = nextSceneIndex;
+    scenes[currentSceneIndex]->enteredScene();
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 
