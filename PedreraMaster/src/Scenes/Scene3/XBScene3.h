@@ -13,8 +13,7 @@
 #include "ofxParticles.h"
 #include "BlurEffect.h"
 #include "Wave.h"
-
-
+#include "ofxGlow.h"
 
 class XBScene3 : public XBBaseScene
 {
@@ -82,6 +81,8 @@ private:
     vector<shared_ptr<CustomBox2dParticle> > circles;
     vector<shared_ptr<ofxBox2dEdge> > edges;
     
+    ofFbo auxFbo;
+    ofxGlow     glow;
     BlurEffect blur;
 };
 

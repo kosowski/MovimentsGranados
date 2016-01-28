@@ -13,6 +13,12 @@ void XBScene3::setup(XBBaseGUI *_gui)
     int w = 200;
     int h = 250;
 
+    auxFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
+    auxFbo.begin();
+    ofClear(0);
+    auxFbo.end();
+    glow.allocate(ofGetWidth(), ofGetHeight());
+    
     // creatures init
     initPaths();
     vPathIndex = 0;//vPath.size()/2;
@@ -71,8 +77,27 @@ void XBScene3::drawIntoFBO()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
+    // draw violin and cello avatars in separate fbo
+    auxFbo.begin();
+    {
+        ofPushMatrix();
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        
+        ofBackground(0);
+        v.draw();
+        x.draw();
+        ofPopMatrix();
+    }
+    auxFbo.end();
+    
+    // and apply them glow
+    glow.setRadius(myGUI->glowAmount);
+    glow << auxFbo.getTexture();
+    glow.update();
+    
     fbo.begin();
     {
+        ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
         if (showFacadeImage)
             templateImage.draw(0, 0);
@@ -130,8 +155,8 @@ void XBScene3::drawIntoFBO()
             ofDrawCircle(p.x, p.y, 10);
         }
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        v.draw();
-        x.draw();
+//        v.draw();
+//        x.draw();
         ofPopStyle();
 
         // mask for removing the windows
@@ -139,7 +164,14 @@ void XBScene3::drawIntoFBO()
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
         ofPopStyle();
-
+        
+        ofPopMatrix();
+        
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        glow.draw(0, 0);
+        ofPopStyle();
+        
         //draw GUI
         drawGUI();
 
