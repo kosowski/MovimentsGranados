@@ -14,6 +14,11 @@ public:
     XBScene6GUI();
     virtual void setup();
 
+    ofxGuiGroup messagesGroup;
+    ofxFloatSlider mainMsgX;
+    ofxFloatSlider mainMsgY;
+    ofxFloatSlider countdownMsgX;
+    ofxFloatSlider countdownMsgY;
 };
 
 

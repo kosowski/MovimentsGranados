@@ -20,6 +20,7 @@ class XBScene6 : public XBBaseScene
 public:
 
     XBScene6(const string &name);
+    ~XBScene6();
 
     virtual void setup(XBBaseGUI *gui);
     virtual void enteredScene();
