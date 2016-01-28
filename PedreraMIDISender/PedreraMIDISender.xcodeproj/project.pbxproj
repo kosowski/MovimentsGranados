@@ -684,8 +684,10 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_DEBUG)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "MIDI-ICO-Debug.icns";
+				ICON_FILE = "./icons/MIDI-ICO-Debug.icns";
+				ICON_NAME_DEBUG = "MIDI-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "MIDI-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -727,8 +729,10 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_RELEASE)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "MIDI-ICO-Release.icns";
+				ICON_FILE = "./icons/MIDI-ICO-Release.icns";
+				ICON_NAME_DEBUG = "MIDI-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "MIDI-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

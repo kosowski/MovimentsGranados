@@ -828,8 +828,11 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_DEBUG)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Violin-ICO-Debug.icns";
+				ICON_FILE = "./icons/Violin-ICO-Debug.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Violin-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Violin-ICO-Release.icns";
 				INFOPLIST_FILE = "PedreraCelloAnalyzer copy-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -867,8 +870,11 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_RELEASE)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Violin-ICO-Release.icns";
+				ICON_FILE = "./icons/Violin-ICO-Release.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Violin-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Violin-ICO-Release.icns";
 				INFOPLIST_FILE = "PedreraCelloAnalyzer copy-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -997,8 +1003,11 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_DEBUG)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Cello-ICO-Debug.icns";
+				ICON_FILE = "./icons/Cello-ICO-Debug.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Cello-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Cello-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1036,8 +1045,11 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
-				ICON = "$(ICON_NAME_RELEASE)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Cello-ICO-Release.icns";
+				ICON_FILE = "./icons/Cello-ICO-Release.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Cello-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Cello-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

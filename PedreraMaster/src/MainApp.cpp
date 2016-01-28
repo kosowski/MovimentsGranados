@@ -7,7 +7,11 @@
 #include "XBScene6.h"
 #include "../../Shared/OSCSettings.h"
 
+#ifdef OF_DEBUG
+static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS (DEBUG)";
+#else
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
+#endif
 
 
 void MainApp::setup()

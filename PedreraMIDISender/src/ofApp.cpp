@@ -1,7 +1,12 @@
 #include "ofApp.h"
 #include "../../Shared/OSCSettings.h"
 
-static const string STR_APP_TITLE           = "PIANO [MIDI RECEIVER]";
+#ifdef OF_DEBUG
+static const string STR_APP_TITLE              = "PIANO [MIDI RECEIVER] (DEBUG)";
+#else
+static const string STR_APP_TITLE              = "PIANO [MIDI RECEIVER]";
+#endif
+
 static const string STR_MIDIPORTS_TITLE     = "MIDI PORTS";
 static const string STR_SETTINGS_FILENAME   = "settings.xml";
 

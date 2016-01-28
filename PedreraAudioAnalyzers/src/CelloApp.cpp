@@ -3,7 +3,11 @@
 #include "SharedConstants.h"
 #include "../../Shared/OSCSettings.h"
 
+#ifdef OF_DEBUG
+static const string STR_APP_TITLE              = "CELLO [AUDIO ANALYZER] (DEBUG)";
+#else
 static const string STR_APP_TITLE              = "CELLO [AUDIO ANALYZER]";
+#endif
 static const string ANALYSIS_CELLO_FILENAME    = "celloAnalyzer.xml";
 static const string DEVICE_SETTINGS_FILENAME   = "celloDeviceSettings.xml";
 
