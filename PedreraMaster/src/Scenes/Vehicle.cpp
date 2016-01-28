@@ -43,26 +43,15 @@ void Vehicle::seek(const ofPoint & target){
 }
 
 void Vehicle::update(){
-//    ofPoint target( ofNoise(ofGetElapsedTimeMillis() * 0.0005 + offset) * ofGetWidth(), ofNoise(ofGetElapsedTimeMillis() * 0.0005f + offset + 1000.0) * ofGetHeight());
-//    
-//    seek(target);
-    
     velocity += acceleration;
     velocity.limit(maxSpeed);
     location += velocity;
     acceleration *= 0;
     
-    
     nodes[0].set(location);
     
     for (int i = 0; i < springs.size(); i++)
         springs[i].update();
-    
-//    history.push_back(location);
-//    if(history.size() > 100){
-//        history.erase(history.begin());
-//    }
-    
 }
 
 void Vehicle::draw(){

@@ -12,7 +12,7 @@ public:
     void update();
     void draw();
     void setColor(ofColor c);
-    ofPoint getLocation(){return location;};
+    ofPoint getLocation(){return nodes[0];};
     void setMaxSpeed(float s);
     void setMaxForce(float f);
     void setTailDamping(float f);
