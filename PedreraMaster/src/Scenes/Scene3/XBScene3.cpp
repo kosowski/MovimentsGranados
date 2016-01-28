@@ -91,7 +91,8 @@ void XBScene3::drawIntoFBO()
     auxFbo.end();
     
     // and apply them glow
-    glow.setRadius(myGUI->glowAmount);
+    glow.setRadius(myGUI->glowRadius);
+    glow.setIntensity(myGUI->glowAmount);
     glow << auxFbo.getTexture();
     glow.update();
     
