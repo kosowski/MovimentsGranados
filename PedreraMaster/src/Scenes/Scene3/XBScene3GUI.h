@@ -22,7 +22,7 @@ public:
     ofxFloatSlider stiffness;
     ofxFloatSlider damping;
     ofxFloatSlider mass;
-    ofxInttSlider glowAmount;
+    ofxIntSlider glowAmount;
     ofxToggle linkAudio;
     ofxToggle showPath;
     

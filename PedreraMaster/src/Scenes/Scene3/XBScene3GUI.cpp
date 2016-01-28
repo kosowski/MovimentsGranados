@@ -22,7 +22,7 @@ void XBScene3GUI::setup()
     creaturesGroup.add(stiffness.setup("stiffness", 0.05, 0.00, 0.50));
     creaturesGroup.add(damping.setup("damping", 0.75, 0.00, 1.00));
     creaturesGroup.add(mass.setup("mass", 6., 0.0, 10.0));
-    creaturesGroup.add(glowAmount.setup("Glow amount", 10, 0, 15));
+    creaturesGroup.add(glowAmount.setup("Glow amount", 10, 0, 20));
     creaturesGroup.add(linkAudio.setup("Alpha audio", false));
     creaturesGroup.add(showPath.setup("Show path", false));
 
