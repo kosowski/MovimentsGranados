@@ -186,9 +186,12 @@ void XBScene1::drawIntoFBO()
 
 void XBScene1::onViolinPitchChanged(float &pitch)
 {
-    int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
-    currentViolinNote = verticalLines[wichLine];
-    violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
+//    int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
+//    currentViolinNote = verticalLines[wichLine];
+//    violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
+    int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
+    currentViolinNote = horizontalLines[wichLine];
+    violinLineIndex = findIntersectionHorizontal(currentViolinNote, celloTimeIndex);
 }
 
 void XBScene1::onViolinEnergyChanged(float &energy)
@@ -283,10 +286,13 @@ void XBScene1::keyPressed(int key)
         {
             if (!fakeEvent) {
                 fakeEvent = true;
-                int wichLine = (int) ofRandom(verticalLines.size());
-                //            cout << "Line changed to " << ofToString(wichLine) << endl;
-                currentViolinNote = verticalLines[wichLine];
-                violinLineIndex = (unsigned int)findIntersectionVertical(currentViolinNote, violinTimeIndex);
+//                int wichLine = (int) ofRandom(verticalLines.size());
+//                //            cout << "Line changed to " << ofToString(wichLine) << endl;
+//                currentViolinNote = verticalLines[wichLine];
+//                violinLineIndex = (unsigned int)findIntersectionVertical(currentViolinNote, violinTimeIndex);
+                int wichLine = (int) ofRandom(horizontalLines.size());
+                currentViolinNote = horizontalLines[wichLine];
+                violinLineIndex = findIntersectionHorizontal(currentViolinNote, celloTimeIndex);
             }
             break;
         }
@@ -373,28 +379,28 @@ void XBScene1::initLines()
     }
     // load vertical lines
     //    svg.load("resources/verticales.svg");
-    svg.load("resources/verticales_v03_pocas_lineas.svg");
-    for (int i = 1; i < svg.getNumPath(); i++) {
-        ofPath p = svg.getPathAt(i);
-//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
-        // svg defaults to non zero winding which doesn't look so good as contours
-        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
-        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
-
-        for (int j = 0; j < (int) lines.size(); j++) {
-            ofPolyline pl = lines[j].getResampledBySpacing(1);
-            vector<ofPoint> points = pl.getVertices();
-            //check path direction
-            if (points.size() > 51) {
-                if (points[0].y < points[50].y) { //check if the order is top to bottom, we dont want that
-                    std::reverse(points.begin(), points.end());
-                    pl.clear();
-                    pl.addVertices(points);
-                }
-            }
-            verticalLines.push_back(pl);
-        }
-    }
+//    svg.load("resources/verticales_v03_pocas_lineas.svg");
+//    for (int i = 1; i < svg.getNumPath(); i++) {
+//        ofPath p = svg.getPathAt(i);
+////        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+//        // svg defaults to non zero winding which doesn't look so good as contours
+//        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+//        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+//
+//        for (int j = 0; j < (int) lines.size(); j++) {
+//            ofPolyline pl = lines[j].getResampledBySpacing(1);
+//            vector<ofPoint> points = pl.getVertices();
+//            //check path direction
+//            if (points.size() > 51) {
+//                if (points[0].y < points[50].y) { //check if the order is top to bottom, we dont want that
+//                    std::reverse(points.begin(), points.end());
+//                    pl.clear();
+//                    pl.addVertices(points);
+//                }
+//            }
+//            verticalLines.push_back(pl);
+//        }
+//    }
 }
 
 void XBScene1::initWindows()
