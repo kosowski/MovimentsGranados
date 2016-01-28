@@ -22,6 +22,7 @@ public:
     ofxFloatSlider lineWidth;
     
     ofxGuiGroup windowGroup;
+    ofxFloatSlider barHeight;
     ofxFloatSlider alphaStart;
     ofxFloatSlider alphaFactor;
     ofxFloatSlider growFactor;
