@@ -374,13 +374,13 @@ void XBScene3::initPhysics()
     // Box2d
     box2d.init();
     box2d.setGravity(0, 2);
-    box2d.createGround();
+    //box2d.createGround();
     box2d.setFPS(60.0);
 //    box2d.registerGrabbing();
 
     int spacing = 40;
     // create horzontal waves
-    svg.load("resources/ventanas.svg");
+    svg.load("resources/ventanas_v02.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
