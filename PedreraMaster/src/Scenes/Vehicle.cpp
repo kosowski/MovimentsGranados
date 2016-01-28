@@ -55,8 +55,6 @@ void Vehicle::update(){
 }
 
 void Vehicle::draw(ofTexture& tex){
-    
-    ofPushStyle();
     ofSetColor(colour);
     ofFill();
     
@@ -70,15 +68,16 @@ void Vehicle::draw(ofTexture& tex){
             ofDrawCircle(nodes[i].x, nodes[i].y, r-2);
         
         ofPushMatrix();
+        ofPushStyle();
         ofTranslate(nodes[i].x, nodes[i].y, 0);
         ofSetColor(colour.r, colour.g, colour.b, colour.a * glowAmount);
         tex.draw(0, 0, r * glowRadius, r * glowRadius);
+        ofPopStyle();
         ofPopMatrix();
-
     }
     for (Rope s:springs)
         s.draw();
-    ofPopStyle();
+    
 }
 
 void Vehicle::setColor(ofColor c){
