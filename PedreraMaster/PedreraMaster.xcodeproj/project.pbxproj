@@ -1578,6 +1578,9 @@
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
 				);
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Master-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Master-ICO-Release.icns";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1628,6 +1631,9 @@
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
 				);
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Master-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Master-ICO-Release.icns";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -1681,8 +1687,11 @@
 					../../../addons/ofxBox2d/libs/triangle,
 					../../../addons/ofxBox2d/src,
 				);
-				ICON = "$(ICON_NAME_DEBUG)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Master-ICO-Debug.icns";
+				ICON_FILE = "./icons/Master-ICO-Debug.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Master-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Master-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1733,8 +1742,11 @@
 					../../../addons/ofxBox2d/libs/triangle,
 					../../../addons/ofxBox2d/src,
 				);
-				ICON = "$(ICON_NAME_RELEASE)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = "Master-ICO-Release.icns";
+				ICON_FILE = "./icons/Master-ICO-Release.icns";
+				ICON_FILE_PATH = ./icons;
+				ICON_NAME_DEBUG = "Master-ICO-Debug.icns";
+				ICON_NAME_RELEASE = "Master-ICO-Release.icns";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1742,7 +1754,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

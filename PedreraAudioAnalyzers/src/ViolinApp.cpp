@@ -3,7 +3,11 @@
 #include "SharedConstants.h"
 #include "../../Shared/OSCSettings.h"
 
+#ifdef OF_DEBUG
+static const string STR_APP_TITLE              = "VIOLIN [AUDIO ANALYZER] (DEBUG)";
+#else
 static const string STR_APP_TITLE              = "VIOLIN [AUDIO ANALYZER]";
+#endif
 static const string ANALYSIS_VIOLIN_FILENAME   = "violinAnalyzer.xml";
 static const string DEVICE_SETTINGS_FILENAME   = "violinDeviceSettings.xml";
 
