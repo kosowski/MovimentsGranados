@@ -23,6 +23,7 @@ void XBScene2GUI::setup()
     sceneGui.add(&directorGroup);
     
     windowGroup.setup("Window");
+    windowGroup.add(alphaStart.setup("Alpha attack", 0.8, 0.0f, 1.0f));
     windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
     windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
     windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));
