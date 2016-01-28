@@ -56,8 +56,9 @@ private:
     vector<expandingPolyLine> pianoOutlinesToDraw;
     
     ofImage windowMask;
+    ofImage rectMask;
     
-   vector<Wave> waves;
+    vector<Wave> waves;
     
     ofColor directorColor;
     

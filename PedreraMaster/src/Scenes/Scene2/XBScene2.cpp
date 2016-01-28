@@ -20,6 +20,7 @@ void XBScene2::setup(XBBaseGUI *_gui)
     auxFbo.end();
 
     initWaves();
+    rectMask.load("resources/Esc2Barra_v01.png");
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", pianoWindows, 2, 2);
     initWindows("resources/Esc2Violinv02.svg", violinWindows, 1, 10);
@@ -204,6 +205,8 @@ void XBScene2::drawIntoFBO()
 
 int XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
 {
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+
     int currentWindow = 0;
     float mappedPitch;
     if (note < 0.25) {
@@ -223,11 +226,10 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
         mappedPitch = ofMap(note, 0.75, 1, 0, 1);
     }
     ofRectangle window = windows[currentWindow];
-//    ofNoFill();
-//    ofDrawRectangle(window);
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
-    ofDrawRectangle(window.x, y, window.width, 10);
+//    ofDrawRectangle(window.x, y, window.width, 10);
+    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
     return currentWindow;
 }
 
