@@ -37,7 +37,8 @@ private:
 
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
-    void drawWindow(float note, vector<ofRectangle>& windows);
+    void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);
+    int drawWindow(float note, vector<ofRectangle>& windows);
     void initReactionDiffusion();
     void initWaves();
     void initSVG();
@@ -58,6 +59,7 @@ private:
     
     ofFbo auxFbo;
     ofImage windowMask;
+    ofImage rectMask;
     ofxSVG svg;
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
@@ -66,6 +68,11 @@ private:
     
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
+    
+    vector<expandingPolyLine> celloOutlines;
+    vector<expandingPolyLine> celloOutlinesToDraw;
+    vector<expandingPolyLine> violinOutlines;
+    vector<expandingPolyLine> violinOutlinesToDraw;
     
     ofxMaskedGrayScott grayV;
     ofxMaskedGrayScott grayX;

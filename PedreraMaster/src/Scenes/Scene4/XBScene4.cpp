@@ -17,6 +17,11 @@ void XBScene4::setup(XBBaseGUI *_gui)
     
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", violinWindows, 2, 2);
+    
+    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
+    initWindowsOutlines("resources/Esc2Piano.svg", violinOutlines);
+    
+    rectMask.load("resources/Esc2Barra_v01.png");
     initWaves();
     initSVG();
     initReactionDiffusion();
@@ -58,6 +63,24 @@ void XBScene4::update()
             i--; // new code to keep i index valid
         }
     }
+    // update cello windows
+    for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
+        celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (celloOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            celloOutlinesToDraw.erase(celloOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+    
+    // update piano windows
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (violinOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+    
     // update reaction diffusion
     grayV.setK( myGUI->violinK);
     grayV.setF( myGUI->violinF);
@@ -84,7 +107,15 @@ void XBScene4::drawIntoFBO()
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
-            drawWindow(celloNote, celloWindows);
+            int windowIndex = drawWindow(celloNote, celloWindows);
+            if(ofGetFrameNum() % myGUI->windowFrequency == 0){
+                if(windowIndex == 2){ // if third floor, light up two windows
+                    celloOutlinesToDraw.push_back(celloOutlines[windowIndex+1]);
+                }
+                else if(windowIndex==3) // if fourth floor, increment one to skip double window
+                    windowIndex++;
+                celloOutlinesToDraw.push_back(celloOutlines[windowIndex]);
+            }
             ofPopStyle();
         }
         
@@ -92,7 +123,15 @@ void XBScene4::drawIntoFBO()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            drawWindow(violinNote, violinWindows);
+            int windowIndex =  drawWindow(violinNote, violinWindows);
+            if(ofGetFrameNum() % myGUI->windowFrequency == 0){
+                if(windowIndex == 2){ // if third floor, light up two windows
+                    violinOutlinesToDraw.push_back(violinOutlines[windowIndex+1]);
+                }
+                else if(windowIndex==3) // if fourth floor, increment one to skip double window
+                    windowIndex++;
+                violinOutlinesToDraw.push_back(violinOutlines[windowIndex]);
+            }
             ofPopStyle();
         }
         // mask windows outsides
@@ -165,6 +204,32 @@ void XBScene4::drawIntoFBO()
         }
         ofPopStyle();
         
+        // draw expanding violin windows
+        ofPushStyle();
+        for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+            expandingPolyLine &e = violinOutlinesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
+            e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->alphaFactor, 0, 255)));
+            e.path.draw();
+            ofPopMatrix();
+        }
+        ofPopStyle();
+        
+        // draw expanding cello windows
+        ofPushStyle();
+        for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
+            expandingPolyLine &e = celloOutlinesToDraw[i];
+            ofPushMatrix();
+            ofTranslate(e.centroid);
+            ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+            e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor , 0, 255)));
+            e.path.draw();
+            ofPopMatrix();
+        }
+        ofPopStyle();
+        
         // mask for removing the windows
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
@@ -187,8 +252,10 @@ void XBScene4::drawIntoFBO()
     blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
-void XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
+int XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
 {
+    XBScene4GUI *myGUI = (XBScene4GUI *) gui;
+    
     int currentWindow = 0;
     float mappedPitch;
     if (note < 0.25) {
@@ -212,7 +279,9 @@ void XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
     //    ofDrawRectangle(window);
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
-    ofDrawRectangle(window.x, y, window.width, 10);
+//    ofDrawRectangle(window.x, y, window.width, 10);
+    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+    return currentWindow;
 }
 
 //--------------------------------------------------------------
@@ -486,3 +555,37 @@ void XBScene4::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
     elements.clear();
     elements = arranged;
 }
+void XBScene4::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows){
+    svg.load(name);
+    for (int i = 2; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k = 0; k < points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if (i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            vectorWindows.push_back(epl);
+        }
+    }
+}
+

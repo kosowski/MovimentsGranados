@@ -22,6 +22,13 @@ void XBScene4GUI::setup()
     sceneGui.add(&violinGroup);
 
     
+    windowGroup.setup("Window");
+    windowGroup.add(barHeight.setup("Audio bar height", 30., 10., 70.));
+    windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
+    windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
+    windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));
+    sceneGui.add(&windowGroup);
+    
     pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.8, 0.000, 1.));
     pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));

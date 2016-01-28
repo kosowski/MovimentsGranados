@@ -34,6 +34,12 @@ public:
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
     
+    ofxGuiGroup windowGroup;
+    ofxFloatSlider barHeight;
+    ofxFloatSlider alphaFactor;
+    ofxFloatSlider growFactor;
+    ofxIntSlider windowFrequency;
+    
     ofxIntSlider blurAmount;
     ofxToggle enableSmooth;
     
