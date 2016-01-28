@@ -435,7 +435,7 @@ void XBScene3::updateVioinCello(){
         
     //update particles emitters
     float dist = x.getLocation().distance(v.getLocation());
-    cout << "Distance " << ofToString(dist) << endl;
+//    cout << "Distance " << ofToString(dist) << endl;
     if (dist < myGUI->maxDistance) {
         float numParticles = ofMap(dist, 0, myGUI->maxDistance, myGUI->maxParticles, 0);
         if(numParticles < 1.f && numParticles > 0.f)
