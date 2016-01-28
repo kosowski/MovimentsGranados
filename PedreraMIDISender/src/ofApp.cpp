@@ -88,18 +88,27 @@ void ofApp::startButtonPressed()
 
     int portIndex = 0;
     bool found = false;
+    bool isVirtualPort = false;
     for (int i=0; i<portParams.size() && !found; ++i)
     {
         found = portParams[i].getIsEnabled();
-        if (found) portIndex = i;
+        if (found)
+        {
+            portIndex = i;
+            isVirtualPort = portParams[i].getIsVirtualPort();
+        }
     }
 
     if (!found) return;
 
-//    cout << endl << "Opening port " << portList[portIndex] << endl;
+    if (isVirtualPort) cout << endl << "Opening virtual port " << portList[portIndex] << endl;
+    else cout << "Is virtual? " << isVirtualPort << endl;
 
-    midiIn.openPort(portList[portIndex]);
-//    midiIn.openVirtualPort(portList[portIndex]);
+    if (isVirtualPort)
+        midiIn.openVirtualPort(portList[portIndex]);
+    else
+        midiIn.openPort(portList[portIndex]);
+
     bool ignoreSysex = false;
     bool ignoreTiming = true;
     bool ignoreSense = false;
@@ -122,8 +131,8 @@ void ofApp::startButtonPressed()
 
 void ofApp::stopButtonPressed()
 {
-    midiIn.closePort();
     midiIn.removeListener(this);
+    midiIn.closePort();
     lblStatus.setBackgroundColor(ofColor::darkRed);
     lblStatus.setup(STR_STATUS, STR_STATUS_OFF);
 }
