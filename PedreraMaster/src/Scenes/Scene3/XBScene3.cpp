@@ -373,7 +373,7 @@ void XBScene3::initPhysics()
     ofLoadImage(pTex, "resources/particle.png");
     // Box2d
     box2d.init();
-    box2d.setGravity(0, 10);
+    box2d.setGravity(0, 2);
     box2d.createGround();
     box2d.setFPS(60.0);
 //    box2d.registerGrabbing();
