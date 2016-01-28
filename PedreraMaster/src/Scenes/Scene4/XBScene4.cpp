@@ -59,10 +59,15 @@ void XBScene4::update()
         }
     }
     // update reaction diffusion
-    gray.setK( myGUI->violinK);
-    gray.setF( myGUI->violinF);
-    gray.setPasses( (int)ofMap(violinEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
-    gray.update();
+    grayV.setK( myGUI->violinK);
+    grayV.setF( myGUI->violinF);
+    grayV.setPasses( (int)ofMap(violinEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
+    grayV.update();
+    
+    grayX.setK( myGUI->violinK);
+    grayX.setF( myGUI->violinF);
+    grayX.setPasses( (int)ofMap(celloEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
+    grayX.update();
 }
 
 void XBScene4::drawIntoFBO()
@@ -115,13 +120,23 @@ void XBScene4::drawIntoFBO()
         
         ofPopMatrix();
         
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
         // draw reaction diffusion with shader to convert it to B&W with transparency
         ofPushStyle();
         convertToBW.begin();
         ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-        gray.draw(0,0);
+        grayV.draw(0,0);
         convertToBW.end();
         ofPopStyle();
+        
+        ofPushStyle();
+        convertToBW.begin();
+        ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
+        grayX.draw(0,0);
+        convertToBW.end();
+        ofPopStyle();
+
+         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         
         ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
@@ -327,20 +342,32 @@ void XBScene4::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel){
 
 
 void XBScene4::initReactionDiffusion(){
-    gray.allocate(ofGetWidth(), ofGetHeight());
+    grayX.allocate(ofGetWidth(), ofGetHeight());
+    grayV.allocate(ofGetWidth(), ofGetHeight());
+
     
     ofImage seed;
-    seed.load("resources/ventanas_v02.png");
-    gray.begin();
+    seed.load("resources/Esc4Violin.png");
+    grayV.begin();
     seed.draw(0,0, ofGetWidth(), ofGetHeight());
-    gray.end();
+    grayV.end();
     
     ofImage mask;
-    mask.load("resources/ventanas_mascara.png");
-    gray.begin(1);
+    mask.load("resources/Esc4Violin_mascara.png");
+    grayV.begin(1);
     mask.draw(0,0, ofGetWidth(), ofGetHeight());
-    gray.end(1);
+    grayX.end(1);
     
+    seed.load("resources/Esc4Cello.png");
+    grayX.begin();
+    seed.draw(0,0, ofGetWidth(), ofGetHeight());
+    grayX.end();
+    
+    mask.load("resources/Esc4Cello_mascara.png");
+    grayX.begin(1);
+    mask.draw(0,0, ofGetWidth(), ofGetHeight());
+    grayX.end(1);
+
     convertToBW.load("resources/shaders/convertToBW");
 }
 

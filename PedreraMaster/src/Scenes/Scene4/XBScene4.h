@@ -67,7 +67,8 @@ private:
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
     
-    ofxMaskedGrayScott gray;
+    ofxMaskedGrayScott grayV;
+    ofxMaskedGrayScott grayX;
     ofShader convertToBW;
     
     BlurEffect blur;
