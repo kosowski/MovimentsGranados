@@ -10,4 +10,5 @@ XBMidiPortParams::XBMidiPortParams(string _portName)
 
     params.setName(portName);
     params.add(enabled.set("Enabled", false));
+    params.add(isVirtual.set("Is Virtual Port", false));
 }

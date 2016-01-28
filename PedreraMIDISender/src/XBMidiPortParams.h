@@ -15,11 +15,13 @@ public:
 
     const ofParameterGroup &getParams() const   { return params; }
     bool getIsEnabled()                         { return enabled; }
+    bool getIsVirtualPort()                     { return isVirtual; }
 
 private:
 
     ofParameterGroup params;
     ofParameter<bool> enabled;
+    ofParameter<bool> isVirtual;
 
     string portName;
 };
