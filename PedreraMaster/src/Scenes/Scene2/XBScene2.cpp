@@ -160,7 +160,7 @@ void XBScene2::drawIntoFBO()
             ofPushMatrix();
             ofTranslate(e.centroid);
             ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
-            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->alphaFactor, 0, 255)));
+            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
@@ -173,7 +173,7 @@ void XBScene2::drawIntoFBO()
             ofPushMatrix();
             ofTranslate(e.centroid);
             ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
-            e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor , 0, 255)));
+            e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * myGUI->alphaStart - e.life * myGUI->alphaFactor , 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
