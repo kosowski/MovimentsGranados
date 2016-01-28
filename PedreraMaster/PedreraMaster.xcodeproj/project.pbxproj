@@ -235,6 +235,7 @@
 		660F191C1C524952007FC7C3 /* CustomBox2dParticle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomBox2dParticle.h; sourceTree = "<group>"; };
 		660FB9E51C47C743000BBF02 /* BlurEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurEffect.h; sourceTree = "<group>"; };
 		660FB9E61C47C895000BBF02 /* BlurEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlurEffect.cpp; sourceTree = "<group>"; };
+		661072671C5A9E1A00119636 /* ofxCustomGlow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCustomGlow.h; sourceTree = "<group>"; };
 		66162B4B1C51835400EF3AE0 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		66162B4D1C51835400EF3AE0 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		66162B4E1C51835400EF3AE0 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -556,6 +557,7 @@
 				660FB9E61C47C895000BBF02 /* BlurEffect.cpp */,
 				660F191C1C524952007FC7C3 /* CustomBox2dParticle.h */,
 				665FC0A51C56B12100BCD157 /* ofxMaskedGrayScott.h */,
+				661072671C5A9E1A00119636 /* ofxCustomGlow.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
