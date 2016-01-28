@@ -84,17 +84,20 @@ void XBScene3::drawIntoFBO()
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
         
         ofBackground(0);
-        v.draw();
-        x.draw();
+        pTex.setAnchorPercent(0.5, 0.5);
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        v.draw(pTex);
+        x.draw(pTex);
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopMatrix();
     }
     auxFbo.end();
     
     // and apply them glow
-    glow.setRadius(myGUI->glowRadius);
-    glow.setIntensity(myGUI->glowAmount);
-    glow << auxFbo.getTexture();
-    glow.update();
+//    glow.setRadius(myGUI->glowRadius);
+//    glow.setIntensity(myGUI->glowAmount);
+//    glow << auxFbo.getTexture();
+//    glow.update();
     
     fbo.begin();
     {
@@ -170,7 +173,7 @@ void XBScene3::drawIntoFBO()
         
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
-        glow.draw(0, 0);
+        auxFbo.draw(0, 0);
         ofPopStyle();
         
         //draw GUI
@@ -404,6 +407,7 @@ void XBScene3::initWaves()
 void XBScene3::initPhysics()
 {
     ofLoadImage(pTex, "resources/particle.png");
+    pTex.setAnchorPercent(0.5f, 0.5f);
     // Box2d
     box2d.init();
     box2d.setGravity(0, 2);
@@ -434,6 +438,11 @@ void XBScene3::initPhysics()
 void XBScene3::updateVioinCello(){
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
+    v.glowRadius = myGUI->glowRadius;
+    x.glowRadius = myGUI->glowRadius;
+    v.glowAmount = myGUI->glowAmount;
+    x.glowAmount = myGUI->glowAmount;
+    
     // update violin and cello positions and colours
     vPathIndex += myGUI->pathSpeed;
     v.setSize(myGUI->size);

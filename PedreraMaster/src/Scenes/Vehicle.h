@@ -10,7 +10,7 @@ public:
     void applyForce(const ofPoint & force);
     void seek(const ofPoint & target);
     void update();
-    void draw();
+    void draw(ofTexture& tex);
     void setColor(ofColor c);
     ofPoint getLocation(){return nodes[0];};
     void setMaxSpeed(float s);
@@ -19,7 +19,8 @@ public:
     void setTailStiffness(float s);
     void setMass(float f);
     void setSize(float radius);
-    
+    float glowRadius;
+    float glowAmount;
 private:
     
     ofPoint location;
