@@ -81,8 +81,6 @@ private:
     vector<shared_ptr<CustomBox2dParticle> > circles;
     vector<shared_ptr<ofxBox2dEdge> > edges;
     
-    ofFbo auxFbo;
-    ofxCustomGlow     glow;
     BlurEffect blur;
 };
 
