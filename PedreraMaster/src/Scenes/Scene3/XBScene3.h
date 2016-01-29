@@ -40,7 +40,7 @@ public:
 
 private:
 
-    void initSVG();
+    void initStones();
     void initParticles();
     void initPaths();
     void initWaves();
@@ -72,8 +72,9 @@ private:
     ofTexture pTex;
     
     ofxSVG svg;
-    vector<expandingPolyLine> stones;
+    vector<vector<expandingPolyLine>> stones;
     vector<expandingPolyLine> stonesToDraw;
+    vector<int> midiToRowMapping;
     
     vector<Wave> waves;
     
