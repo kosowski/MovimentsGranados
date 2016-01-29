@@ -41,7 +41,7 @@ private:
     int drawWindow(float note, vector<ofRectangle>& windows);
     void initReactionDiffusion();
     void initWaves();
-    void initSVG();
+    void initStones();
     
     bool fakeCelloEvent = false;
     float celloNote;
@@ -61,7 +61,8 @@ private:
     ofImage windowMask;
     ofImage rectMask;
     ofxSVG svg;
-    vector<expandingPolyLine> stones;
+    vector<int> midiToRowMapping;
+    vector<vector<expandingPolyLine>> stones;
     vector<expandingPolyLine> stonesToDraw;
     
     vector<Wave> waves;

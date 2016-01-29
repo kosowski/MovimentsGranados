@@ -23,7 +23,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     
     rectMask.load("resources/Esc2Barra_v01.png");
     initWaves();
-    initSVG();
+    initStones();
     initReactionDiffusion();
     
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 1 );
@@ -328,7 +328,8 @@ void XBScene4::keyReleased(int key){
         case 'v':
         case 'V':
         {
-            expandingPolyLine e = stones[ (int) ofRandom(stones.size() - 1)];
+            int index = midiToRowMapping[(int) ofRandom(127)];
+            expandingPolyLine e = stones[index][ (int) ofRandom(stones[index].size() - 1)];
             e.life= 1;
             e.amplitude = myGUI->stoneGrowFactor;
             stonesToDraw.push_back(e);
@@ -378,13 +379,16 @@ void XBScene4::onCelloEnergyChanged(float &energy)
 
 void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
-    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
     
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;
     
-    int wichLine = floor((noteOn.pitch / MAX_MIDI_VALUE) * (stones.size() - 1));;
-    expandingPolyLine e = stones[wichLine];
+    if(noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE){
+        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl; return;
+    }
+    
+    int wichLine = midiToRowMapping[noteOn.pitch];
+    expandingPolyLine e = stones[wichLine][ (int) ofRandom(stones[wichLine].size() - 1)];
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
     stonesToDraw.push_back(e);
@@ -480,12 +484,17 @@ void XBScene4::initWaves(){
     }
 }
 
-void XBScene4::initSVG()
+void XBScene4::initStones()
 {
-    svg.load("resources/Esc3y4Piano.svg");
+    stones.resize(40);
+    svg.load("resources/Esc3y4Pianov02.svg");
     for (int i = 0; i < svg.getNumPath(); i++){
         ofPath p = svg.getPathAt(i);
-        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        string pathId = svg.getPathIdAt(i);
+        if(pathId.empty())
+            continue;
+        pathId = pathId.substr(1,2);
+        cout << "Path " << i << " ID: " << pathId << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline>& lines = const_cast<vector<ofPolyline>&>(p.getOutline());
@@ -510,8 +519,22 @@ void XBScene4::initSVG()
             }
             epl.path.close();
             epl.line.close();
-            stones.push_back(epl);
+             stones[ofToInt(pathId) - 1].push_back(epl);
         }
+    }
+    string filePath = "resources/mapping_38_rows_midi.txt";
+    //Load file placed in bin/data
+    ofFile file(filePath);
+    
+    if(!file.exists()){
+        ofLogError("The file " + filePath + " is missing");
+    }
+    ofBuffer buffer(file);
+    
+    //Read file line by line
+    for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+        string line = *it;
+        midiToRowMapping.push_back(ofToInt(line));
     }
 }
 
