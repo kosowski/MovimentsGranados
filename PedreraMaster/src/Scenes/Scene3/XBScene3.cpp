@@ -64,7 +64,6 @@ void XBScene3::update()
         }
         waves[i].update();
     }
-
 }
 
 void XBScene3::drawIntoFBO()
@@ -99,15 +98,14 @@ void XBScene3::drawIntoFBO()
             ofPushMatrix();
             ofTranslate(e.centroid);
 //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-            ofScale(1 + e.amplitude * sin(myGUI->stoneFrequency * e.life),
-                    1 + e.amplitude * sin(myGUI->stoneFrequency * e.life));
+            float scale =1 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
+            ofScale(scale,scale);
             e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
         ofPopStyle();
 
-        
         //draw particles from violin and cello
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
