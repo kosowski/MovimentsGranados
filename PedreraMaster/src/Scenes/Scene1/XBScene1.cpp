@@ -49,14 +49,16 @@ void XBScene1::update()
     // if note ON, update emitter location along the current line
     if (fakeEvent || violinEnergy > energyThreshold) {
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
-        violinLineIndex++;
-        vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
+        ofPoint endPoint = currentViolinNote.getPointAtIndexInterpolated(violinLineIndex);
+        violinLineIndex+=myGUI->timeIncrement;
+        vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex), endPoint);
         particleSystem.addParticles(vEmitter);
     }
     if (fakeCelloEvent || celloEnergy > energyThreshold) {
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
-        celloLineIndex++;
-        xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex));
+        ofPoint endPoint = currentCelloNote.getPointAtIndexInterpolated(celloLineIndex);
+        celloLineIndex+=myGUI->timeIncrement;
+        xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex), endPoint);
         particleSystem.addParticles(xEmitter);
     }
     updateEmitters();
@@ -459,7 +461,7 @@ void XBScene1::initParticles()
     vEmitter.velSpread = myGUI->particleSpread;
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
-    vEmitter.numPars = 1;
+    vEmitter.numPars = 20;
     vEmitter.color = ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
     vEmitter.size = myGUI->particleSize;
 
@@ -468,7 +470,7 @@ void XBScene1::initParticles()
     xEmitter.velSpread = myGUI->particleSpread;
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
-    xEmitter.numPars = 1;
+    xEmitter.numPars = 20;
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
 
