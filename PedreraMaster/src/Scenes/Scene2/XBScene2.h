@@ -37,18 +37,22 @@ public:
 private:
 
     void initWaves();
-    void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
+    void initWindows(string name,  vector<ofRectangle>& vectorWindows, vector<Wave>& vectorWaves,int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);
 
     
-    int drawWindow(float note, vector<ofRectangle>& windows);
+    int drawWindow(float note, vector<ofRectangle>& windows, vector<Wave> &waves);
     
     ofFbo auxFbo;
     ofxSVG svg;
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
     vector<ofRectangle> pianoWindows;
+    
+    vector<Wave> celloWaves;
+    vector<Wave> violinWaves;
+    vector<Wave> pianoWaves;
     
     vector<expandingPolyLine> celloOutlines;
     vector<expandingPolyLine> celloOutlinesToDraw;

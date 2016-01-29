@@ -21,9 +21,9 @@ void XBScene2::setup(XBBaseGUI *_gui)
 
     initWaves();
     rectMask.load("resources/img/Esc2Barra_v01.png");
-    initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
-    initWindows("resources/Esc2Piano.svg", pianoWindows, 2, 2);
-    initWindows("resources/Esc2Violinv02.svg", violinWindows, 1, 10);
+    initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2, 2);
+    initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2, 2);
+    initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1, 10);
     
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
@@ -90,7 +90,7 @@ void XBScene2::drawIntoFBO()
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
-            int windowIndex = drawWindow(celloNote, celloWindows);
+            int windowIndex = drawWindow(celloNote, celloWindows, celloWaves);
             if(ofGetFrameNum() % myGUI->windowFrequency == 0){
                 if(windowIndex == 2){ // if third floor, light up two windows
                     celloOutlinesToDraw.push_back(celloOutlines[windowIndex+1]);
@@ -106,7 +106,7 @@ void XBScene2::drawIntoFBO()
         if (fakePianoEvent || pianoEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
-             int windowIndex = drawWindow(pianoNote, pianoWindows);
+             int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves);
             if(ofGetFrameNum() % myGUI->windowFrequency == 0){
                 if(windowIndex == 2){ // if third floor, light up two windows
                     pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex+1]);
@@ -122,15 +122,15 @@ void XBScene2::drawIntoFBO()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            drawWindow(violinNote, violinWindows);
+            drawWindow(violinNote, violinWindows, violinWaves);
             ofPopStyle();
         }
         
         // mask windows outsides
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        windowMask.draw(0, 0);
-        ofPopStyle();
+//        ofPushStyle();
+//        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+//        windowMask.draw(0, 0);
+//        ofPopStyle();
 
         ofPopMatrix();
     }
@@ -206,7 +206,7 @@ void XBScene2::drawIntoFBO()
     fbo.end();
 }
 
-int XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
+int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Wave> &waves)
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
 
@@ -233,6 +233,11 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows)
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
 //    ofDrawRectangle(window.x, y, window.width, 10);
     rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+//    ofPushStyle();
+//    ofSetLineWidth(4);
+//    waves[currentWindow].update();
+//    waves[currentWindow].display();
+//    ofPopStyle();
     return currentWindow;
 }
 
@@ -354,7 +359,7 @@ void XBScene2::keyReleased(int key)
 }
 
 
-void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, int startIndex, int arrangFloor)
+void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<Wave> &vectorWaves,int startIndex, int arrangFloor)
 {
     svg.load(name);
 //    int startIndex = 2; //skip full frame and first balcony
@@ -371,6 +376,14 @@ void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, int 
         }
     }
     arrangeWindows(arrangFloor, vectorWindows);
+    // crear wave para cada rectangulo
+    for(int i=0; i< vectorWindows.size();i++){
+        ofPoint o = vectorWindows[i].getTopLeft();
+        int w_ =vectorWindows[i].width;
+        Wave w(o, w_, 20.f, 1600., 4, 0);
+        w.setAttractor(0, o.x + w_/2, o.y, 1000, 1);
+        vectorWaves.push_back(w);
+    }
 }
 
 void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
