@@ -142,6 +142,8 @@ void XBScene3::drawIntoFBO()
         
         ofPopMatrix();
         
+        drawMusiciansWindows();
+        
         //draw GUI
         drawGUI();
 

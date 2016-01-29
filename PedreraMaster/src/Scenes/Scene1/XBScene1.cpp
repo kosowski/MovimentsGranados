@@ -92,6 +92,7 @@ void XBScene1::drawIntoFBO()
 
     fbo.begin();
     {
+        ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
         if (showFacadeImage)
             templateImage.draw(0, 0);
@@ -174,6 +175,10 @@ void XBScene1::drawIntoFBO()
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
 
+        ofPopMatrix();
+        
+        drawMusiciansWindows();
+        
         drawGUI();
         drawFadeRectangle();
     }

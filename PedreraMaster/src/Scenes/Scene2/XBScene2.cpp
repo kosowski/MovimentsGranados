@@ -195,6 +195,8 @@ void XBScene2::drawIntoFBO()
         auxFbo.draw(0, 0);
         ofPopStyle();
 
+        drawMusiciansWindows();
+        
         drawGUI();
         drawFadeRectangle();
 
