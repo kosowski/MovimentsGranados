@@ -24,8 +24,8 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
     fbo.end();
     
     fboAlpha = 255.0f;
-    templateImage.load("resources/FotoPlantilla_16-10_Foto9615_v2 1200x1920.jpg");
-    mask.load("resources/ventanas_invert.png");
+    templateImage.load("resources/img/FotoPlantilla_16-10_Foto9615_v2 1200x1920.jpg");
+    mask.load("resources/img/Mask_Ventanas_y_Arriba_invert.png");
 
     violinBG.load("resources/img/01_Violin.png");
     pianoBG.load("resources/img/01_Piano.png");
