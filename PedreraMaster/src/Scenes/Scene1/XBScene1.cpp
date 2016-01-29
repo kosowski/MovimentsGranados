@@ -11,6 +11,11 @@ void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
 
+    wavesMask.allocate(ofGetWidth(), ofGetHeight());
+    wavesMask.begin();
+    ofClear(0);
+    wavesMask.end();
+    
     initWindows();
     initParticles();
     initWaves();
@@ -44,14 +49,16 @@ void XBScene1::update()
     // if note ON, update emitter location along the current line
     if (fakeEvent || violinEnergy > energyThreshold) {
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
-        violinLineIndex++;
-        vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
+        ofPoint endPoint = currentViolinNote.getPointAtIndexInterpolated(violinLineIndex);
+        violinLineIndex+=myGUI->timeIncrement;
+        vEmitter.setPosition(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex), endPoint);
         particleSystem.addParticles(vEmitter);
     }
     if (fakeCelloEvent || celloEnergy > energyThreshold) {
         //        violinLine.addVertex(currentViolinNote.getPointAtIndexInterpolated(violinLineIndex));
-        celloLineIndex++;
-        xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex));
+        ofPoint endPoint = currentCelloNote.getPointAtIndexInterpolated(celloLineIndex);
+        celloLineIndex+=myGUI->timeIncrement;
+        xEmitter.setPosition(currentCelloNote.getPointAtIndexInterpolated(celloLineIndex), endPoint);
         particleSystem.addParticles(xEmitter);
     }
     updateEmitters();
@@ -67,23 +74,28 @@ void XBScene1::update()
     }
 
     // update waves
+    if(myGUI->simulateHands){
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
     for (int i = 0; i < waves.size(); i++) {
-        // if simulate mode ON, use the mouse
-        if(myGUI->simulateHands){
-            float mouseX = ofGetMouseX() / (float) ofGetWidth();
-            float mouseY = ofGetMouseY() / (float) ofGetHeight();
-            float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-            float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
-            waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-            waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
-        }
-        // else, use the data from kinect
-        else{
-            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        }
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
         waves[i].update();
     }
+    // update waves mask
+    wavesMask.begin();
+    ofBackground(0, 0, 0);
+    ofPushMatrix();
+    ofSetColor(255);
+    pTex.setAnchorPercent(0.5, 0.5);
+    pTex.draw(rightHand.pos.x * wavesMask.getWidth() , rightHand.pos.y * wavesMask.getHeight(),  myGUI->maskRadius, myGUI->maskRadius);
+    pTex.draw(leftHand.pos.x* wavesMask.getWidth(), leftHand.pos.y* wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    ofPopMatrix();
+    
+    wavesMask.end();
 }
 
 void XBScene1::drawIntoFBO()
@@ -111,7 +123,17 @@ void XBScene1::drawIntoFBO()
             w.display();
         ofPopStyle();
 
+        ofPopMatrix();
+        
+        // apply director mask
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        wavesMask.draw(0, 0, ofGetWidth(), ofGetHeight());
+        ofPopStyle();
 
+        ofPushMatrix();
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        
         // draw expanding stones from piano
         for (int i = 0; i < stonesToDraw.size(); i++) {
             expandingPolyLine &e = stonesToDraw[i];
@@ -439,7 +461,7 @@ void XBScene1::initParticles()
     vEmitter.velSpread = myGUI->particleSpread;
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
-    vEmitter.numPars = 1;
+    vEmitter.numPars = 20;
     vEmitter.color = ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
     vEmitter.size = myGUI->particleSize;
 
@@ -448,7 +470,7 @@ void XBScene1::initParticles()
     xEmitter.velSpread = myGUI->particleSpread;
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
-    xEmitter.numPars = 1;
+    xEmitter.numPars = 20;
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
 

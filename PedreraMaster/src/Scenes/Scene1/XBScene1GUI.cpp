@@ -20,6 +20,7 @@ void XBScene1GUI::setup()
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
     directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    directorGroup.add(maskRadius.setup("Mask radius", 300, 10, 600.));
     sceneGui.add(&directorGroup);
 
     
@@ -33,7 +34,7 @@ void XBScene1GUI::setup()
     
     violinGroup.setup("Violin&Cello");
     violinGroup.add(particleSize.setup("Particle size", 10, 2, 40));
-    violinGroup.add(particleLife.setup("Particle life", 30, 1, 60));
+    violinGroup.add(particleLife.setup("Particle life", 3, 1, 60));
     violinGroup.add(timeIncrement.setup("Marker speed", 1, 1, 30));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
