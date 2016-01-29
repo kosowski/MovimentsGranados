@@ -11,6 +11,8 @@
 ///--------------------------------------------------------------
 bool PMMotionExtractor::setup()
 {
+	positionDetectedCounter = 0;
+
 	kinect.open();
 	kinect.initDepthSource();
 	//kinect.initColorSource();
@@ -20,7 +22,7 @@ bool PMMotionExtractor::setup()
 
 	//TODO: Implement kinect detection
     //hasKinect = kinect.isOpen();
-	hasKinect = false;
+	hasKinect = true;
     return hasKinect;
 }
 
@@ -64,7 +66,21 @@ void PMMotionExtractor::update()
 							handsInfo.rightHand.pos.z = joint.second.getPosition().z;
 						}
 						else if (joint.first == JointType_Head) {
+							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
+							headPos.y /= 424;
+							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05){
+								positionDetectedCounter++;
+							}
+							else {
+								positionDetectedCounter = 0;
+							}
 
+							if (positionDetectedCounter >= 60) {
+								auto userPositioned = true;
+								ofNotifyEvent(eventUserPositioned, userPositioned, this);
+								positionDetectedCounter = 0;
+								
+							}
 						}
 					}
 					
@@ -169,6 +185,7 @@ void PMMotionExtractor::draw(bool drawImage, bool drawHands)
         ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
         ofPopStyle();
     }
+	ofDrawBitmapString(positionDetectedCounter, 0, 0);
 }
 
 ///--------------------------------------------------------------

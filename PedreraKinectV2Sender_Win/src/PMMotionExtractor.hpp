@@ -58,6 +58,7 @@ public:
     KinectInfo gethandsInfo(){return handsInfo;};
     
     ofEvent<bool> eventUserDetection;
+	ofEvent<bool> eventUserPositioned;
 
 private:
 	ofxKFW2::Device kinect;
@@ -68,6 +69,9 @@ private:
     //for computing velocity
     deque<ofPoint> rHandPosHist;
     deque<ofPoint> lHandPosHist;
+
+	//positioning variable
+	int positionDetectedCounter;
 };
 
 #endif /* PMMotionExtractor_hpp */
