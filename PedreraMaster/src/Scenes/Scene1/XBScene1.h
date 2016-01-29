@@ -75,6 +75,7 @@ private:
     vector<int> midiToRowMapping;
     
     vector<Wave> waves;
+    ofFbo wavesMask;
     
     BlurEffect blur;
     

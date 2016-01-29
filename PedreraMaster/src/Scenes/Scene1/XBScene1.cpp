@@ -11,6 +11,11 @@ void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
 
+    wavesMask.allocate(ofGetWidth(), ofGetHeight());
+    wavesMask.begin();
+    ofClear(0);
+    wavesMask.end();
+    
     initWindows();
     initParticles();
     initWaves();
@@ -67,23 +72,28 @@ void XBScene1::update()
     }
 
     // update waves
+    if(myGUI->simulateHands){
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
     for (int i = 0; i < waves.size(); i++) {
-        // if simulate mode ON, use the mouse
-        if(myGUI->simulateHands){
-            float mouseX = ofGetMouseX() / (float) ofGetWidth();
-            float mouseY = ofGetMouseY() / (float) ofGetHeight();
-            float fakeX = (mouseX - 0.5) * MAIN_WINDOW_WIDTH + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-            float fakeY = mouseY * MAIN_WINDOW_HEIGHT + 600 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
-            waves[i].setAttractor(0, mouseX * MAIN_WINDOW_WIDTH, mouseY * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-            waves[i].setAttractor(1, fakeX, fakeY, myGUI->attractorStrength, myGUI->attractorRadius);
-        }
-        // else, use the data from kinect
-        else{
-            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        }
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
         waves[i].update();
     }
+    // update waves mask
+    wavesMask.begin();
+    ofBackground(0, 0, 0);
+    ofPushMatrix();
+    ofSetColor(255);
+    pTex.setAnchorPercent(0.5, 0.5);
+    pTex.draw(rightHand.pos.x * wavesMask.getWidth() , rightHand.pos.y * wavesMask.getHeight(),  myGUI->maskRadius, myGUI->maskRadius);
+    pTex.draw(leftHand.pos.x* wavesMask.getWidth(), leftHand.pos.y* wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    ofPopMatrix();
+    
+    wavesMask.end();
 }
 
 void XBScene1::drawIntoFBO()
@@ -111,7 +121,17 @@ void XBScene1::drawIntoFBO()
             w.display();
         ofPopStyle();
 
+        ofPopMatrix();
+        
+        // apply director mask
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        wavesMask.draw(0, 0, ofGetWidth(), ofGetHeight());
+        ofPopStyle();
 
+        ofPushMatrix();
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        
         // draw expanding stones from piano
         for (int i = 0; i < stonesToDraw.size(); i++) {
             expandingPolyLine &e = stonesToDraw[i];
