@@ -26,6 +26,7 @@ public:
     ofxFloatSlider stoneAlphaDecrease;
     ofxFloatSlider stoneTime;
     ofxFloatSlider stoneFrequency;
+    ofxIntSlider stonePhase;
     
     ofxGuiGroup directorGroup;
     ofxFloatSlider attractorStrength;

@@ -35,6 +35,7 @@ void XBScene4GUI::setup()
     pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
     pianoGroup.add(stoneTime.setup("Duration", 2, 0.0, 5.0));
     pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
+    pianoGroup.add(stonePhase.setup("Initial phase", 3, 0, 3));
     sceneGui.add(&pianoGroup);
     
     directorGroup.setup("Director");
