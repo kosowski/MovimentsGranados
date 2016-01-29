@@ -154,8 +154,15 @@ void XBScene2::drawIntoFBO()
             w.display();
         ofPopStyle();
         
+        // apply mask to remove windows interiors
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
         // draw expanding piano windows
         ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
         for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
             expandingPolyLine &e = pianoOutlinesToDraw[i];
             ofPushMatrix();
@@ -169,6 +176,7 @@ void XBScene2::drawIntoFBO()
         
         // draw expanding cello windows
         ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
         for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
             expandingPolyLine &e = celloOutlinesToDraw[i];
             ofPushMatrix();
@@ -179,14 +187,7 @@ void XBScene2::drawIntoFBO()
             ofPopMatrix();
         }
         ofPopStyle();
-        
-        
-        // apply mask to remove windows interiors
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
-        ofPopStyle();
-    
+
         ofPopMatrix();
         
         // add fbo with windows contents
