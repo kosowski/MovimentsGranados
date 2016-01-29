@@ -27,6 +27,10 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
     templateImage.load("resources/FotoPlantilla_16-10_Foto9615_v2 1200x1920.jpg");
     mask.load("resources/ventanas_invert.png");
 
+    violinBG.load("resources/img/01_Violin.png");
+    pianoBG.load("resources/img/01_Piano.png");
+    celloBG.load("resources/img/01_Cello.png");
+
     showTemplate = false;
     showFacadeImage = false;
     

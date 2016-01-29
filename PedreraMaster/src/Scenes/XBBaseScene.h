@@ -42,6 +42,7 @@ protected:
     float fboAlpha;
     ofImage templateImage;
     ofImage mask;
+    ofImage violinBG, pianoBG, celloBG;
     bool showTemplate;
     bool showFacadeImage;
 
