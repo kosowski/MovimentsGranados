@@ -462,7 +462,7 @@ void XBScene1::initStones()
 
         // for every line create a shape centered at zero and store its centroid
         for (int j = 0; j < (int) lines.size(); j++) {
-            ofPolyline pl = lines[j].getResampledBySpacing(6);
+            ofPolyline pl = lines[j].getResampledBySpacing(10);
             expandingPolyLine epl;
             epl.life = 0;
             epl.centroid = pl.getCentroid2D();
@@ -484,7 +484,6 @@ void XBScene1::initStones()
         }
     }
     string filePath = "resources/mapping_35_rows_midi.txt";
-
     //Load file placed in bin/data
     ofFile file(filePath);
     
