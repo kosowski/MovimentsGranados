@@ -24,6 +24,7 @@ public:
     virtual void update() {};
     virtual void drawIntoFBO() = 0;
     virtual void drawGUI();
+    void drawMusiciansWindows();
 
     const string &getName() const { return name; }
     const ofFbo &getMainFBO() const { return fbo; }

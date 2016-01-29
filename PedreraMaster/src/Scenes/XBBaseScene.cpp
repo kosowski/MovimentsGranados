@@ -55,6 +55,18 @@ void XBBaseScene::drawFadeRectangle()
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 }
 
+void XBBaseScene::drawMusiciansWindows()
+{
+    ofPushStyle();
+    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, gui->colorCelloA));
+    celloBG.draw(0,0);
+    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, gui->colorViolinA));
+    violinBG.draw(0,0);
+    
+    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA);
+    pianoBG.draw(0,0);
+    ofPopStyle();
+}
 void XBBaseScene::keyReleased(int key)
 {
     switch(key)
