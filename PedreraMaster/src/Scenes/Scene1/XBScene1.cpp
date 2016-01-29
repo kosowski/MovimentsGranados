@@ -221,7 +221,10 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
 
-    int wichLine = floor((noteOn.pitch / MAX_MIDI_VALUE) * (stones.size() - 1));;
+    if(noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE){
+        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl; return;
+    }
+    int wichLine = midiToRowMapping[noteOn.pitch];
     expandingPolyLine e = stones[wichLine];
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
@@ -311,8 +314,8 @@ void XBScene1::keyPressed(int key)
         case 'v':
         case 'V':
         {
-            //        currentOutlines.push_back(outlines[ (int) ofRandom(outlines.size() - 1)]);
-            expandingPolyLine e = stones[(int) ofRandom(stones.size() - 1)];
+            int index = midiToRowMapping[(int) ofRandom(127)];
+            expandingPolyLine e = stones[index];
             e.life = 1;
             e.amplitude = myGUI->stoneGrowFactor;
             stonesToDraw.push_back(e);
@@ -479,6 +482,21 @@ void XBScene1::initStones()
             epl.line.close();
             stones.push_back(epl);
         }
+    }
+    string filePath = "resources/mapping_35_rows_midi.txt";
+
+    //Load file placed in bin/data
+    ofFile file(filePath);
+    
+    if(!file.exists()){
+        ofLogError("The file " + filePath + " is missing");
+    }
+    ofBuffer buffer(file);
+    
+    //Read file line by line
+    for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+        string line = *it;
+        midiToRowMapping.push_back(ofToInt(line));
     }
 }
 

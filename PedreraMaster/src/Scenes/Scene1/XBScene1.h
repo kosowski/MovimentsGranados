@@ -72,6 +72,7 @@ private:
     
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;
+    vector<int> midiToRowMapping;
     
     vector<Wave> waves;
     
