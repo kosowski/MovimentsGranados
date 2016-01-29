@@ -59,12 +59,12 @@ void XBBaseScene::drawMusiciansWindows()
 {
     ofPushStyle();
     ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, gui->colorCelloA));
-    celloBG.draw(0,0);
+    celloBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, gui->colorViolinA));
-    violinBG.draw(0,0);
+    violinBG.draw(0,0, ofGetWidth(), ofGetHeight());
     
     ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA);
-    pianoBG.draw(0,0);
+    pianoBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofPopStyle();
 }
 void XBBaseScene::keyReleased(int key)
