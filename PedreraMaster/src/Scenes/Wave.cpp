@@ -28,6 +28,24 @@ Wave::Wave(vector<ofPoint>& o, float a, float p, float s, int ori = 0) {
     maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
 }
 
+Wave::Wave(ofPoint o, int w_, float a, float p, float s, int ori = 0){
+    w = w_;
+    xspacing = s;
+    for(int i=0; i< w; i+=xspacing ){
+        origin.push_back(ofPoint(o.x + i, o.y));
+    }
+
+    
+    for (int i = 0; i < numComponents; i++) {
+        period = p / (2*(i+1));
+        amplitude.push_back( a / (i+1) );
+        dx.push_back( (TWO_PI / period) * xspacing);
+    }
+    for (int i = 0; i < origin.size(); i++) {
+        particles.push_back(ofPoint (0,0));
+    }
+    maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
+}
 
 void Wave::update() {
     // Increment theta (try different values for 'angular velocity' here
