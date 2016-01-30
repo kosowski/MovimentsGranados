@@ -124,10 +124,10 @@ void XBScene2::drawIntoFBO()
         }
         
         // mask windows outsides
-//        ofPushStyle();
-//        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-//        windowMask.draw(0, 0);
-//        ofPopStyle();
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        windowMask.draw(0, 0);
+        ofPopStyle();
 
         ofPopMatrix();
     }
@@ -205,7 +205,7 @@ void XBScene2::drawIntoFBO()
     blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
-int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Wave> &waves)
+int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves)
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
 
@@ -230,13 +230,16 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Wave> 
     ofRectangle window = windows[currentWindow];
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
-//    ofDrawRectangle(window.x, y, window.width, 10);
-    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
-//    ofPushStyle();
-//    ofSetLineWidth(4);
-//    waves[currentWindow].update();
-//    waves[currentWindow].display();
-//    ofPopStyle();
+
+//    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+    ofPushStyle();
+    ofSetLineWidth(4);
+    waves[currentWindow].update();
+    ofPushMatrix();
+    ofTranslate(0,y);
+    waves[currentWindow].display();
+    ofPopMatrix();
+    ofPopStyle();
     return currentWindow;
 }
 
@@ -358,7 +361,7 @@ void XBScene2::keyReleased(int key)
 }
 
 
-void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<Wave> &vectorWaves,int startIndex, int arrangFloor)
+void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<SimpleWave> &vectorWaves,int startIndex, int arrangFloor)
 {
     svg.load(name);
 //    int startIndex = 2; //skip full frame and first balcony
@@ -378,10 +381,10 @@ void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vect
     // crear wave para cada rectangulo
     for(int i=0; i< vectorWindows.size();i++){
         ofPoint o = vectorWindows[i].getTopLeft();
-        int w_ =vectorWindows[i].width;
-        Wave w(o, w_, 20.f, 1600., 4, 0);
-        w.setAttractor(0, o.x + w_/2, o.y, 1000, 1);
-        vectorWaves.push_back(w);
+        o.y = 0;
+        int w =vectorWindows[i].width;
+        SimpleWave sw(o, w/2 + 10, 20.f, ofRandom(180, 220.));
+        vectorWaves.push_back(sw);
     }
 }
 
