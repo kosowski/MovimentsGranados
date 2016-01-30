@@ -41,7 +41,8 @@ private:
 
     S6State state;
 
-    ofTrueTypeFont *fontMain;
+    ofTrueTypeFont *fontTitle;
+    ofTrueTypeFont *fontSubtitle;
     ofTrueTypeFont *fontCountdown;
 };
 

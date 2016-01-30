@@ -17,8 +17,10 @@ public:
     ofxGuiGroup messagesGroup;
     ofxFloatSlider mainMsgX;
     ofxFloatSlider mainMsgY;
+    ofxFloatSlider mainMsgScale;
     ofxFloatSlider countdownMsgX;
     ofxFloatSlider countdownMsgY;
+    ofxFloatSlider countdownMsgScale;
 };
 
 

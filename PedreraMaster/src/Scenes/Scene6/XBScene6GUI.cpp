@@ -17,8 +17,10 @@ void XBScene6GUI::setup()
     messagesGroup.setup("Messages Position");
     messagesGroup.add(mainMsgX.setup("Message X", 0.5f, 0.0f, 1.0f));
     messagesGroup.add(mainMsgY.setup("Message Y", 0.5f, 0.0f, 1.0f));
+    messagesGroup.add(mainMsgScale.setup("Message Scale", 0.5, 0.1f, 1.0f));
     messagesGroup.add(countdownMsgX.setup("Countdown X", 0.5f, 0.0f, 1.0f));
     messagesGroup.add(countdownMsgY.setup("Countdown Y", 0.5f, 0.0f, 1.0f));
+    messagesGroup.add(countdownMsgScale.setup("Countdown Scale", 0.5, 0.1f, 1.0f));
     sceneGui.add(&messagesGroup);
 
     loadSettings();
