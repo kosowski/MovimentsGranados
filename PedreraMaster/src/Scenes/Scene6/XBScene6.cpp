@@ -8,7 +8,8 @@
 
 
 static const string STR_FONT_PATH = "resources/fonts/";
-static const string STR_FONTFILE = "GaramondPremrPro.otf";
+static const string STR_FONTFILE_TITLE = "NeutraText-Demi.otf";
+static const string STR_FONTFILE_SUBTITLE = "NeutraText-Book.otf";
 
 static const int MAX_FONT_SIZE = 75;
 
@@ -25,10 +26,12 @@ static const int COUNTDOWN_NUM_SECONDS = 5;
 
 XBScene6::XBScene6(const string &name) : XBBaseScene(name)
 {
-    string fontPath = STR_FONT_PATH + STR_FONTFILE;
+    string fontPath = STR_FONT_PATH + STR_FONTFILE_TITLE;
 
     fontTitle = new ofTrueTypeFont();
     fontTitle->load(fontPath, MAX_FONT_SIZE, true, true, true);
+
+    fontPath = STR_FONT_PATH + STR_FONTFILE_SUBTITLE;
 
     fontSubtitle = new ofTrueTypeFont();
     fontSubtitle->load(fontPath, MAX_FONT_SIZE, true, true, true);
@@ -68,7 +71,7 @@ void XBScene6::update()
 
 void XBScene6::drawIntoFBO()
 {
-    ofClear(0);
+//    ofClear(0);
 
     switch (state) {
         case S6_1_INITIAL:    drawS6_1(); break;
@@ -89,7 +92,7 @@ void XBScene6::drawS6_1()
 {
     fbo.begin();
     {
-        ofClear(0);
+        ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
         drawText(S1_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
@@ -116,7 +119,7 @@ void XBScene6::drawS6_2()
 
     fbo.begin();
     {
-        ofClear(0);
+        ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
         drawText(S2_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
@@ -139,11 +142,14 @@ void XBScene6::drawS6_3()
 {
     fbo.begin();
     {
-        ofClear(0);
+        ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S3_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-        drawText(S3_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+        if (showUndetectedMessage)
+        {
+            drawText(S3_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+            drawText(S3_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+        }
 
         drawFadeRectangle();
     }
@@ -160,7 +166,7 @@ void XBScene6::drawS6_4()
 {
     fbo.begin();
     {
-        ofClear(0);
+        ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
         drawText(S4_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
@@ -174,19 +180,27 @@ void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
 
-    if (key == ' ') goToNextState();
+    switch (key)
+    {
+        case ' ': goToNextState(); break;
+#ifdef OF_DEBUG
+        case '.': showUndetectedMessage = !showUndetectedMessage; break;
+#endif
+        default: break;
+    }
 }
 
 void XBScene6::onKinectStateChanged(string &kState)
 {
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+
     switch (state)
     {
         case S6_1_INITIAL:
         {
-            if (kState == OSC_KINECT_STATE_POSITIONED)
-            {
+            if ((kState == OSC_KINECT_STATE_POSITIONED) && (myGUI->kinectMode))
                 goToState(S6_2_DETECTED);
-            }
+
             break;
         }
         case S6_2_DETECTED:
@@ -195,6 +209,10 @@ void XBScene6::onKinectStateChanged(string &kState)
         }
         case S6_3_LIVE:
         {
+            if (kState == OSC_KINECT_STATE_DETECTING)
+                showUndetectedMessage = true;
+            else if (kState == OSC_KINECT_STATE_CAPTURING)
+                showUndetectedMessage = false;
             break;
         }
         case S6_4_THANKS:
@@ -209,9 +227,19 @@ void XBScene6::goToState(S6State newState)
 {
     state = newState;
 
-    if (state == S6_2_DETECTED)
+    switch(state)
     {
-        countdownStartTime = ofGetElapsedTimef();
+        case S6_2_DETECTED:
+        {
+            countdownStartTime = ofGetElapsedTimef();
+            break;
+        }
+        case S6_3_LIVE:
+        {
+            showUndetectedMessage = false;
+            break;
+        }
+        default: break;
     }
 }
 

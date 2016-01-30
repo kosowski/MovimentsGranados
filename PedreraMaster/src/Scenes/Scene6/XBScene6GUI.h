@@ -14,6 +14,8 @@ public:
     XBScene6GUI();
     virtual void setup();
 
+    ofxGuiGroup kinectGroup;
+    ofxToggle kinectMode;
     ofxGuiGroup titlesGroup;
     ofxFloatSlider titleX;
     ofxFloatSlider titleY;
