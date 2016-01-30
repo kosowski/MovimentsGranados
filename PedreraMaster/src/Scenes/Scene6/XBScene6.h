@@ -49,6 +49,8 @@ private:
     float countdownStartTime;
     float countdownElapsedTime;
 
+    bool showUndetectedMessage;
+
     void onKinectStateChanged(string &kState);
 
     void goToState(S6State newState);

@@ -14,6 +14,13 @@ void XBScene6GUI::setup()
 {
     XBBaseGUI::setup();
 
+//    ofxGuiGroup kinectGroup;
+//    ofxToggle kinectManualMode;
+
+    kinectGroup.setup("Kinect Control");
+    kinectGroup.add(kinectMode.setup("Automatic", false));
+    sceneGui.add(&kinectGroup);
+
     titlesGroup.setup("Titles");
     titlesGroup.add(titleX.setup("Title X", 0.5f, 0.0f, 1.0f));
     titlesGroup.add(titleY.setup("Title Y", 0.47f, 0.0f, 1.0f));
