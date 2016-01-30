@@ -28,7 +28,7 @@ void XBScene6GUI::setup()
 
     countdownGroup.setup("Countdown");
     countdownGroup.add(countdownX.setup("Countdown X", 0.5f, 0.0f, 1.0f));
-    countdownGroup.add(countdownY.setup("Countdown Y", 0.5f, 0.0f, 1.0f));
+    countdownGroup.add(countdownY.setup("Countdown Y", 0.7f, 0.0f, 1.0f));
     countdownGroup.add(countdownScale.setup("Countdown Scale", 1.0f, 0.1f, 1.0f));
     sceneGui.add(&countdownGroup);
 

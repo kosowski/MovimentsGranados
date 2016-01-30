@@ -4,6 +4,7 @@
 
 #include "XBScene6.h"
 #include "XBScene6GUI.h"
+#include "../../Shared/OSCSettings.h"
 
 
 static const string STR_FONT_PATH = "resources/fonts/";
@@ -18,6 +19,9 @@ static const string S2_SUBTITLE = "Mou les mans per a crear onades.";
 static const string S3_TITLE = "PERSONA NO DETECTADA";
 static const string S3_SUBTITLE = S1_SUBTITLE;
 static const string S4_TITLE = "Gràcies per participar!";
+
+static const int COUNTDOWN_NUM_SECONDS = 5;
+
 
 XBScene6::XBScene6(const string &name) : XBBaseScene(name)
 {
@@ -47,17 +51,18 @@ void XBScene6::setup(XBBaseGUI *_gui)
 
 void XBScene6::enteredScene()
 {
-    state = S6_1_DETECTING;
+    state = S6_1_INITIAL;
 }
 
 void XBScene6::update()
 {
     XBBaseScene::update();
     switch (state) {
-        case S6_1_DETECTING:    updateS6_1(); break;
-        case S6_2_COUNTDOWN:    updateS6_2(); break;
+        case S6_1_INITIAL:    updateS6_1(); break;
+        case S6_2_DETECTED:    updateS6_2(); break;
         case S6_3_LIVE:         updateS6_3(); break;
         case S6_4_THANKS:       updateS6_4(); break;
+        default:                break;
     }
 }
 
@@ -66,10 +71,11 @@ void XBScene6::drawIntoFBO()
     ofClear(0);
 
     switch (state) {
-        case S6_1_DETECTING:    drawS6_1(); break;
-        case S6_2_COUNTDOWN:    drawS6_2(); break;
+        case S6_1_INITIAL:    drawS6_1(); break;
+        case S6_2_DETECTED:    drawS6_2(); break;
         case S6_3_LIVE:         drawS6_3(); break;
         case S6_4_THANKS:       drawS6_4(); break;
+        default:                break;
     }
 }
 
@@ -98,10 +104,16 @@ void XBScene6::drawS6_1()
 
 void XBScene6::updateS6_2()
 {
+    countdownElapsedTime = ofGetElapsedTimef() - countdownStartTime;
+
+    if (countdownElapsedTime > COUNTDOWN_NUM_SECONDS)
+        goToState(S6_3_LIVE);
 }
 
 void XBScene6::drawS6_2()
 {
+    int countdownNumber = COUNTDOWN_NUM_SECONDS - int(countdownElapsedTime);
+
     fbo.begin();
     {
         ofClear(0);
@@ -109,6 +121,8 @@ void XBScene6::drawS6_2()
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
         drawText(S2_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
         drawText(S2_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+
+        drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
 
         drawFadeRectangle();
     }
@@ -160,29 +174,51 @@ void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
 
-    if (key == ',') goToPreviousState();
-    if (key == '.') goToNextState();
+    if (key == ' ') goToNextState();
+}
+
+void XBScene6::onKinectStateChanged(string &kState)
+{
+    switch (state)
+    {
+        case S6_1_INITIAL:
+        {
+            if (kState == OSC_KINECT_STATE_POSITIONED)
+            {
+                goToState(S6_2_DETECTED);
+            }
+            break;
+        }
+        case S6_2_DETECTED:
+        {
+            break;
+        }
+        case S6_3_LIVE:
+        {
+            break;
+        }
+        case S6_4_THANKS:
+        {
+            break;
+        }
+        default: break;
+    }
 }
 
 void XBScene6::goToState(S6State newState)
 {
     state = newState;
+
+    if (state == S6_2_DETECTED)
+    {
+        countdownStartTime = ofGetElapsedTimef();
+    }
 }
 
 void XBScene6::goToNextState()
 {
-    state = S6State((state + 1) % S6_NUM_STATES);
-}
-
-void XBScene6::goToPreviousState()
-{
-    if (state == 0)
-    {
-        state = S6_4_THANKS;
-        return;
-    }
-
-    state = S6State(state - 1);
+    S6State newState = S6State((state + 1) % S6_NUM_STATES);
+    goToState(newState);
 }
 
 void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color)
@@ -199,5 +235,4 @@ void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, 
         fontTitle->drawString(message, 0, 0);
     }
     ofPopMatrix();
-
 }
