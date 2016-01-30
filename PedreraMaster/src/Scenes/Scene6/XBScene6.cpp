@@ -7,34 +7,34 @@
 #include "../../Shared/OSCSettings.h"
 
 
-static const string STR_FONT_PATH = "resources/fonts/";
-static const string STR_FONTFILE_TITLE = "NeutraText-Demi.otf";
-static const string STR_FONTFILE_SUBTITLE = "NeutraText-Book.otf";
+static const string STR_FONT_PATH       = "resources/fonts/";
+static const string STR_FONTFILE_BOLD   = "NeutraText-Demi.otf";
+static const string STR_FONTFILE_NORMAL = "NeutraText-Book.otf";
 
 static const int MAX_FONT_SIZE = 75;
 
-static const string S1_TITLE = "MOU LA PEDRERA!";
+static const string S1_TITLE    = "MOU LA PEDRERA!";
 static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat.";
-static const string S2_TITLE = "DETECTAT!";
+static const string S2_TITLE    = "DETECTAT!";
 static const string S2_SUBTITLE = "Mou les mans per a crear onades.";
-static const string S3_TITLE = "PERSONA NO DETECTADA";
+static const string S3_TITLE    = "PERSONA NO DETECTADA";
 static const string S3_SUBTITLE = S1_SUBTITLE;
-static const string S4_TITLE = "Gràcies per participar!";
+static const string S4_TITLE    = "Gràcies per participar!";
 
 static const int COUNTDOWN_NUM_SECONDS = 5;
 
 
 XBScene6::XBScene6(const string &name) : XBBaseScene(name)
 {
-    string fontPath = STR_FONT_PATH + STR_FONTFILE_TITLE;
+    string fontPath = STR_FONT_PATH + STR_FONTFILE_BOLD;
 
-    fontTitle = new ofTrueTypeFont();
-    fontTitle->load(fontPath, MAX_FONT_SIZE, true, true, true);
+    fontMsgBold = new ofTrueTypeFont();
+    fontMsgBold->load(fontPath, MAX_FONT_SIZE, true, true, true);
 
-    fontPath = STR_FONT_PATH + STR_FONTFILE_SUBTITLE;
+    fontPath = STR_FONT_PATH + STR_FONTFILE_NORMAL;
 
-    fontSubtitle = new ofTrueTypeFont();
-    fontSubtitle->load(fontPath, MAX_FONT_SIZE, true, true, true);
+    fontMsgNormal = new ofTrueTypeFont();
+    fontMsgNormal->load(fontPath, MAX_FONT_SIZE, true, true, true);
 
     fontCountdown = new ofTrueTypeFont();
     fontCountdown->load(fontPath, MAX_FONT_SIZE, true, true, true);
@@ -43,8 +43,8 @@ XBScene6::XBScene6(const string &name) : XBBaseScene(name)
 XBScene6::~XBScene6()
 {
     delete fontCountdown;
-    delete fontSubtitle;
-    delete fontTitle;
+    delete fontMsgNormal;
+    delete fontMsgBold;
 }
 
 void XBScene6::setup(XBBaseGUI *_gui)
@@ -95,8 +95,8 @@ void XBScene6::drawS6_1()
         ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S1_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-        drawText(S1_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+        drawText(S1_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S1_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
         drawFadeRectangle();
     }
@@ -122,8 +122,8 @@ void XBScene6::drawS6_2()
         ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S2_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-        drawText(S2_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+        drawText(S2_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S2_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
         drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
 
@@ -147,8 +147,8 @@ void XBScene6::drawS6_3()
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
         if (showUndetectedMessage)
         {
-            drawText(S3_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-            drawText(S3_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+            drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+            drawText(S3_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
         }
 
         drawFadeRectangle();
@@ -169,7 +169,7 @@ void XBScene6::drawS6_4()
         ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S4_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S4_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
 
         drawFadeRectangle();
     }
@@ -260,7 +260,7 @@ void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, 
 
         ofTranslate(ofPoint((ofGetWidth() * x) - width/2, (ofGetHeight() * y) - height/2));
         ofScale(scaleFactor, scaleFactor);
-        fontTitle->drawString(message, 0, 0);
+        fontMsgBold->drawString(message, 0, 0);
     }
     ofPopMatrix();
 }
