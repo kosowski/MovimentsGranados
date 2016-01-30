@@ -197,13 +197,20 @@ void XBScene4::drawIntoFBO()
         }
         ofPopStyle();
         
+        
+        // mask for removing the windows
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
         // draw expanding violin windows
         ofPushStyle();
         for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
             expandingPolyLine &e = violinOutlinesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
+            ofScale(1 - e.life * myGUI->growFactor , 1 - e.life * myGUI->growFactor);
             e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->alphaFactor, 0, 255)));
             e.path.draw();
             ofPopMatrix();
@@ -216,17 +223,11 @@ void XBScene4::drawIntoFBO()
             expandingPolyLine &e = celloOutlinesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+            ofScale(1 - e.life  * myGUI->growFactor, 1 - e.life * myGUI->growFactor);
             e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor , 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
-        ofPopStyle();
-        
-        // mask for removing the windows
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
         ofPopStyle();
         
         ofPopMatrix();

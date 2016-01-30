@@ -23,7 +23,7 @@ void XBScene4GUI::setup()
 
     
     windowGroup.setup("Window");
-    windowGroup.add(barHeight.setup("Audio bar height", 30., 10., 70.));
+    windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
     windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
     windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
     windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));
