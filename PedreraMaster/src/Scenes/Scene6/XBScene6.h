@@ -42,8 +42,8 @@ private:
 
     S6State state;
 
-    ofTrueTypeFont *fontTitle;
-    ofTrueTypeFont *fontSubtitle;
+    ofTrueTypeFont *fontMsgBold;
+    ofTrueTypeFont *fontMsgNormal;
     ofTrueTypeFont *fontCountdown;
 
     float countdownStartTime;
