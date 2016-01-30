@@ -11,9 +11,10 @@ void XBScene1::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
 
-    wavesMask.allocate(ofGetWidth(), ofGetHeight());
+    wavesMask.allocate(ofGetWidth(), ofGetHeight(), GL_RGB);
     wavesMask.begin();
-    ofClear(0);
+    ofSetBackgroundAuto(false);
+    ofBackground(0, 0, 0);
     wavesMask.end();
     
     initWindows();
@@ -87,7 +88,8 @@ void XBScene1::update()
     }
     // update waves mask
     wavesMask.begin();
-    ofBackground(0, 0, 0);
+    ofSetColor(0, 0, 0, myGUI->maskAlpha);
+    ofDrawRectangle(0, 0, wavesMask.getWidth(), wavesMask.getHeight());
     ofPushMatrix();
     ofSetColor(255);
     pTex.setAnchorPercent(0.5, 0.5);

@@ -21,6 +21,7 @@ public:
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
     ofxFloatSlider maskRadius;
+    ofxFloatSlider maskAlpha;
     
     ofxGuiGroup violinGroup;
     ofxFloatSlider violinBorderSize;

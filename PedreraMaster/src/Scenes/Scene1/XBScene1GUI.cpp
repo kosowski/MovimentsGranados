@@ -21,6 +21,7 @@ void XBScene1GUI::setup()
     directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     directorGroup.add(maskRadius.setup("Mask radius", 300, 10, 600.));
+    directorGroup.add(maskAlpha.setup("Mask decay", 10, 0, 120));
     sceneGui.add(&directorGroup);
 
     
