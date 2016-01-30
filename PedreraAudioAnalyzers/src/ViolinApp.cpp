@@ -280,12 +280,10 @@ void ViolinApp::guiOnsetsThresholdChanged(float &threshold) {
 void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     if (!guiAnalyzerCreated) return;
+    if (silenceOn) return;
 
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
-
-//    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
-//    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -298,15 +296,10 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
 {
     if (!guiAnalyzerCreated) return;
-
-//    cout << "energyParams.energy = " << energyParams.energy << endl;
-//    cout << "energyParams.smoothedEnergy = " << energyParams.smoothedEnergy << endl;
+    if (silenceOn) return;
 
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
-
-//    cout << "energyEnergy = " << energyEnergy << endl;
-//    cout << "energySmoothed = " << energySmoothed << endl;
 
     ofxOscMessage m;
     stringstream address;
