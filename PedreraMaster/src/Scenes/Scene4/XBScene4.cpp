@@ -13,7 +13,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     auxFbo.begin();
     ofClear(0);
     auxFbo.end();
-    windowMask.load("resources/Esc2_fade_Completo.png");
+    windowMask.load("resources/img/Esc2_fade_Completo.png");
     
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", violinWindows, 2, 2);
@@ -21,7 +21,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", violinOutlines);
     
-    rectMask.load("resources/Esc2Barra_v01.png");
+    rectMask.load("resources/img/Esc2Barra_v01.png");
     initWaves();
     initStones();
     initReactionDiffusion();

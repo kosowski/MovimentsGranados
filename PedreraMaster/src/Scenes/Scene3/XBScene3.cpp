@@ -92,7 +92,7 @@ void XBScene3::drawIntoFBO()
             ofPushMatrix();
             ofTranslate(e.centroid);
 //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-            float scale =1 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
+            float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
             ofScale(scale,scale);
             e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
             e.path.draw();
