@@ -421,8 +421,8 @@ void XBScene3::initPhysics()
 void XBScene3::updateVioinCello(){
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    v.glowRadius = myGUI->glowRadius;
-    x.glowRadius = myGUI->glowRadius;
+    v.glowRadius = myGUI->glowRadius * violinEnergy;
+    x.glowRadius = myGUI->glowRadius * celloEnergy;
     v.glowAmount = myGUI->glowAmount;
     x.glowAmount = myGUI->glowAmount;
     
