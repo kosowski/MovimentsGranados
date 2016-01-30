@@ -23,8 +23,15 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 
 ### PedreraKinectSender
 - ofxGUI (already part of OF)
-- [ofxKinectFeatures-PM](https://github.com/eduardfrigola/ofxKinectFeatures-PM)
 - [ofxOpenNI-PM](https://github.com/eduardfrigola/ofxOpenNI-PM) 
+- ofxOSC (already part of OF)
+
+### PedreraKinectV2Sender_Win
+- ofxGUI (already part of OF)
+- ofxOSC (already part of OF)
+- [ofxKinectForWindows2] (https://github.com/elliotwoods/ofxKinectForWindows2)
+
+### PedreraKinectReceiver
 - ofxOSC (already part of OF)
 
 ### PedreraMIDISender
