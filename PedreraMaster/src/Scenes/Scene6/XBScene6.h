@@ -9,10 +9,11 @@
 
 typedef enum
 {
-    S6_1_DETECTING = 0,
-    S6_2_COUNTDOWN = 1,
-    S6_3_LIVE = 2,
-    S6_4_THANKS = 3
+    S6_1_DETECTING  = 0,
+    S6_2_COUNTDOWN  = 1,
+    S6_3_LIVE       = 2,
+    S6_4_THANKS     = 3,
+    S6_NUM_STATES   = 4
 } S6State;
 
 class XBScene6 : public XBBaseScene
@@ -44,6 +45,10 @@ private:
     ofTrueTypeFont *fontTitle;
     ofTrueTypeFont *fontSubtitle;
     ofTrueTypeFont *fontCountdown;
+
+    void goToState(S6State newState);
+    void goToNextState();
+    void goToPreviousState();
 
     void drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color);
 };

@@ -17,7 +17,7 @@ static const string S2_TITLE = "DETECTAT!";
 static const string S2_SUBTITLE = "Mou les mans per a crear onades.";
 static const string S3_TITLE = "PERSONA NO DETECTADA";
 static const string S3_SUBTITLE = S1_SUBTITLE;
-static const string s$_TITLE = "Gràcies per participar!";
+static const string S4_TITLE = "Gràcies per participar!";
 
 XBScene6::XBScene6(const string &name) : XBBaseScene(name)
 {
@@ -86,13 +86,8 @@ void XBScene6::drawS6_1()
         ofClear(0);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        ofSetColor(255, 255, 255, 255);
-
         drawText(S1_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
         drawText(S1_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
-
-
-        // Subtitle
 
         drawFadeRectangle();
     }
@@ -111,6 +106,10 @@ void XBScene6::drawS6_2()
     {
         ofClear(0);
 
+        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+        drawText(S2_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S2_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+
         drawFadeRectangle();
     }
     fbo.end();
@@ -126,6 +125,12 @@ void XBScene6::drawS6_3()
 {
     fbo.begin();
     {
+        ofClear(0);
+
+        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+        drawText(S3_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S3_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+
         drawFadeRectangle();
     }
     fbo.end();
@@ -143,6 +148,9 @@ void XBScene6::drawS6_4()
     {
         ofClear(0);
 
+        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+        drawText(S4_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+
         drawFadeRectangle();
     }
     fbo.end();
@@ -151,6 +159,30 @@ void XBScene6::drawS6_4()
 void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
+
+    if (key == ',') goToPreviousState();
+    if (key == '.') goToNextState();
+}
+
+void XBScene6::goToState(S6State newState)
+{
+    state = newState;
+}
+
+void XBScene6::goToNextState()
+{
+    state = S6State((state + 1) % S6_NUM_STATES);
+}
+
+void XBScene6::goToPreviousState()
+{
+    if (state == 0)
+    {
+        state = S6_4_THANKS;
+        return;
+    }
+
+    state = S6State(state - 1);
 }
 
 void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color)
