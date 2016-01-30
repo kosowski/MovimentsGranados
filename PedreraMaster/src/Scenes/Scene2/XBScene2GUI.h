@@ -27,6 +27,8 @@ public:
     ofxFloatSlider alphaFactor;
     ofxFloatSlider growFactor;
     ofxIntSlider windowFrequency;
+    
+    ofxFloatSlider blurAmount;
 };
 
 

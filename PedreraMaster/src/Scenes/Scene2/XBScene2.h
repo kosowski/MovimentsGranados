@@ -8,6 +8,7 @@
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
 #include "Wave.h"
+#include "BlurEffect.h"
 
 using namespace  traer::physics ;
 
@@ -65,6 +66,8 @@ private:
     vector<Wave> waves;
     
     ofColor directorColor;
+    
+    BlurEffect blur;
     
     bool fakeCelloEvent = false;
     float celloNote;

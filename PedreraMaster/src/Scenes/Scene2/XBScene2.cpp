@@ -199,6 +199,8 @@ void XBScene2::drawIntoFBO()
 
     }
     fbo.end();
+    
+    blur.apply(&fbo, myGUI->blurAmount, 1);
 }
 
 int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Wave> &waves)
