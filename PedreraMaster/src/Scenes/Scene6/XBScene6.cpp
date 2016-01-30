@@ -9,7 +9,7 @@
 static const string STR_FONT_PATH = "resources/fonts/";
 static const string STR_FONTFILE = "GaramondPremrPro.otf";
 
-static const int MAX_FONT_SIZE = 100;
+static const int MAX_FONT_SIZE = 75;
 
 static const string S1_TITLE = "MOU LA PEDRERA!";
 static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat.";
@@ -86,19 +86,13 @@ void XBScene6::drawS6_1()
         ofClear(0);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+        ofSetColor(255, 255, 255, 255);
 
-        ofPushMatrix();
-        {
-            ofSetColor(255, 255, 255, 255);
+        drawText(S1_TITLE, fontTitle, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S1_SUBTITLE, fontSubtitle, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-            float width = fontTitle->stringWidth(S1_TITLE) * myGUI->mainMsgScale;
-            float height = fontTitle->stringHeight(S1_TITLE) * myGUI->mainMsgScale;
 
-            ofTranslate(ofPoint((ofGetWidth() * myGUI->mainMsgX) - width/2, (ofGetHeight() * myGUI->mainMsgY) - height/2));
-            ofScale(myGUI->mainMsgScale, myGUI->mainMsgScale);
-            fontTitle->drawString(S1_TITLE, 0, 0);
-        }
-        ofPopMatrix();
+        // Subtitle
 
         drawFadeRectangle();
     }
@@ -157,4 +151,21 @@ void XBScene6::drawS6_4()
 void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
+}
+
+void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color)
+{
+    ofSetColor(color);
+
+    ofPushMatrix();
+    {
+        float width = font->stringWidth(message) * scaleFactor;
+        float height = font->stringHeight(message) * scaleFactor;
+
+        ofTranslate(ofPoint((ofGetWidth() * x) - width/2, (ofGetHeight() * y) - height/2));
+        ofScale(scaleFactor, scaleFactor);
+        fontTitle->drawString(message, 0, 0);
+    }
+    ofPopMatrix();
+
 }

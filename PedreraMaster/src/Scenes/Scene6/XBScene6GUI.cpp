@@ -14,14 +14,23 @@ void XBScene6GUI::setup()
 {
     XBBaseGUI::setup();
 
-    messagesGroup.setup("Messages Position");
-    messagesGroup.add(mainMsgX.setup("Message X", 0.5f, 0.0f, 1.0f));
-    messagesGroup.add(mainMsgY.setup("Message Y", 0.5f, 0.0f, 1.0f));
-    messagesGroup.add(mainMsgScale.setup("Message Scale", 0.5, 0.1f, 1.0f));
-    messagesGroup.add(countdownMsgX.setup("Countdown X", 0.5f, 0.0f, 1.0f));
-    messagesGroup.add(countdownMsgY.setup("Countdown Y", 0.5f, 0.0f, 1.0f));
-    messagesGroup.add(countdownMsgScale.setup("Countdown Scale", 0.5, 0.1f, 1.0f));
-    sceneGui.add(&messagesGroup);
+    titlesGroup.setup("Titles");
+    titlesGroup.add(titleX.setup("Title X", 0.5f, 0.0f, 1.0f));
+    titlesGroup.add(titleY.setup("Title Y", 0.47f, 0.0f, 1.0f));
+    titlesGroup.add(titleScale.setup("Title Scale", 0.5f, 0.1f, 1.0f));
+    sceneGui.add(&titlesGroup);
+
+    subtitlesGroup.setup("Subtitles");
+    subtitlesGroup.add(subtitleX.setup("Subtitle X", 0.5f, 0.0f, 1.0f));
+    subtitlesGroup.add(subtitleY.setup("Subtitle Y", 0.53f, 0.0f, 1.0f));
+    subtitlesGroup.add(subtitleScale.setup("Subtitle Scale", 0.25f, 0.1f, 1.0f));
+    sceneGui.add(&subtitlesGroup);
+
+    countdownGroup.setup("Countdown");
+    countdownGroup.add(countdownX.setup("Countdown X", 0.5f, 0.0f, 1.0f));
+    countdownGroup.add(countdownY.setup("Countdown Y", 0.5f, 0.0f, 1.0f));
+    countdownGroup.add(countdownScale.setup("Countdown Scale", 1.0f, 0.1f, 1.0f));
+    sceneGui.add(&countdownGroup);
 
     loadSettings();
 }

@@ -44,6 +44,8 @@ private:
     ofTrueTypeFont *fontTitle;
     ofTrueTypeFont *fontSubtitle;
     ofTrueTypeFont *fontCountdown;
+
+    void drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color);
 };
 
 
