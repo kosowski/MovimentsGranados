@@ -241,7 +241,6 @@ void XBScene4::drawIntoFBO()
         
         drawGUI();
         drawFadeRectangle();
-        
     }
     fbo.end();
     
@@ -414,7 +413,6 @@ void XBScene4::initReactionDiffusion(){
     grayX.allocate(ofGetWidth(), ofGetHeight());
     grayV.allocate(ofGetWidth(), ofGetHeight());
 
-    
     ofImage seed;
     seed.load("resources/Esc4Violin.png");
     grayV.begin();
