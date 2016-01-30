@@ -22,6 +22,7 @@ static const string S3_SUBTITLE = S1_SUBTITLE;
 static const string S4_TITLE    = "Gràcies per participar!";
 
 static const int COUNTDOWN_NUM_SECONDS = 5;
+static const int THANKS_NUM_SECONDS = 6;
 
 
 XBScene6::XBScene6(const string &name) : XBBaseScene(name)
@@ -107,15 +108,15 @@ void XBScene6::drawS6_1()
 
 void XBScene6::updateS6_2()
 {
-    countdownElapsedTime = ofGetElapsedTimef() - countdownStartTime;
+    state2CountdownElapsedTime = ofGetElapsedTimef() - state2CountdownStartTime;
 
-    if (countdownElapsedTime > COUNTDOWN_NUM_SECONDS)
+    if (state2CountdownElapsedTime > COUNTDOWN_NUM_SECONDS)
         goToState(S6_3_LIVE);
 }
 
 void XBScene6::drawS6_2()
 {
-    int countdownNumber = COUNTDOWN_NUM_SECONDS - int(countdownElapsedTime);
+    int countdownNumber = COUNTDOWN_NUM_SECONDS - int(state2CountdownElapsedTime);
 
     fbo.begin();
     {
@@ -136,6 +137,12 @@ void XBScene6::drawS6_2()
 
 void XBScene6::updateS6_3()
 {
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+
+    state3ElapsedTime = ofGetElapsedTimef() - state3StartTime;
+
+    if (state3ElapsedTime > myGUI->interactionMaxTime * 60)
+        goToState(S6_4_THANKS);
 }
 
 void XBScene6::drawS6_3()
@@ -145,7 +152,7 @@ void XBScene6::drawS6_3()
         ofBackground(0,0,0,255);
 
         XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        if (showUndetectedMessage)
+        if (state3IsDetecting)
         {
             drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
             drawText(S3_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
@@ -160,6 +167,10 @@ void XBScene6::drawS6_3()
 
 void XBScene6::updateS6_4()
 {
+    state4ElapsedTime = ofGetElapsedTimef() - state4StartTime;
+
+    if (state4ElapsedTime > THANKS_NUM_SECONDS)
+        goToState(S6_1_INITIAL);
 }
 
 void XBScene6::drawS6_4()
@@ -176,6 +187,8 @@ void XBScene6::drawS6_4()
     fbo.end();
 }
 
+#pragma mark - Kinect / key events
+
 void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
@@ -184,7 +197,7 @@ void XBScene6::keyReleased(int key)
     {
         case ' ': goToNextState(); break;
 #ifdef OF_DEBUG
-        case '.': showUndetectedMessage = !showUndetectedMessage; break;
+        case '.': state3IsDetecting = !state3IsDetecting; break;
 #endif
         default: break;
     }
@@ -210,9 +223,9 @@ void XBScene6::onKinectStateChanged(string &kState)
         case S6_3_LIVE:
         {
             if (kState == OSC_KINECT_STATE_DETECTING)
-                showUndetectedMessage = true;
+                state3IsDetecting = true;
             else if (kState == OSC_KINECT_STATE_CAPTURING)
-                showUndetectedMessage = false;
+                state3IsDetecting = false;
             break;
         }
         case S6_4_THANKS:
@@ -231,12 +244,18 @@ void XBScene6::goToState(S6State newState)
     {
         case S6_2_DETECTED:
         {
-            countdownStartTime = ofGetElapsedTimef();
+            state2CountdownStartTime = ofGetElapsedTimef();
             break;
         }
         case S6_3_LIVE:
         {
-            showUndetectedMessage = false;
+            state3IsDetecting = false;
+            state3StartTime = ofGetElapsedTimef();
+            break;
+        }
+        case S6_4_THANKS:
+        {
+            state4StartTime = ofGetElapsedTimef();
             break;
         }
         default: break;
@@ -248,6 +267,8 @@ void XBScene6::goToNextState()
     S6State newState = S6State((state + 1) % S6_NUM_STATES);
     goToState(newState);
 }
+
+#pragma mark - Convenience methods
 
 void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color)
 {

@@ -14,12 +14,13 @@ void XBScene6GUI::setup()
 {
     XBBaseGUI::setup();
 
-//    ofxGuiGroup kinectGroup;
-//    ofxToggle kinectManualMode;
-
     kinectGroup.setup("Kinect Control");
     kinectGroup.add(kinectMode.setup("Automatic", false));
     sceneGui.add(&kinectGroup);
+
+    s3Interaction.setup("Interaction");
+    s3Interaction.add(interactionMaxTime.setup("Max Time", 1, 1, 5));
+    sceneGui.add(&s3Interaction);
 
     titlesGroup.setup("Titles");
     titlesGroup.add(titleX.setup("Title X", 0.5f, 0.0f, 1.0f));
