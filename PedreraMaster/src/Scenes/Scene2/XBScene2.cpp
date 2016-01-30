@@ -29,6 +29,8 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
     
     windowMask.load("resources/img/Esc2_fade_Completo.png");
+    
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
 
 
