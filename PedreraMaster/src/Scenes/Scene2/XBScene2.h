@@ -71,14 +71,10 @@ private:
     
     bool fakeCelloEvent = false;
     float celloNote;
-    float celloEnergy = 0;
     bool fakePianoEvent = false;
     float pianoNote;
-    float pianoEnergy = 0;
     bool fakeViolinEvent = false;
     float violinNote;
-    float violinEnergy = 0;
-    float energyThreshold = 0.01;
     kinectHand leftHand;
     kinectHand rightHand;
 };

@@ -12,6 +12,10 @@
 #include "Defaults.h"
 
 static const float MAX_MIDI_VALUE = 127.0f;
+struct kinectHand{
+    ofVec3f pos;
+    ofVec3f velocity;
+};
 
 class XBBaseScene
 {
@@ -46,6 +50,14 @@ protected:
     ofImage violinBG, pianoBG, celloBG;
     bool showTemplate;
     bool showFacadeImage;
+    
+    float celloEnergy = 0;
+    float violinEnergy = 0;
+    float pianoEnergy = 0;
+    float energyThreshold = 0.01;
+
+    kinectHand leftHand;
+    kinectHand rightHand;
 
     XBBaseGUI *gui;
 
@@ -82,11 +94,6 @@ protected:
 private:
 
     string name;
-};
-
-struct kinectHand{
-    ofVec3f pos;
-    ofVec3f velocity;
 };
 
 struct expandingPolyLine{

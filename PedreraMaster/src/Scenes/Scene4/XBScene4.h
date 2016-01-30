@@ -45,17 +45,10 @@ private:
     
     bool fakeCelloEvent = false;
     float celloNote;
-    float celloEnergy = 0;
     bool fakePianoEvent = false;
     float pianoNote;
-    float pianoEnergy = 0;
     bool fakeViolinEvent = false;
     float violinNote;
-    float violinEnergy = 0;
-    kinectHand leftHand;
-    kinectHand rightHand;
-    
-    float energyThreshold = 0.01;
     
     ofFbo auxFbo;
     ofImage windowMask;

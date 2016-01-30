@@ -84,9 +84,6 @@ private:
     
     BlurEffect blur;
     
-    float celloEnergy = 0;
-    float violinEnergy = 0;
-    float energyThreshold = 0.01;
     kinectHand leftHand;
     kinectHand rightHand;
 };
