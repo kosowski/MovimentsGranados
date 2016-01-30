@@ -24,8 +24,7 @@ public:
     ofxFloatSlider maskAlpha;
     
     ofxGuiGroup violinGroup;
-    ofxFloatSlider violinBorderSize;
-    ofxFloatSlider ViolinBorderFade;
+    ofxFloatSlider windowFade;
     ofxFloatSlider timeIncrement;
     ofxToggle showTimeMarker;
     

@@ -43,7 +43,7 @@ public:
     void updateEmitters();
     
 private:
-
+    void addFadingWindow(int index, vector<expandingPolyLine> &vector);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
         
@@ -64,6 +64,11 @@ private:
     unsigned int celloLineIndex = 0;
     ofPolyline currentCelloNote;
     ofPolyline celloLine;
+    
+    int celloInsideWindow = -1;
+    int violinInsideWindow = -1;
+    vector<expandingPolyLine> fadingViolinWindowsToDraw;
+    vector<expandingPolyLine> fadingCelloWindowsToDraw;
     
     bool emitParticles;
     ofxParticleSystem particleSystem;
