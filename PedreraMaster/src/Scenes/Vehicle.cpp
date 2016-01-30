@@ -55,29 +55,31 @@ void Vehicle::update(){
 }
 
 void Vehicle::draw(ofTexture& tex){
-    ofSetColor(colour);
+    ofPushStyle();
     ofFill();
     
-//    for (ofPoint p:nodes)
-//        ofDrawCircle(p.x, p.y, r-2);
-    
+    for(int i=0; i<nodes.size(); i++){
+        ofPushMatrix();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        ofTranslate(nodes[i].x, nodes[i].y, 0);
+        ofSetColor(colour.r, colour.g, colour.b, colour.a * glowAmount);
+        if(i==0)
+            tex.draw(0, 0, r * glowRadius, r * glowRadius);
+        else
+            tex.draw(0, 0, (r-2) * glowRadius, (r-2) * glowRadius);
+        ofPopMatrix();
+    }
+    ofBlendMode(OF_BLEND_MODE_ALPHA);
+    ofSetColor(colour);
     for(int i=0; i<nodes.size(); i++){
         if(i==0)
             ofDrawCircle(nodes[i].x, nodes[i].y, r);
         else
             ofDrawCircle(nodes[i].x, nodes[i].y, r-2);
-        
-        ofPushMatrix();
-        ofPushStyle();
-        ofTranslate(nodes[i].x, nodes[i].y, 0);
-        ofSetColor(colour.r, colour.g, colour.b, colour.a * glowAmount);
-        tex.draw(0, 0, r * glowRadius, r * glowRadius);
-        ofPopStyle();
-        ofPopMatrix();
     }
     for (Rope s:springs)
         s.draw();
-    
+    ofPopStyle();
 }
 
 void Vehicle::setColor(ofColor c){
