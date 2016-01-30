@@ -414,23 +414,23 @@ void XBScene4::initReactionDiffusion(){
     grayV.allocate(ofGetWidth(), ofGetHeight());
 
     ofImage seed;
-    seed.load("resources/Esc4Violin.png");
+    seed.load("resources/img/Esc4Violin.png");
     grayV.begin();
     seed.draw(0,0, ofGetWidth(), ofGetHeight());
     grayV.end();
     
     ofImage mask;
-    mask.load("resources/Esc4Violin_mascara.png");
+    mask.load("resources/img/Esc4Violin_mascara.png");
     grayV.begin(1);
     mask.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end(1);
     
-    seed.load("resources/Esc4Cello.png");
+    seed.load("resources/img/Esc4Cello.png");
     grayX.begin();
     seed.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end();
     
-    mask.load("resources/Esc4Cello_mascara.png");
+    mask.load("resources/img/Esc4Cello_mascara.png");
     grayX.begin(1);
     mask.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end(1);
