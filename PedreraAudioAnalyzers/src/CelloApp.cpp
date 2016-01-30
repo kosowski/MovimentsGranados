@@ -287,12 +287,10 @@ void CelloApp::guiOnsetsThresholdChanged(float &threshold) {
 void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     if (!guiAnalyzerCreated) return;
+    if (silenceOn) return;
 
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
-
-    cout << "pitchCurrentNote = " << pitchCurrentNote << endl;
-    cout << "pitchSmoothedNote = " << pitchSmoothedNote << endl;
 
     ofxOscMessage m;
     stringstream address;
@@ -305,12 +303,10 @@ void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
 void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
 {
     if (!guiAnalyzerCreated) return;
+    if (silenceOn) return;
 
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
-
-    cout << "energyEnergy = " << energyEnergy << endl;
-    cout << "energySmoothed = " << energySmoothed << endl;
 
     ofxOscMessage m;
     stringstream address;

@@ -46,10 +46,15 @@ private:
     ofTrueTypeFont *fontMsgNormal;
     ofTrueTypeFont *fontCountdown;
 
-    float countdownStartTime;
-    float countdownElapsedTime;
+    float state2CountdownStartTime;
+    float state2CountdownElapsedTime;
 
-    bool showUndetectedMessage;
+    bool state3IsDetecting;
+    float state3StartTime;
+    float state3ElapsedTime;
+
+    float state4StartTime;
+    float state4ElapsedTime;
 
     void onKinectStateChanged(string &kState);
 

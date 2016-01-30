@@ -16,6 +16,8 @@ public:
 
     ofxGuiGroup kinectGroup;
     ofxToggle kinectMode;
+    ofxGuiGroup s3Interaction;
+    ofxIntSlider interactionMaxTime;
     ofxGuiGroup titlesGroup;
     ofxFloatSlider titleX;
     ofxFloatSlider titleY;
