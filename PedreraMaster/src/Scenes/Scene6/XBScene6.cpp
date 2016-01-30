@@ -139,6 +139,8 @@ void XBScene6::updateS6_3()
 {
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
 
+    if (state3IsDetecting) return; // Avoid countdown while detecting person.
+
     state3ElapsedTime = ofGetElapsedTimef() - state3StartTime;
 
     if (state3ElapsedTime > myGUI->interactionMaxTime * 60)
@@ -225,7 +227,10 @@ void XBScene6::onKinectStateChanged(string &kState)
             if (kState == OSC_KINECT_STATE_DETECTING)
                 state3IsDetecting = true;
             else if (kState == OSC_KINECT_STATE_CAPTURING)
+            {
                 state3IsDetecting = false;
+                state3StartTime = ofGetElapsedTimef();
+            }
             break;
         }
         case S6_4_THANKS:
