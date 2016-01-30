@@ -23,6 +23,7 @@ public:
 
     void handleStateChanges();
     void userDetection(bool &hasUser);
+	void userPositioned(bool &hasPositioned);
     void sendHandInfo();
     void resetKinect();
 

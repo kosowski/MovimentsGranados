@@ -23,6 +23,7 @@ void ofApp::setup()
 {
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(ofColor::black);
+	ofSetFrameRate(60);
 
     currState = prevState = STATE_SETUP;
 
@@ -61,6 +62,7 @@ void ofApp::setup()
     }
 
     ofAddListener(motionExtractor->eventUserDetection, this, &ofApp::userDetection);
+	ofAddListener(motionExtractor->eventUserPositioned, this, &ofApp::userPositioned);
 }
 
 void ofApp::update()
@@ -146,6 +148,17 @@ void ofApp::userDetection(bool &hasUser)
         currState = STATE_CAPTURING;
     else
         currState = STATE_DETECTING;
+}
+
+void ofApp::userPositioned(bool &hasPositioned)
+{
+	ofxOscMessage userPositioned;
+	stringstream userPositioned_address;
+	userPositioned_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE << OSC_KINECT_STATE_POSITIONED;
+	userPositioned.setAddress(userPositioned_address.str());
+	userPositioned.addBoolArg(hasPositioned);
+	oscSender.sendMessage(userPositioned, false);
+	oscSender_Max.sendMessage(userPositioned, false);
 }
 
 void ofApp::sendHandInfo()
