@@ -180,16 +180,25 @@ void XBScene6::keyReleased(int key)
 {
     XBBaseScene::keyReleased(key);
 
-    if (key == ' ') goToNextState();
+    switch (key)
+    {
+        case ' ': goToNextState(); break;
+#ifdef OF_DEBUG
+        case '.': showUndetectedMessage = !showUndetectedMessage; break;
+#endif
+        default: break;
+    }
 }
 
 void XBScene6::onKinectStateChanged(string &kState)
 {
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+
     switch (state)
     {
         case S6_1_INITIAL:
         {
-            if (kState == OSC_KINECT_STATE_POSITIONED)
+            if ((kState == OSC_KINECT_STATE_POSITIONED) && (myGUI->kinectMode))
                 goToState(S6_2_DETECTED);
 
             break;
