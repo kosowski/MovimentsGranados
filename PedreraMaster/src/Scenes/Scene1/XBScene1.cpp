@@ -256,9 +256,28 @@ void XBScene1::drawIntoFBO()
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         particleSystem.draw(pTex);
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+//        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
 
+        int radius = 26;
+        ofPushStyle();
+        ofPushMatrix();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+
+        ofTranslate(xEmitter.positionStart.x, xEmitter.positionStart.y);
+        ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+        pTex.setAnchorPercent(0.5, 0.5);
+        pTex.draw(0,0, myGUI->particleSize + radius, myGUI->particleSize + radius);
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(vEmitter.positionStart.x, vEmitter.positionStart.y);
+        ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+        pTex.draw(0, 0, myGUI->particleSize + radius, myGUI->particleSize + radius);
+        
+        ofPopMatrix();
+        ofPopStyle();
+        
         ofPopMatrix();
         
         drawMusiciansWindows();
@@ -327,6 +346,7 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
     stonesToDraw.push_back(e);
+    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
 }
 
 void XBScene1::onPianoNoteOff(int &noteOff)
