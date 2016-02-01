@@ -289,6 +289,11 @@ void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
     if (!guiAnalyzerCreated) return;
     if (silenceOn) return;
 
+    if (silenceOn)
+    {
+        return;
+    }
+
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
 
@@ -298,6 +303,8 @@ void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
     m.setAddress(address.str());
     m.addFloatArg(pitchParams.smoothedPitch);
     oscSender.sendMessage(m, false);
+
+    cout << "SEND pitch " << pitchParams.midiNote << endl;
 }
 
 void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
@@ -321,8 +328,6 @@ void CelloApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
     if (!guiAnalyzerCreated) return;
 
     silenceOn = silenceParams.isSilent;
-
-    cout << "silenceOn = " << silenceOn << endl;
 
     ofxOscMessage m;
     stringstream address;

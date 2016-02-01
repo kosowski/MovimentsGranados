@@ -280,7 +280,10 @@ void ViolinApp::guiOnsetsThresholdChanged(float &threshold) {
 void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 {
     if (!guiAnalyzerCreated) return;
-    if (silenceOn) return;
+    if (silenceOn)
+    {
+        return;
+    }
 
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
@@ -291,6 +294,8 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
     m.setAddress(address.str());
     m.addFloatArg(pitchParams.smoothedPitch);
     oscSender.sendMessage(m, false);
+
+    cout << "SEND pitch " << pitchParams.midiNote << endl;
 }
 
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
