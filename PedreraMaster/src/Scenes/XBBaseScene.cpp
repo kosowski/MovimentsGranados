@@ -58,15 +58,16 @@ void XBBaseScene::drawFadeRectangle()
 void XBBaseScene::drawMusiciansWindows()
 {
     ofPushStyle();
-    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, gui->colorCelloA));
+    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, gui->colorCelloA * celloEnergy));
     celloBG.draw(0,0, ofGetWidth(), ofGetHeight());
-    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, gui->colorViolinA));
+    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, gui->colorViolinA * violinEnergy));
     violinBG.draw(0,0, ofGetWidth(), ofGetHeight());
     
-    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA);
+    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA * pianoEnergy);
     pianoBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofPopStyle();
 }
+
 void XBBaseScene::keyReleased(int key)
 {
     switch(key)

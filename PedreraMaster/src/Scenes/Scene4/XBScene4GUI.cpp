@@ -14,16 +14,16 @@ void XBScene4GUI::setup()
 {
     XBBaseGUI::setup();
 
-    violinGroup.setup("Violin");
-    violinGroup.add(minViolinSpeed.setup("Vioin min speed", 1, 0, 10));
-    violinGroup.add(maxViolinSpeed.setup("Vioin max speed", 6, 0, 20));
+    violinGroup.setup("Violin&Cello");
+    violinGroup.add(minViolinSpeed.setup("Min speed", 1, 0, 10));
+    violinGroup.add(maxViolinSpeed.setup("Max speed", 6, 0, 20));
     violinGroup.add(violinK.setup("K", 0.057, 0.005, 0.095));
     violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.040));
     sceneGui.add(&violinGroup);
 
     
     windowGroup.setup("Window");
-    windowGroup.add(barHeight.setup("Audio bar height", 30., 10., 70.));
+    windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
     windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
     windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
     windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));

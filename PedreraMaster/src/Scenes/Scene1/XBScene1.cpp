@@ -73,6 +73,23 @@ void XBScene1::update()
             i--; // new code to keep i index valid
         }
     }
+    
+    // update fading windows outlines
+    for (int i = 0; i < fadingViolinWindowsToDraw.size(); i++) {
+        fadingViolinWindowsToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (fadingViolinWindowsToDraw[i].life * myGUI->windowFade > 255) {
+            fadingViolinWindowsToDraw.erase(fadingViolinWindowsToDraw.begin() + i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
+    for (int i = 0; i < fadingCelloWindowsToDraw.size(); i++) {
+        fadingCelloWindowsToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (fadingCelloWindowsToDraw[i].life * myGUI->windowFade > 255) {
+            fadingCelloWindowsToDraw.erase(fadingCelloWindowsToDraw.begin() + i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
+
 
     // update waves
     if(myGUI->simulateHands){
@@ -158,32 +175,75 @@ void XBScene1::drawIntoFBO()
 
         // if cello is under a window, paint it
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
-            for (ofPolyline pl:windowsOutlines) {
-                if (pl.inside(xEmitter.positionStart)) {
+            for (int i=0;i< windowsOutlines.size(); i++) {
+                if (windowsOutlines[i].inside(xEmitter.positionStart)) {
                     ofPushStyle();
                     ofSetLineWidth(4);
                     ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-                    pl.draw();
+                    windowsOutlines[i].draw();
                     ofPopStyle();
+                    //                    if(celloInsideWindow != -1 && celloInsideWindow != i)
+                    //    cout << "Fade en otra ventana" << endl;
+                    celloInsideWindow = i;
                     break;
+                }
+                // reached the end of the loop, wich means is not under any window
+                if(i == windowsOutlines.size() - 1){
+                    if(celloInsideWindow >-1)
+                        addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+                    celloInsideWindow = -1;
                 }
             }
         }
-
+        else{
+            if(celloInsideWindow >-1)
+                addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+            celloInsideWindow = -1;
+        }
+    
         // if violin is under a window, paint it
-        if (fakeEvent || violinEnergy > energyThreshold) {
-            for (ofPolyline pl:windowsOutlines) {
-                if (pl.inside(vEmitter.positionStart)) {
+        if (fakeEvent || violinEnergy > energyThreshold){
+            for (int i=0; i < windowsOutlines.size(); i++) {
+                if (windowsOutlines[i].inside(vEmitter.positionStart)) {
                     ofPushStyle();
                     ofSetLineWidth(4);
                     ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-                    pl.draw();
+                    windowsOutlines[i].draw();
                     ofPopStyle();
+                    violinInsideWindow = i;
                     break;
+                }
+                // reached the end of the loop, wich means is not under any window
+                if(i == windowsOutlines.size() - 1){
+                    if(violinInsideWindow >-1){
+                        addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+                    }
+                    violinInsideWindow = -1;
                 }
             }
         }
+        else{
+            if(violinInsideWindow >-1)
+                addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+            violinInsideWindow = -1;
+        }
 
+        // draw fading window outlines
+        ofPushStyle();
+        ofSetLineWidth(4);
+        for (int i = 0; i < fadingViolinWindowsToDraw.size(); i++) {
+            expandingPolyLine &e = fadingViolinWindowsToDraw[i];
+            ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->windowFade, 0, 255)));
+            e.line.draw();
+        }
+        
+        for (int i = 0; i < fadingCelloWindowsToDraw.size(); i++) {
+            expandingPolyLine &e = fadingCelloWindowsToDraw[i];
+            ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->windowFade, 0, 255)));
+            e.line.draw();
+        }
+        ofPopStyle();
+        
         // mask for removing the windows
         if (maskWindows == true) {
             ofPushStyle();
@@ -209,6 +269,13 @@ void XBScene1::drawIntoFBO()
     fbo.end();
 
     blur.apply(&fbo, myGUI->blurAmount, 1);
+}
+
+void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector){
+    expandingPolyLine e;
+    e.life = 1;
+    e.line =windowsOutlines[index];
+    vector.push_back(e);
 }
 
 //--------------------------------------------------------------

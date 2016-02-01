@@ -98,6 +98,7 @@
 		6626DFF61C443A27001E40C2 /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6626DFF41C443A27001E40C2 /* Wave.cpp */; };
 		662B18811C405DF100004722 /* Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187D1C405DF100004722 /* Rope.cpp */; };
 		662B18821C405DF100004722 /* Vehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662B187F1C405DF100004722 /* Vehicle.cpp */; };
+		66310DCE1C5D4C4000F0BF02 /* SimpleWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66310DCD1C5D4C4000F0BF02 /* SimpleWave.cpp */; };
 		6659B6ED1C3FDF9900B8285C /* Attraction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6DC1C3FDF9900B8285C /* Attraction.cpp */; };
 		6659B6EE1C3FDF9900B8285C /* EulerIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6DE1C3FDF9900B8285C /* EulerIntegrator.cpp */; };
 		6659B6EF1C3FDF9900B8285C /* ModifiedEulerIntegrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6659B6E21C3FDF9900B8285C /* ModifiedEulerIntegrator.cpp */; };
@@ -361,6 +362,8 @@
 		662B187E1C405DF100004722 /* Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rope.h; sourceTree = "<group>"; };
 		662B187F1C405DF100004722 /* Vehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vehicle.cpp; sourceTree = "<group>"; };
 		662B18801C405DF100004722 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
+		66310DCD1C5D4C4000F0BF02 /* SimpleWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleWave.cpp; sourceTree = "<group>"; };
+		66310DCF1C5D4C9500F0BF02 /* SimpleWave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleWave.h; sourceTree = "<group>"; };
 		6657D5381C457A1E0090CE82 /* ofxParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticles.h; sourceTree = "<group>"; };
 		6659B6DC1C3FDF9900B8285C /* Attraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attraction.cpp; sourceTree = "<group>"; };
 		6659B6DD1C3FDF9900B8285C /* Attraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attraction.h; sourceTree = "<group>"; };
@@ -558,6 +561,8 @@
 				660F191C1C524952007FC7C3 /* CustomBox2dParticle.h */,
 				665FC0A51C56B12100BCD157 /* ofxMaskedGrayScott.h */,
 				661072671C5A9E1A00119636 /* ofxCustomGlow.h */,
+				66310DCD1C5D4C4000F0BF02 /* SimpleWave.cpp */,
+				66310DCF1C5D4C9500F0BF02 /* SimpleWave.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1524,6 +1529,7 @@
 				66162C101C51835400EF3AE0 /* b2CircleContact.cpp in Sources */,
 				2147643B75FD4078E237C224 /* XBScene4.cpp in Sources */,
 				66162C221C51835400EF3AE0 /* b2WheelJoint.cpp in Sources */,
+				66310DCE1C5D4C4000F0BF02 /* SimpleWave.cpp in Sources */,
 				21476A37847B388C4E321B90 /* XBScene4GUI.cpp in Sources */,
 				21476BE971C8D8B08FCA2B1E /* XBScene5.cpp in Sources */,
 				214760457DCB87685487ECCB /* XBScene5GUI.cpp in Sources */,

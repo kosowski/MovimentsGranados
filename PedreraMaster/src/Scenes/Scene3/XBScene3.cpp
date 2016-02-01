@@ -92,7 +92,7 @@ void XBScene3::drawIntoFBO()
             ofPushMatrix();
             ofTranslate(e.centroid);
 //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-            float scale =1 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
+            float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
             ofScale(scale,scale);
             e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
             e.path.draw();
@@ -421,8 +421,8 @@ void XBScene3::initPhysics()
 void XBScene3::updateVioinCello(){
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    v.glowRadius = myGUI->glowRadius;
-    x.glowRadius = myGUI->glowRadius;
+    v.glowRadius = myGUI->glowRadius * violinEnergy;
+    x.glowRadius = myGUI->glowRadius * celloEnergy;
     v.glowAmount = myGUI->glowAmount;
     x.glowAmount = myGUI->glowAmount;
     
@@ -460,14 +460,12 @@ void XBScene3::updateVioinCello(){
         
     //update particles emitters
     float dist = x.getLocation().distance(v.getLocation());
-//    cout << "Distance " << ofToString(dist) << endl;
+
     if (dist < myGUI->maxDistance) {
         float numParticles = ofMap(dist, 0, myGUI->maxDistance, myGUI->maxParticles, 0);
         if(numParticles < 1.f && numParticles > 0.f)
             numParticles = ofGetFrameNum() % 2;
         numParticles = floor(numParticles);
-//        cout << "Adding " << ofToString(numParticles) << " particles" << endl;
-        // update box2 particles
         for(int i = 0; i< numParticles; i++){
             shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c.get()->setPhysics(0.2, 0.2, 0.002);
@@ -475,14 +473,14 @@ void XBScene3::updateVioinCello(){
             ofPoint vel = myGUI->particleVelocity;
             ofPoint spread = myGUI->particleSpread;
             c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA* violinEnergy));
             circles.push_back(c);
             
             shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c2.get()->setPhysics(0.2, 0.2, 0.002);
             c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
             c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
             circles.push_back(c2);
         }
     }

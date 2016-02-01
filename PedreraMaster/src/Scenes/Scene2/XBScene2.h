@@ -8,6 +8,7 @@
 #include "XBBaseScene.h"
 #include "ofxTraerPhysics.h"
 #include "Wave.h"
+#include "SimpleWave.h"
 #include "BlurEffect.h"
 
 using namespace  traer::physics ;
@@ -38,12 +39,12 @@ public:
 private:
 
     void initWaves();
-    void initWindows(string name,  vector<ofRectangle>& vectorWindows, vector<Wave>& vectorWaves,int starIndex, int floor);
+    void initWindows(string name,  vector<ofRectangle>& vectorWindows, vector<SimpleWave>& vectorWaves,int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);
 
     
-    int drawWindow(float note, vector<ofRectangle>& windows, vector<Wave> &waves);
+    int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves);
     
     ofFbo auxFbo;
     ofxSVG svg;
@@ -51,9 +52,9 @@ private:
     vector<ofRectangle> violinWindows;
     vector<ofRectangle> pianoWindows;
     
-    vector<Wave> celloWaves;
-    vector<Wave> violinWaves;
-    vector<Wave> pianoWaves;
+    vector<SimpleWave> celloWaves;
+    vector<SimpleWave> violinWaves;
+    vector<SimpleWave> pianoWaves;
     
     vector<expandingPolyLine> celloOutlines;
     vector<expandingPolyLine> celloOutlinesToDraw;
@@ -71,14 +72,10 @@ private:
     
     bool fakeCelloEvent = false;
     float celloNote;
-    float celloEnergy = 0;
     bool fakePianoEvent = false;
     float pianoNote;
-    float pianoEnergy = 0;
     bool fakeViolinEvent = false;
     float violinNote;
-    float violinEnergy = 0;
-    float energyThreshold = 0.01;
     kinectHand leftHand;
     kinectHand rightHand;
 };

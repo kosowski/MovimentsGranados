@@ -99,7 +99,6 @@ void PMDeviceAudioAnalyzer::clear()
 
 void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
-    cout << "nChannels = " << nChannels << endl;
     for (int k=0; k<channelNumbers.size(); ++k)
     {
         /**/
@@ -227,7 +226,6 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         {
             // Raw Energy
             eParams.energy = absMean;
-            cout << "absMean = " << absMean << endl;
 
             // Smoothed and Mapped Energy = energySmoothed
             float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
@@ -292,8 +290,6 @@ float PMDeviceAudioAnalyzer::getRms(float *input, int bufferSize)
 
 float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
 {
-    cout << "chn  size = " << channelNumbers.size() << endl;
-    cout << "buff size = " << bufferSize << endl;
     float sum = 0.0f;
     for (int i=0; i<bufferSize; ++i)
     {

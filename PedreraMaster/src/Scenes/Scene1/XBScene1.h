@@ -43,7 +43,7 @@ public:
     void updateEmitters();
     
 private:
-
+    void addFadingWindow(int index, vector<expandingPolyLine> &vector);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
         
@@ -65,6 +65,11 @@ private:
     ofPolyline currentCelloNote;
     ofPolyline celloLine;
     
+    int celloInsideWindow = -1;
+    int violinInsideWindow = -1;
+    vector<expandingPolyLine> fadingViolinWindowsToDraw;
+    vector<expandingPolyLine> fadingCelloWindowsToDraw;
+    
     bool emitParticles;
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
@@ -79,9 +84,6 @@ private:
     
     BlurEffect blur;
     
-    float celloEnergy = 0;
-    float violinEnergy = 0;
-    float energyThreshold = 0.01;
     kinectHand leftHand;
     kinectHand rightHand;
 };

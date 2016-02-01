@@ -13,7 +13,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     auxFbo.begin();
     ofClear(0);
     auxFbo.end();
-    windowMask.load("resources/Esc2_fade_Completo.png");
+    windowMask.load("resources/img/Esc2_fade_Completo.png");
     
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", violinWindows, 2, 2);
@@ -21,7 +21,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", violinOutlines);
     
-    rectMask.load("resources/Esc2Barra_v01.png");
+    rectMask.load("resources/img/Esc2Barra_v01.png");
     initWaves();
     initStones();
     initReactionDiffusion();
@@ -197,13 +197,20 @@ void XBScene4::drawIntoFBO()
         }
         ofPopStyle();
         
+        
+        // mask for removing the windows
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
         // draw expanding violin windows
         ofPushStyle();
         for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
             expandingPolyLine &e = violinOutlinesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
+            ofScale(1 - e.life * myGUI->growFactor , 1 - e.life * myGUI->growFactor);
             e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->alphaFactor, 0, 255)));
             e.path.draw();
             ofPopMatrix();
@@ -216,17 +223,11 @@ void XBScene4::drawIntoFBO()
             expandingPolyLine &e = celloOutlinesToDraw[i];
             ofPushMatrix();
             ofTranslate(e.centroid);
-            ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+            ofScale(1 - e.life  * myGUI->growFactor, 1 - e.life * myGUI->growFactor);
             e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor , 0, 255)));
             e.path.draw();
             ofPopMatrix();
         }
-        ofPopStyle();
-        
-        // mask for removing the windows
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
         ofPopStyle();
         
         ofPopMatrix();
@@ -240,7 +241,6 @@ void XBScene4::drawIntoFBO()
         
         drawGUI();
         drawFadeRectangle();
-        
     }
     fbo.end();
     
@@ -413,25 +413,24 @@ void XBScene4::initReactionDiffusion(){
     grayX.allocate(ofGetWidth(), ofGetHeight());
     grayV.allocate(ofGetWidth(), ofGetHeight());
 
-    
     ofImage seed;
-    seed.load("resources/Esc4Violin.png");
+    seed.load("resources/img/Esc4Violin.png");
     grayV.begin();
     seed.draw(0,0, ofGetWidth(), ofGetHeight());
     grayV.end();
     
     ofImage mask;
-    mask.load("resources/Esc4Violin_mascara.png");
+    mask.load("resources/img/Esc4Violin_mascara.png");
     grayV.begin(1);
     mask.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end(1);
     
-    seed.load("resources/Esc4Cello.png");
+    seed.load("resources/img/Esc4Cello.png");
     grayX.begin();
     seed.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end();
     
-    mask.load("resources/Esc4Cello_mascara.png");
+    mask.load("resources/img/Esc4Cello_mascara.png");
     grayX.begin(1);
     mask.draw(0,0, ofGetWidth(), ofGetHeight());
     grayX.end(1);
