@@ -9,6 +9,7 @@
 #include "XBBaseGUI.h"
 #include "XBOSCManager.h"
 #include "ofxSvg.h"
+#include "ofxCustomGlow.h"
 #include "Defaults.h"
 
 static const float MAX_MIDI_VALUE = 127.0f;
@@ -29,6 +30,7 @@ public:
     virtual void drawIntoFBO() = 0;
     virtual void drawGUI();
     void drawMusiciansWindows();
+    void applyPostFX();
 
     const string &getName() const { return name; }
     const ofFbo &getMainFBO() const { return fbo; }
@@ -58,6 +60,8 @@ protected:
 
     kinectHand leftHand;
     kinectHand rightHand;
+    
+    ofxCustomGlow glowEffect;
 
     XBBaseGUI *gui;
 

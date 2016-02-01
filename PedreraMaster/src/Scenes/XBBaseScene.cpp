@@ -11,6 +11,9 @@ XBBaseScene::XBBaseScene(string _name)
     name = _name;
     
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, FBO_NUM_SAMPLES);
+    glowEffect.allocate(ofGetWidth(), ofGetHeight());
+    glowEffect.setIntensity(1);
+    glowEffect.setRadius(1);
 }
 
 void XBBaseScene::setup(XBBaseGUI *_gui)
@@ -66,6 +69,19 @@ void XBBaseScene::drawMusiciansWindows()
     ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA * pianoEnergy);
     pianoBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofPopStyle();
+}
+
+void XBBaseScene::applyPostFX(){
+    if(gui->useGlow){
+        glowEffect.setIntensity(gui->glowAmount);
+        glowEffect.setRadius(gui->glowradius);
+        
+        glowEffect << fbo.getTexture();
+        glowEffect.update();
+        fbo.begin();
+        glowEffect.draw(0,0, fbo.getWidth(), fbo.getHeight());
+        fbo.end();
+    }
 }
 
 void XBBaseScene::keyReleased(int key)
