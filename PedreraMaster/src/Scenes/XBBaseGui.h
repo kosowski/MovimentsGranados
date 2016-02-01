@@ -46,6 +46,8 @@ public:
     ofxIntSlider glowAmount;
     ofxIntSlider glowradius;
     
+    ofxIntSlider maxAlphaWindow;
+    ofxIntSlider minAlphaWindow;
     
     void loadSettings();
     void saveSettings();

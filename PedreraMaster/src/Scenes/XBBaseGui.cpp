@@ -53,6 +53,9 @@ void XBBaseGUI::setup()
     sceneGui.add(useGlow.setup("Apply glow", false));
     sceneGui.add(glowAmount.setup("Glow amount", 1, 0, 5));
     sceneGui.add(glowradius.setup("Glow radius", 1, 1, 10));
+    
+    sceneGui.add(minAlphaWindow.setup("Min window alpha", 1, 0, 255));
+    sceneGui.add(maxAlphaWindow.setup("Max window alpha", 255, 0, 255));
 
     colorGui.setup(strColorGuiTitle, STR_SETTINGS_BASEPATH + colorSettingsFilename);
     colorGui.setPosition(colorsPosX, colorsPosY);
