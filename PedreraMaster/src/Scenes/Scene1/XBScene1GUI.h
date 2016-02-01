@@ -30,6 +30,8 @@ public:
     
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
+    ofxIntSlider numParticles;
+
     ofxVec3Slider particleVelocity;
     ofxVec3Slider particleSpread;
     

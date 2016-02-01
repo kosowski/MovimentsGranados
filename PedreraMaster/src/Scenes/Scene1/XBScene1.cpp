@@ -531,7 +531,7 @@ void XBScene1::initParticles()
     vEmitter.velSpread = myGUI->particleSpread;
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
-    vEmitter.numPars = 20;
+    vEmitter.numPars = myGUI->numParticles;
     vEmitter.color = ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
     vEmitter.size = myGUI->particleSize;
 
@@ -643,12 +643,14 @@ void XBScene1::updateEmitters()
     vEmitter.setVelocity(myGUI->particleVelocity);
     vEmitter.velSpread = myGUI->particleSpread;
     vEmitter.life = myGUI->particleLife;
+    vEmitter.numPars = myGUI->numParticles;
     vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
 
     xEmitter.size = myGUI->particleSize;
     xEmitter.setVelocity(myGUI->particleVelocity);
     xEmitter.velSpread = myGUI->particleSpread;
     xEmitter.life = myGUI->particleLife;
+    xEmitter.numPars = myGUI->numParticles;
     xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
 
     // update particle system
