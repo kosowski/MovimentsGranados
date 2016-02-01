@@ -151,12 +151,6 @@ void XBScene2::drawIntoFBO()
             w.display();
         ofPopStyle();
         
-        // apply mask to remove windows interiors
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
-        ofPopStyle();
-        
         // draw expanding piano windows
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -185,6 +179,12 @@ void XBScene2::drawIntoFBO()
         }
         ofPopStyle();
 
+        // apply mask to remove windows interiors
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
         ofPopMatrix();
         
         // add fbo with windows contents
@@ -281,7 +281,7 @@ void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene2::onPianoNoteOff(int &noteOff)
 {
-    cout << "Piano NoteOff: p=" << noteOff << endl;
+//    cout << "Piano NoteOff: p=" << noteOff << endl;
     pianoEnergy = 0;
 }
 
