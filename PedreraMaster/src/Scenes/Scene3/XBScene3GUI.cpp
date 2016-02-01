@@ -14,7 +14,7 @@ void XBScene3GUI::setup()
 {
     XBBaseGUI::setup();
 
-    creaturesGroup.setup("ViolinAndCello");
+    creaturesGroup.setup("Violin And Cello");
     creaturesGroup.add(size.setup("Size", 10.0, 1.0, 20));
     creaturesGroup.add(maxSpeed.setup("Speed", 1.0, 0.0, 10));
     creaturesGroup.add(maxForce.setup("Force", 0.10, 0.00, 1.00));

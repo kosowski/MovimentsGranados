@@ -8,6 +8,7 @@ void ofApp::setup(){
 	receiver.setup(PORT);
 
 	ofBackground(30, 30, 130);
+    detectionStatus = OSC_KINECT_STATE_SETUP;
 
 }
 
@@ -20,13 +21,16 @@ void ofApp::update(){
 		ofxOscMessage m;
 		receiver.getNextMessage(&m);
 //        cout<<m.getAddress()<<endl;
-        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_STATE))
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_STATE)){
+            if (m.getArgAsString(0) != OSC_KINECT_STATE_POSITIONED)
+                detectionStatus = m.getArgAsString(0);
+            else
+                triggerUserPositioned();
+        }
             detectionStatus = m.getArgAsString(0);
-        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_STATE+OSC_KINECT_STATE_POSITIONED))
-            userPositioned = m.getArgAsBool(0);
-        if(m.getAddress() == "/motion/leftHand/position")
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
             handL = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
-        if(m.getAddress() == "/motion/rightHand/position")
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
             handR = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
 	}
 }
@@ -34,7 +38,6 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
     
     
     if(detectionStatus=="Capturing"){
@@ -46,6 +49,15 @@ void ofApp::draw(){
         ofDrawCircle(handR.x * ofGetWidth(), handR.y * ofGetHeight(), 20);
         ofPopStyle();
     }
+    ofSetColor(ofColor::red);
+    ofDrawBitmapString("State: "+detectionStatus, 5, ofGetWindowHeight()-20);
+    ofSetBackgroundColor(ofColor::white);
+
+}
+
+//-------------------------------------------------------------
+void ofApp::triggerUserPositioned(){
+    ofSetBackgroundColor(ofColor::red);
 }
 
 //--------------------------------------------------------------

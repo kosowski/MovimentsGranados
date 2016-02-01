@@ -14,7 +14,7 @@ void XBScene4GUI::setup()
 {
     XBBaseGUI::setup();
 
-    violinGroup.setup("Violin&Cello");
+    violinGroup.setup("Violin and Cello");
     violinGroup.add(minViolinSpeed.setup("Min speed", 1, 0, 10));
     violinGroup.add(maxViolinSpeed.setup("Max speed", 6, 0, 20));
     violinGroup.add(violinK.setup("K", 0.057, 0.005, 0.095));
@@ -26,7 +26,7 @@ void XBScene4GUI::setup()
     windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
     windowGroup.add(alphaFactor.setup("Alpha decay", 18.0f, 0.0f, 30.0f));
     windowGroup.add(growFactor.setup("Speed", .05f, 0.0f, .5f));
-    windowGroup.add(windowFrequency.setup("Frequency",8, 2, 20));
+    windowGroup.add(windowFrequency.setup("Frequency", 20, 2, 60));
     sceneGui.add(&windowGroup);
     
     pianoGroup.setup("Piano");
