@@ -349,11 +349,16 @@ void XBScene4::keyReleased(int key){
 //--------------------------------------------------------------
 void XBScene4::onViolinPitchChanged(float &pitch)
 {
+    if(!active)
+        return;
     violinNote = pitch;
 }
 
 void XBScene4::onViolinEnergyChanged(float &energy)
 {
+    if(!active)
+        return;
+    
     if (energy <= energyThreshold)
         violinEnergy = 0;
     else
@@ -362,11 +367,16 @@ void XBScene4::onViolinEnergyChanged(float &energy)
 
 void XBScene4::onCelloPitchChanged(float &pitch)
 {
+    if(!active)
+        return;
     celloNote = pitch;
 }
 
 void XBScene4::onCelloEnergyChanged(float &energy)
 {
+    if(!active)
+        return;
+    
     if (energy <= energyThreshold)
         celloEnergy = 0;
     else
@@ -375,6 +385,9 @@ void XBScene4::onCelloEnergyChanged(float &energy)
 
 void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
+    if(!active)
+        return;
+    
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
     
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;

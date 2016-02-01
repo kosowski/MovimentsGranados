@@ -46,12 +46,12 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
     active = false;
 }
 
-virtual void XBBaseScene::enteredScene()
+void XBBaseScene::enteredScene()
 {
     active = true;
 }
 
-virtual void XBBaseScene::leftScene()
+void XBBaseScene::leftScene()
 {
     active = false;
 }

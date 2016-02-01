@@ -305,7 +305,9 @@ void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector){
 
 void XBScene1::onViolinPitchChanged(float &pitch)
 {
-    cout << "violin pitch changed to " << pitch << endl;
+    if(!active)
+        return;
+    
     int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
     currentViolinNote = verticalLines[wichLine];
     violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
@@ -316,7 +318,9 @@ void XBScene1::onViolinPitchChanged(float &pitch)
 
 void XBScene1::onViolinEnergyChanged(float &energy)
 {
-    cout << "violin energy changed to " << energy << endl;
+    if(!active)
+        return;
+    
     if (energy <= energyThreshold)
         violinEnergy = 0;
     else
@@ -325,6 +329,8 @@ void XBScene1::onViolinEnergyChanged(float &energy)
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
+    if(!active)
+        return;
     int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
     currentCelloNote = horizontalLines[wichLine];
     celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
@@ -332,6 +338,8 @@ void XBScene1::onCelloPitchChanged(float &pitch)
 
 void XBScene1::onCelloEnergyChanged(float &energy)
 {
+    if(!active)
+        return;
     if (energy <= energyThreshold)
         celloEnergy = 0;
     else
@@ -340,6 +348,9 @@ void XBScene1::onCelloEnergyChanged(float &energy)
 
 void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
+    if(!active)
+        return;
+    
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
 
     if(noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE){

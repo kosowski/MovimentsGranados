@@ -248,11 +248,15 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
 //--------------------------------------------------------------
 void XBScene2::onViolinPitchChanged(float &pitch)
 {
+    if(!active)
+        return;
     violinNote = pitch;
 }
 
 void XBScene2::onViolinEnergyChanged(float &energy)
 {
+    if(!active)
+        return;
     if (energy <= energyThreshold)
         violinEnergy = 0;
     else
@@ -261,11 +265,15 @@ void XBScene2::onViolinEnergyChanged(float &energy)
 
 void XBScene2::onCelloPitchChanged(float &pitch)
 {
+    if(!active)
+        return;
     celloNote = pitch;
 }
 
 void XBScene2::onCelloEnergyChanged(float &energy)
 {
+    if(!active)
+        return;
     if (energy <= energyThreshold)
         celloEnergy = 0;
     else
@@ -274,6 +282,8 @@ void XBScene2::onCelloEnergyChanged(float &energy)
 
 void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
+    if(!active)
+        return;
 //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
     pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
