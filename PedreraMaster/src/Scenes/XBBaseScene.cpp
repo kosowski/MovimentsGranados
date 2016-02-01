@@ -94,6 +94,15 @@ void XBBaseScene::applyPostFX(){
     }
 }
 
+ void XBBaseScene::onCelloSilenceChanged(bool &isSilent) {
+     if(isSilent)
+         celloEnergy = 0;
+ }
+ void XBBaseScene::onViolinSilenceChanged(bool &isSilent) {
+     if(isSilent)
+         violinEnergy = 0;
+ }
+
 void XBBaseScene::keyReleased(int key)
 {
     switch(key)
