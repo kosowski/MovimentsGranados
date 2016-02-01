@@ -33,7 +33,7 @@ void XBScene1GUI::setup()
     pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
     sceneGui.add(&pianoGroup);
     
-    violinGroup.setup("Violin&Cello");
+    violinGroup.setup("Violin and Cello");
     violinGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     violinGroup.add(particleLife.setup("Particle life", 3, 1, 60));
     violinGroup.add(numParticles.setup("Particle  number", 10, 1, 20));
