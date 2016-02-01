@@ -269,6 +269,8 @@ void XBScene1::drawIntoFBO()
     fbo.end();
 
     blur.apply(&fbo, myGUI->blurAmount, 1);
+    
+    applyPostFX();
 }
 
 void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector){
