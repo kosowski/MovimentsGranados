@@ -333,9 +333,13 @@ void XBScene1::onCelloPitchChanged(float &pitch)
 //    cout << "Cello pitch " << ofToString(pitch);
     if(!active)
         return;
-    int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
-    currentCelloNote = horizontalLines[wichLine];
-    celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+//    int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
+//    currentCelloNote = horizontalLines[wichLine];
+//    celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+    int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
+    currentCelloNote = verticalLines[wichLine];
+    celloLineIndex = findIntersectionVertical(currentCelloNote, violinTimeIndex);
+
 }
 
 void XBScene1::onCelloEnergyChanged(float &energy)
