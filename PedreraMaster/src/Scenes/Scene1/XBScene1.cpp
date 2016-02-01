@@ -129,6 +129,7 @@ void XBScene1::drawIntoFBO()
             templateImage.draw(0, 0);
         else
             ofBackground(0);
+        
         if (showTemplate) {
             ofSetColor(255);
             svg.draw();
@@ -259,7 +260,7 @@ void XBScene1::drawIntoFBO()
 //        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
 
-        int radius = 26;
+        int radius = myGUI->headSize;
         ofPushStyle();
         ofPushMatrix();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
