@@ -260,6 +260,7 @@ void XBScene1::drawIntoFBO()
 //        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
 
+        // draw head of violin and cello lines
         int radius = myGUI->headSize;
         ofPushStyle();
         ofPushMatrix();
