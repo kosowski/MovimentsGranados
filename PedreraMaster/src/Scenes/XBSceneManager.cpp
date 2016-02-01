@@ -90,6 +90,7 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
     {
         case SCENETRANSITION_Direct:
         {
+            scenes[currentSceneIndex]->leftScene();
             state = SCENESTATE_OnScene;
             currentSceneIndex = sceneIndex;
             scenes[currentSceneIndex]->setFBOAlpha(255.0f);
@@ -103,6 +104,7 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode tran
             nextSceneIndex = sceneIndex;
 
             scenes[nextSceneIndex]->setFBOAlpha(0.0f);
+            scenes[nextSceneIndex]->enteredScene();
 
             float tweenDelay = 0.0f;
 
@@ -155,8 +157,8 @@ void XBSceneManager::onFadeComplete(float *arg)
     Tweenzor::removeCompleteListener(dstTween);
 
     state = SCENESTATE_OnScene;
+    scenes[currentSceneIndex]->leftScene();
     currentSceneIndex = nextSceneIndex;
-    scenes[currentSceneIndex]->enteredScene();
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
 

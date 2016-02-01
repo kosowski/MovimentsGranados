@@ -55,6 +55,7 @@ void XBScene6::setup(XBBaseGUI *_gui)
 
 void XBScene6::enteredScene()
 {
+    XBBaseScene::enteredScene();
     state = S6_1_INITIAL;
 }
 

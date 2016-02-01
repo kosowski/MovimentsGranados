@@ -25,7 +25,8 @@ public:
     XBBaseScene(string name);
 
     virtual void setup(XBBaseGUI *gui);
-    virtual void enteredScene() {};
+    virtual void enteredScene();
+    virtual void leftScene();
     virtual void update() {};
     virtual void drawIntoFBO() = 0;
     virtual void drawGUI();
@@ -64,6 +65,8 @@ protected:
     ofxCustomGlow glowEffect;
 
     XBBaseGUI *gui;
+
+    bool active;
 
     void subscribeToCelloEvents();
     void subscribeToViolinEvents();
