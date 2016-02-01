@@ -146,7 +146,7 @@ void XBScene3::drawIntoFBO()
     fbo.end();
 
     blur.apply(&fbo, myGUI->blurAmount, 1);
-
+    applyPostFX();
 }
 
 void XBScene3::drawGUI()

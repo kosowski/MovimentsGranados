@@ -203,6 +203,8 @@ void XBScene2::drawIntoFBO()
     fbo.end();
     
     blur.apply(&fbo, myGUI->blurAmount, 1);
+    
+    applyPostFX();
 }
 
 int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves)

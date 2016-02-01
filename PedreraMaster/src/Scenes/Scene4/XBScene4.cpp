@@ -245,6 +245,7 @@ void XBScene4::drawIntoFBO()
     fbo.end();
     
     blur.apply(&fbo, myGUI->blurAmount, 1);
+    applyPostFX();
 }
 
 int XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
