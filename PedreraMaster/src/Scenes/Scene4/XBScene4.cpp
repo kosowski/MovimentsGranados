@@ -392,7 +392,7 @@ void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene4::onPianoNoteOff(int &noteOff)
 {
-    cout << "Piano NoteOff: p=" << noteOff << endl;
+//    cout << "Piano NoteOff: p=" << noteOff << endl;
     pianoEnergy = 0;
 }
 

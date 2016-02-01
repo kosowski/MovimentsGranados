@@ -331,7 +331,7 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene1::onPianoNoteOff(int &noteOff)
 {
-    cout << "Piano NoteOff: p=" << noteOff << endl;
+//    cout << "Piano NoteOff: p=" << noteOff << endl;
 }
 
 void XBScene1::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {
