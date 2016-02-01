@@ -329,6 +329,7 @@ void XBScene1::onViolinEnergyChanged(float &energy)
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
+    cout << "XBScene1: " << pitch << endl;
     if(!active)
         return;
     int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
