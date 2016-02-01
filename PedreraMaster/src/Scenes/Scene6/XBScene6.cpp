@@ -72,15 +72,20 @@ void XBScene6::update()
 
 void XBScene6::drawIntoFBO()
 {
-//    ofClear(0);
+    fbo.begin();
+    {
+        if (showFacadeImage) templateImage.draw(0, 0);
+        else ofBackground(0);
 
-    switch (state) {
-        case S6_1_INITIAL:    drawS6_1(); break;
-        case S6_2_DETECTED:    drawS6_2(); break;
-        case S6_3_LIVE:         drawS6_3(); break;
-        case S6_4_THANKS:       drawS6_4(); break;
-        default:                break;
+        switch (state) {
+            case S6_1_INITIAL:    drawS6_1(); break;
+            case S6_2_DETECTED:    drawS6_2(); break;
+            case S6_3_LIVE:         drawS6_3(); break;
+            case S6_4_THANKS:       drawS6_4(); break;
+            default:                break;
+        }
     }
+    fbo.end();
 }
 
 #pragma mark - 1 DETECTING
@@ -91,17 +96,11 @@ void XBScene6::updateS6_1()
 
 void XBScene6::drawS6_1()
 {
-    fbo.begin();
-    {
-        ofBackground(0,0,0,255);
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    drawText(S1_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+    drawText(S1_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S1_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-        drawText(S1_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
-
-        drawFadeRectangle();
-    }
-    fbo.end();
+    drawFadeRectangle();
 }
 
 #pragma mark - 2 COUNTDOWN
@@ -118,19 +117,13 @@ void XBScene6::drawS6_2()
 {
     int countdownNumber = COUNTDOWN_NUM_SECONDS - int(state2CountdownElapsedTime);
 
-    fbo.begin();
-    {
-        ofBackground(0,0,0,255);
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    drawText(S2_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+    drawText(S2_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S2_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-        drawText(S2_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
+    drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
 
-        drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
-
-        drawFadeRectangle();
-    }
-    fbo.end();
+    drawFadeRectangle();
 }
 
 #pragma mark - 3 LIVE
@@ -149,20 +142,14 @@ void XBScene6::updateS6_3()
 
 void XBScene6::drawS6_3()
 {
-    fbo.begin();
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    if (state3IsDetecting)
     {
-        ofBackground(0,0,0,255);
-
-        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        if (state3IsDetecting)
-        {
-            drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-            drawText(S3_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
-        }
-
-        drawFadeRectangle();
+        drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
+        drawText(S3_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
     }
-    fbo.end();
+
+    drawFadeRectangle();
 }
 
 #pragma mark - 4 THANKS
@@ -177,16 +164,10 @@ void XBScene6::updateS6_4()
 
 void XBScene6::drawS6_4()
 {
-    fbo.begin();
-    {
-        ofBackground(0,0,0,255);
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    drawText(S4_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
 
-        XBScene6GUI *myGUI = (XBScene6GUI *) gui;
-        drawText(S4_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
-
-        drawFadeRectangle();
-    }
-    fbo.end();
+    drawFadeRectangle();
 }
 
 #pragma mark - Kinect / key events
