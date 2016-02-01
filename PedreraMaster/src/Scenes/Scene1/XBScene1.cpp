@@ -256,6 +256,7 @@ void XBScene1::drawIntoFBO()
         //draw particles from violin and cello
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
+        pTex.ofBaseDraws::setAnchorPercent(0.5, 0.5);
         particleSystem.draw(pTex);
 //        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofPopStyle();
@@ -266,7 +267,7 @@ void XBScene1::drawIntoFBO()
         ofPushMatrix();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
 
-        ofTranslate(xEmitter.positionStart.x, xEmitter.positionStart.y);
+        ofTranslate(xEmitter.positionStart.x, xEmitter.positionStart.y );
         ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
         pTex.setAnchorPercent(0.5, 0.5);
         pTex.draw(0,0, myGUI->particleSize + radius, myGUI->particleSize + radius);
@@ -329,6 +330,7 @@ void XBScene1::onViolinEnergyChanged(float &energy)
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
+//    cout << "Cello pitch " << ofToString(pitch);
     if(!active)
         return;
     int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
@@ -366,7 +368,8 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene1::onPianoNoteOff(int &noteOff)
 {
-    cout << "Piano NoteOff: p=" << noteOff << endl;
+//    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
 }
 
 void XBScene1::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {
@@ -580,6 +583,7 @@ void XBScene1::initParticles()
     xEmitter.size = myGUI->particleSize;
 
     ofLoadImage(pTex, "resources/particle.png");
+    pTex.setAnchorPercent(0.5, 0.5);
 }
 
 void XBScene1::initStones()
