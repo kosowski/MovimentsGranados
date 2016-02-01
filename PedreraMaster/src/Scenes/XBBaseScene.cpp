@@ -61,11 +61,11 @@ void XBBaseScene::drawFadeRectangle()
 void XBBaseScene::drawMusiciansWindows()
 {
     ofPushStyle();
-    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, ofClamp(gui->colorCelloA * celloEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
+    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, ofClamp(255* celloEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
     celloBG.draw(0,0, ofGetWidth(), ofGetHeight());
-    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, ofClamp(gui->colorViolinA * violinEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
+    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, ofClamp(255 * violinEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
     violinBG.draw(0,0, ofGetWidth(), ofGetHeight());
-    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, ofClamp(gui->colorPianoA * pianoEnergy, gui->minAlphaWindow, gui->maxAlphaWindow));
+    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, ofClamp(255 * pianoEnergy, gui->minAlphaWindow, gui->maxAlphaWindow));
     pianoBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofPopStyle();
 }
