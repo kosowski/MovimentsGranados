@@ -74,12 +74,12 @@ void XBScene6::drawIntoFBO()
 {
     fbo.begin();
     {
-        if (showFacadeImage) templateImage.draw(0, 0);
+        if (showFacadeImage) templateImage.draw(0, 0, ofGetWidth(), ofGetHeight());
         else ofBackground(0);
 
         switch (state) {
-            case S6_1_INITIAL:    drawS6_1(); break;
-            case S6_2_DETECTED:    drawS6_2(); break;
+            case S6_1_INITIAL:      drawS6_1(); break;
+            case S6_2_DETECTED:     drawS6_2(); break;
             case S6_3_LIVE:         drawS6_3(); break;
             case S6_4_THANKS:       drawS6_4(); break;
             default:                break;

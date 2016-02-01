@@ -303,6 +303,7 @@ void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector){
 
 void XBScene1::onViolinPitchChanged(float &pitch)
 {
+    cout << "violin pitch changed to " << pitch << endl;
     int wichLine = floor( ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
     currentViolinNote = verticalLines[wichLine];
     violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
@@ -313,6 +314,7 @@ void XBScene1::onViolinPitchChanged(float &pitch)
 
 void XBScene1::onViolinEnergyChanged(float &energy)
 {
+    cout << "violin energy changed to " << energy << endl;
     if (energy <= energyThreshold)
         violinEnergy = 0;
     else
