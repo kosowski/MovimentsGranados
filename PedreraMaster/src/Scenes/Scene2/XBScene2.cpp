@@ -28,7 +28,7 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
     
-    windowMask.load("resources/img/Esc2_fade_Completo.png");
+    windowMask.load("resources/img/Esc2_fade_Completo_v2.png");
     
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
@@ -231,15 +231,15 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
 
-//    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
-    ofPushStyle();
-    ofSetLineWidth(4);
-    waves[currentWindow].update();
-    ofPushMatrix();
-    ofTranslate(0,y);
-    waves[currentWindow].display();
-    ofPopMatrix();
-    ofPopStyle();
+    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+//    ofPushStyle();
+//    ofSetLineWidth(4);
+//    waves[currentWindow].update();
+//    ofPushMatrix();
+//    ofTranslate(0,y);
+//    waves[currentWindow].display();
+//    ofPopMatrix();
+//    ofPopStyle();
     return currentWindow;
 }
 
@@ -379,13 +379,13 @@ void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vect
     }
     arrangeWindows(arrangFloor, vectorWindows);
     // crear wave para cada rectangulo
-    for(int i=0; i< vectorWindows.size();i++){
-        ofPoint o = vectorWindows[i].getTopLeft();
-        o.y = 0;
-        int w =vectorWindows[i].width;
-        SimpleWave sw(o, w/2 + 10, 20.f, ofRandom(180, 220.));
-        vectorWaves.push_back(sw);
-    }
+//    for(int i=0; i< vectorWindows.size();i++){
+//        ofPoint o = vectorWindows[i].getTopLeft();
+//        o.y = 0;
+//        int w =vectorWindows[i].width;
+//        SimpleWave sw(o, w/2 + 10, 20.f, ofRandom(180, 220.));
+//        vectorWaves.push_back(sw);
+//    }
 }
 
 void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)

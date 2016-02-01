@@ -42,6 +42,10 @@ public:
     ofxIntSlider colorPianoA;
 
     ofxToggle simulateHands;
+    ofxToggle useGlow;
+    ofxIntSlider glowAmount;
+    ofxIntSlider glowradius;
+    
     
     void loadSettings();
     void saveSettings();

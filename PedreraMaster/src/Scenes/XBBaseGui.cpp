@@ -49,6 +49,10 @@ void XBBaseGUI::setup()
     sceneGui.setup(strSceneGuiTitle, STR_SETTINGS_BASEPATH + sceneSettingsFilename);
     sceneGui.setPosition(scenePosX, scenePosY);
     sceneGui.add(simulateHands.setup("Simulate hands", false));
+    
+    sceneGui.add(useGlow.setup("Apply glow", false));
+    sceneGui.add(glowAmount.setup("Glow amount", 1, 0, 5));
+    sceneGui.add(glowradius.setup("Glow radius", 1, 1, 10));
 
     colorGui.setup(strColorGuiTitle, STR_SETTINGS_BASEPATH + colorSettingsFilename);
     colorGui.setPosition(colorsPosX, colorsPosY);
