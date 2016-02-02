@@ -39,14 +39,21 @@ public:
     void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
 
 private:
+    void updateViolin();
+    void updateCello();
+    void updateVioinCello();
+    void updatePiano();
+    void updateDirector();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawViolinCello();
 
     void initStones();
     void initParticles();
     void initPaths();
     void initWaves();
     void initPhysics();
-    
-    void updateVioinCello();
     
     bool fakeCelloEvent = false;
     float celloNote;

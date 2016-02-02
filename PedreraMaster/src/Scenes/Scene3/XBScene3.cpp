@@ -31,33 +31,11 @@ void XBScene3::setup(XBBaseGUI *_gui)
 void XBScene3::update()
 {
     XBBaseScene::update();
-
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
     updateVioinCello();
-
-    // update piano's stones
-    for (int i = 0; i < stonesToDraw.size(); i++) {
-        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
-        if (stonesToDraw[i].life > ofGetFrameRate() * myGUI->stoneTime) {
-            stonesToDraw.erase(stonesToDraw.begin() + i);
-            i--; // keep i index valid
-        }
-    }
-
-    // update waves
-    if(myGUI->simulateHands){
-        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
-        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
-        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
-    }
-    for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].update();
-    }
+    updatePiano();
+    updateDirector();
 }
 
 void XBScene3::drawIntoFBO()
@@ -77,56 +55,9 @@ void XBScene3::drawIntoFBO()
             svg.draw();
         }
 
-        // draw directors waves
-        ofPushStyle();
-        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
-        ofSetLineWidth(myGUI->lineWidth);
-        for (Wave w:waves)
-            w.display();
-        ofPopStyle();
-
-        ofPushStyle();
-        // draw expanding stones from piano
-        for (int i = 0; i < stonesToDraw.size(); i++) {
-            expandingPolyLine &e = stonesToDraw[i];
-            ofPushMatrix();
-            ofTranslate(e.centroid);
-//             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-            float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
-            ofScale(scale,scale);
-            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
-            e.path.draw();
-            ofPopMatrix();
-        }
-        ofPopStyle();
-
-        //draw particles from violin and cello
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        for (int i = 0; i < circles.size(); i++) {
-            ofFill();
-            circles[i].get()->draw(pTex);
-        }
-        ofPopStyle();
-
-        // draw violin and cello
-        if (myGUI->showPath) {
-            ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-            vPath.draw();
-            ofPoint p = vPath.getPointAtIndexInterpolated(vPathIndex);
-            ofSetColor(255);
-            ofDrawCircle(p.x, p.y, 10);
-            ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-            xPath.draw();
-            p = xPath.getPointAtIndexInterpolated(xPathIndex);
-            ofSetColor(255);
-            ofDrawCircle(p.x, p.y, 10);
-        }
-        pTex.setAnchorPercent(0.5, 0.5);
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        v.draw(pTex);
-        x.draw(pTex);
-        ofPopStyle();
+        drawDirector();
+        drawPiano();
+        drawViolinCello();
 
         // mask for removing the windows
         ofPushStyle();
@@ -147,6 +78,95 @@ void XBScene3::drawIntoFBO()
 
     blur.apply(&fbo, myGUI->blurAmount, 1);
     applyPostFX();
+}
+
+void XBScene3::updatePiano(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    // update piano's stones
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
+        if (stonesToDraw[i].life > ofGetFrameRate() * myGUI->stoneTime) {
+            stonesToDraw.erase(stonesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+}
+
+void XBScene3::updateDirector(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    // update waves
+    if(myGUI->simulateHands){
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
+    for (int i = 0; i < waves.size(); i++) {
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].update();
+    }
+}
+
+void XBScene3::drawViolinCello(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    //draw particles from violin and cello
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < circles.size(); i++) {
+        ofFill();
+        circles[i].get()->draw(pTex);
+    }
+    ofPopStyle();
+    
+    // draw violin and cello
+    if (myGUI->showPath) {
+        ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+        vPath.draw();
+        ofPoint p = vPath.getPointAtIndexInterpolated(vPathIndex);
+        ofSetColor(255);
+        ofDrawCircle(p.x, p.y, 10);
+        ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+        xPath.draw();
+        p = xPath.getPointAtIndexInterpolated(xPathIndex);
+        ofSetColor(255);
+        ofDrawCircle(p.x, p.y, 10);
+    }
+    pTex.setAnchorPercent(0.5, 0.5);
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    v.draw(pTex);
+    x.draw(pTex);
+    ofPopStyle();
+}
+void XBScene3::drawDirector(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    // draw directors waves
+    ofPushStyle();
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetLineWidth(myGUI->lineWidth);
+    for (Wave w:waves)
+        w.display();
+    ofPopStyle();
+}
+
+void XBScene3::drawPiano(){
+    XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    ofPushStyle();
+    // draw expanding stones from piano
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        expandingPolyLine &e = stonesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+        float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
+        ofScale(scale,scale);
+        e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
+    ofPopStyle();
+    
 }
 
 void XBScene3::drawGUI()
