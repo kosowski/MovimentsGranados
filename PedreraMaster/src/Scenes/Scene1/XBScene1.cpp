@@ -376,16 +376,20 @@ void XBScene1::onViolinEnergyChanged(float &energy)
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
-    //    cout << "Cello pitch " << ofToString(pitch);
+    XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+
     if (!active)
         return;
-    //    int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
-    //    currentCelloNote = horizontalLines[wichLine];
-    //    celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
-    int wichLine = floor(ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
-    currentCelloNote = verticalLines[wichLine];
-    celloLineIndex = findIntersectionVertical(currentCelloNote, violinTimeIndex);
-
+    if(myGUI->celloVertical){
+        int wichLine = floor(ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
+        currentCelloNote = verticalLines[wichLine];
+        celloLineIndex = findIntersectionVertical(currentCelloNote, violinTimeIndex);
+    }
+    else{
+        int wichLine = floor( ofClamp(pitch, 0., 1.) * (horizontalLines.size() - 1));;
+        currentCelloNote = horizontalLines[wichLine];
+        celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+    }
 }
 
 void XBScene1::onCelloEnergyChanged(float &energy)
@@ -484,9 +488,6 @@ void XBScene1::keyPressed(int key)
                 int wichLine = (int) ofRandom(verticalLines.size());
                 currentViolinNote = verticalLines[wichLine];
                 violinLineIndex = (unsigned int) findIntersectionVertical(currentViolinNote, violinTimeIndex);
-                //                int wichLine = (int) ofRandom(horizontalLines.size());
-                //                currentViolinNote = horizontalLines[wichLine];
-                //                violinLineIndex = findIntersectionHorizontal(currentViolinNote, celloTimeIndex);
             }
             break;
         }
@@ -494,10 +495,16 @@ void XBScene1::keyPressed(int key)
         case 'C': {
             if (!fakeCelloEvent) {
                 fakeCelloEvent = true;
-                int wichLine = (int) ofRandom(horizontalLines.size());
-                //            cout << "Line changed to " << ofToString(wichLine) << endl;
-                currentCelloNote = horizontalLines[wichLine];
-                celloLineIndex = (unsigned int) findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+                if(myGUI->celloVertical){
+                    int wichLine = (int) ofRandom(verticalLines.size());
+                    currentCelloNote = verticalLines[wichLine];
+                    celloLineIndex = findIntersectionVertical(currentCelloNote, violinTimeIndex);
+                }
+                else{
+                    int wichLine = (int) ofRandom(horizontalLines.size());
+                    currentCelloNote = horizontalLines[wichLine];
+                    celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+                }
             }
             break;
         }
