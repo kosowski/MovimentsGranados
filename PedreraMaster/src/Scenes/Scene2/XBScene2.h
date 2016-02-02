@@ -47,6 +47,8 @@ private:
     int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves);
     
     ofFbo auxFbo;
+    ofFbo celloFbo, pianoFbo, violinFbo;
+    ofImage pianoMask, violinMask, celloMask;
     ofxSVG svg;
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
