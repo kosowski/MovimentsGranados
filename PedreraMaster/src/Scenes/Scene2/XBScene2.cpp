@@ -13,26 +13,16 @@
 void XBScene2::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
-
-//    auxFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
-//    auxFbo.begin();
-//    ofClear(0);
-//    auxFbo.end();
     
     violinFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
     violinFbo.begin();
     ofClear(0);
     violinFbo.end();
 
-    celloFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
-    celloFbo.begin();
+    celloPianoFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
+    celloPianoFbo.begin();
     ofClear(0);
-    celloFbo.end();
-    
-//    pianoFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 1);
-//    pianoFbo.begin();
-//    ofClear(0);
-//    pianoFbo.end();
+    celloPianoFbo.end();
 
     initWaves();
     rectMask.load("resources/img/Esc2Barra_v01.png");
@@ -43,33 +33,72 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
     
-    //    windowMask.load("resources/img/Esc2_fade_Completo_v2.png");
-//    pianoMask.load("resources/img/Esc2Piano.png");
-    celloMask.load("resources/img/Esc2CelloPiano.png");
+    celloPianoMask.load("resources/img/Esc2CelloPiano.png");
     violinMask.load("resources/img/Esc2Violinv03_fade.png");
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
 
-
 void XBScene2::update()
 {
     XBBaseScene::update();
+    updateDirector();
+    updateCello();
+    updatePiano();
+    updateViolin();
+}
 
+void XBScene2::drawIntoFBO()
+{
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-    // update waves
-    if(myGUI->simulateHands){
-        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
-        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
-        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+
+    fbo.begin();
+    {
+        ofPushMatrix();
+        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+
+        if (showFacadeImage)
+            templateImage.draw(0, 0);
+        else
+            ofBackground(0);
+        
+        drawDirector();
+        drawPiano();
+        drawCello();
+
+        // apply mask to remove windows interiors
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        mask.draw(0, 0);
+        ofPopStyle();
+        
+        ofPopMatrix();
+        
+        // add fbo with piano and cello windows interiors
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        celloPianoFbo.draw(0, 0);
+        ofPopStyle();
+        
+        // add violin fbo
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        violinFbo.draw(0, 0);
+        ofPopStyle();
+
+        drawMusiciansWindows();
+        
+        drawGUI();
+        drawFadeRectangle();
     }
-    for (int i = 0; i < waves.size(); i++) {
-        // if simulate mode ON, use the mouse
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].update();
-    }
+    fbo.end();
     
+    blur.apply(&fbo, myGUI->blurAmount, 1);
+    
+    applyPostFX();
+}
+
+void XBScene2::updateCello(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     // update cello windows
     for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
         celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
@@ -79,44 +108,8 @@ void XBScene2::update()
         }
     }
     
-    // update piano windows
-    for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
-        pianoOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        if (pianoOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
-            pianoOutlinesToDraw.erase(pianoOutlinesToDraw.begin() + i);
-            i--; // keep i index valid
-        }
-    }
-}
-
-void XBScene2::drawIntoFBO()
-{
-    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-
-    violinFbo.begin();
-    {
-        ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
-        ofBackground(0);
-
-        //draw violin windows
-        if (fakeViolinEvent || violinEnergy > energyThreshold) {
-            ofPushStyle();
-            ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            drawWindow(violinNote, violinWindows, violinWaves);
-            ofPopStyle();
-        }
-        
-        // mask windows outsides
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        violinMask.draw(0, 0);
-        ofPopStyle();
-        ofPopMatrix();
-    }
-    violinFbo.end();
-    
-    celloFbo.begin();
+    // draw cello and piano windows in their fbo
+    celloPianoFbo.begin();
     {
         ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
@@ -151,132 +144,118 @@ void XBScene2::drawIntoFBO()
             }
             ofPopStyle();
         }
-
+        
         // mask windows outsides
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        celloMask.draw(0, 0);
+        celloPianoMask.draw(0, 0);
         ofPopStyle();
         ofPopMatrix();
     }
-    celloFbo.end();
-    
-//    pianoFbo.begin();
-//    {
-//        ofPushMatrix();
-//        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
-//        ofBackground(0);
-//        //draw piano windows
-//        if (fakePianoEvent || pianoEnergy > energyThreshold) {
-//            ofPushStyle();
-//            ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
-//            int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves);
-//            if(ofGetFrameNum() % myGUI->windowFrequency == 0){
-//                if(windowIndex == 2){ // if third floor, light up two windows
-//                    pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex+1]);
-//                }
-//                else if(windowIndex==3) // if fourth floor, increment one to skip double window
-//                    windowIndex++;
-//                pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex]);
-//            }
-//            ofPopStyle();
-//        }
-//        // mask windows outsides
-//        ofPushStyle();
-//        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-//        pianoMask.draw(0, 0);
-//        ofPopStyle();
-//        ofPopMatrix();
-//    }
-//    pianoFbo.end();
+    celloPianoFbo.end();
+}
 
-    fbo.begin();
+void XBScene2::updateViolin(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    
+    // draw violin windows into its fbo
+    violinFbo.begin();
     {
         ofPushMatrix();
         ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
-
-        if (showFacadeImage)
-            templateImage.draw(0, 0);
-        else
-            ofBackground(0);
+        ofBackground(0);
         
-        // draw directors waves
-        ofPushStyle();
-        ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
-        ofSetLineWidth(myGUI->lineWidth);
-        for (Wave w:waves)
-            w.display();
-        ofPopStyle();
-        
-        // draw expanding piano windows
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
-            expandingPolyLine &e = pianoOutlinesToDraw[i];
-            ofPushMatrix();
-            ofTranslate(e.centroid);
-            ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
-            e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
-            e.path.draw();
-            ofPopMatrix();
+        //draw violin windows
+        if (fakeViolinEvent || violinEnergy > energyThreshold) {
+            ofPushStyle();
+            ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
+            drawWindow(violinNote, violinWindows, violinWaves);
+            ofPopStyle();
         }
-        ofPopStyle();
         
-        // draw expanding cello windows
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
-            expandingPolyLine &e = celloOutlinesToDraw[i];
-            ofPushMatrix();
-            ofTranslate(e.centroid);
-            ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
-            e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * myGUI->alphaStart - e.life * myGUI->alphaFactor , 0, 255)));
-            e.path.draw();
-            ofPopMatrix();
-        }
-        ofPopStyle();
-
-        // apply mask to remove windows interiors
+        // mask windows outsides
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-        mask.draw(0, 0);
+        violinMask.draw(0, 0);
         ofPopStyle();
-        
         ofPopMatrix();
-        
-        // add fbo with windows contents
-//        ofPushStyle();
-//        ofEnableBlendMode(OF_BLENDMODE_ADD);
-//        auxFbo.draw(0, 0);
-//        ofPopStyle();
-        
-//        ofPushStyle();
-//        ofEnableBlendMode(OF_BLENDMODE_ADD);
-//        pianoFbo.draw(0, 0);
-//        ofPopStyle();
-        
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        celloFbo.draw(0, 0);
-        ofPopStyle();
-        
-        ofPushStyle();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        violinFbo.draw(0, 0);
-        ofPopStyle();
-
-        drawMusiciansWindows();
-        
-        drawGUI();
-        drawFadeRectangle();
-
-
     }
-    fbo.end();
+    violinFbo.end();
+}
+
+void XBScene2::updatePiano(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // update piano windows
+    for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
+        pianoOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (pianoOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            pianoOutlinesToDraw.erase(pianoOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+}
+
+void XBScene2::updateDirector(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // update waves
+    if(myGUI->simulateHands){
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
+    for (int i = 0; i < waves.size(); i++) {
+        // if simulate mode ON, use the mouse
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].update();
+    }
+}
+
+void XBScene2::drawDirector(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // draw directors waves
+    ofPushStyle();
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetLineWidth(myGUI->lineWidth);
+    for (Wave w:waves)
+        w.display();
+    ofPopStyle();
+}
+
+void XBScene2::drawPiano(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // draw expanding piano windows
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < pianoOutlinesToDraw.size(); i++) {
+        expandingPolyLine &e = pianoOutlinesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        ofScale(1 + e.life * myGUI->growFactor , 1 + e.life * myGUI->growFactor);
+        e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
+    ofPopStyle();
+}
+
+void XBScene2::drawCello(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     
-    blur.apply(&fbo, myGUI->blurAmount, 1);
-    
-    applyPostFX();
+    // draw expanding cello windows
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
+        expandingPolyLine &e = celloOutlinesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        ofScale(1 + e.life  * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+        e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * myGUI->alphaStart - e.life * myGUI->alphaFactor , 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
+    ofPopStyle();
 }
 
 int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves)

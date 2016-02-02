@@ -37,7 +37,16 @@ public:
     void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
 
 private:
-
+    void updateViolin();
+    void updateCello();
+    void updatePiano();
+    void updateDirector();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawCello();
+    void drawWindows();
+    
     void initWaves();
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, vector<SimpleWave>& vectorWaves,int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
@@ -46,9 +55,8 @@ private:
     
     int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves);
     
-    ofFbo auxFbo;
-    ofFbo celloFbo, pianoFbo, violinFbo;
-    ofImage pianoMask, violinMask, celloMask;
+    ofFbo celloPianoFbo, violinFbo;
+    ofImage violinMask, celloPianoMask;
     ofxSVG svg;
     vector<ofRectangle> celloWindows;
     vector<ofRectangle> violinWindows;
