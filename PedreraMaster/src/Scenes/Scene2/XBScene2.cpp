@@ -25,7 +25,6 @@ void XBScene2::setup(XBBaseGUI *_gui)
     ofClear(0);
     celloPianoFbo.end();
 
-    initWaves();
     rectMask.load("resources/img/Esc2Barra_v01.png");
     initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2, 2);
     initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2, 2);
@@ -34,6 +33,8 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
 
+    initWaves();
+    
     celloPianoMask.load("resources/img/Esc2CelloPiano.png");
     violinMask.load("resources/img/Esc2Violinv03_fade.png");
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
