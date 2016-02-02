@@ -43,6 +43,16 @@ public:
     void updateEmitters();
     
 private:
+    void updateViolin();
+    void updateCello();
+    void updatePiano();
+    void updateDirector();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawViolinCello();
+    void drawWindows();
+    
     void addFadingWindow(int index, vector<expandingPolyLine> &vector);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
