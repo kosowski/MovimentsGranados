@@ -251,15 +251,15 @@ void XBScene1::drawViolinCello()
     ofEnableBlendMode(OF_BLENDMODE_ADD);
 
     ofTranslate(xEmitter.positionStart.x, xEmitter.positionStart.y);
-    ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+    ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
     pTex.setAnchorPercent(0.5, 0.5);
-    pTex.draw(0, 0, myGUI->particleSize + radius, myGUI->particleSize + radius);
+    pTex.draw(0, 0, myGUI->particleSize + radius * celloEnergy, myGUI->particleSize + radius * celloEnergy);
     ofPopMatrix();
 
     ofPushMatrix();
     ofTranslate(vEmitter.positionStart.x, vEmitter.positionStart.y);
-    ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-    pTex.draw(0, 0, myGUI->particleSize + radius, myGUI->particleSize + radius);
+    ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
+    pTex.draw(0, 0, myGUI->particleSize + radius * violinEnergy, myGUI->particleSize + radius * violinEnergy);
 
     ofPopMatrix();
     ofPopStyle();
