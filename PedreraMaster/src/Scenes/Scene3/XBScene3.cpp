@@ -12,7 +12,7 @@ void XBScene3::setup(XBBaseGUI *_gui)
 
     int w = 200;
     int h = 250;
-    
+
     // creatures init
     initPaths();
     vPathIndex = 0;//vPath.size()/2;
@@ -65,11 +65,11 @@ void XBScene3::drawIntoFBO()
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
         mask.draw(0, 0);
         ofPopStyle();
-        
+
         ofPopMatrix();
-        
+
         drawMusiciansWindows();
-        
+
         //draw GUI
         drawGUI();
 
@@ -80,9 +80,10 @@ void XBScene3::drawIntoFBO()
     applyPostFX();
 }
 
-void XBScene3::updatePiano(){
+void XBScene3::updatePiano()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-    
+
     // update piano's stones
     for (int i = 0; i < stonesToDraw.size(); i++) {
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
@@ -94,14 +95,15 @@ void XBScene3::updatePiano(){
     }
 }
 
-void XBScene3::updateDirector(){
+void XBScene3::updateDirector()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
     // update waves
-    if(myGUI->simulateHands){
+    if (myGUI->simulateHands) {
         rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
         rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
-        leftHand.pos.x = (rightHand.pos.x - 0.5)  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
-        leftHand.pos.y = rightHand.pos.y  + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+        leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
     }
     for (int i = 0; i < waves.size(); i++) {
         waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
@@ -110,7 +112,8 @@ void XBScene3::updateDirector(){
     }
 }
 
-void XBScene3::drawViolinCello(){
+void XBScene3::drawViolinCello()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
     //draw particles from violin and cello
     ofPushStyle();
@@ -120,7 +123,7 @@ void XBScene3::drawViolinCello(){
         circles[i].get()->draw(pTex);
     }
     ofPopStyle();
-    
+
     // draw violin and cello
     if (myGUI->showPath) {
         ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
@@ -140,7 +143,9 @@ void XBScene3::drawViolinCello(){
     x.draw(pTex);
     ofPopStyle();
 }
-void XBScene3::drawDirector(){
+
+void XBScene3::drawDirector()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
     // draw directors waves
     ofPushStyle();
@@ -151,7 +156,8 @@ void XBScene3::drawDirector(){
     ofPopStyle();
 }
 
-void XBScene3::drawPiano(){
+void XBScene3::drawPiano()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
     ofPushStyle();
     // draw expanding stones from piano
@@ -160,14 +166,14 @@ void XBScene3::drawPiano(){
         ofPushMatrix();
         ofTranslate(e.centroid);
         //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-        float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI/2.f);
-        ofScale(scale,scale);
+        float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI / 2.f);
+        ofScale(scale, scale);
         e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
         e.path.draw();
         ofPopMatrix();
     }
     ofPopStyle();
-    
+
 }
 
 void XBScene3::drawGUI()
@@ -181,49 +187,46 @@ void XBScene3::keyReleased(int key)
 
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
-    switch (key)
-    {
+    switch (key) {
         case 'v':
-        case 'V':
-        {
+        case 'V': {
             int index = midiToRowMapping[(int) ofRandom(127)];
-            expandingPolyLine e = stones[index][ (int) ofRandom(stones[index].size() - 1)];
+            expandingPolyLine e = stones[index][(int) ofRandom(stones[index].size() - 1)];
             e.life = 1;
             e.amplitude = myGUI->stoneGrowFactor;
             stonesToDraw.push_back(e);
             break;
         }
         case 'z':
-        case 'Z':
-        {
+        case 'Z': {
             waves.clear();
             initWaves();
             break;
         }
-        case 'b':
-        {
-            for(int i=0;i< edges.size();i++){
+        case 'b': {
+            for (int i = 0; i < edges.size(); i++) {
                 edges[i].get()->destroy();
             }
             break;
         }
-        default: break;
+        default:
+            break;
     }
 }
 
 //--------------------------------------------------------------
 void XBScene3::onViolinPitchChanged(float &pitch)
 {
-    if(!active)
+    if (!active)
         return;
     violinNote = pitch;
 }
 
 void XBScene3::onViolinEnergyChanged(float &energy)
 {
-    if(!active)
+    if (!active)
         return;
-    
+
     if (energy <= energyThreshold)
         violinEnergy = 0;
     else
@@ -232,17 +235,17 @@ void XBScene3::onViolinEnergyChanged(float &energy)
 
 void XBScene3::onCelloPitchChanged(float &pitch)
 {
-    if(!active)
+    if (!active)
         return;
-    
+
     celloNote = pitch;
 }
 
 void XBScene3::onCelloEnergyChanged(float &energy)
 {
-    if(!active)
+    if (!active)
         return;
-    
+
     if (energy <= energyThreshold)
         celloEnergy = 0;
     else
@@ -251,17 +254,18 @@ void XBScene3::onCelloEnergyChanged(float &energy)
 
 void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
-    if(!active)
+    if (!active)
         return;
-    
+
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-    
-    if(noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE){
-        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl; return;
+
+    if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
+        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl;
+        return;
     }
-    
+
     int wichLine = midiToRowMapping[noteOn.pitch];
-    expandingPolyLine e = stones[wichLine][ (int) ofRandom(stones[wichLine].size() - 1)];
+    expandingPolyLine e = stones[wichLine][(int) ofRandom(stones[wichLine].size() - 1)];
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
     stonesToDraw.push_back(e);
@@ -274,16 +278,23 @@ void XBScene3::onPianoNoteOff(int &noteOff)
     pianoEnergy = 0;
 }
 
-void XBScene3::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {
+void XBScene3::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
+{
     leftHand.pos.set(lPos.x, lPos.y, lPos.z);
 }
-void XBScene3::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel){
+
+void XBScene3::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
+{
     leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
 }
-void XBScene3::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos){
+
+void XBScene3::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
+{
     rightHand.pos.set(rPos.x, rPos.y, rPos.z);
 }
-void XBScene3::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel){
+
+void XBScene3::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
+{
     rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
 }
 
@@ -317,9 +328,9 @@ void XBScene3::initStones()
     for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         string pathId = svg.getPathIdAt(i);
-        if(pathId.empty())
+        if (pathId.empty())
             continue;
-        pathId = pathId.substr(1,2);
+        pathId = pathId.substr(1, 2);
 //        cout << "Path " << i << " ID: " << pathId << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
@@ -351,12 +362,12 @@ void XBScene3::initStones()
     string filePath = "resources/mapping_38_rows_midi.txt";
     //Load file placed in bin/data
     ofFile file(filePath);
-    
-    if(!file.exists()){
+
+    if (!file.exists()) {
         ofLogError("The file " + filePath + " is missing");
     }
     ofBuffer buffer(file);
-    
+
     //Read file line by line
     for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
         string line = *it;
@@ -460,14 +471,15 @@ void XBScene3::initPhysics()
     }
 }
 
-void XBScene3::updateVioinCello(){
+void XBScene3::updateVioinCello()
+{
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
     v.glowRadius = myGUI->glowRadius * violinEnergy;
     x.glowRadius = myGUI->glowRadius * celloEnergy;
     v.glowAmount = myGUI->glowAmount;
     x.glowAmount = myGUI->glowAmount;
-    
+
     // update violin and cello positions and colours
     vPathIndex += myGUI->pathSpeed;
     v.setSize(myGUI->size);
@@ -479,7 +491,7 @@ void XBScene3::updateVioinCello(){
     ofPoint vTarget = vPath.getPointAtIndexInterpolated(vPathIndex);
     v.seek(vTarget);
     v.update();
-    
+
     xPathIndex += myGUI->pathSpeed;
     x.setSize(myGUI->size);
     x.setMaxForce(myGUI->maxForce);
@@ -490,34 +502,34 @@ void XBScene3::updateVioinCello(){
     ofPoint xTarget = xPath.getPointAtIndexInterpolated(xPathIndex);
     x.seek(xTarget);
     x.update();
-    
-    if(myGUI->linkAudio){
+
+    if (myGUI->linkAudio) {
         v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
         x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
     }
-    else{
-        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA ));
-        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA ));
+    else {
+        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
     }
-        
+
     //update particles emitters
     float dist = x.getLocation().distance(v.getLocation());
 
     if (dist < myGUI->maxDistance) {
         float numParticles = ofMap(dist, 0, myGUI->maxDistance, myGUI->maxParticles, 0);
-        if(numParticles < 1.f && numParticles > 0.f)
+        if (numParticles < 1.f && numParticles > 0.f)
             numParticles = ofGetFrameNum() % 2;
         numParticles = floor(numParticles);
-        for(int i = 0; i< numParticles; i++){
+        for (int i = 0; i < numParticles; i++) {
             shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c.get()->setPhysics(0.2, 0.2, 0.002);
             c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
             ofPoint vel = myGUI->particleVelocity;
             ofPoint spread = myGUI->particleSpread;
             c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA* violinEnergy));
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
             circles.push_back(c);
-            
+
             shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c2.get()->setPhysics(0.2, 0.2, 0.002);
             c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
