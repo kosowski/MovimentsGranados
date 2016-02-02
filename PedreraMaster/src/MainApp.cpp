@@ -30,8 +30,8 @@ void MainApp::setup()
         int windowWidths = int(MAIN_WINDOW_WIDTH * windowScale) + GUI_WINDOW_WIDTH;
         int winX = ofGetScreenWidth()/2 - windowWidths/2;
         int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * windowScale)/2;
-        ofSetWindowPosition(winX, winY);
         ofSetWindowShape(int(MAIN_WINDOW_WIDTH * windowScale), int(MAIN_WINDOW_HEIGHT * windowScale));
+        ofSetWindowPosition(winX, winY);
     }
 
     ofSetFrameRate(60);
