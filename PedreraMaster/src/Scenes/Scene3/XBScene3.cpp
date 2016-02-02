@@ -82,6 +82,7 @@ void XBScene3::drawIntoFBO()
 
 void XBScene3::updatePiano(){
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    
     // update piano's stones
     for (int i = 0; i < stonesToDraw.size(); i++) {
         stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
