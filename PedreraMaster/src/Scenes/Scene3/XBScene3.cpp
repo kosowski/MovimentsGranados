@@ -4,7 +4,7 @@
 
 #include "XBScene3.h"
 #include "XBScene3GUI.h"
-
+#include "XBSettingsManager.h"
 
 void XBScene3::setup(XBBaseGUI *_gui)
 {
@@ -41,11 +41,12 @@ void XBScene3::update()
 void XBScene3::drawIntoFBO()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
 
     fbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         if (showFacadeImage)
             templateImage.draw(0, 0);
         else

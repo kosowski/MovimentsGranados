@@ -4,8 +4,10 @@
 
 #include "GUIApp.h"
 #include "MainApp.h"
+#include "XBSettingsManager.h"
 
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS [GUI]";
+static const string STR_APPSETTINGS_FILENAME = "settings/AppSettings.xml";
 
 
 void GUIApp::setup()
@@ -15,12 +17,15 @@ void GUIApp::setup()
 
     ofBackground(68, 84, 71);
 
+    XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     int winX, winY;
     if (MAIN_WINDOW_MODE == OF_WINDOW)
     {
-        int windowWidths = int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE) + GUI_WINDOW_WIDTH;
-        winX = ofGetScreenWidth()/2 - windowWidths/2 + int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE);
-        winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * MAIN_WINDOW_SCALE)/2;
+        int windowWidths = int(MAIN_WINDOW_WIDTH * windowScale) + GUI_WINDOW_WIDTH;
+        winX = ofGetScreenWidth()/2 - windowWidths/2 + int(MAIN_WINDOW_WIDTH * windowScale);
+        winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * windowScale)/2;
     }
     else
     {
@@ -29,6 +34,7 @@ void GUIApp::setup()
     }
 
     ofSetWindowPosition(winX, winY);
+    ofSetWindowShape(GUI_WINDOW_WIDTH, GUI_WINDOW_HEIGHT);
 
     currentGuiIndex = -1;
 

@@ -4,6 +4,7 @@
 
 #include "XBScene4.h"
 #include "XBScene4GUI.h"
+#include "XBSettingsManager.h"
 
 void XBScene4::setup(XBBaseGUI *_gui)
 {
@@ -42,13 +43,14 @@ void XBScene4::update()
 void XBScene4::drawIntoFBO()
 {
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
-    
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     updateViolinCelloFbo();
     
     fbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         if(showFacadeImage)
             templateImage.draw(0,0);
         else
@@ -157,10 +159,12 @@ void XBScene4::updateViolin(){
 }
 void XBScene4::updateViolinCelloFbo(){
     XBScene4GUI *myGUI = (XBScene4GUI *)gui;
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     auxFbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         
         ofBackground(0);
         //draw cello windows

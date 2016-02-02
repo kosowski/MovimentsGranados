@@ -6,6 +6,7 @@
 #include "XBScene5.h"
 #include "XBScene6.h"
 #include "../../Shared/OSCSettings.h"
+#include "XBSettingsManager.h"
 
 #ifdef OF_DEBUG
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS (DEBUG)";
@@ -13,20 +14,25 @@ static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS (DEBUG)";
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
 #endif
 
+static const string STR_APPSETTINGS_FILENAME = "settings/AppSettings.xml";
+
 
 void MainApp::setup()
 {
     ofSetWindowTitle(STR_WINDOW_TITLE);
     ofBackground(0, 0, 0);
 
+    XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     if (MAIN_WINDOW_MODE == OF_WINDOW)
     {
-        int windowWidths = int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE) + GUI_WINDOW_WIDTH;
+        int windowWidths = int(MAIN_WINDOW_WIDTH * windowScale) + GUI_WINDOW_WIDTH;
         int winX = ofGetScreenWidth()/2 - windowWidths/2;
-        int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * MAIN_WINDOW_SCALE)/2;
+        int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * windowScale)/2;
         ofSetWindowPosition(winX, winY);
+        ofSetWindowShape(int(MAIN_WINDOW_WIDTH * windowScale), int(MAIN_WINDOW_HEIGHT * windowScale));
     }
-
 
     ofSetFrameRate(60);
     ofSetVerticalSync(true);

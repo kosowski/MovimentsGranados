@@ -4,6 +4,7 @@
 
 #include "XBScene1.h"
 #include "XBScene1GUI.h"
+#include "XBSettingsManager.h"
 
 bool maskWindows = true;
 
@@ -42,11 +43,13 @@ void XBScene1::update()
 void XBScene1::drawIntoFBO()
 {
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
-    
+
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     fbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         if (showFacadeImage)
             templateImage.draw(0, 0);
         else
@@ -63,8 +66,8 @@ void XBScene1::drawIntoFBO()
         // draw time markers
         if (myGUI->showTimeMarker) {
             ofSetColor(220);
-            ofDrawLine(0, violinTimeIndex, ofGetWidth() / MAIN_WINDOW_SCALE, violinTimeIndex);
-            ofDrawLine(celloTimeIndex, 0, celloTimeIndex, ofGetHeight() / MAIN_WINDOW_SCALE);
+            ofDrawLine(0, violinTimeIndex, ofGetWidth() / windowScale, violinTimeIndex);
+            ofDrawLine(celloTimeIndex, 0, celloTimeIndex, ofGetHeight() / windowScale);
         }
         
         drawWindows();
@@ -90,11 +93,12 @@ void XBScene1::drawIntoFBO()
 
 void XBScene1::updateViolin(){
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
-    
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     // increase time marker
     violinTimeIndex -= myGUI->timeIncrement;
     if (violinTimeIndex < 0)
-        violinTimeIndex = ofGetHeight() / MAIN_WINDOW_SCALE;
+        violinTimeIndex = ofGetHeight() / windowScale;
     
     if (violinLineIndex <= 0)
         currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
@@ -120,9 +124,10 @@ void XBScene1::updateViolin(){
 
 void XBScene1::updateCello(){
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
-    
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     celloTimeIndex += myGUI->timeIncrement;
-    if (celloTimeIndex > ofGetWidth() / MAIN_WINDOW_SCALE) {
+    if (celloTimeIndex > ofGetWidth() / windowScale) {
         celloTimeIndex = 0;
         currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
     }

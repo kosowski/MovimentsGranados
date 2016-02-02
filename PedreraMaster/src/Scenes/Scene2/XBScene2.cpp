@@ -4,6 +4,7 @@
 
 #include "XBScene2.h"
 #include "XBScene2GUI.h"
+#include "XBSettingsManager.h"
 
 #define NODE_SIZE 6
 #define GRID_X_RES 40
@@ -50,11 +51,12 @@ void XBScene2::update()
 void XBScene2::drawIntoFBO()
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
 
     fbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
 
         if (showFacadeImage)
             templateImage.draw(0, 0);
@@ -99,6 +101,8 @@ void XBScene2::drawIntoFBO()
 
 void XBScene2::updateCello(){
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     // update cello windows
     for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
         celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
@@ -112,7 +116,7 @@ void XBScene2::updateCello(){
     celloPianoFbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         ofBackground(0);
         //draw cello windows
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
@@ -157,12 +161,13 @@ void XBScene2::updateCello(){
 
 void XBScene2::updateViolin(){
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-    
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     // draw violin windows into its fbo
     violinFbo.begin();
     {
         ofPushMatrix();
-        ofScale(MAIN_WINDOW_SCALE, MAIN_WINDOW_SCALE);
+        ofScale(windowScale, windowScale);
         ofBackground(0);
         
         //draw violin windows
