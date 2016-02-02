@@ -34,7 +34,19 @@ public:
     void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
 
 private:
-
+    void updateViolin();
+    void updateCello();
+    void updatePiano();
+    void updateDirector();
+    void updateViolinCelloFbo();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawViolin();
+    void drawCello();
+    void drawViolinWindow();
+    void drawCelloWindow();
+    
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);
