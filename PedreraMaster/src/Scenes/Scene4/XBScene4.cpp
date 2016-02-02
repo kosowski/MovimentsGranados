@@ -75,6 +75,7 @@ void XBScene4::drawIntoFBO()
        
         ofPopMatrix();
         
+        // draw window interiors
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_ADD);
         auxFbo.draw(0, 0);
