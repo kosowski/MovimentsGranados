@@ -13,7 +13,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     auxFbo.begin();
     ofClear(0);
     auxFbo.end();
-    windowMask.load("resources/img/Esc2_fade_Completo.png");
+    windowMask.load("resources/img/Esc2_fade_Completo_v2.png");
     
     initWindows("resources/Esc2Cello.svg", celloWindows, 2, 2);
     initWindows("resources/Esc2Piano.svg", violinWindows, 2, 2);
