@@ -25,6 +25,7 @@ public:
     
     ofxGuiGroup violinGroup;
     ofxFloatSlider windowFade;
+    ofxToggle drawWindows;
     ofxFloatSlider timeIncrement;
     ofxToggle showTimeMarker;
     

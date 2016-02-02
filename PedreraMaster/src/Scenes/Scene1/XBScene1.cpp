@@ -70,7 +70,8 @@ void XBScene1::drawIntoFBO()
             ofDrawLine(celloTimeIndex, 0, celloTimeIndex, ofGetHeight() / windowScale);
         }
 
-        drawWindows();
+        if(myGUI->drawWindows)
+            drawWindows();
 
         // mask for removing the windows
         if (maskWindows == true) {
