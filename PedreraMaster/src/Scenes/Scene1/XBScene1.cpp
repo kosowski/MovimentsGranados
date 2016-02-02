@@ -84,7 +84,7 @@ void XBScene1::drawIntoFBO()
         drawFadeRectangle();
     }
     fbo.end();
-    blur.apply(&fbo, myGUI->blurAmount, 1);
+    blur.apply(&fbo, 1, myGUI->blurAmount);
     applyPostFX();
 }
 
