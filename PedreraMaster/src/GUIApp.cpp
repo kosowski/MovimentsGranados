@@ -33,8 +33,8 @@ void GUIApp::setup()
         winY = ofGetScreenHeight()/2 - GUI_WINDOW_HEIGHT/2;
     }
 
-    ofSetWindowPosition(winX, winY);
     ofSetWindowShape(GUI_WINDOW_WIDTH, GUI_WINDOW_HEIGHT);
+    ofSetWindowPosition(winX, winY);
 
     currentGuiIndex = -1;
 
