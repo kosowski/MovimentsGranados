@@ -179,6 +179,13 @@ void XBScene3::keyReleased(int key)
             initWaves();
             break;
         }
+        case 'b':
+        {
+            for(int i=0;i< edges.size();i++){
+                edges[i].get()->destroy();
+            }
+            break;
+        }
         default: break;
     }
 }
