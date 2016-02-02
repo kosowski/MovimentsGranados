@@ -84,7 +84,7 @@ void MainApp::draw()
 
     if (showFPS) {
         ofSetColor(ofColor::white);
-        ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, ofGetHeight() - 15);
+        ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, 15);
     }
     
     syphonServer.publishScreen();
