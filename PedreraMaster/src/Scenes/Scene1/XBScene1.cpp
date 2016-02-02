@@ -579,7 +579,7 @@ void XBScene1::initLines()
     // load vertical lines
     //    svg.load("resources/verticales.svg");
     svg.load("resources/verticales_v03_pocas_lineas.svg");
-    for (int i = 1; i < svg.getNumPath(); i++) {
+    for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -720,7 +720,7 @@ void XBScene1::initWaves()
     // create vertical waves
     svg.load("resources/verticales_v03_pocas_lineas.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
-    for (int i = 1; i < svg.getNumPath(); i++) {
+    for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
