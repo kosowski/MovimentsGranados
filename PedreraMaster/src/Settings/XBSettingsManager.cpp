@@ -5,8 +5,10 @@
 #include "XBSettingsManager.h"
 #include "ofxXmlSettings.h"
 
-const static string STR_TAG_MAIN = "AppSettings";
-const static string STR_TAG_WINDOWSCALE = "WindowScale";
+const static string STR_TAG_MAIN            = "AppSettings";
+const static string STR_TAG_WINDOWSCALE     = "WindowScale";
+const static string STR_TAG_TRANSITIONTIME  = "TransitionTime";
+
 
 bool XBSettingsManager::loadFile(string filename)
 {
@@ -18,7 +20,9 @@ bool XBSettingsManager::loadFile(string filename)
         // Check XML validity
         {
             loaded = settings.tagExists(STR_TAG_MAIN);
-            loaded = loaded && settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE);
+            loaded = loaded &&
+                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE) &&
+                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME);
 
             if (!loaded)
             {
@@ -28,6 +32,7 @@ bool XBSettingsManager::loadFile(string filename)
         }
 
         windowScale = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.0));
+        transitionTime = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0));
     }
     else
     {
@@ -42,5 +47,6 @@ void XBSettingsManager::createSettingsFile(string filename)
 {
     ofxXmlSettings settings;
     settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.7);
+    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0);
     settings.saveFile(filename);
 }

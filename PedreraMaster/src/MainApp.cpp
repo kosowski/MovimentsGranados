@@ -102,31 +102,34 @@ void MainApp::keyPressed(int key)
 
 void MainApp::keyReleased(int key)
 {
+    float transitionTime = XBSettingsManager::getInstance().getTransitionTime();
+
     switch (key)
     {
         case OF_KEY_LEFT:
         case OF_KEY_DOWN:
-            sceneManager.goToPrevScene(SCENETRANSITION_Fade, 0.5f);
+            sceneManager.goToPrevScene(transitionTime);
             break;
         case OF_KEY_RIGHT:
         case OF_KEY_UP:
-            sceneManager.goToNextScene(SCENETRANSITION_Fade, 0.5f);
+            cout << "TR time: " << transitionTime << endl;
+            sceneManager.goToNextScene(transitionTime);
             break;
         case 'q':
         case 'Q':
             showFPS = !showFPS; break;
         case '1':
-            sceneManager.goToScene(0); break;
+            sceneManager.goToScene(0, transitionTime); break;
         case '2':
-            sceneManager.goToScene(1); break;
+            sceneManager.goToScene(1, transitionTime); break;
         case '3':
-            sceneManager.goToScene(2); break;
+            sceneManager.goToScene(2, transitionTime); break;
         case '4':
-            sceneManager.goToScene(3); break;
+            sceneManager.goToScene(3, transitionTime); break;
         case '5':
-            sceneManager.goToScene(4); break;
+            sceneManager.goToScene(4, transitionTime); break;
         case '6':
-            sceneManager.goToScene(5); break;
+            sceneManager.goToScene(5, transitionTime); break;
         default: break;
     }
     sceneManager.keyReleased(key);

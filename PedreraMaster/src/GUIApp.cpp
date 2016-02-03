@@ -96,7 +96,7 @@ void GUIApp::drawLegend()
 
 void GUIApp::drawSceneName()
 {
-    ofDrawBitmapStringHighlight(sceneManager->getCurrentScene()->getName(), ofGetWidth() - 75, ofGetHeight() - 10);
+    ofDrawBitmapStringHighlight(sceneManager->getCurrentSceneName(), ofGetWidth() - 300, ofGetHeight() - 10);
 }
 
 void GUIApp::exit()

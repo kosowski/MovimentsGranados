@@ -54,7 +54,7 @@ void XBSceneManager::draw()
     if (scenes.size() == 0) return;
     if (currentSceneIndex < 0) return;
 
-//    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
     switch(state)
     {
@@ -73,66 +73,47 @@ void XBSceneManager::draw()
         default: break;
     }
 
-//    ofDisableBlendMode();
+    ofDisableBlendMode();
 }
 
 void XBSceneManager::exit()
 {
 }
 
-void XBSceneManager::goToScene(unsigned int sceneIndex, SceneTransitionMode transitionMode, float timeInSeconds)
+void XBSceneManager::goToScene(unsigned int sceneIndex, float timeInSeconds)
 {
     if (sceneIndex >= scenes.size()) return;
     if (sceneIndex == currentSceneIndex) return;
     if (state == SCENESTATE_Transitioning) return;
 
-    switch(transitionMode)
-    {
-        case SCENETRANSITION_Direct:
-        {
-            scenes[currentSceneIndex]->leftScene();
-            state = SCENESTATE_OnScene;
-            currentSceneIndex = sceneIndex;
-            scenes[currentSceneIndex]->setFBOAlpha(255.0f);
-            scenes[currentSceneIndex]->enteredScene();
-            ofNotifyEvent(eventSceneChanged, currentSceneIndex);
-            break;
-        }
-        case SCENETRANSITION_Fade:
-        {
-            state = SCENESTATE_Transitioning;
-            nextSceneIndex = sceneIndex;
+    state = SCENESTATE_Transitioning;
+    nextSceneIndex = sceneIndex;
 
-            scenes[nextSceneIndex]->setFBOAlpha(0.0f);
-            scenes[nextSceneIndex]->enteredScene();
+    scenes[nextSceneIndex]->setFBOAlpha(0.0f);
+    scenes[nextSceneIndex]->enteredScene();
 
-            float tweenDelay = 0.0f;
+    float tweenDelay = 0.0f;
 
-            Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), *(scenes[currentSceneIndex]->getFBOAlpha()), 0.0f, tweenDelay, timeInSeconds);
-            Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
-            srcTween->setRepeat(1, false);
+    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), *(scenes[currentSceneIndex]->getFBOAlpha()), 0.0f, tweenDelay, timeInSeconds);
+    Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
+    srcTween->setRepeat(1, false);
 
-            Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), *(scenes[nextSceneIndex]->getFBOAlpha()), 255.0f, tweenDelay, timeInSeconds);
-            Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
-            dstTween->setRepeat(1, false);
-            Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);
-
-            break;
-        }
-        default: break;
-    }
+    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), *(scenes[nextSceneIndex]->getFBOAlpha()), 255.0f, tweenDelay, timeInSeconds);
+    Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
+    dstTween->setRepeat(1, false);
+    Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);
 }
 
-void XBSceneManager::goToNextScene(SceneTransitionMode transitionMode, float timeInSeconds)
+void XBSceneManager::goToNextScene(float timeInSeconds)
 {
     unsigned int sceneIndex = (unsigned int)((currentSceneIndex + 1) % scenes.size());
-    goToScene(sceneIndex, transitionMode, timeInSeconds);
+    goToScene(sceneIndex, timeInSeconds);
 }
 
-void XBSceneManager::goToPrevScene(SceneTransitionMode transitionMode, float timeInSeconds)
+void XBSceneManager::goToPrevScene(float timeInSeconds)
 {
     unsigned int sceneIndex = (currentSceneIndex == 0) ? ((unsigned int)(scenes.size() - 1)) : ((unsigned int)(currentSceneIndex - 1));
-    goToScene(sceneIndex, transitionMode, timeInSeconds);
+    goToScene(sceneIndex, timeInSeconds);
 }
 
 void XBSceneManager::drawSceneAtIndex(int sceneIndex)
@@ -148,6 +129,20 @@ XBBaseScene *XBSceneManager::getCurrentScene()
 {
     if (currentSceneIndex == -1) return nullptr;
     return scenes[currentSceneIndex];
+}
+
+string XBSceneManager::getCurrentSceneName()
+{
+    switch (state)
+    {
+        case SCENESTATE_OnScene:
+            return getCurrentScene()->getName();
+        case SCENESTATE_Transitioning:
+        {
+            string sceneName = "Transitioning from " + scenes[currentSceneIndex]->getName() + " to " + scenes[nextSceneIndex]->getName();
+            return sceneName;
+        }
+    }
 }
 
 void XBSceneManager::onFadeComplete(float *arg)
