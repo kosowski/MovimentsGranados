@@ -15,7 +15,7 @@ bool PMMotionExtractor::setup()
 
 	kinect.open();
 	kinect.initDepthSource();
-	//kinect.initColorSource();
+	kinect.initColorSource();
 	kinect.initInfraredSource();
 	kinect.initBodySource();
 	kinect.initBodyIndexSource();
@@ -52,6 +52,9 @@ void PMMotionExtractor::update()
 				auto bodies = kinect.getBodySource()->getBodies();
 				for (auto body : bodies) {
 					//TODO: Implement body gesture detection
+					//cout << body.trackingId << endl;
+					if (body.trackingId != 0)
+						//break
 					for (auto joint : body.joints) {
 						if (joint.first == JointType_HandLeft) {
 							handsInfo.leftHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
@@ -151,7 +154,7 @@ void PMMotionExtractor::update()
         handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
         handsInfo.leftHand.pos.z = 1;
         computeVelocity(5);
-		cout << ofGetMouseX() << endl;
+		//cout << ofGetMouseX() << endl;
     }else{
         hasUser = false;
         ofNotifyEvent(eventUserDetection, hasUser, this);
@@ -240,24 +243,13 @@ void PMMotionExtractor::computeVelocity(int meanSize)
 }
 
 bool PMMotionExtractor::reset(bool kinectActivated){
-    //if(!kinectActivated)
-    //    return setup();
-    //else{
-    //    hasUser=false;
-    //    ofNotifyEvent(eventUserDetection, hasUser, this);
-    //    kinect.setPaused(true);
-    //    kinect.removeHandsGenerator();
-    //    kinect.removeAllHandFocusGestures();
-    //    kinect.addHandsGenerator();
-    //    kinect.addAllHandFocusGestures();
-    //    kinect.setMaxNumHands(2);
-    //    
-    //    for (int i = 0; i < kinect.getMaxNumHands(); i++) {
-    //        ofxOpenNIDepthThreshold depthThreshold = ofxOpenNIDepthThreshold(0, 0, false, true, true, true, true);
-    //        kinect.addDepthThreshold(depthThreshold);
-    //    }
-    //    kinect.setPaused(false);
-    //    return true;
-    //}
+	kinect.close();
+	kinect.open();
 	return true;
+}
+
+
+ofPixels PMMotionExtractor::getColorPixels() {
+	auto ColoredImage = kinect.getColorSource();
+	return ColoredImage->getPixels();
 }

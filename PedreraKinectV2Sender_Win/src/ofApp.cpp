@@ -10,6 +10,7 @@ static const string STR_STATE_SETUP         = "Initializing Kinect...";
 static const string STR_STATE_DETECTING     = "Detecting Person...";
 static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
+static const string STR_BUTTON_SENDVIDEO	= "Send Video over IP";
 static const string STR_TOGGLE_SHOW_KINECT  = "Draw Kinect Output";
 static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
 
@@ -33,12 +34,14 @@ void ofApp::setup()
         gui.setPosition(GUI_POSX, GUI_POSY);
         gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
         gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
+		gui.add(sendVideo.setup(STR_BUTTON_SENDVIDEO, true));
         gui.loadFromFile(SETTINGS_FILENAME);
 
         gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
+		
         
         guiRestartBtn.addListener(this, &ofApp::resetKinect);
 
@@ -61,14 +64,58 @@ void ofApp::setup()
         }
     }
 
+	// POSITIONING
+	{
+		userPositionedTimeStamp = 0;
+		userRemovedTimeStamp = 0;
+	}
+
+	// VIDEO Server
+	{
+		ofx::HTTP::SimpleIPVideoServerSettings settings;
+
+		// Many other settings are available.
+		settings.setPort(7890);
+
+		// The default maximum number of client connections is 5.
+		settings.ipVideoRouteSettings.setMaxClientConnections(2);
+
+		// Apply the settings.
+		server.setup(settings);
+
+		// Start the server.
+		server.start();
+		
+		//Get URL
+		serverURL = server.getURL();
+		cout << serverURL << endl;
+
+		// Launch a browser with the address of the server.
+		//ofLaunchBrowser(server.getURL());
+
+		
+	}
+
     ofAddListener(motionExtractor->eventUserDetection, this, &ofApp::userDetection);
 	ofAddListener(motionExtractor->eventUserPositioned, this, &ofApp::userPositioned);
+
+
 }
 
 void ofApp::update()
 {
     handleStateChanges();
     motionExtractor->update();
+
+
+	if (sendVideo) {
+		colorPixels.setFromPixels(motionExtractor->getColorPixels()); //Get Color Stream
+		colorPixels.resize(480, 270); //Resize color stream to improve speed
+		colorPixels.setImageType(OF_IMAGE_GRAYSCALE);
+		server.send(colorPixels.getPixels()); //send resized color stream
+	}
+
+
     if(currState == STATE_CAPTURING){
         handsInfo = motionExtractor->gethandsInfo();
         sendHandInfo();
@@ -146,19 +193,23 @@ void ofApp::userDetection(bool &hasUser)
 {
     if (hasUser)
         currState = STATE_CAPTURING;
-    else
-        currState = STATE_DETECTING;
+	else {
+		currState = STATE_DETECTING;
+		userRemovedTimeStamp = ofGetElapsedTimef();
+	}
 }
 
 void ofApp::userPositioned(bool &hasPositioned)
 {
+	userPositionedTimeStamp = ofGetElapsedTimef();
 	ofxOscMessage userPositioned;
 	stringstream userPositioned_address;
-	userPositioned_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE << OSC_KINECT_STATE_POSITIONED;
+	userPositioned_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
 	userPositioned.setAddress(userPositioned_address.str());
-	userPositioned.addBoolArg(hasPositioned);
+	userPositioned.addStringArg(OSC_KINECT_STATE_POSITIONED);
 	oscSender.sendMessage(userPositioned, false);
 	oscSender_Max.sendMessage(userPositioned, false);
+	cout << "userDetected" + ofGetTimestampString() << endl;
 }
 
 void ofApp::sendHandInfo()
@@ -217,4 +268,3 @@ void ofApp::windowResized(int w, int h)
 	float kinect_aspectRatio = (float)KINECT_STD_COLOR_WIDTH / (float)KINECT_STD_COLOR_HEIGHT;
 	ofSetWindowShape((float)h*kinect_aspectRatio, h);
 }
-
