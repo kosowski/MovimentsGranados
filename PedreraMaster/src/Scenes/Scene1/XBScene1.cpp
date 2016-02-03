@@ -611,8 +611,9 @@ void XBScene1::initParticles()
 
 void XBScene1::initStones()
 {
-    svg.load("resources/Esc1Piano.svg");
-    for (int i = 0; i < svg.getNumPath(); i++) {
+    svg.load("resources/Esc1Pianov02.svg");
+    cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
+    for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
