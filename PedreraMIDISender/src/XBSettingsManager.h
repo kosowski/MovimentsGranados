@@ -18,15 +18,13 @@ public:
 
     bool loadFile(string filename);
 
-    float getWindowScale()          { return windowScale; }
-    float getTransitionTime()       { return transitionTime; }
+    string getOSCHost() { return oscHost; }
 
 private:
 
     void createSettingsFile(string filename);
 
-    float windowScale;
-    float transitionTime;
+    string oscHost;
 };
 
 

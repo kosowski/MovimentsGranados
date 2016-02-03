@@ -396,50 +396,13 @@ void XBScene4::keyReleased(int key)
     }
 }
 
-//--------------------------------------------------------------
-void XBScene4::onViolinPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    violinNote = pitch;
-}
-
-void XBScene4::onViolinEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        violinEnergy = 0;
-    else
-        violinEnergy = energy;
-}
-
-void XBScene4::onCelloPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    celloNote = pitch;
-}
-
-void XBScene4::onCelloEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        celloEnergy = 0;
-    else
-        celloEnergy = energy;
-}
 
 void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     if (!active)
         return;
 
-    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
-
+    XBBaseScene::onPianoNoteOn(noteOn);
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;
 
     if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
@@ -454,31 +417,6 @@ void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     stonesToDraw.push_back(e);
 }
 
-void XBScene4::onPianoNoteOff(int &noteOff)
-{
-//    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy = 0;
-}
-
-void XBScene4::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
-{
-    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
-}
-
-void XBScene4::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
-{
-    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
-}
-
-void XBScene4::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
-{
-    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
-}
-
-void XBScene4::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
-{
-    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
-}
 
 
 void XBScene4::initReactionDiffusion()

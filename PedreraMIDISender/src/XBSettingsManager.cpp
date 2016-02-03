@@ -5,10 +5,8 @@
 #include "XBSettingsManager.h"
 #include "ofxXmlSettings.h"
 
-const static string STR_TAG_MAIN            = "AppSettings";
-const static string STR_TAG_WINDOWSCALE     = "WindowScale";
-const static string STR_TAG_TRANSITIONTIME  = "TransitionTime";
-
+const static string STR_TAG_MAIN = "AppSettings";
+const static string STR_TAG_OSCHOST = "OSCHost";
 
 bool XBSettingsManager::loadFile(string filename)
 {
@@ -20,9 +18,7 @@ bool XBSettingsManager::loadFile(string filename)
         // Check XML validity
         {
             loaded = settings.tagExists(STR_TAG_MAIN);
-            loaded = loaded &&
-                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE) &&
-                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME);
+            loaded = loaded && settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_OSCHOST);
 
             if (!loaded)
             {
@@ -31,8 +27,7 @@ bool XBSettingsManager::loadFile(string filename)
             }
         }
 
-        windowScale = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.0));
-        transitionTime = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0));
+        oscHost = settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_OSCHOST, "localhost");
     }
     else
     {
@@ -46,7 +41,6 @@ bool XBSettingsManager::loadFile(string filename)
 void XBSettingsManager::createSettingsFile(string filename)
 {
     ofxXmlSettings settings;
-    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.7);
-    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0);
+    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_OSCHOST, "localhost");
     settings.saveFile(filename);
 }

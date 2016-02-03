@@ -307,75 +307,7 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
     return currentWindow;
 }
 
-//--------------------------------------------------------------
-void XBScene2::onViolinPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    violinNote = pitch;
-}
 
-void XBScene2::onViolinEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-    if (energy <= energyThreshold)
-        violinEnergy = 0;
-    else
-        violinEnergy = energy;
-}
-
-void XBScene2::onCelloPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    celloNote = pitch;
-}
-
-void XBScene2::onCelloEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-    if (energy <= energyThreshold)
-        celloEnergy = 0;
-    else
-        celloEnergy = energy;
-}
-
-void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
-{
-    if (!active)
-        return;
-//    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
-    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
-    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
-}
-
-void XBScene2::onPianoNoteOff(int &noteOff)
-{
-//    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy = 0;
-}
-
-void XBScene2::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
-{
-    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
-}
-
-void XBScene2::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
-{
-    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
-}
-
-void XBScene2::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
-{
-    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
-}
-
-void XBScene2::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
-{
-    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
-}
 
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)

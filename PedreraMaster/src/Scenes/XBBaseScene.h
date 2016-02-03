@@ -58,7 +58,10 @@ protected:
     float violinEnergy = 0;
     float pianoEnergy = 0;
     float energyThreshold = 0.01;
-
+    float celloNote;
+    float pianoNote;
+    float violinNote;
+   
     kinectHand leftHand;
     kinectHand rightHand;
     
@@ -75,28 +78,28 @@ protected:
 
     virtual void onCelloStarted() {};
     virtual void onCelloStopped() {};
-    virtual void onCelloPitchChanged(float &pitch) {};
-    virtual void onCelloEnergyChanged(float &energy) {};
-    virtual void onCelloSilenceChanged(bool &isSilent);
-    virtual void onCelloPauseChanged(bool &isPaused) {};
+    void onCelloPitchChanged(float &pitch) ;
+    void onCelloEnergyChanged(float &energy) ;
+    void onCelloSilenceChanged(bool &isSilent);
+    virtual void onCelloPauseChanged(bool &isPaused){};
     virtual void onCelloOnsetDetected() {};
 
     virtual void onViolinStarted() {};
     virtual void onViolinStopped() {};
-    virtual void onViolinPitchChanged(float &pitch) {};
-    virtual void onViolinEnergyChanged(float &energy) {};
-    virtual void onViolinSilenceChanged(bool &isSilent);
+    void onViolinPitchChanged(float &pitch) ;
+    void onViolinEnergyChanged(float &energy) ;
+    void onViolinSilenceChanged(bool &isSilent);
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
-    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) {};
-    virtual void onPianoNoteOff(int &noteOff) {};
+    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) ;
+    void onPianoNoteOff(int &noteOff) ;
 
     virtual void onKinectStateChanged(string &kState) {};
-    virtual void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) {};
-    virtual void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel) {};
-    virtual void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos) {};
-    virtual void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel) {};
+    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
+    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel) ;
+    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos) ;
+    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel) ;
 
 private:
 
