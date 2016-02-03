@@ -588,8 +588,8 @@ void XBScene1::initParticles()
 
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    vEmitter.setVelocity(myGUI->particleVelocity);
-    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = myGUI->numParticles;
@@ -597,8 +597,8 @@ void XBScene1::initParticles()
     vEmitter.size = myGUI->particleSize;
 
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    xEmitter.setVelocity(myGUI->particleVelocity);
-    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 20;
@@ -612,7 +612,7 @@ void XBScene1::initParticles()
 void XBScene1::initStones()
 {
     svg.load("resources/Esc1Pianov02.svg");
-    cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
+    //cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
@@ -703,15 +703,15 @@ void XBScene1::updateEmitters()
 
     //GUI related
     vEmitter.size = myGUI->particleSize;
-    vEmitter.setVelocity(myGUI->particleVelocity);
-    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.numPars = myGUI->numParticles;
     vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
 
     xEmitter.size = myGUI->particleSize;
-    xEmitter.setVelocity(myGUI->particleVelocity);
-    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.numPars = myGUI->numParticles;
     xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
