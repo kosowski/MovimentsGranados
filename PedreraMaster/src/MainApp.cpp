@@ -112,8 +112,8 @@ void MainApp::keyReleased(int key)
         case OF_KEY_UP:
             sceneManager.goToNextScene(SCENETRANSITION_Fade, 0.5f);
             break;
-        case 'f':
-        case 'F':
+        case 'q':
+        case 'Q':
             showFPS = !showFPS; break;
         case '1':
             sceneManager.goToScene(0); break;
