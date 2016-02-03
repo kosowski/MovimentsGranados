@@ -26,18 +26,8 @@ public:
     virtual void drawIntoFBO();
     virtual void drawGUI();
     void keyReleased(int key);
-    void onViolinPitchChanged(float &pitch);
-    void onViolinEnergyChanged(float &energy);
-    void onCelloPitchChanged(float &pitch);
-    void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
-    void onPianoNoteOff(int &noteOff);
-    void onKinectStateChanged(string &kState) {};
-    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
-    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel);
-    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos);
-    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
-
+  
 private:
     void updateViolin();
     void updateCello();
@@ -82,6 +72,8 @@ private:
     ofxBox2d  box2d;
     vector<shared_ptr<CustomBox2dParticle> > circles;
     vector<shared_ptr<ofxBox2dEdge> > edges;
+    
+    bool collisionOn = true;
     
     BlurEffect blur;
 };

@@ -48,6 +48,7 @@ public:
     
     ofxIntSlider maxAlphaWindow;
     ofxIntSlider minAlphaWindow;
+    ofxFloatSlider pianoSmoothFactor;
     
     void loadSettings();
     void saveSettings();

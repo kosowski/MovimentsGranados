@@ -103,6 +103,76 @@ void XBBaseScene::applyPostFX(){
          violinEnergy = 0;
  }
 
+void XBBaseScene::onViolinPitchChanged(float &pitch)
+{
+    if (!active)
+        return;
+    violinNote = pitch;
+}
+
+void XBBaseScene::onViolinEnergyChanged(float &energy)
+{
+    if (!active)
+        return;
+    if (energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBBaseScene::onCelloPitchChanged(float &pitch)
+{
+    if (!active)
+        return;
+    celloNote = pitch;
+}
+
+void XBBaseScene::onCelloEnergyChanged(float &energy)
+{
+    if (!active)
+        return;
+    if (energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBBaseScene::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    if (!active)
+        return;
+    //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
+    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
+//    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
+    pianoEnergy += (noteOn.velocity / MAX_MIDI_VALUE - pianoEnergy) * (1. - gui->pianoSmoothFactor);
+}
+
+void XBBaseScene::onPianoNoteOff(int &noteOff)
+{
+    //    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
+}
+
+void XBBaseScene::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
+{
+    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
+}
+
+void XBBaseScene::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
+{
+    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
+}
+
+void XBBaseScene::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
+{
+    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
+}
+
+void XBBaseScene::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
+{
+    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
+}
+
 void XBBaseScene::keyReleased(int key)
 {
     switch(key)

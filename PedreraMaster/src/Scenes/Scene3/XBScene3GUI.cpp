@@ -34,10 +34,11 @@ void XBScene3GUI::setup()
     particlesGroup.add(particleLife.setup("Particle life", 60, 1, 200));
     particlesGroup.add(maxDistance.setup("Max distance", 400, 1, 2000));
     particlesGroup.add(maxParticles.setup("Max particles", 1, 0, 10));
+    particlesGroup.add(collisionOn.setup("Collisions", true));
     particlesGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
     particlesGroup.add(particleSpread.setup("Particle spread", ofVec2f(10,0), ofVec2f(0,0), ofVec2f(150,150)));
     sceneGui.add(&particlesGroup);
-    
+        
     pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.5, 0.0, 1.));
     pianoGroup.add(stoneDamping.setup("Damping", 0.98, 0.4, 1.00));

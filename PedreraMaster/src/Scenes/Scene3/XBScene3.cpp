@@ -36,6 +36,21 @@ void XBScene3::update()
     updateVioinCello();
     updatePiano();
     updateDirector();
+    
+    if(collisionOn != myGUI->collisionOn){
+        b2Filter f;
+        if(myGUI->collisionOn){
+            f.categoryBits = 0x0001;
+            f.maskBits =0xFFFF;
+        }
+        else{
+            f.categoryBits = 0x0004;
+            f.maskBits =0x0004;
+        }
+        for (int i = 0; i < edges.size(); i++)
+            edges[i].get()->setFilterData(f);
+        collisionOn = myGUI->collisionOn;
+    }
 }
 
 void XBScene3::drawIntoFBO()
@@ -203,66 +218,20 @@ void XBScene3::keyReleased(int key)
             initWaves();
             break;
         }
-        case 'b': {
-            for (int i = 0; i < edges.size(); i++) {
-                edges[i].get()->destroy();
-            }
-            break;
-        }
         default:
             break;
     }
 }
 
 //--------------------------------------------------------------
-void XBScene3::onViolinPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    violinNote = pitch;
-}
-
-void XBScene3::onViolinEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        violinEnergy = 0;
-    else
-        violinEnergy = energy;
-}
-
-void XBScene3::onCelloPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-
-    celloNote = pitch;
-}
-
-void XBScene3::onCelloEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        celloEnergy = 0;
-    else
-        celloEnergy = energy;
-}
 
 void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     if (!active)
         return;
 
+    XBBaseScene::onPianoNoteOn(noteOn);
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-
-    if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
-        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl;
-        return;
-    }
 
     int wichLine = midiToRowMapping[noteOn.pitch];
     expandingPolyLine e = stones[wichLine][(int) ofRandom(stones[wichLine].size() - 1)];
@@ -272,31 +241,8 @@ void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
 }
 
-void XBScene3::onPianoNoteOff(int &noteOff)
-{
-//    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy = 0;
-}
 
-void XBScene3::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
-{
-    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
-}
 
-void XBScene3::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
-{
-    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
-}
-
-void XBScene3::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
-{
-    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
-}
-
-void XBScene3::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
-{
-    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
-}
 
 void XBScene3::initPaths()
 {
@@ -412,7 +358,6 @@ void XBScene3::initWaves()
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
-//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
@@ -428,7 +373,6 @@ void XBScene3::initWaves()
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
-//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
@@ -447,9 +391,7 @@ void XBScene3::initPhysics()
     // Box2d
     box2d.init();
     box2d.setGravity(0, 2);
-    //box2d.createGround();
     box2d.setFPS(60.0);
-//    box2d.registerGrabbing();
 
     int spacing = 40;
     // create horzontal waves
