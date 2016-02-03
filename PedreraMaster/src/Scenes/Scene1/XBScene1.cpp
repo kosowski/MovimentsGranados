@@ -362,6 +362,7 @@ void XBScene1::onViolinPitchChanged(float &pitch)
     if (!active)
         return;
 
+    XBBaseScene::onViolinPitchChanged(pitch);
     int wichLine = floor(ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
     currentViolinNote = verticalLines[wichLine];
     violinLineIndex = findIntersectionVertical(currentViolinNote, violinTimeIndex);
@@ -370,16 +371,6 @@ void XBScene1::onViolinPitchChanged(float &pitch)
     //    violinLineIndex = findIntersectionHorizontal(currentViolinNote, celloTimeIndex);
 }
 
-void XBScene1::onViolinEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        violinEnergy = 0;
-    else
-        violinEnergy = energy;
-}
 
 void XBScene1::onCelloPitchChanged(float &pitch)
 {
@@ -387,6 +378,7 @@ void XBScene1::onCelloPitchChanged(float &pitch)
 
     if (!active)
         return;
+    XBBaseScene::onCelloPitchChanged(pitch);
     if(myGUI->celloVertical){
         int wichLine = floor(ofClamp(pitch, 0., 1.) * (verticalLines.size() - 1));
         currentCelloNote = verticalLines[wichLine];
@@ -399,21 +391,11 @@ void XBScene1::onCelloPitchChanged(float &pitch)
     }
 }
 
-void XBScene1::onCelloEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-    if (energy <= energyThreshold)
-        celloEnergy = 0;
-    else
-        celloEnergy = energy;
-}
-
 void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     if (!active)
         return;
-
+    XBBaseScene::onPianoNoteOn(noteOn);
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
 
     if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
@@ -425,33 +407,6 @@ void XBScene1::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     e.life = 1;
     e.amplitude = myGUI->stoneGrowFactor;
     stonesToDraw.push_back(e);
-    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
-}
-
-void XBScene1::onPianoNoteOff(int &noteOff)
-{
-    //    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy = 0;
-}
-
-void XBScene1::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
-{
-    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
-}
-
-void XBScene1::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
-{
-    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
-}
-
-void XBScene1::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
-{
-    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
-}
-
-void XBScene1::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
-{
-    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
 }
 
 
