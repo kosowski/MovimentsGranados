@@ -143,7 +143,8 @@ void XBBaseScene::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
         return;
     //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
     pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
-    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
+//    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
+    pianoEnergy += (noteOn.velocity / MAX_MIDI_VALUE - pianoEnergy) * (1. - gui->pianoSmoothFactor);
 }
 
 void XBBaseScene::onPianoNoteOff(int &noteOff)
