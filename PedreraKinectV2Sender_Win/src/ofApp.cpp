@@ -117,7 +117,7 @@ void ofApp::update()
 
 
     if(currState == STATE_CAPTURING){
-        handsInfo = motionExtractor->gethandsInfo();
+        handsInfo = motionExtractor->getHandsInfo();
         sendHandInfo();
     }
 }

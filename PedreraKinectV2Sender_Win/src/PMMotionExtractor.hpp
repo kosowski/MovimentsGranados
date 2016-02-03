@@ -55,8 +55,7 @@ public:
     void computeVelocity(int meanSize);
 	ofPixels getColorPixels();
 
-    KinectInfo getKinectInfo();
-    KinectInfo gethandsInfo(){return handsInfo;};
+	KinectInfo getHandsInfo();
     
     ofEvent<bool> eventUserDetection;
 	ofEvent<bool> eventUserPositioned;
