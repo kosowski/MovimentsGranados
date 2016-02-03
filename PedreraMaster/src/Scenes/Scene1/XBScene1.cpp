@@ -548,7 +548,8 @@ void XBScene1::initLines()
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
 
-        for (int j = 0; j < (int) lines.size(); j++) {
+//        for (int j = 0; j < (int) lines.size(); j++) {
+        int j = 0; // take only the first one and skip erroneous data
             ofPolyline pl = lines[j].getResampledBySpacing(1);
             vector<ofPoint> points = pl.getVertices();
             //check path direction
@@ -560,7 +561,7 @@ void XBScene1::initLines()
                 }
             }
             verticalLines.push_back(pl);
-        }
+//        }
     }
 }
 
