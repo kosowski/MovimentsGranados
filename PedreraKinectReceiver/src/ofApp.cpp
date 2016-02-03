@@ -8,8 +8,12 @@ void ofApp::setup(){
 	receiver.setup(PORT);
 
 	ofBackground(30, 30, 130);
-    detectionStatus = OSC_KINECT_STATE_SETUP;
-
+    detectionStatus = "Waiting for Sender";
+    
+    //Video grabber
+    videoGrabber.setCameraName("Kinect");
+    videoGrabber.setURI("http://192.168.1.112:7890/ipvideo");
+    videoGrabber.connect();
 }
 
 //--------------------------------------------------------------
@@ -33,24 +37,30 @@ void ofApp::update(){
         if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
             handR = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
 	}
+    
+    //video grabber update
+    videoGrabber.update();
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+    int drawBoxHeight=ofGetHeight()-(float)ofGetWidth()/1920*1080;
+    videoGrabber.draw(0,drawBoxHeight, ofGetWidth(), (float)ofGetWidth()/1920*1080);
     
     if(detectionStatus=="Capturing"){
         ofPushStyle();
         ofNoFill();
         ofSetLineWidth(3);
         ofSetColor(ofColor::red);
-        ofDrawCircle(handL.x * ofGetWidth(), handL.y * ofGetHeight(), 20);
-        ofDrawCircle(handR.x * ofGetWidth(), handR.y * ofGetHeight(), 20);
+        ofDrawCircle(handL.x * ofGetWidth(), handL.y * drawBoxHeight, 20);
+        ofDrawCircle(handR.x * ofGetWidth(), handR.y * drawBoxHeight, 20);
         ofPopStyle();
     }
+    ofPushStyle();
     ofSetColor(ofColor::red);
-    ofDrawBitmapString("State: "+detectionStatus, 5, ofGetWindowHeight()-20);
+    ofDrawBitmapString("State: "+detectionStatus, 5, drawBoxHeight-20);
+    ofPopStyle();
     ofSetBackgroundColor(ofColor::white);
 
 }
