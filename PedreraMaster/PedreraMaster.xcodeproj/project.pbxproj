@@ -25,9 +25,9 @@
 		21476C70701E5C2DB08122FE /* XBScene3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476EE73ADFE6457D9A0D79 /* XBScene3.cpp */; };
 		21476DBE1D97923486A7ABA1 /* XBScene2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */; };
 		21476EA8B8001E8C9786A0E0 /* XBSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F1A48583F231F67A4C7 /* XBSettingsManager.cpp */; };
-		21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214762A363D919020F64E5B8 /* XBOSCManager.cpp */; };
 		2A1C6E521C2CDAA00068B7CD /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C6E4B1C2CDAA00068B7CD /* Tween.cpp */; };
 		2A1C6E531C2CDAA00068B7CD /* Tweenzor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A1C6E501C2CDAA00068B7CD /* Tweenzor.cpp */; };
+		2A6C1A801C6273B600C4655D /* XBOSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A6C1A7E1C6273B600C4655D /* XBOSCManager.cpp */; };
 		2A77B1531C50040C00057FFB /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A77B1481C50040C00057FFB /* ofxSvg.cpp */; };
 		2A77B1541C50040C00057FFB /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A77B14D1C50040C00057FFB /* src_colors.cpp */; };
 		2A77B1551C50040C00057FFB /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A77B14E1C50040C00057FFB /* svgtiny.cpp */; };
@@ -176,7 +176,6 @@
 		2147617FBC02B546C344BAC8 /* XBScene1GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene1GUI.h; sourceTree = "<group>"; };
 		214762178DD089E121BE3345 /* XBScene5GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene5GUI.cpp; sourceTree = "<group>"; };
 		21476259C699FCFC880F32B2 /* GUIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIApp.h; sourceTree = "<group>"; };
-		214762A363D919020F64E5B8 /* XBOSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBOSCManager.cpp; sourceTree = "<group>"; };
 		214762C47E3482C9E70146D9 /* XBScene5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene5.h; sourceTree = "<group>"; };
 		214762E2D9D203239903B85A /* XBScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBScene2.h; sourceTree = "<group>"; };
 		2147635FC29F812F8FBC27AC /* XBScene3GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene3GUI.cpp; sourceTree = "<group>"; };
@@ -199,7 +198,6 @@
 		214769766EACF82FCF45AF4C /* XBScene6GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene6GUI.cpp; sourceTree = "<group>"; };
 		21476A40F5757F1B800038BA /* XBBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBBaseScene.h; sourceTree = "<group>"; };
 		21476AC4EF7E172BFCA22E56 /* XBScene2GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene2GUI.cpp; sourceTree = "<group>"; };
-		21476B2D5110E0A3A73E969E /* XBOSCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBOSCManager.h; sourceTree = "<group>"; };
 		21476B42F5F063EF7C5AECAF /* XBScene6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene6.cpp; sourceTree = "<group>"; };
 		21476BD65DF61532FDC35AFF /* XBSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBSceneManager.cpp; sourceTree = "<group>"; };
 		21476C1A96EFC9C6F0EBD464 /* XBScene2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBScene2.cpp; sourceTree = "<group>"; };
@@ -219,6 +217,8 @@
 		2A1C6E4F1C2CDAA00068B7CD /* TweenSelector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TweenSelector.h; sourceTree = "<group>"; };
 		2A1C6E501C2CDAA00068B7CD /* Tweenzor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Tweenzor.cpp; sourceTree = "<group>"; };
 		2A1C6E511C2CDAA00068B7CD /* Tweenzor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Tweenzor.h; sourceTree = "<group>"; };
+		2A6C1A7E1C6273B600C4655D /* XBOSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XBOSCManager.cpp; sourceTree = "<group>"; };
+		2A6C1A7F1C6273B600C4655D /* XBOSCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBOSCManager.h; sourceTree = "<group>"; };
 		2A77B1481C50040C00057FFB /* ofxSvg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSvg.cpp; sourceTree = "<group>"; };
 		2A77B1491C50040C00057FFB /* ofxSvg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSvg.h; sourceTree = "<group>"; };
 		2A77B14D1C50040C00057FFB /* src_colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
@@ -601,15 +601,6 @@
 			path = Scene5;
 			sourceTree = "<group>";
 		};
-		21476E8F52179BE6F92AFAA1 /* OSC */ = {
-			isa = PBXGroup;
-			children = (
-				214762A363D919020F64E5B8 /* XBOSCManager.cpp */,
-				21476B2D5110E0A3A73E969E /* XBOSCManager.h */,
-			);
-			path = OSC;
-			sourceTree = "<group>";
-		};
 		21476F2EA52598B8CB87246C /* Scene3 */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +634,15 @@
 			);
 			name = src;
 			path = ../../../addons/ofxTweenzor/src;
+			sourceTree = "<group>";
+		};
+		2A6C1A7D1C6273B600C4655D /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				2A6C1A7E1C6273B600C4655D /* XBOSCManager.cpp */,
+				2A6C1A7F1C6273B600C4655D /* XBOSCManager.h */,
+			);
+			path = OSC;
 			sourceTree = "<group>";
 		};
 		2A77B1461C50040C00057FFB /* ofxSvg-PM */ = {
@@ -1300,7 +1300,7 @@
 				21476259C699FCFC880F32B2 /* GUIApp.h */,
 				214761088AC0A8B723CC52C3 /* Defaults.h */,
 				21476C9C72CA2F646A3F0702 /* Scenes */,
-				21476E8F52179BE6F92AFAA1 /* OSC */,
+				2A6C1A7D1C6273B600C4655D /* OSC */,
 				21476C885558C407FE930F0E /* Shared */,
 				21476AA4EA47A3C8B826EAB5 /* Settings */,
 			);
@@ -1480,6 +1480,7 @@
 				6659B70E1C3FE15500B8285C /* ofxToggle.cpp in Sources */,
 				66162BFA1C51835400EF3AE0 /* b2Collision.cpp in Sources */,
 				66162C1B1C51835400EF3AE0 /* b2MotorJoint.cpp in Sources */,
+				2A6C1A801C6273B600C4655D /* XBOSCManager.cpp in Sources */,
 				6659B6EE1C3FDF9900B8285C /* EulerIntegrator.cpp in Sources */,
 				66162C0F1C51835400EF3AE0 /* b2ChainAndPolygonContact.cpp in Sources */,
 				6659B6F31C3FDF9900B8285C /* Spring.cpp in Sources */,
@@ -1508,7 +1509,6 @@
 				66162C131C51835400EF3AE0 /* b2EdgeAndCircleContact.cpp in Sources */,
 				2A77B1551C50040C00057FFB /* svgtiny.cpp in Sources */,
 				6659B7071C3FE15500B8285C /* ofxBaseGui.cpp in Sources */,
-				21476F3CB9076FD9C6AD1FF1 /* XBOSCManager.cpp in Sources */,
 				6659B7091C3FE15500B8285C /* ofxGuiGroup.cpp in Sources */,
 				66162C1E1C51835400EF3AE0 /* b2PulleyJoint.cpp in Sources */,
 				660FB9E71C47C895000BBF02 /* BlurEffect.cpp in Sources */,
@@ -1776,7 +1776,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
