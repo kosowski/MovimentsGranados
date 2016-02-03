@@ -36,6 +36,21 @@ void XBScene3::update()
     updateVioinCello();
     updatePiano();
     updateDirector();
+    
+    if(collisionOn != myGUI->collisionOn){
+        b2Filter f;
+        if(myGUI->collisionOn){
+            f.categoryBits = 0x0001;
+            f.maskBits =0xFFFF;
+        }
+        else{
+            f.categoryBits = 0x0004;
+            f.maskBits =0x0004;
+        }
+        for (int i = 0; i < edges.size(); i++)
+            edges[i].get()->setFilterData(f);
+        collisionOn = myGUI->collisionOn;
+    }
 }
 
 void XBScene3::drawIntoFBO()
@@ -201,12 +216,6 @@ void XBScene3::keyReleased(int key)
         case 'Z': {
             waves.clear();
             initWaves();
-            break;
-        }
-        case 'b': {
-            for (int i = 0; i < edges.size(); i++) {
-                edges[i].get()->destroy();
-            }
             break;
         }
         default:
@@ -412,7 +421,6 @@ void XBScene3::initWaves()
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
-//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
@@ -428,7 +436,6 @@ void XBScene3::initWaves()
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
-//        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
@@ -447,9 +454,7 @@ void XBScene3::initPhysics()
     // Box2d
     box2d.init();
     box2d.setGravity(0, 2);
-    //box2d.createGround();
     box2d.setFPS(60.0);
-//    box2d.registerGrabbing();
 
     int spacing = 40;
     // create horzontal waves

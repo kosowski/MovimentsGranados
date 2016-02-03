@@ -83,6 +83,8 @@ private:
     vector<shared_ptr<CustomBox2dParticle> > circles;
     vector<shared_ptr<ofxBox2dEdge> > edges;
     
+    bool collisionOn = true;
+    
     BlurEffect blur;
 };
 
