@@ -99,11 +99,15 @@ void XBScene1::updateViolin()
 
     // increase time marker
     violinTimeIndex -= myGUI->timeIncrement;
-    if (violinTimeIndex < 0)
+    if (violinTimeIndex < 0){
         violinTimeIndex = ofGetHeight() / windowScale;
-
-    if (violinLineIndex <= 0)
-        currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+        violinLineIndex = (unsigned int) findIntersectionVertical(currentViolinNote, violinTimeIndex);
+         if( myGUI->celloVertical)
+             celloLineIndex = findIntersectionVertical(currentCelloNote, violinTimeIndex);
+    }
+    
+//    if (violinLineIndex <= 0)
+//        currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
 
     // if note ON, update emitter location along the current line
     if (fakeEvent || violinEnergy > energyThreshold) {
@@ -129,10 +133,13 @@ void XBScene1::updateCello()
     XBScene1GUI *myGUI = (XBScene1GUI *) gui;
     float windowScale = XBSettingsManager::getInstance().getWindowScale();
 
-    celloTimeIndex += myGUI->timeIncrement;
-    if (celloTimeIndex > ofGetWidth() / windowScale) {
-        celloTimeIndex = 0;
-        currentViolinNote.getClosestPoint(ofPoint(0, violinTimeIndex), &violinLineIndex);
+    // if cello line is horizontal, update the indices, it it isnt, it will be updated in updateVioliln()
+    if( !myGUI->celloVertical){
+        celloTimeIndex += myGUI->timeIncrement;
+        if (celloTimeIndex > ofGetWidth() / windowScale) {
+            celloTimeIndex = 0;
+            celloLineIndex = findIntersectionHorizontal(currentCelloNote, celloTimeIndex);
+        }
     }
 
     if (fakeCelloEvent || celloEnergy > energyThreshold) {
