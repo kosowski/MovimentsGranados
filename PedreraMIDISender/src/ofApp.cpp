@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "XBSettingsManager.h"
 #include "../../Shared/OSCSettings.h"
 
 #ifdef OF_DEBUG
@@ -7,14 +8,15 @@ static const string STR_APP_TITLE              = "PIANO [MIDI RECEIVER] (DEBUG)"
 static const string STR_APP_TITLE              = "PIANO [MIDI RECEIVER]";
 #endif
 
-static const string STR_MIDIPORTS_TITLE     = "MIDI PORTS";
-static const string STR_SETTINGS_FILENAME   = "settings.xml";
+static const string STR_MIDIPORTS_TITLE         = "MIDI PORTS";
+static const string STR_MIDISETTINGS_FILENAME   = "midiSettings.xml";
+static const string STR_APPSETTINGS_FILENAME    = "AppSettings.xml";
 
-static const string STR_STATUS              = "CURRENT STATUS";
-static const string STR_STATUS_ON           = "ON";
-static const string STR_STATUS_OFF          = "OFF";
-static const string STR_START               = "START";
-static const string STR_STOP                = "STOP";
+static const string STR_STATUS                  = "CURRENT STATUS";
+static const string STR_STATUS_ON               = "ON";
+static const string STR_STATUS_OFF              = "OFF";
+static const string STR_START                   = "START";
+static const string STR_STOP                    = "STOP";
 
 static const int GUI_MARGIN     = 10;
 static const int GUI_WIDTH      = 300;
@@ -33,7 +35,7 @@ void ofApp::setup()
 
     // GUI
     {
-        gui.setup(STR_MIDIPORTS_TITLE, STR_SETTINGS_FILENAME);
+        gui.setup(STR_MIDIPORTS_TITLE, STR_MIDISETTINGS_FILENAME);
         gui.setPosition(GUI_MARGIN, GUI_MARGIN);
 
         vector<string> portList = midiIn.getPortList();
@@ -45,7 +47,7 @@ void ofApp::setup()
             portParams.push_back(params);
         }
 
-        gui.loadFromFile(STR_SETTINGS_FILENAME);
+        gui.loadFromFile(STR_MIDISETTINGS_FILENAME);
 
         gui.add(lblStatus.setup(STR_STATUS, STR_STATUS_OFF));
         lblStatus.setBackgroundColor(ofColor::darkRed);
@@ -63,7 +65,9 @@ void ofApp::setup()
 
     // OSC
     {
-        oscSender.setup(OSC_PIANO_SENDER_HOST, OSC_PIANO_SENDER_PORT);
+        XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+        string oscHost = XBSettingsManager::getInstance().getOSCHost();
+        oscSender.setup(oscHost, OSC_PIANO_SENDER_PORT);
     }
 }
 
@@ -80,7 +84,7 @@ void ofApp::draw()
 
 void ofApp::exit()
 {
-    gui.saveToFile(STR_SETTINGS_FILENAME);
+    gui.saveToFile(STR_MIDISETTINGS_FILENAME);
 }
 
 void ofApp::keyReleased(int key)
