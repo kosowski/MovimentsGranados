@@ -224,54 +224,14 @@ void XBScene3::keyReleased(int key)
 }
 
 //--------------------------------------------------------------
-void XBScene3::onViolinPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-    violinNote = pitch;
-}
-
-void XBScene3::onViolinEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        violinEnergy = 0;
-    else
-        violinEnergy = energy;
-}
-
-void XBScene3::onCelloPitchChanged(float &pitch)
-{
-    if (!active)
-        return;
-
-    celloNote = pitch;
-}
-
-void XBScene3::onCelloEnergyChanged(float &energy)
-{
-    if (!active)
-        return;
-
-    if (energy <= energyThreshold)
-        celloEnergy = 0;
-    else
-        celloEnergy = energy;
-}
 
 void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     if (!active)
         return;
 
+    XBBaseScene::onPianoNoteOn(noteOn);
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-
-    if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
-        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl;
-        return;
-    }
 
     int wichLine = midiToRowMapping[noteOn.pitch];
     expandingPolyLine e = stones[wichLine][(int) ofRandom(stones[wichLine].size() - 1)];
@@ -281,31 +241,8 @@ void XBScene3::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
     pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
 }
 
-void XBScene3::onPianoNoteOff(int &noteOff)
-{
-//    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy = 0;
-}
 
-void XBScene3::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
-{
-    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
-}
 
-void XBScene3::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
-{
-    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
-}
-
-void XBScene3::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
-{
-    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
-}
-
-void XBScene3::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
-{
-    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
-}
 
 void XBScene3::initPaths()
 {
