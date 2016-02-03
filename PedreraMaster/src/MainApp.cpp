@@ -6,6 +6,7 @@
 #include "XBScene5.h"
 #include "XBScene6.h"
 #include "../../Shared/OSCSettings.h"
+#include "XBSettingsManager.h"
 
 #ifdef OF_DEBUG
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS (DEBUG)";
@@ -13,20 +14,25 @@ static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS (DEBUG)";
 static const string STR_WINDOW_TITLE = "MOVIMENTS GRANADOS";
 #endif
 
+static const string STR_APPSETTINGS_FILENAME = "settings/AppSettings.xml";
+
 
 void MainApp::setup()
 {
     ofSetWindowTitle(STR_WINDOW_TITLE);
     ofBackground(0, 0, 0);
 
+    XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     if (MAIN_WINDOW_MODE == OF_WINDOW)
     {
-        int windowWidths = int(MAIN_WINDOW_WIDTH * MAIN_WINDOW_SCALE) + GUI_WINDOW_WIDTH;
+        int windowWidths = int(MAIN_WINDOW_WIDTH * windowScale) + GUI_WINDOW_WIDTH;
         int winX = ofGetScreenWidth()/2 - windowWidths/2;
-        int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * MAIN_WINDOW_SCALE)/2;
+        int winY = ofGetScreenHeight()/2 - int(MAIN_WINDOW_HEIGHT * windowScale)/2;
+        ofSetWindowShape(int(MAIN_WINDOW_WIDTH * windowScale), int(MAIN_WINDOW_HEIGHT * windowScale));
         ofSetWindowPosition(winX, winY);
     }
-
 
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
@@ -78,7 +84,7 @@ void MainApp::draw()
 
     if (showFPS) {
         ofSetColor(ofColor::white);
-        ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, ofGetHeight() - 15);
+        ofDrawBitmapString(ofToString(roundf(ofGetFrameRate())) + "fps", 15, 15);
     }
     
     syphonServer.publishScreen();
@@ -96,31 +102,34 @@ void MainApp::keyPressed(int key)
 
 void MainApp::keyReleased(int key)
 {
+    float transitionTime = XBSettingsManager::getInstance().getTransitionTime();
+
     switch (key)
     {
         case OF_KEY_LEFT:
         case OF_KEY_DOWN:
-            sceneManager.goToPrevScene(SCENETRANSITION_Fade, 0.5f);
+            sceneManager.goToPrevScene(transitionTime);
             break;
         case OF_KEY_RIGHT:
         case OF_KEY_UP:
-            sceneManager.goToNextScene(SCENETRANSITION_Fade, 0.5f);
+            cout << "TR time: " << transitionTime << endl;
+            sceneManager.goToNextScene(transitionTime);
             break;
-        case 'f':
-        case 'F':
+        case 'q':
+        case 'Q':
             showFPS = !showFPS; break;
         case '1':
-            sceneManager.goToScene(0); break;
+            sceneManager.goToScene(0, transitionTime); break;
         case '2':
-            sceneManager.goToScene(1); break;
+            sceneManager.goToScene(1, transitionTime); break;
         case '3':
-            sceneManager.goToScene(2); break;
+            sceneManager.goToScene(2, transitionTime); break;
         case '4':
-            sceneManager.goToScene(3); break;
+            sceneManager.goToScene(3, transitionTime); break;
         case '5':
-            sceneManager.goToScene(4); break;
+            sceneManager.goToScene(4, transitionTime); break;
         case '6':
-            sceneManager.goToScene(5); break;
+            sceneManager.goToScene(5, transitionTime); break;
         default: break;
     }
     sceneManager.keyReleased(key);

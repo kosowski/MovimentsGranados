@@ -3,11 +3,6 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1200px"
 	 height="1920px" viewBox="0 0 1200 1920" enable-background="new 0 0 1200 1920" xml:space="preserve">
-<g id="fondo">
-	<g id="Capa_25">
-	</g>
-	<rect x="-29" y="-27" stroke="#FFFFFF" stroke-linejoin="round" stroke-miterlimit="10" width="1312" height="1964"/>
-</g>
 <g id="verticales">
 	<path id="LV2" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" d="M70,117.6l0.1,0.7c0.5,4.5,1.1,8.8,1.1,8.8l2,24.2l0.7,16.1
 		l-7.7-0.7l1.3,19.2l1.2,48.2c0,0,0.7,8.8,1.2,10c-0.2,1.8-0.5,3.8-0.5,3.8l3.2,3.3l-10.5-2v15.2v12.8v13.7l-0.8,24.8l8.2,1.2

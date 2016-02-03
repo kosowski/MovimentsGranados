@@ -11,6 +11,9 @@ XBBaseScene::XBBaseScene(string _name)
     name = _name;
     
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, FBO_NUM_SAMPLES);
+    glowEffect.allocate(ofGetWidth(), ofGetHeight());
+    glowEffect.setIntensity(1);
+    glowEffect.setRadius(1);
 }
 
 void XBBaseScene::setup(XBBaseGUI *_gui)
@@ -40,6 +43,17 @@ void XBBaseScene::setup(XBBaseGUI *_gui)
     subscribeToKinectEvents();
     
     gui = _gui;
+    active = false;
+}
+
+void XBBaseScene::enteredScene()
+{
+    active = true;
+}
+
+void XBBaseScene::leftScene()
+{
+    active = false;
 }
 
 void XBBaseScene::drawGUI()
@@ -58,14 +72,105 @@ void XBBaseScene::drawFadeRectangle()
 void XBBaseScene::drawMusiciansWindows()
 {
     ofPushStyle();
-    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, gui->colorCelloA * celloEnergy));
+    ofSetColor(ofColor(gui->rgbColorCelloR, gui->rgbColorCelloG, gui->rgbColorCelloB, ofClamp(255* celloEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
     celloBG.draw(0,0, ofGetWidth(), ofGetHeight());
-    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, gui->colorViolinA * violinEnergy));
+    ofSetColor(ofColor(gui->rgbColorViolinR, gui->rgbColorViolinG, gui->rgbColorViolinB, ofClamp(255 * violinEnergy, gui->minAlphaWindow, gui->maxAlphaWindow)));
     violinBG.draw(0,0, ofGetWidth(), ofGetHeight());
-    
-    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, gui->colorPianoA * pianoEnergy);
+    ofSetColor(gui->rgbColorPianoR, gui->rgbColorPianoG, gui->rgbColorPianoB, ofClamp(255 * pianoEnergy, gui->minAlphaWindow, gui->maxAlphaWindow));
     pianoBG.draw(0,0, ofGetWidth(), ofGetHeight());
     ofPopStyle();
+}
+
+void XBBaseScene::applyPostFX(){
+    if(gui->useGlow){
+        glowEffect.setIntensity(gui->glowAmount);
+        glowEffect.setRadius(gui->glowradius);
+        
+        glowEffect << fbo.getTexture();
+        glowEffect.update();
+        fbo.begin();
+        glowEffect.draw(0,0, fbo.getWidth(), fbo.getHeight());
+        fbo.end();
+    }
+}
+
+ void XBBaseScene::onCelloSilenceChanged(bool &isSilent) {
+     if(isSilent)
+         celloEnergy = 0;
+ }
+ void XBBaseScene::onViolinSilenceChanged(bool &isSilent) {
+     if(isSilent)
+         violinEnergy = 0;
+ }
+
+void XBBaseScene::onViolinPitchChanged(float &pitch)
+{
+    if (!active)
+        return;
+    violinNote = pitch;
+}
+
+void XBBaseScene::onViolinEnergyChanged(float &energy)
+{
+    if (!active)
+        return;
+    if (energy <= energyThreshold)
+        violinEnergy = 0;
+    else
+        violinEnergy = energy;
+}
+
+void XBBaseScene::onCelloPitchChanged(float &pitch)
+{
+    if (!active)
+        return;
+    celloNote = pitch;
+}
+
+void XBBaseScene::onCelloEnergyChanged(float &energy)
+{
+    if (!active)
+        return;
+    if (energy <= energyThreshold)
+        celloEnergy = 0;
+    else
+        celloEnergy = energy;
+}
+
+void XBBaseScene::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    if (!active)
+        return;
+    //    cout << "Piano NoteOn:  p=" << noteOn.pitch << " v=" << noteOn.velocity << endl;
+    pianoNote = noteOn.pitch / MAX_MIDI_VALUE;
+//    pianoEnergy = noteOn.velocity / MAX_MIDI_VALUE;
+    pianoEnergy += (noteOn.velocity / MAX_MIDI_VALUE - pianoEnergy) * (1. - gui->pianoSmoothFactor);
+}
+
+void XBBaseScene::onPianoNoteOff(int &noteOff)
+{
+    //    cout << "Piano NoteOff: p=" << noteOff << endl;
+    pianoEnergy = 0;
+}
+
+void XBBaseScene::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
+{
+    leftHand.pos.set(lPos.x, lPos.y, lPos.z);
+}
+
+void XBBaseScene::onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel)
+{
+    leftHand.velocity.set(lVel.x, lVel.y, lVel.z);
+}
+
+void XBBaseScene::onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos)
+{
+    rightHand.pos.set(rPos.x, rPos.y, rPos.z);
+}
+
+void XBBaseScene::onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel)
+{
+    rightHand.velocity.set(rVel.x, rVel.y, rVel.z);
 }
 
 void XBBaseScene::keyReleased(int key)

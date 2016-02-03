@@ -13,6 +13,8 @@ class ofApp : public ofBaseApp {
 		void setup();
 		void update();
 		void draw();
+    
+        void triggerUserPositioned();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -29,15 +31,8 @@ class ofApp : public ofBaseApp {
 		ofTrueTypeFont font;
 		ofxOscReceiver receiver;
 
-		int current_msg_string;
-		string msg_strings[NUM_MSG_STRINGS];
-		float timers[NUM_MSG_STRINGS];
 
-		int mouseX, mouseY;
-//        float handrX, handrY, handlX, handlY;
-    ofPoint handR, handL;
-    string detectionStatus;
-		string mouseButtonState;
-    
-        ofImage receivedImage;
+        ofPoint handR, handL;
+        string detectionStatus;
+        bool userPositioned;
 };

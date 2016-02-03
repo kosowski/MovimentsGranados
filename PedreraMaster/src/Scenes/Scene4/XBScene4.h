@@ -21,20 +21,22 @@ public:
     virtual void drawIntoFBO();
     void keyPressed(int key);
     void keyReleased(int key);
-    void onViolinPitchChanged(float &pitch);
-    void onViolinEnergyChanged(float &energy);
-    void onCelloPitchChanged(float &pitch);
-    void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
-    void onPianoNoteOff(int &noteOff);
-    void onKinectStateChanged(string &kState) {};
-    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
-    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel);
-    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos);
-    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
-
+   
 private:
-
+    void updateViolin();
+    void updateCello();
+    void updatePiano();
+    void updateDirector();
+    void updateViolinCelloFbo();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawViolin();
+    void drawCello();
+    void drawViolinWindow();
+    void drawCelloWindow();
+    
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);

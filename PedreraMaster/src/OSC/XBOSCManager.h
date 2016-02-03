@@ -5,7 +5,7 @@
 #ifndef PEDRERAMASTER_XBOSCMANAGER_H
 #define PEDRERAMASTER_XBOSCMANAGER_H
 
-#include "ofxOSC.h"
+#include "ofxOsc.h"
 
 class XBOSCManager
 {

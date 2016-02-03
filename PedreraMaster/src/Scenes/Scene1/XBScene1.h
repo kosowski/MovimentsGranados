@@ -24,17 +24,9 @@ public:
     void keyReleased(int key);
     
     void onViolinPitchChanged(float &pitch);
-    void onViolinEnergyChanged(float &energy);
     void onCelloPitchChanged(float &pitch);
-    void onCelloEnergyChanged(float &energy);
     void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
-    void onPianoNoteOff(int &noteOff);
-    void onKinectStateChanged(string &kState) {};
-    void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;
-    void onKinectLVelocityChanged(XBOSCManager::KinectPosVelArgs &lVel);
-    void onKinectRPositionChanged(XBOSCManager::KinectPosVelArgs &rPos);
-    void onKinectRVelocityChanged(XBOSCManager::KinectPosVelArgs &rVel);
-    
+
     void initWaves();
     void initLines();
     void initParticles();
@@ -43,6 +35,16 @@ public:
     void updateEmitters();
     
 private:
+    void updateViolin();
+    void updateCello();
+    void updatePiano();
+    void updateDirector();
+    
+    void drawDirector();
+    void drawPiano();
+    void drawViolinCello();
+    void drawWindows();
+    
     void addFadingWindow(int index, vector<expandingPolyLine> &vector);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
@@ -74,6 +76,7 @@ private:
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
+    ofTexture headTexture;
     
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;

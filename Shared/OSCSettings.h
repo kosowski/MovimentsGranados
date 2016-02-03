@@ -48,7 +48,6 @@ static const int            OSC_KINECT_SENDER_PORT          = 30304;
 static const int            OSC_KINECT_SENDER_PORT_MAX      = 30305;
 static const string         OSC_KINECT_ADDR_BASE            = "/motion";
 static const string         OSC_KINECT_ADDR_STATE           = "/detectionStatus";
-static const string         OSC_KINECT_STATE_SETUP          = "Setting up";
 static const string         OSC_KINECT_STATE_DETECTING      = "Detecting";
 static const string         OSC_KINECT_STATE_CAPTURING      = "Capturing";
 static const string         OSC_KINECT_STATE_POSITIONED     = "Positioned";

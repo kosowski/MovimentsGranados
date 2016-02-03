@@ -33,14 +33,18 @@ void XBScene1GUI::setup()
     pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
     sceneGui.add(&pianoGroup);
     
-    violinGroup.setup("Violin&Cello");
+    violinGroup.setup("Violin and Cello");
+    violinGroup.add(celloVertical.setup("Cello vertical", false));
     violinGroup.add(particleSize.setup("Particle size", 10, 2, 40));
     violinGroup.add(particleLife.setup("Particle life", 3, 1, 60));
+    violinGroup.add(numParticles.setup("Particle  number", 10, 1, 20));
+    violinGroup.add(headSize.setup("Head size", 20, 10, 80));
     violinGroup.add(windowFade.setup("Window fade speed", 10, 1, 20));
+    violinGroup.add(drawWindows.setup("draw windows", false));
     violinGroup.add(timeIncrement.setup("Marker speed", 1, 1, 30));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
-    violinGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(150,150)));
+    violinGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(30,30)));
     
     sceneGui.add(&violinGroup);
     

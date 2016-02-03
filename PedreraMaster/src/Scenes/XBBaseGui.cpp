@@ -49,6 +49,14 @@ void XBBaseGUI::setup()
     sceneGui.setup(strSceneGuiTitle, STR_SETTINGS_BASEPATH + sceneSettingsFilename);
     sceneGui.setPosition(scenePosX, scenePosY);
     sceneGui.add(simulateHands.setup("Simulate hands", false));
+    
+    sceneGui.add(useGlow.setup("Apply glow", false));
+    sceneGui.add(glowAmount.setup("Glow amount", 1, 0, 5));
+    sceneGui.add(glowradius.setup("Glow radius", 1, 1, 10));
+    
+    sceneGui.add(minAlphaWindow.setup("Min window alpha", 1, 0, 255));
+    sceneGui.add(maxAlphaWindow.setup("Max window alpha", 255, 0, 255));
+    sceneGui.add(pianoSmoothFactor.setup("Smooth piano", .20, 0.00, 1.00));
 
     colorGui.setup(strColorGuiTitle, STR_SETTINGS_BASEPATH + colorSettingsFilename);
     colorGui.setPosition(colorsPosX, colorsPosY);

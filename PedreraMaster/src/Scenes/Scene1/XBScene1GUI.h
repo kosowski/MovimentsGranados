@@ -24,14 +24,19 @@ public:
     ofxFloatSlider maskAlpha;
     
     ofxGuiGroup violinGroup;
+    ofxToggle celloVertical;
     ofxFloatSlider windowFade;
+    ofxToggle drawWindows;
     ofxFloatSlider timeIncrement;
     ofxToggle showTimeMarker;
     
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
-    ofxVec3Slider particleVelocity;
-    ofxVec3Slider particleSpread;
+    ofxIntSlider numParticles;
+    ofxFloatSlider headSize;
+
+    ofxVec2Slider particleVelocity;
+    ofxVec2Slider particleSpread;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;

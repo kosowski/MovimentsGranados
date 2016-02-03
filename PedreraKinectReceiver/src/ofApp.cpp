@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "../../Shared/OSCSettings.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -6,24 +7,13 @@ void ofApp::setup(){
 	cout << "listening for osc messages on port " << PORT << "\n";
 	receiver.setup(PORT);
 
-	current_msg_string = 0;
-	mouseX = 0;
-	mouseY = 0;
-	mouseButtonState = "";
-
 	ofBackground(30, 30, 130);
+    detectionStatus = OSC_KINECT_STATE_SETUP;
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
-	// hide old messages
-	for(int i = 0; i < NUM_MSG_STRINGS; i++){
-		if(timers[i] < ofGetElapsedTimef()){
-			msg_strings[i] = "";
-		}
-	}
 
 	// check for waiting messages
 	while(receiver.hasWaitingMessages()){
@@ -31,18 +21,24 @@ void ofApp::update(){
 		ofxOscMessage m;
 		receiver.getNextMessage(&m);
 //        cout<<m.getAddress()<<endl;
-        if(m.getAddress() == "/motion/detectionStatus")
-            detectionStatus=m.getArgAsString(0); cout<<detectionStatus<<endl;
-        if(m.getAddress() == "/motion/leftHand/position")
-            handL=ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
-        if(m.getAddress() == "/motion/rightHand/position")
-            handR=ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_STATE)){
+            if (m.getArgAsString(0) != OSC_KINECT_STATE_POSITIONED)
+                detectionStatus = m.getArgAsString(0);
+            else
+                triggerUserPositioned();
+        }
+            detectionStatus = m.getArgAsString(0);
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
+            handL = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
+            handR = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
 	}
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
     
     if(detectionStatus=="Capturing"){
         ofPushStyle();
@@ -53,28 +49,15 @@ void ofApp::draw(){
         ofDrawCircle(handR.x * ofGetWidth(), handR.y * ofGetHeight(), 20);
         ofPopStyle();
     }
+    ofSetColor(ofColor::red);
+    ofDrawBitmapString("State: "+detectionStatus, 5, ofGetWindowHeight()-20);
+    ofSetBackgroundColor(ofColor::white);
 
-    
-//	string buf;
-//	buf = "listening for osc messages on port" + ofToString(PORT);
-//	ofDrawBitmapString(buf, 10, 20);
-//    
-//    if(receivedImage.getWidth() > 0){
-//        ofDrawBitmapString("Image:", 10, 160);
-//        receivedImage.draw(10, 180);
-//    }
-//
-//	// draw mouse state
-//	buf = "mouse: " + ofToString(mouseX, 4) +  " " + ofToString(mouseY, 4);
-//	ofDrawBitmapString(buf, 430, 20);
-//	ofDrawBitmapString(mouseButtonState, 580, 20);
-//
-//	for(int i = 0; i < NUM_MSG_STRINGS; i++){
-//		ofDrawBitmapString(msg_strings[i], 10, 40 + 15 * i);
-//	}
-//
-    
+}
 
+//-------------------------------------------------------------
+void ofApp::triggerUserPositioned(){
+    ofSetBackgroundColor(ofColor::red);
 }
 
 //--------------------------------------------------------------

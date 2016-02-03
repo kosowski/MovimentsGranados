@@ -114,7 +114,7 @@ Desktop.ini
 # Project specific
 #########################
 
-PerdreraMaster/bin/data/Settings/*.xml
+PerdreraMaster/bin/data/settings/*.xml
 *.xml
 !PedreraKinectSender/bin/data/openni/config/licenses.xml
 !PedreraKinectSender/bin/data/openni/config/modules.xml

@@ -42,6 +42,13 @@ public:
     ofxIntSlider colorPianoA;
 
     ofxToggle simulateHands;
+    ofxToggle useGlow;
+    ofxIntSlider glowAmount;
+    ofxIntSlider glowradius;
+    
+    ofxIntSlider maxAlphaWindow;
+    ofxIntSlider minAlphaWindow;
+    ofxFloatSlider pianoSmoothFactor;
     
     void loadSettings();
     void saveSettings();
