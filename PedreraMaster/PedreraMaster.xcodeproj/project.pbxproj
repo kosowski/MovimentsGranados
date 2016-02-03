@@ -1309,8 +1309,8 @@
 				214761088AC0A8B723CC52C3 /* Defaults.h */,
 				21476C9C72CA2F646A3F0702 /* Scenes */,
 				2A6C1A7D1C6273B600C4655D /* OSC */,
-				21476C885558C407FE930F0E /* Shared */,
 				21476AA4EA47A3C8B826EAB5 /* Settings */,
+				21476C885558C407FE930F0E /* Shared */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1784,7 +1784,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
