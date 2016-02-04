@@ -78,22 +78,22 @@ protected:
 
     virtual void onCelloStarted() {};
     virtual void onCelloStopped() {};
-    void onCelloPitchChanged(float &pitch) ;
-    void onCelloEnergyChanged(float &energy) ;
-    void onCelloSilenceChanged(bool &isSilent);
+    virtual void onCelloPitchChanged(float &pitch) ;
+    virtual void onCelloEnergyChanged(float &energy) ;
+    virtual void onCelloSilenceChanged(bool &isSilent);
     virtual void onCelloPauseChanged(bool &isPaused){};
     virtual void onCelloOnsetDetected() {};
 
     virtual void onViolinStarted() {};
     virtual void onViolinStopped() {};
-    void onViolinPitchChanged(float &pitch) ;
-    void onViolinEnergyChanged(float &energy) ;
-    void onViolinSilenceChanged(bool &isSilent);
+    virtual void onViolinPitchChanged(float &pitch) ;
+    virtual void onViolinEnergyChanged(float &energy) ;
+    virtual void onViolinSilenceChanged(bool &isSilent);
     virtual void onViolinPauseChanged(bool &isPaused) {};
     virtual void onViolinOnsetDetected() {};
 
-    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) ;
-    void onPianoNoteOff(int &noteOff) ;
+    virtual void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn) ;
+    virtual void onPianoNoteOff(int &noteOff) ;
 
     virtual void onKinectStateChanged(string &kState) {};
     void onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos) ;

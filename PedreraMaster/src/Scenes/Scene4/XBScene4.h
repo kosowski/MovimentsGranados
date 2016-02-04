@@ -73,7 +73,6 @@ private:
     ofxMaskedGrayScott grayV;
     ofxMaskedGrayScott grayX;
     ofShader convertToBW;
-    
     BlurEffect blur;
 };
 

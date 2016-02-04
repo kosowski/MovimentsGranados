@@ -294,8 +294,6 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
     m.setAddress(address.str());
     m.addFloatArg(pitchParams.smoothedPitch);
     oscSender.sendMessage(m, false);
-
-    cout << "SEND pitch " << pitchParams.midiNote << endl;
 }
 
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
@@ -335,8 +333,6 @@ void ViolinApp::analyzerOnsetDetected(onsetParams &onsetParams)
     if (!guiAnalyzerCreated) return;
 
     onsetsOn = onsetParams.isOnset;
-
-//    cout << "onsetsOn = " << onsetsOn << endl;
 
     ofxOscMessage m;
     stringstream address;

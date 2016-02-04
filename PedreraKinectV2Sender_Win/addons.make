@@ -1,3 +1,9 @@
 ofxGui
-ofxKinectForWindows2
 ofxOsc
+ofxHTTP
+ofxIO
+ofxKinectForWindows2
+ofxMediaType
+ofxNetworkUtils
+ofxSSLManager
+ofxTaskQueue

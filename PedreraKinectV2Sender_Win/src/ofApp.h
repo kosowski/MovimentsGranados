@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGUI.h"
 #include "ofxOsc.h"
+#include "ofxHTTP.h"
 #include "PMMotionExtractor.hpp"
 
 typedef enum
@@ -38,6 +39,7 @@ private:
     ofxButton guiRestartBtn;
     ofxToggle showImage;
     ofxToggle showHands;
+	ofxToggle sendVideo;
 
     ofxOscSender oscSender;
 	ofxOscSender oscSender_Max;
@@ -47,4 +49,15 @@ private:
     bool kinectAvailable;
     
     KinectInfo  handsInfo;
+
+	//User Positioning
+	float userPositionedTimeStamp;
+	float userRemovedTimeStamp;
+
+	//VideoStream
+	ofx::HTTP::SimpleIPVideoServer server;
+	string serverURL;
+	ofImage colorPixels;
+
+	ofVideoPlayer player;
 };

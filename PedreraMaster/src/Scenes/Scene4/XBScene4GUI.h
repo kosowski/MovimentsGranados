@@ -6,6 +6,7 @@
 #define PEDRERAMASTER_XBSCENE4GUI_H
 
 #include "XBBaseGUI.h"
+#include "PresetsRD.h"
 
 class XBScene4GUI : public XBBaseGUI
 {
@@ -13,12 +14,14 @@ public:
 
     XBScene4GUI();
     virtual void setup();
+    void onPresetChange(int &index);
 
     ofxGuiGroup violinGroup;
     ofxIntSlider minViolinSpeed;
     ofxIntSlider maxViolinSpeed;
     ofxFloatSlider violinK;
     ofxFloatSlider violinF;
+    ofxIntSlider presetIndex;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
@@ -44,6 +47,7 @@ public:
     ofxIntSlider blurAmount;
     ofxToggle enableSmooth;
     
+    PresetsRD  presets;
 };
 
 
