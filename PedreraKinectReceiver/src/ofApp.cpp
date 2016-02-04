@@ -26,15 +26,15 @@ void ofApp::update(){
 		receiver.getNextMessage(&m);
 //        cout<<m.getAddress()<<endl;
         if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_STATE)){
-            if (m.getArgAsString(0) != OSC_KINECT_STATE_POSITIONED)
-                detectionStatus = m.getArgAsString(0);
+            auto receivedMessage = m.getArgAsString(0);
+            if (receivedMessage != OSC_KINECT_STATE_POSITIONED)
+                detectionStatus =receivedMessage;
             else
                 triggerUserPositioned();
         }
-            detectionStatus = m.getArgAsString(0);
         if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
             handL = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
-        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_LHAND+OSC_KINECT_ADDR_POSITION))
+        if(m.getAddress() == (OSC_KINECT_ADDR_BASE+OSC_KINECT_ADDR_RHAND+OSC_KINECT_ADDR_POSITION))
             handR = ofPoint(m.getArgAsFloat(0), m.getArgAsFloat(1));
 	}
     
