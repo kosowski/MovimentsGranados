@@ -57,14 +57,12 @@ public:
     
     void computeVelocity(int meanSize);
 
-    KinectInfo getKinectInfo();
-    KinectInfo gethandsInfo(){return handsInfo;};
+    KinectInfo getHandsInfo();
     
     ofEvent<bool> eventUserDetection;
 
 private:
     ofxOpenNI openNIDevice;
-    KinectInfo kinectOut;
     KinectInfo handsInfo;
     bool hasUser, hasKinect;
     

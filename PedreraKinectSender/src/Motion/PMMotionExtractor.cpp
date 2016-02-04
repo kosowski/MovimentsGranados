@@ -125,9 +125,28 @@ void PMMotionExtractor::exit()
     openNIDevice.stop();
 }
 
-KinectInfo PMMotionExtractor::getKinectInfo()
+KinectInfo PMMotionExtractor::getHandsInfo()
 {
-    return kinectOut;
+    KinectInfo tempInfo = handsInfo;
+    
+    //Compute hand Mean value;
+    ofPoint lHandPosMean = ofPoint(0);
+    for (auto & tempPos : lHandPosHist) {
+        lHandPosMean += tempPos;
+    }
+    lHandPosMean /= lHandPosHist.size();
+    
+    ofPoint rHandPosMean = ofPoint(0);
+    for (auto & tempPos : rHandPosHist) {
+        rHandPosMean += tempPos;
+    }
+    rHandPosMean /= rHandPosHist.size();
+    
+    //Assign mean value to output value;
+    tempInfo.leftHand.pos = lHandPosMean;
+    tempInfo.rightHand.pos = rHandPosMean;
+    
+    return tempInfo;
 }
 
 void PMMotionExtractor::computeVelocity(int meanSize)
