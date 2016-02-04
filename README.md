@@ -43,3 +43,13 @@ Moviments Granados project by [Xavi Bové](http://xavibove.com).
 - [ofxAubio](https://github.com/aubio/ofxAubio)
 - ofxGUI (already part of OF)
 - ofxOSC (already part of OF)
+- 
+
+For using ip video for sending a receiving the stream of the kinect you will need:
+- of 0.9.1+ (last openframeworks version updated on 30/01/16) on Windows.
+- These addons for windows Sender:
+  - [ofxHTTP] (https://github.com/bakercp/ofxHTTP) and it's dependencies
+
+- These addons for Mac Receiver:
+  - [ofxIpVideoGrabber] (https://github.com/bakercp/ofxIpVideoGrabber)
+  
