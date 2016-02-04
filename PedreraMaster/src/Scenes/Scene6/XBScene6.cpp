@@ -51,6 +51,8 @@ XBScene6::~XBScene6()
 void XBScene6::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
+    initWaves();
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
 
 void XBScene6::enteredScene()
@@ -87,6 +89,10 @@ void XBScene6::drawIntoFBO()
         }
     }
     fbo.end();
+    
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    blur.apply(&fbo, 1, myGUI->blurAmount);
+    applyPostFX();
 }
 
 #pragma mark - 1 DETECTING
@@ -139,11 +145,15 @@ void XBScene6::updateS6_3()
 
     if (state3ElapsedTime > myGUI->interactionMaxTime * 60)
         goToState(S6_4_THANKS);
+    
+    updateDirector();
 }
 
 void XBScene6::drawS6_3()
 {
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    
+    drawDirector();
     if (state3IsDetecting)
     {
         drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
@@ -271,4 +281,72 @@ void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, 
         fontMsgBold->drawString(message, 0, 0);
     }
     ofPopMatrix();
+}
+
+void XBScene6::updateDirector()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    // update waves
+    if (myGUI->simulateHands) {
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
+    for (int i = 0; i < waves.size(); i++) {
+        // if simulate mode ON, use the mouse
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].update();
+    }
+}
+
+void XBScene6::drawDirector()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    // draw directors waves
+    ofPushStyle();
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetLineWidth(myGUI->lineWidth);
+    for (Wave w:waves)
+        w.display();
+    ofPopStyle();
+}
+
+void XBScene6::initWaves()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    int spacing = 10;
+    
+    // create horzontal waves
+    svg.load("resources/horizontalesv03.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
+        }
+    }
+    
+    // create vertical waves
+    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 0; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
+        }
+    }
 }
