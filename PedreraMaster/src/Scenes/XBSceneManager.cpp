@@ -46,7 +46,6 @@ void XBSceneManager::update()
         }
         default: break;
     }
-//    cout << "State: " << state << endl;
 }
 
 void XBSceneManager::draw()
@@ -65,7 +64,7 @@ void XBSceneManager::draw()
         }
         case SCENESTATE_Transitioning:
         {
-//            cout << "SrcAlpha: " << scenes[currentSceneIndex]->fboAlpha << " - DstAlpha: " << scenes[nextSceneIndex]->fboAlpha << endl;
+            cout << "SrcAlpha: " << *(scenes[currentSceneIndex]->getFBOAlpha()) << " - DstAlpha: " << *(scenes[nextSceneIndex]->getFBOAlpha()) << endl;
             drawSceneAtIndex(currentSceneIndex);
             drawSceneAtIndex(nextSceneIndex);
             break;
