@@ -91,19 +91,6 @@ void ofApp::handleStateChanges()
 
     string stateDescr;
     switch (currState) {
-        case STATE_SETUP: {
-            stateDescr = STR_STATE_SETUP;
-            guiStatusLbl.setBackgroundColor(ofColor::darkRed);
-
-            ofxOscMessage m;
-            stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
-            m.setAddress(address.str());
-            m.addStringArg(OSC_KINECT_STATE_SETUP);
-            oscSender.sendMessage(m, false);
-
-            break;
-        }
         case STATE_DETECTING: {
             stateDescr = STR_STATE_DETECTING;
             guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
