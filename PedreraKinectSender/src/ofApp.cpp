@@ -77,6 +77,8 @@ void ofApp::draw()
     motionExtractor->draw(showImage, (showHands && currState==STATE_CAPTURING));
 
     gui.draw();
+    ofSetColor(ofColor::white);
+    ofDrawBitmapString("Simulacio de posicionament amb la tecla ESPAI", 20, ofGetWindowHeight()-20);
 }
 
 void ofApp::exit()
@@ -182,8 +184,9 @@ void ofApp::keyPressed(int key){
     if(key == ' '){
         ofxOscMessage positionDetected;
         stringstream posDetect_address;
-        posDetect_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_STATE_POSITIONED;
+        posDetect_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
         positionDetected.setAddress(posDetect_address.str());
+        positionDetected.addStringArg(OSC_KINECT_STATE_POSITIONED);
         oscSender.sendMessage(positionDetected, false);
     }
 }
