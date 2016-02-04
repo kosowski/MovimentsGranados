@@ -64,9 +64,9 @@ void XBSceneManager::draw()
         }
         case SCENESTATE_Transitioning:
         {
-            cout << "SrcAlpha: " << *(scenes[currentSceneIndex]->getFBOAlpha()) << " - DstAlpha: " << *(scenes[nextSceneIndex]->getFBOAlpha()) << endl;
             drawSceneAtIndex(currentSceneIndex);
             drawSceneAtIndex(nextSceneIndex);
+            cout << "SrcAlpha: " << *(scenes[currentSceneIndex]->getFBOAlpha()) << " - DstAlpha: " << *(scenes[nextSceneIndex]->getFBOAlpha()) << endl;
             break;
         }
         default: break;

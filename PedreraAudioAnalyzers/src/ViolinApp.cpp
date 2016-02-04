@@ -236,7 +236,7 @@ void ViolinApp::startButtonPressed()
 }
 
 void ViolinApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
 }
 
@@ -249,7 +249,7 @@ void ViolinApp::getPitchMaxChanged(float &pitch) {
 }
 
 void ViolinApp::guiEnergySmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, ENERGY_SMOOTH_MIN, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaEnergy(invertedSmoothAmount);
 }
 

@@ -243,7 +243,7 @@ void CelloApp::startButtonPressed()
 }
 
 void CelloApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
 }
 
@@ -256,7 +256,7 @@ void CelloApp::getPitchMaxChanged(float &pitch) {
 }
 
 void CelloApp::guiEnergySmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, ENERGY_SMOOTH_MIN, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaEnergy(invertedSmoothAmount);
 }
 
