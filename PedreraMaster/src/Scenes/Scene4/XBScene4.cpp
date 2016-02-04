@@ -147,6 +147,8 @@ void XBScene4::updateCello()
     }
     grayX.setK(myGUI->violinK);
     grayX.setF(myGUI->violinF);
+//    grayX.setK( presets.get(myGUI->presetIndex).kill);
+//    grayX.setF(presets.get(myGUI->presetIndex).feed);
     grayX.setPasses((int) ofMap(celloEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
     grayX.update();
 }
@@ -157,6 +159,8 @@ void XBScene4::updateViolin()
     // update reaction diffusion
     grayV.setK(myGUI->violinK);
     grayV.setF(myGUI->violinF);
+//    grayV.setK( presets.get(myGUI->presetIndex).kill);
+//    grayV.setF(presets.get(myGUI->presetIndex).feed);
     grayV.setPasses((int) ofMap(violinEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
     grayV.update();
 }

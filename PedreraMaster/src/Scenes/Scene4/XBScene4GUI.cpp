@@ -18,9 +18,10 @@ void XBScene4GUI::setup()
     violinGroup.add(minViolinSpeed.setup("Min speed", 1, 0, 10));
     violinGroup.add(maxViolinSpeed.setup("Max speed", 6, 0, 20));
     violinGroup.add(violinK.setup("K", 0.057, 0.005, 0.095));
-    violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.040));
+    violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.065));
+    violinGroup.add(presetIndex.setup("Presets", 0, 0, 13));
+    presetIndex.addListener(this, &XBScene4GUI::onPresetChange);
     sceneGui.add(&violinGroup);
-
     
     windowGroup.setup("Window");
     windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
@@ -50,4 +51,10 @@ void XBScene4GUI::setup()
     sceneGui.add(blurAmount.setup("Blur amount", 0, 0, 8));
     
     loadSettings();
+}
+
+void XBScene4GUI::onPresetChange(int &index)
+{
+    violinK = presets.get(presetIndex).kill;
+    violinF = presets.get(presetIndex).feed;
 }

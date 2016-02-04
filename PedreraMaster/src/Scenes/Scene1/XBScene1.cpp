@@ -259,14 +259,14 @@ void XBScene1::drawViolinCello()
 
     ofTranslate(xEmitter.positionStart.x, xEmitter.positionStart.y);
     ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
-    pTex.setAnchorPercent(0.5, 0.5);
-    pTex.draw(0, 0, myGUI->particleSize + radius * celloEnergy, myGUI->particleSize + radius * celloEnergy);
+    headTexture.setAnchorPercent(0.5, 0.5);
+    headTexture.draw(0, 0, myGUI->particleSize + radius * celloEnergy, myGUI->particleSize + radius * celloEnergy);
     ofPopMatrix();
 
     ofPushMatrix();
     ofTranslate(vEmitter.positionStart.x, vEmitter.positionStart.y);
     ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
-    pTex.draw(0, 0, myGUI->particleSize + radius * violinEnergy, myGUI->particleSize + radius * violinEnergy);
+    headTexture.draw(0, 0, myGUI->particleSize + radius * violinEnergy, myGUI->particleSize + radius * violinEnergy);
 
     ofPopMatrix();
     ofPopStyle();
@@ -548,7 +548,8 @@ void XBScene1::initLines()
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
 
-        for (int j = 0; j < (int) lines.size(); j++) {
+//        for (int j = 0; j < (int) lines.size(); j++) {
+        int j = 0; // take only the first one and skip erroneous data
             ofPolyline pl = lines[j].getResampledBySpacing(1);
             vector<ofPoint> points = pl.getVertices();
             //check path direction
@@ -560,7 +561,7 @@ void XBScene1::initLines()
                 }
             }
             verticalLines.push_back(pl);
-        }
+//        }
     }
 }
 
@@ -588,8 +589,8 @@ void XBScene1::initParticles()
 
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    vEmitter.setVelocity(myGUI->particleVelocity);
-    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = myGUI->numParticles;
@@ -597,8 +598,8 @@ void XBScene1::initParticles()
     vEmitter.size = myGUI->particleSize;
 
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    xEmitter.setVelocity(myGUI->particleVelocity);
-    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 20;
@@ -607,12 +608,16 @@ void XBScene1::initParticles()
 
     ofLoadImage(pTex, "resources/particle.png");
     pTex.setAnchorPercent(0.5, 0.5);
+    
+    ofLoadImage(headTexture, "resources/img/particle head.png");
+    headTexture.setAnchorPercent(0.5, 0.5);
 }
 
 void XBScene1::initStones()
 {
-    svg.load("resources/Esc1Piano.svg");
-    for (int i = 0; i < svg.getNumPath(); i++) {
+    svg.load("resources/Esc1Pianov02.svg");
+    //cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
+    for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -702,15 +707,15 @@ void XBScene1::updateEmitters()
 
     //GUI related
     vEmitter.size = myGUI->particleSize;
-    vEmitter.setVelocity(myGUI->particleVelocity);
-    vEmitter.velSpread = myGUI->particleSpread;
+    vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.numPars = myGUI->numParticles;
     vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
 
     xEmitter.size = myGUI->particleSize;
-    xEmitter.setVelocity(myGUI->particleVelocity);
-    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.numPars = myGUI->numParticles;
     xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));

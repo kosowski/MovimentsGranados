@@ -76,6 +76,7 @@ private:
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
+    ofTexture headTexture;
     
     vector<expandingPolyLine> stones;
     vector<expandingPolyLine> stonesToDraw;

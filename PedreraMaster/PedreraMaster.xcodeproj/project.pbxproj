@@ -368,6 +368,7 @@
 		66162BCB1C51835400EF3AE0 /* ofxBox2dRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRect.h; sourceTree = "<group>"; };
 		66162BCC1C51835400EF3AE0 /* ofxBox2dRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dRender.h; sourceTree = "<group>"; };
 		66162BCF1C51835400EF3AE0 /* ofxBox2dUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBox2dUtils.h; sourceTree = "<group>"; };
+		6633CD1E1C63879C00089B59 /* PresetsRD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PresetsRD.h; path = ../Scene4/PresetsRD.h; sourceTree = "<group>"; };
 		6657D5381C457A1E0090CE82 /* ofxParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxParticles.h; sourceTree = "<group>"; };
 		6659B6DC1C3FDF9900B8285C /* Attraction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Attraction.cpp; sourceTree = "<group>"; };
 		6659B6DD1C3FDF9900B8285C /* Attraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attraction.h; sourceTree = "<group>"; };
@@ -581,6 +582,7 @@
 		21476DEAC2DF76790A1ABE51 /* SceneComponents */ = {
 			isa = PBXGroup;
 			children = (
+				6633CD1E1C63879C00089B59 /* PresetsRD.h */,
 				214762E6C746AD737DEB3BE9 /* Rope.h */,
 				21476CA46F1F3BEE0FA9D978 /* Rope.cpp */,
 				214765B92C0C3F1F4C10BC35 /* Vehicle.h */,

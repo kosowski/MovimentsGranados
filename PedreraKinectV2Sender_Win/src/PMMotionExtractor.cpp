@@ -15,7 +15,7 @@ bool PMMotionExtractor::setup()
 
 	kinect.open();
 	kinect.initDepthSource();
-	//kinect.initColorSource();
+	kinect.initColorSource();
 	kinect.initInfraredSource();
 	kinect.initBodySource();
 	kinect.initBodyIndexSource();
@@ -52,6 +52,9 @@ void PMMotionExtractor::update()
 				auto bodies = kinect.getBodySource()->getBodies();
 				for (auto body : bodies) {
 					//TODO: Implement body gesture detection
+					//cout << body.trackingId << endl;
+					if (body.trackingId != 0)
+						//break
 					for (auto joint : body.joints) {
 						if (joint.first == JointType_HandLeft) {
 							handsInfo.leftHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
@@ -79,21 +82,12 @@ void PMMotionExtractor::update()
 								auto userPositioned = true;
 								ofNotifyEvent(eventUserPositioned, userPositioned, this);
 								positionDetectedCounter = 0;
-								
 							}
 						}
-					}
-					
+					}	
 				}
 				computeVelocity(5);
 			}
-			//
-			//-
-			//map<JointType, ofVec2f> projectedJoints = kinect.getBodySource()->getProjectedJoints(0);
-			//if (projectedJoints.size() == 25) {
-			//	ofVec2f p = projectedJoints.at(JointType_HandLeft);
-			//	cout << p << endl;
-			//}
 		}
 		else {
 			if (hasUser) {
@@ -104,43 +98,6 @@ void PMMotionExtractor::update()
 			}
 		}
 
-
-
-
-
-
-        // iterate through users
-        // only processes if two hands are found, it means a user is found
-        //if (kinect.getNumTrackedHands() == 2) {
-        //    if (!hasUser) {
-        //        hasUser = true;
-        //        ofNotifyEvent(eventUserDetection, hasUser, this);
-        //    }
-        //    for (int i = 0; i < kinect.getNumTrackedHands(); i++) {
-        //        // get a reference to this user
-        //        ofxOpenNIHand &hand = kinect.getTrackedHand(i);
-        //        
-        //        // get hand position
-        //        ofPoint handPos = hand.getPosition();
-        //        handPos.x /= kinect.getWidth(); //mapped to 0-1
-        //        handPos.y /= kinect.getHeight(); //mapped to 0-1
-        //        handPos.z /= 1000; //mapped to give distance to kinect in meters
-        //        //Random choser left and right hand
-        //        //TODO: implement right/left detection (IF NEED)
-        //        if (i)
-        //            handsInfo.leftHand.pos = handPos;
-        //        else
-        //            handsInfo.rightHand.pos = handPos;
-        //    }
-        //    computeVelocity(5);
-        //} else {
-        //    if (hasUser) {
-        //        hasUser = false;
-        //        ofNotifyEvent(eventUserDetection, hasUser, this);
-        //        rHandPosHist.clear();
-        //        lHandPosHist.clear();
-        //    }
-        //}
     }else if(ofGetMousePressed()){
         hasUser = true;
         ofNotifyEvent(eventUserDetection, hasUser, this);
@@ -151,7 +108,7 @@ void PMMotionExtractor::update()
         handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
         handsInfo.leftHand.pos.z = 1;
         computeVelocity(5);
-		cout << ofGetMouseX() << endl;
+		//cout << ofGetMouseX() << endl;
     }else{
         hasUser = false;
         ofNotifyEvent(eventUserDetection, hasUser, this);
@@ -165,7 +122,6 @@ void PMMotionExtractor::update()
 void PMMotionExtractor::draw(bool drawImage, bool drawHands)
 {
 	if (hasKinect && drawImage) {
-		//kinect.getInfraredSource()->draw(0, 0, ofGetWidth(), ofGetHeight());
 		auto infraredImage = kinect.getInfraredSource();
 		auto infraredPixels = infraredImage->getPixels();
 		for (auto & pixel : infraredPixels) {
@@ -191,13 +147,32 @@ void PMMotionExtractor::draw(bool drawImage, bool drawHands)
 ///--------------------------------------------------------------
 void PMMotionExtractor::exit()
 {
-    /*kinect.stop();*/
+	kinect.close();
 }
 
-KinectInfo PMMotionExtractor::getKinectInfo()
-{
-    return kinectOut;
+KinectInfo PMMotionExtractor::getHandsInfo() {
+	KinectInfo tempInfo = handsInfo;
+
+	//Compute hand Mean value;
+	ofPoint lHandPosMean = ofPoint(0);
+	for (auto & tempPos : lHandPosHist) {
+		lHandPosMean += tempPos;
+	}
+	lHandPosMean /= lHandPosHist.size();
+	
+	ofPoint rHandPosMean = ofPoint(0);
+	for (auto & tempPos : rHandPosHist) {
+		rHandPosMean += tempPos;
+	}
+	rHandPosMean /= rHandPosHist.size();
+
+	//Assign mean value to output value;
+	tempInfo.leftHand.pos = lHandPosMean;
+	tempInfo.rightHand.pos = rHandPosMean;
+
+	return tempInfo;
 }
+
 
 void PMMotionExtractor::computeVelocity(int meanSize)
 {
@@ -236,28 +211,17 @@ void PMMotionExtractor::computeVelocity(int meanSize)
     lHandVel/=lHandPosHist.size();
     lHandVel*=1000;
     handsInfo.leftHand.v=lHandVel;
-    
 }
 
 bool PMMotionExtractor::reset(bool kinectActivated){
-    //if(!kinectActivated)
-    //    return setup();
-    //else{
-    //    hasUser=false;
-    //    ofNotifyEvent(eventUserDetection, hasUser, this);
-    //    kinect.setPaused(true);
-    //    kinect.removeHandsGenerator();
-    //    kinect.removeAllHandFocusGestures();
-    //    kinect.addHandsGenerator();
-    //    kinect.addAllHandFocusGestures();
-    //    kinect.setMaxNumHands(2);
-    //    
-    //    for (int i = 0; i < kinect.getMaxNumHands(); i++) {
-    //        ofxOpenNIDepthThreshold depthThreshold = ofxOpenNIDepthThreshold(0, 0, false, true, true, true, true);
-    //        kinect.addDepthThreshold(depthThreshold);
-    //    }
-    //    kinect.setPaused(false);
-    //    return true;
-    //}
+	kinect.close();
+	kinect.open();
+
 	return true;
+}
+
+
+ofPixels PMMotionExtractor::getColorPixels() {
+	auto ColoredImage = kinect.getColorSource();
+	return ColoredImage->getPixels();
 }

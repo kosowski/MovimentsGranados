@@ -35,8 +35,8 @@ public:
     ofxIntSlider numParticles;
     ofxFloatSlider headSize;
 
-    ofxVec3Slider particleVelocity;
-    ofxVec3Slider particleSpread;
+    ofxVec2Slider particleVelocity;
+    ofxVec2Slider particleSpread;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;
