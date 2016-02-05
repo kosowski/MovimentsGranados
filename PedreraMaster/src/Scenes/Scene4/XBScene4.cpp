@@ -376,6 +376,7 @@ void XBScene4::keyReleased(int key)
         case 'Z': {
             waves.clear();
             initWaves();
+            initReactionDiffusion();
             break;
         }
 
