@@ -76,7 +76,7 @@ void XBSceneManager::exit()
 {
 }
 
-void XBSceneManager::goToScene(unsigned int sceneIndex, float timeInSeconds)
+void XBSceneManager::goToScene(unsigned int sceneIndex, float fadeOutTime, float fadeInTime)
 {
     if (sceneIndex >= scenes.size()) return;
     if (sceneIndex == currentSceneIndex) return;
@@ -91,26 +91,26 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, float timeInSeconds)
 
     float tweenDelay = 0.0f;
 
-    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, timeInSeconds);
+    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, fadeInTime);
     Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
     srcTween->setRepeat(1, false);
 
-    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, timeInSeconds);
+    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, fadeInTime);
     Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
     dstTween->setRepeat(1, false);
     Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);
 }
 
-void XBSceneManager::goToNextScene(float timeInSeconds)
+void XBSceneManager::goToNextScene(float fadeOutTime, float fadeInTime)
 {
     unsigned int sceneIndex = (unsigned int)((currentSceneIndex + 1) % scenes.size());
-    goToScene(sceneIndex, timeInSeconds);
+    goToScene(sceneIndex, fadeOutTime, fadeInTime);
 }
 
-void XBSceneManager::goToPrevScene(float timeInSeconds)
+void XBSceneManager::goToPrevScene(float fadeOutTime, float fadeInTime)
 {
     unsigned int sceneIndex = (currentSceneIndex == 0) ? ((unsigned int)(scenes.size() - 1)) : ((unsigned int)(currentSceneIndex - 1));
-    goToScene(sceneIndex, timeInSeconds);
+    goToScene(sceneIndex, fadeOutTime, fadeInTime);
 }
 
 void XBSceneManager::drawSceneAtIndex(int sceneIndex)

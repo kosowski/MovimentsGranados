@@ -19,14 +19,16 @@ public:
     bool loadFile(string filename);
 
     float getWindowScale()          { return windowScale; }
-    float getTransitionTime()       { return transitionTime; }
+    float getFadeOutTime()          { return fadeOutTime; }
+    float getFadeInTime()           { return fadeInTime; }
 
 private:
 
     void createSettingsFile(string filename);
 
     float windowScale;
-    float transitionTime;
+    float fadeOutTime;
+    float fadeInTime;
 };
 
 
