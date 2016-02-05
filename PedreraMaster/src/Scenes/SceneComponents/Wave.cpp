@@ -26,7 +26,7 @@ Wave::Wave(vector<ofPoint>& o, float a, float p, float s, int ori = 0) {
         particles.push_back(ofPoint (0,0));
     }
     maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
-    float history = 5;
+    float history = 1;
     attractors.resize(history * 2);
     for(int i=0; i< history * 2;i++)
         attractors.push_back(attractor{ ofPoint(0, 0), 0 ,0 });
@@ -98,8 +98,8 @@ void Wave::setAttractor(int index, float x, float y, float strength, float radiu
         attractors.push_back( attractor{ofPoint(x, y), strength, radius});
         index = attractors.size() - 1;
     }
-    if(ofGetFrameNum() % 2 == 0)
-         updateAttractor( (index+1)%2, decay);
+//    if(ofGetFrameNum() % 2 == 0)
+//         updateAttractor( (index+1)%2, decay);
     attractors[index].pos.x=x;
     attractors[index].pos.y=y;
     attractors[index].strength = strength;
