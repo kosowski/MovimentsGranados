@@ -72,7 +72,7 @@ void XBSceneManager::draw()
         default: break;
     }
 
-    ofDisableBlendMode();
+//    ofDisableBlendMode();
 }
 
 void XBSceneManager::exit()
