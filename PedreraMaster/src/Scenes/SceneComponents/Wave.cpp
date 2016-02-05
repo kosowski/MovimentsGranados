@@ -26,7 +26,7 @@ Wave::Wave(vector<ofPoint>& o, float a, float p, float s, int ori = 0) {
         particles.push_back(ofPoint (0,0));
     }
     maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
-    float history = 10;
+    float history = 5;
     attractors.resize(history * 2);
     for(int i=0; i< history * 2;i++)
         attractors.push_back(attractor{ ofPoint(0, 0), 0 ,0 });
