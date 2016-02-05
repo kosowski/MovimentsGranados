@@ -15,8 +15,10 @@ void XBScene4GUI::setup()
     XBBaseGUI::setup();
 
     violinGroup.setup("Violin and Cello");
-    violinGroup.add(minViolinSpeed.setup("Min speed", 1, 0, 10));
-    violinGroup.add(maxViolinSpeed.setup("Max speed", 6, 0, 20));
+    violinGroup.add(minViolinSpeed.setup("Min v speed", 1, 0, 10));
+    violinGroup.add(maxViolinSpeed.setup("Max v speed", 6, 0, 30));
+    violinGroup.add(minCelloSpeed.setup("Min c speed", 1, 0, 10));
+    violinGroup.add(maxCelloSpeed.setup("Max c speed", 6, 0, 30));
     violinGroup.add(violinK.setup("K", 0.057, 0.005, 0.095));
     violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.065));
     violinGroup.add(presetIndex.setup("Presets", 0, 0, 13));

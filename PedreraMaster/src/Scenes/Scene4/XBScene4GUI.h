@@ -19,6 +19,8 @@ public:
     ofxGuiGroup violinGroup;
     ofxIntSlider minViolinSpeed;
     ofxIntSlider maxViolinSpeed;
+    ofxIntSlider minCelloSpeed;
+    ofxIntSlider maxCelloSpeed;
     ofxFloatSlider violinK;
     ofxFloatSlider violinF;
     ofxIntSlider presetIndex;

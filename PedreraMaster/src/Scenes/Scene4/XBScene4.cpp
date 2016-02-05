@@ -151,7 +151,7 @@ void XBScene4::updateCello()
     grayX.setF(myGUI->violinF);
 //    grayX.setK( presets.get(myGUI->presetIndex).kill);
 //    grayX.setF(presets.get(myGUI->presetIndex).feed);
-    grayX.setPasses((int) ofMap(celloEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
+    grayX.setPasses((int) ofMap(celloEnergy, 0, 1, myGUI->minCelloSpeed, myGUI->maxCelloSpeed));
     grayX.update();
 }
 
