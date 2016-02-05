@@ -66,13 +66,10 @@ void XBSceneManager::draw()
         {
             drawSceneAtIndex(currentSceneIndex);
             drawSceneAtIndex(nextSceneIndex);
-            cout << "SrcAlpha: " << *(scenes[currentSceneIndex]->getFBOAlpha()) << " - DstAlpha: " << *(scenes[nextSceneIndex]->getFBOAlpha()) << endl;
             break;
         }
         default: break;
     }
-
-//    ofDisableBlendMode();
 }
 
 void XBSceneManager::exit()
@@ -88,16 +85,17 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, float timeInSeconds)
     state = SCENESTATE_Transitioning;
     nextSceneIndex = sceneIndex;
 
+    scenes[currentSceneIndex]->setFBOAlpha(255.0f);
     scenes[nextSceneIndex]->setFBOAlpha(0.0f);
     scenes[nextSceneIndex]->enteredScene();
 
     float tweenDelay = 0.0f;
 
-    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), *(scenes[currentSceneIndex]->getFBOAlpha()), 0.0f, tweenDelay, timeInSeconds);
+    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, timeInSeconds);
     Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
     srcTween->setRepeat(1, false);
 
-    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), *(scenes[nextSceneIndex]->getFBOAlpha()), 255.0f, tweenDelay, timeInSeconds);
+    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, timeInSeconds);
     Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
     dstTween->setRepeat(1, false);
     Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);

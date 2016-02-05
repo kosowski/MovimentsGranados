@@ -227,8 +227,11 @@ void XBScene2::drawDirector()
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     // draw directors waves
+
+    float directorAlpha = (fboAlpha < 255.0) ? ofMap(fboAlpha, 0, 255, 0, myGUI->colorDirectorA, true) : myGUI->colorDirectorA;
+
     ofPushStyle();
-    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, directorAlpha);
     ofSetLineWidth(myGUI->lineWidth);
     for (Wave w:waves)
         w.display();

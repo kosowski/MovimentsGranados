@@ -112,7 +112,6 @@ void MainApp::keyReleased(int key)
             break;
         case OF_KEY_RIGHT:
         case OF_KEY_UP:
-            cout << "TR time: " << transitionTime << endl;
             sceneManager.goToNextScene(transitionTime);
             break;
         case 'q':
