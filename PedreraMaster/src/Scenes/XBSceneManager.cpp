@@ -158,9 +158,9 @@ void XBSceneManager::onFadeOutComplete(float *arg)
 
     fadingOut = false;
 
+    scenes[currentSceneIndex]->leftScene();
     if (!fadingIn)
     {
-        scenes[currentSceneIndex]->leftScene();
         currentSceneIndex = nextSceneIndex;
         state = SCENESTATE_OnScene;
         ofNotifyEvent(eventSceneChanged, currentSceneIndex);
@@ -177,7 +177,7 @@ void XBSceneManager::onFadeInComplete(float *arg)
 
     if (!fadingOut)
     {
-        scenes[currentSceneIndex]->leftScene();
+//        scenes[currentSceneIndex]->leftScene();
         currentSceneIndex = nextSceneIndex;
         state = SCENESTATE_OnScene;
         ofNotifyEvent(eventSceneChanged, currentSceneIndex);
