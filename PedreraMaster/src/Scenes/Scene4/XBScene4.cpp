@@ -270,6 +270,7 @@ void XBScene4::drawPiano()
         ofPopMatrix();
     }
     ofPopStyle();
+    pianoEnergy *= gui->pianoDecay;
 }
 
 void XBScene4::drawViolinWindow()

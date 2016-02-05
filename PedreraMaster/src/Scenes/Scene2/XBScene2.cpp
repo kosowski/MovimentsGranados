@@ -200,6 +200,9 @@ void XBScene2::updatePiano()
             i--; // keep i index valid
         }
     }
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene2::updateDirector()

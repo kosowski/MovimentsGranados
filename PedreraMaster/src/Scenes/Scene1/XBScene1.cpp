@@ -173,6 +173,7 @@ void XBScene1::updatePiano()
             i--; // new code to keep i index valid
         }
     }
+    pianoEnergy *= gui->pianoDecay;
 }
 
 void XBScene1::updateDirector()

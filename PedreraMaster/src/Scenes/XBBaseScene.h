@@ -61,6 +61,7 @@ protected:
     float celloNote;
     float pianoNote;
     float violinNote;
+    unsigned int lastPianoNoteTime;
    
     kinectHand leftHand;
     kinectHand rightHand;

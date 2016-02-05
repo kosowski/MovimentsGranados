@@ -149,8 +149,8 @@ void XBBaseScene::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBBaseScene::onPianoNoteOff(int &noteOff)
 {
-    //    cout << "Piano NoteOff: p=" << noteOff << endl;
-    pianoEnergy *= gui->pianoDecay;
+//    pianoEnergy *= gui->pianoDecay;
+    lastPianoNoteTime = ofGetElapsedTimeMillis();
 }
 
 void XBBaseScene::onKinectLPositionChanged(XBOSCManager::KinectPosVelArgs &lPos)
