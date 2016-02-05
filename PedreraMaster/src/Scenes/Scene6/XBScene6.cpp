@@ -4,6 +4,7 @@
 
 #include "XBScene6.h"
 #include "XBScene6GUI.h"
+#include "XBSettingsManager.h"
 #include "../../Shared/OSCSettings.h"
 
 
@@ -75,11 +76,15 @@ void XBScene6::update()
 
 void XBScene6::drawIntoFBO()
 {
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     fbo.begin();
     {
         if (showFacadeImage) templateImage.draw(0, 0, ofGetWidth(), ofGetHeight());
         else ofBackground(0);
 
+        ofPushMatrix();
+        ofScale(windowScale, windowScale);
         switch (state) {
             case S6_1_INITIAL:      drawS6_1(); break;
             case S6_2_DETECTED:     drawS6_2(); break;
@@ -87,6 +92,7 @@ void XBScene6::drawIntoFBO()
             case S6_4_THANKS:       drawS6_4(); break;
             default:                break;
         }
+        ofPopMatrix();
     }
     fbo.end();
     
@@ -319,7 +325,7 @@ void XBScene6::initWaves()
     int spacing = 10;
     
     // create horzontal waves
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
