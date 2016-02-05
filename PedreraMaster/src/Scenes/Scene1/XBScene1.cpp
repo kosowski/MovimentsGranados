@@ -517,7 +517,7 @@ void XBScene1::keyReleased(int key)
 void XBScene1::initLines()
 {
     // LOAD HORIZINTAL LINES
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04.svg");
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -669,7 +669,7 @@ void XBScene1::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
