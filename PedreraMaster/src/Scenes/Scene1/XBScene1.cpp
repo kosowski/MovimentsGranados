@@ -7,6 +7,8 @@
 #include "XBSettingsManager.h"
 
 bool maskWindows = true;
+float celloWindowAlpha = 0;
+float violinWindowAlpha = 0;
 
 void XBScene1::setup(XBBaseGUI *_gui)
 {
@@ -282,9 +284,14 @@ void XBScene1::drawWindows()
     if (fakeCelloEvent || celloEnergy > energyThreshold) {
         for (int i = 0; i < windowsOutlines.size(); i++) {
             if (windowsOutlines[i].inside(xEmitter.positionStart)) {
+                if(celloInsideWindow != i)
+                    celloWindowAlpha = 0;
+                else
+                    celloWindowAlpha+= myGUI->windowAttack;
+                if(celloWindowAlpha > 1) celloWindowAlpha = 1;
                 ofPushStyle();
                 ofSetLineWidth(4);
-                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
                 //                    if(celloInsideWindow != -1 && celloInsideWindow != i)
@@ -295,14 +302,14 @@ void XBScene1::drawWindows()
             // reached the end of the loop, wich means is not under any window
             if (i == windowsOutlines.size() - 1) {
                 if (celloInsideWindow > -1)
-                    addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+                    addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw, celloWindowAlpha, myGUI->colorCelloA);
                 celloInsideWindow = -1;
             }
         }
     }
     else {
         if (celloInsideWindow > -1)
-            addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+            addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw, celloWindowAlpha, myGUI->colorCelloA);
         celloInsideWindow = -1;
     }
 
@@ -310,9 +317,14 @@ void XBScene1::drawWindows()
     if (fakeEvent || violinEnergy > energyThreshold) {
         for (int i = 0; i < windowsOutlines.size(); i++) {
             if (windowsOutlines[i].inside(vEmitter.positionStart)) {
+                if(violinInsideWindow != i)
+                    violinWindowAlpha = 0;
+                else
+                    violinWindowAlpha+= myGUI->windowAttack;
+                if(violinWindowAlpha > 1) violinWindowAlpha = 1;
                 ofPushStyle();
                 ofSetLineWidth(4);
-                ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+                ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
                 violinInsideWindow = i;
@@ -321,7 +333,7 @@ void XBScene1::drawWindows()
             // reached the end of the loop, wich means is not under any window
             if (i == windowsOutlines.size() - 1) {
                 if (violinInsideWindow > -1) {
-                    addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+                    addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw, violinWindowAlpha, myGUI->colorViolinA);
                 }
                 violinInsideWindow = -1;
             }
@@ -329,7 +341,7 @@ void XBScene1::drawWindows()
     }
     else {
         if (violinInsideWindow > -1)
-            addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+            addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw, violinWindowAlpha, myGUI->colorViolinA);
         violinInsideWindow = -1;
     }
 
@@ -350,10 +362,13 @@ void XBScene1::drawWindows()
     ofPopStyle();
 }
 
-void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector)
+void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector, float initValue, float instrumentAlpha)
 {
+    XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+    float init = instrumentAlpha *( 1 -  initValue) / myGUI->windowFade;
+    cout << init << endl;
     expandingPolyLine e;
-    e.life = 1;
+    e.life = init;
     e.line = windowsOutlines[index];
     vector.push_back(e);
 }

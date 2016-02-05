@@ -26,6 +26,7 @@ public:
     
     ofxGuiGroup violinGroup;
     ofxToggle celloVertical;
+    ofxFloatSlider windowAttack;
     ofxFloatSlider windowFade;
     ofxToggle drawWindows;
     ofxFloatSlider timeIncrement;
