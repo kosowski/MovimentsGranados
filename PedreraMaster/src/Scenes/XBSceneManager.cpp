@@ -20,7 +20,10 @@ void XBSceneManager::addScene(XBBaseScene *scene)
 void XBSceneManager::setup(int initialScene)
 {
     currentSceneIndex = nextSceneIndex = initialScene;
+
+    fadingOut = fadingIn = false;
     Tweenzor::init();
+
     scenes[currentSceneIndex]->enteredScene();
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
 }
@@ -29,6 +32,8 @@ void XBSceneManager::update()
 {
     if (scenes.size() == 0) return;
     if (currentSceneIndex < 0) return;
+
+    Tweenzor::update(ofGetElapsedTimeMillis());
 
     switch(state)
     {
@@ -41,7 +46,6 @@ void XBSceneManager::update()
         {
             scenes[currentSceneIndex]->update();
             scenes[nextSceneIndex]->update();
-            Tweenzor::update(ofGetElapsedTimeMillis());
             break;
         }
         default: break;
@@ -87,18 +91,22 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, float fadeOutTime, float
 
     scenes[currentSceneIndex]->setFBOAlpha(255.0f);
     scenes[nextSceneIndex]->setFBOAlpha(0.0f);
+
     scenes[nextSceneIndex]->enteredScene();
 
     float tweenDelay = 0.0f;
 
-    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, fadeInTime);
+    cout << "fadeOut = " << fadeOutTime << " - fadeIn = " << fadeInTime << endl;
+    fadingOut = true;
+    Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, fadeOutTime, EASE_OUT_SINE);
     Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
-    srcTween->setRepeat(1, false);
+//    srcTween->setRepeat(1, false);
+    Tweenzor::addCompleteListener(srcTween, this, &XBSceneManager::onFadeOutComplete);
 
-    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, fadeInTime);
+    Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, fadeInTime, EASE_IN_SINE);
     Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
-    dstTween->setRepeat(1, false);
-    Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeComplete);
+//    dstTween->setRepeat(1, false);
+    Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeInComplete);
 }
 
 void XBSceneManager::goToNextScene(float fadeOutTime, float fadeInTime)
@@ -142,16 +150,38 @@ string XBSceneManager::getCurrentSceneName()
     }
 }
 
-void XBSceneManager::onFadeComplete(float *arg)
+void XBSceneManager::onFadeOutComplete(float *arg)
 {
-    Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
-    Tweenzor::removeTween(scenes[nextSceneIndex]->getFBOAlpha());
-    Tweenzor::removeCompleteListener(dstTween);
+    Tween *tween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
+    Tweenzor::removeTween(scenes[currentSceneIndex]->getFBOAlpha());
+    Tweenzor::removeCompleteListener(tween);
 
-    state = SCENESTATE_OnScene;
-    scenes[currentSceneIndex]->leftScene();
-    currentSceneIndex = nextSceneIndex;
-    ofNotifyEvent(eventSceneChanged, currentSceneIndex);
+    fadingOut = false;
+
+    if (!fadingIn)
+    {
+        scenes[currentSceneIndex]->leftScene();
+        currentSceneIndex = nextSceneIndex;
+        state = SCENESTATE_OnScene;
+        ofNotifyEvent(eventSceneChanged, currentSceneIndex);
+    }
+}
+
+void XBSceneManager::onFadeInComplete(float *arg)
+{
+    Tween *tween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
+    Tweenzor::removeTween(scenes[nextSceneIndex]->getFBOAlpha());
+    Tweenzor::removeCompleteListener(tween);
+
+    fadingIn = false;
+
+    if (!fadingOut)
+    {
+        scenes[currentSceneIndex]->leftScene();
+        currentSceneIndex = nextSceneIndex;
+        state = SCENESTATE_OnScene;
+        ofNotifyEvent(eventSceneChanged, currentSceneIndex);
+    }
 }
 
 void XBSceneManager::keyReleased(int key)

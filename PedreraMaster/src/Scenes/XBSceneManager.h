@@ -40,7 +40,11 @@ public:
 private:
 
     void drawSceneAtIndex(int sceneIndex);
-    void onFadeComplete(float* arg);
+
+    void onFadeOutComplete(float *arg);
+    void onFadeInComplete(float *arg);
+
+    bool fadingOut, fadingIn;
 
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;
