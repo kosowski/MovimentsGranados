@@ -37,6 +37,7 @@ public:
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
+    ofxFloatSlider dampingWaves;
     ofxFloatSlider blurAmount;
 };
 

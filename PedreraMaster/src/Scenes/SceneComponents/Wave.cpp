@@ -26,6 +26,10 @@ Wave::Wave(vector<ofPoint>& o, float a, float p, float s, int ori = 0) {
         particles.push_back(ofPoint (0,0));
     }
     maxDist = ofPoint(0,0).distance( ofPoint(ofGetWidth(), ofGetHeight()));
+    float history = 10;
+    attractors.resize(history * 2);
+    for(int i=0; i< history * 2;i++)
+        attractors.push_back(attractor{ ofPoint(0, 0), 0 ,0 });
 }
 
 Wave::Wave(ofPoint o, int w_, float a, float p, float s, int ori = 0){
@@ -61,8 +65,8 @@ void Wave::update() {
     
             float attraction = 0;
             for(int k= 0; k< attractors.size(); k++){
-                float dist = ofClamp(1 - particles[i].distance( attractors[k]) / maxDist, 0.0f, 1.0f);
-                attraction += pow(dist, attractorRadius) * attractorStrength;
+                float dist = ofClamp(1 - particles[i].distance( attractors[k].pos) / maxDist, 0.0f, 1.0f);
+                attraction += pow(dist, attractors[k].radius) * attractors[k].strength;
             }
             // Every other wave is cosine instead of sine
             // if (j % 2 == 0)
@@ -89,14 +93,27 @@ void Wave::display() {
     }
 }
 
-void Wave::setAttractor(int index, float x, float y, float strength, float radius){
+void Wave::setAttractor(int index, float x, float y, float strength, float radius, float decay){
     if( index >= attractors.size()){
-        attractors.push_back(ofPoint(x, y));
+        attractors.push_back( attractor{ofPoint(x, y), strength, radius});
         index = attractors.size() - 1;
     }
-    attractors[index].x=x;
-    attractors[index].y=y;
-    attractorStrength = strength;
-    attractorRadius = radius;
+    if(ofGetFrameNum() % 2 == 0)
+         updateAttractor( (index+1)%2, decay);
+    attractors[index].pos.x=x;
+    attractors[index].pos.y=y;
+    attractors[index].strength = strength;
+    attractors[index].radius = radius;
 //    cout << "Set attractor " << ofToString(index) << " at " << x << "," << y <<endl;
+}
+
+// attractors hold current attractor position at index 0 and 1 (for both hands) and a list of previous positions
+// so index 2 is previous pos to index 0, index 4 to 2....and index 3 is the previous to 1, 5 to 3...
+// thats why we decrement the index by two, each call updates the history of one hand
+void Wave::updateAttractor(int index, float decay){
+    for(int i = attractors.size() - 1 - index; i > 0;i-=2){
+        attractors[i].pos.set( attractors[i - 2].pos );
+        attractors[i].strength = attractors[i - 2].strength * decay;
+        attractors[i].radius = attractors[i - 2].radius ;
+    }
 }

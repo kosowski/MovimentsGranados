@@ -51,6 +51,7 @@ public:
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
+    ofxFloatSlider dampingWaves;
     
 //    ofxToggle showTemplate;
 };
