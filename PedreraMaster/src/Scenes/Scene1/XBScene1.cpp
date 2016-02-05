@@ -174,6 +174,8 @@ void XBScene1::updatePiano()
         }
     }
     pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene1::updateDirector()

@@ -131,7 +131,9 @@ void XBScene4::updatePiano()
             i--; // keep i index valid
         }
     }
-
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene4::updateCello()
