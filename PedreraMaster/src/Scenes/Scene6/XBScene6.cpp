@@ -66,8 +66,8 @@ void XBScene6::update()
 {
     XBBaseScene::update();
     switch (state) {
-        case S6_1_INITIAL:    updateS6_1(); break;
-        case S6_2_DETECTED:    updateS6_2(); break;
+        case S6_1_INITIAL:      updateS6_1(); break;
+        case S6_2_DETECTED:     updateS6_2(); break;
         case S6_3_LIVE:         updateS6_3(); break;
         case S6_4_THANKS:       updateS6_4(); break;
         default:                break;
@@ -277,12 +277,14 @@ void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, 
 {
     ofSetColor(color);
 
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     ofPushMatrix();
     {
         float width = font->stringWidth(message) * scaleFactor;
         float height = font->stringHeight(message) * scaleFactor;
 
-        ofTranslate(ofPoint((ofGetWidth() * x) - width/2, (ofGetHeight() * y) - height/2));
+        ofTranslate(ofPoint((ofGetWidth() * x / windowScale) - width/2, (ofGetHeight() * y / windowScale) - height/2));
         ofScale(scaleFactor, scaleFactor);
         fontMsgBold->drawString(message, 0, 0);
     }
