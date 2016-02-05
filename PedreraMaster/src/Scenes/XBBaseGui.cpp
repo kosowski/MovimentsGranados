@@ -56,8 +56,9 @@ void XBBaseGUI::setup()
     
     sceneGui.add(minAlphaWindow.setup("Min window alpha", 1, 0, 255));
     sceneGui.add(maxAlphaWindow.setup("Max window alpha", 255, 0, 255));
-    sceneGui.add(pianoSmoothFactor.setup("Smooth piano", .20, 0.00, 1.00));
-
+    sceneGui.add(pianoSmoothFactor.setup("Piano attack", .20, 0.00, 1.00));
+    sceneGui.add(pianoDecay.setup("Piano decay", .80, 0.00, 1.00));
+    
     colorGui.setup(strColorGuiTitle, STR_SETTINGS_BASEPATH + colorSettingsFilename);
     colorGui.setPosition(colorsPosX, colorsPosY);
 
