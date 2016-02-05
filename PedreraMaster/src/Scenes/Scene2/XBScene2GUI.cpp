@@ -20,6 +20,7 @@ void XBScene2GUI::setup()
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
     directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    directorGroup.add(dampingWaves.setup("Max wave period",  0.80, 0.00, 1.00));
     sceneGui.add(&directorGroup);
     
     windowGroup.setup("Window");

@@ -20,6 +20,7 @@ public:
     ofxFloatSlider minPeriod;
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
+    ofxFloatSlider dampingWaves;
     
     ofxGuiGroup windowGroup;
     ofxFloatSlider barHeight;
