@@ -30,8 +30,9 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2, 2);
     initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1, 10);
 
-    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
-    initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
+    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines, 2);
+    initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines, 2);
+    initWindowsOutlines("resources/Esc2Violinv02.svg", violinOutlines, 1);
 
     initWaves();
     initStones();
@@ -68,6 +69,7 @@ void XBScene2::drawIntoFBO()
         drawDirector();
         drawPiano();
         drawCello();
+        drawViolin();
 
         // apply mask to remove windows interiors
         ofPushStyle();
@@ -165,6 +167,15 @@ void XBScene2::updateViolin()
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     float windowScale = XBSettingsManager::getInstance().getWindowScale();
 
+    // update violin windows
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (violinOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+
     // draw violin windows into its fbo
     violinFbo.begin();
     {
@@ -176,7 +187,9 @@ void XBScene2::updateViolin()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            drawWindow(violinNote, violinWindows, violinWaves);
+            int windowIndex = drawWindow(violinNote, violinWindows, violinWaves);
+            if (ofGetFrameNum() % myGUI->windowFrequency == 0)
+                violinOutlinesToDraw.push_back(violinOutlines[windowIndex]);
             ofPopStyle();
         }
 
@@ -293,6 +306,23 @@ void XBScene2::drawCello()
         ofTranslate(e.centroid);
         ofScale(1 + e.life * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
         e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
+    ofPopStyle();
+}
+
+void XBScene2::drawViolin(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // draw expanding violin windows
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        expandingPolyLine &e = violinOutlinesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        ofScale(1 + e.life * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+        e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
         e.path.draw();
         ofPopMatrix();
     }
@@ -465,10 +495,10 @@ void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
     elements = arranged;
 }
 
-void XBScene2::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows)
+void XBScene2::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows, int startIndex)
 {
     svg.load(name);
-    for (int i = 2; i < svg.getNumPath(); i++) {
+    for (int i = startIndex; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
