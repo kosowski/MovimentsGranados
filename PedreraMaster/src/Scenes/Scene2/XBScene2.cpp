@@ -26,13 +26,16 @@ void XBScene2::setup(XBBaseGUI *_gui)
     celloPianoFbo.end();
 
     rectMask.load("resources/img/Esc2Barra_v01.png");
-    initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2, 2);
-    initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2, 2);
-    initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1, 10);
-
+    initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2);
+    arrangeWindows(2, celloWindows);
+    initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2);
+    arrangeWindows(2, violinWindows);
+    initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1);
+    arrangeViolinWindows();
+    
     initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines, 2);
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines, 2);
-    initWindowsOutlines("resources/Esc2Violinv02.svg", violinOutlines, 1);
+    initWindowsOutlines("resources/Esc2Violin.svg", violinOutlines, 3);
 
     initWaves();
     initStones();
@@ -187,7 +190,7 @@ void XBScene2::updateViolin()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            int windowIndex = drawWindow(violinNote, violinWindows, violinWaves, 5);
+            int windowIndex = drawViolinWindow(violinNote, violinWindows, violinWaves, 4);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0)
                 violinOutlinesToDraw.push_back(violinOutlines[windowIndex]);
             ofPopStyle();
@@ -350,6 +353,27 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
     return currentWindow;
 }
 
+int XBScene2::drawViolinWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves, int floors)
+{
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    
+    int currentWindow = 0;
+    float mappedPitch;
+    
+    float divisionSize = 1./ floors;
+    currentWindow = (int) (note / divisionSize);
+    if(currentWindow >= floors) currentWindow = floors -1;
+    mappedPitch = note;
+    
+    ofRectangle window = windows[0];
+    ofFill();
+    float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
+    
+    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+    
+    return currentWindow;
+}
+
 void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 {
     if (!active)
@@ -436,7 +460,7 @@ void XBScene2::keyReleased(int key)
 }
 
 
-void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<SimpleWave> &vectorWaves, int startIndex, int arrangFloor)
+void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<SimpleWave> &vectorWaves, int startIndex)
 {
     svg.load(name);
 //    int startIndex = 2; //skip full frame and first balcony
@@ -452,15 +476,6 @@ void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vect
             vectorWindows.push_back(pl.getBoundingBox());
         }
     }
-    arrangeWindows(arrangFloor, vectorWindows);
-    // crear wave para cada rectangulo
-//    for(int i=0; i< vectorWindows.size();i++){
-//        ofPoint o = vectorWindows[i].getTopLeft();
-//        o.y = 0;
-//        int w =vectorWindows[i].width;
-//        SimpleWave sw(o, w/2 + 10, 20.f, ofRandom(180, 220.));
-//        vectorWaves.push_back(sw);
-//    }
 }
 
 void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
@@ -608,3 +623,19 @@ void XBScene2::initStones()
     }
 }
 
+void XBScene2::arrangeViolinWindows(){
+    float xMin = violinWindows[0].getMinX();
+    float yMin = violinWindows[0].getMinY();
+    float xMax = violinWindows[0].getMaxX();
+    float yMax = violinWindows[0].getMaxY();
+    for (int i = 1; i < violinWindows.size(); i++) {
+        ofRectangle r3 = violinWindows[i];
+        if( r3.getMinX() < xMin) xMin = r3.getMinX();
+        if( r3.getMinY() < yMin) yMin = r3.getMinY();
+        if( r3.getMaxX() > xMax) xMax = r3.getMaxX();
+        if( r3.getMaxY() > yMax) yMax = r3.getMaxY();
+    }
+    violinWindows.clear();
+    ofRectangle combined(xMin, yMin, xMax - xMin, yMax - yMin);
+    violinWindows.push_back(combined);
+}
