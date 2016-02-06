@@ -26,7 +26,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     initWaves();
     initStones();
     initReactionDiffusion();
-
+    
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 1);
 }
 
@@ -59,13 +59,13 @@ void XBScene4::drawIntoFBO()
             ofSetColor(255);
             svg.draw();
         }
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        drawViolin();
-        drawCello();
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         drawDirector();
         drawPiano();
-
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        drawViolin();
+        drawCello();
+        
         // mask for removing the windows
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
@@ -375,8 +375,8 @@ void XBScene4::keyReleased(int key)
     switch (key) {
         case 'z':
         case 'Z': {
-            waves.clear();
-            initWaves();
+//            waves.clear();
+//            initWaves();
             initReactionDiffusion();
             break;
         }
