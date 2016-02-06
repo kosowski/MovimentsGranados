@@ -38,6 +38,7 @@ private:
     void drawDirector();
     void drawPiano();
     void drawViolinCello();
+    void drawParticles();
 
     void initStones();
     void initParticles();

@@ -81,6 +81,8 @@ void XBScene3::drawIntoFBO()
         mask.draw(0, 0);
         ofPopStyle();
 
+        drawParticles();
+        
         ofPopMatrix();
 
         drawMusiciansWindows();
@@ -133,16 +135,8 @@ void XBScene3::updateDirector()
 void XBScene3::drawViolinCello()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-    //draw particles from violin and cello
-    ofPushStyle();
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
-    for (int i = 0; i < circles.size(); i++) {
-        ofFill();
-        circles[i].get()->draw(pTex);
-    }
-    ofPopStyle();
 
-    // draw violin and cello
+    // draw violin and cello avatars
     if (myGUI->showPath) {
         ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
         vPath.draw();
@@ -159,6 +153,18 @@ void XBScene3::drawViolinCello()
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     v.draw(pTex);
     x.draw(pTex);
+    ofPopStyle();
+}
+
+void XBScene3::drawParticles()
+{
+    //draw particles from violin and cello
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < circles.size(); i++) {
+        ofFill();
+        circles[i].get()->draw(pTex);
+    }
     ofPopStyle();
 }
 
@@ -472,14 +478,14 @@ void XBScene3::updateVioinCello()
             ofPoint vel = myGUI->particleVelocity;
             ofPoint spread = myGUI->particleSpread;
             c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA ));
             circles.push_back(c);
 
             shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c2.get()->setPhysics(0.2, 0.2, 0.002);
             c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
             c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
+            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA ));
             circles.push_back(c2);
         }
     }
