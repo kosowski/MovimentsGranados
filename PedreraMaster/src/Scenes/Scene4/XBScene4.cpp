@@ -335,8 +335,6 @@ int XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
         mappedPitch = ofMap(note, 0.75, 1, 0, 1);
     }
     ofRectangle window = windows[currentWindow];
-    //    ofNoFill();
-    //    ofDrawRectangle(window);
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
 //    ofDrawRectangle(window.x, y, window.width, 10);
