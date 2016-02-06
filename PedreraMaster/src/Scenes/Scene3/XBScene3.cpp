@@ -486,14 +486,20 @@ void XBScene3::updateVioinCello()
             ofPoint vel = myGUI->particleVelocity;
             ofPoint spread = myGUI->particleSpread;
             c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
+            float alpha = myGUI->colorViolinA;
+            if (myGUI->linkAudio)
+                alpha *= violinEnergy;
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha));
             circles.push_back(c);
 
             shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c2.get()->setPhysics(0.2, 0.2, 0.002);
             c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
             c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
+            alpha = myGUI->colorCelloA;
+            if (myGUI->linkAudio)
+                alpha *= celloEnergy;
+            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  alpha));
             circles.push_back(c2);
         }
     }
