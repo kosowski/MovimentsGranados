@@ -46,11 +46,8 @@ private:
     void initStones();
     
     bool fakeCelloEvent = false;
-    float celloNote;
     bool fakePianoEvent = false;
-    float pianoNote;
     bool fakeViolinEvent = false;
-    float violinNote;
     
     ofFbo auxFbo;
     ofImage windowMask;
