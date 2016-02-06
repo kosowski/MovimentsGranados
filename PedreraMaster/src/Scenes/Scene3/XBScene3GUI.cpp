@@ -31,7 +31,7 @@ void XBScene3GUI::setup()
     
     particlesGroup.setup("Particles");
     particlesGroup.add(particleSize.setup("Particle size", 10, 2, 40));
-    particlesGroup.add(particleLife.setup("Particle life", 60, 1, 200));
+    particlesGroup.add(particleLife.setup("Particle life", 60, 1, 300));
     particlesGroup.add(maxDistance.setup("Max distance", 400, 1, 2000));
     particlesGroup.add(maxParticles.setup("Max particles", 1, 0, 10));
     particlesGroup.add(collisionOn.setup("Collisions", true));

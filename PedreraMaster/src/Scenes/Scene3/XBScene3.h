@@ -62,6 +62,7 @@ private:
     ofxParticleSystem particleSystem;
     ofxParticleEmitter vEmitter, xEmitter;
     ofTexture pTex;
+    ofTexture particlesMask;
     
     ofxSVG svg;
     vector<vector<expandingPolyLine>> stones;

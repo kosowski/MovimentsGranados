@@ -83,6 +83,12 @@ void XBScene3::drawIntoFBO()
 
         drawParticles();
         
+        // mask top and bottom of the facade for the particles
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        particlesMask.draw(0, 0);
+        ofPopStyle();
+        
         ofPopMatrix();
 
         drawMusiciansWindows();
@@ -334,6 +340,8 @@ void XBScene3::initParticles()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
+    ofLoadImage(particlesMask, "resources/img/Mask_Arriba_y_Abajo_invert.png");
+    
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     vEmitter.setVelocity(myGUI->particleVelocity);
     vEmitter.velSpread = myGUI->particleSpread;
