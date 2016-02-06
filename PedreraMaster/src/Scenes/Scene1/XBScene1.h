@@ -86,9 +86,6 @@ private:
     ofFbo wavesMask;
     
     BlurEffect blur;
-    
-    kinectHand leftHand;
-    kinectHand rightHand;
 };
 
 
