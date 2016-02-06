@@ -338,6 +338,7 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
     
     float divisionSize = 1./ floors;
     currentWindow = (int) (note / divisionSize);
+    if(currentWindow >= floors) currentWindow = floors -1;
     mappedPitch = ofMap(note, currentWindow * divisionSize, (currentWindow + 1)* divisionSize, 0, 1);
     
     ofRectangle window = windows[currentWindow];
