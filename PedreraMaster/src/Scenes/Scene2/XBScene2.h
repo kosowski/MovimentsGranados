@@ -44,7 +44,7 @@ private:
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows, int startIndex);
     void initStones();
     
-    int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves);
+    int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves, int floors);
     
     ofFbo celloPianoFbo, violinFbo;
     ofImage violinMask, celloPianoMask;

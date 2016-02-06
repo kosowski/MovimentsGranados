@@ -125,7 +125,7 @@ void XBScene2::updateCello()
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
-            int windowIndex = drawWindow(celloNote, celloWindows, celloWaves);
+            int windowIndex = drawWindow(celloNote, celloWindows, celloWaves, 4);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0) {
                 if (windowIndex == 2) { // if third floor, light up two windows
                     celloOutlinesToDraw.push_back(celloOutlines[windowIndex + 1]);
@@ -140,7 +140,7 @@ void XBScene2::updateCello()
         if (fakePianoEvent || pianoEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
-            int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves);
+            int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves, 4);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0) {
                 if (windowIndex == 2) { // if third floor, light up two windows
                     pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex + 1]);
@@ -187,7 +187,7 @@ void XBScene2::updateViolin()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            int windowIndex = drawWindow(violinNote, violinWindows, violinWaves);
+            int windowIndex = drawWindow(violinNote, violinWindows, violinWaves, 5);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0)
                 violinOutlinesToDraw.push_back(violinOutlines[windowIndex]);
             ofPopStyle();
@@ -329,34 +329,23 @@ void XBScene2::drawViolin(){
     ofPopStyle();
 }
 
-int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves)
+int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves, int floors)
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-
+    
     int currentWindow = 0;
     float mappedPitch;
-    if (note < 0.25) {
-        currentWindow = 0;
-        mappedPitch = ofMap(note, 0, 0.25, 0, 1);
-    }
-    else if (note >= 0.25 && note < 0.5) {
-        currentWindow = 1;
-        mappedPitch = ofMap(note, 0.25, 0.5, 0, 1);
-    }
-    else if (note >= 0.5 && note < 0.75) {
-        currentWindow = 2;
-        mappedPitch = ofMap(note, 0.5, 0.75, 0, 1);
-    }
-    else if (note >= 0.75) {
-        currentWindow = 3;
-        mappedPitch = ofMap(note, 0.75, 1, 0, 1);
-    }
+    
+    float divisionSize = 1./ floors;
+    currentWindow = (int) (note / divisionSize);
+    mappedPitch = ofMap(note, currentWindow * divisionSize, (currentWindow + 1)* divisionSize, 0, 1);
+    
     ofRectangle window = windows[currentWindow];
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
-
+    
     rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
-
+    
     return currentWindow;
 }
 
