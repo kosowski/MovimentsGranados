@@ -22,6 +22,13 @@ public:
     ofxFloatSlider lineWidth;
     ofxFloatSlider dampingWaves;
     
+    ofxGuiGroup pianoGroup;
+    ofxFloatSlider stoneGrowFactor;
+    ofxFloatSlider stoneDamping;
+    ofxFloatSlider stoneAlphaDecrease;
+    ofxFloatSlider stoneTime;
+    ofxFloatSlider stoneFrequency;
+    
     ofxGuiGroup windowGroup;
     ofxFloatSlider barHeight;
     ofxFloatSlider alphaStart;

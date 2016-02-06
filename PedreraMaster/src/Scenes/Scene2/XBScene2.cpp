@@ -34,6 +34,7 @@ void XBScene2::setup(XBBaseGUI *_gui)
     initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
 
     initWaves();
+    initStones();
     
     celloPianoMask.load("resources/img/Esc2CelloPiano.png");
     violinMask.load("resources/img/Esc2Violinv03_fade.png");
@@ -200,6 +201,16 @@ void XBScene2::updatePiano()
             i--; // keep i index valid
         }
     }
+    // update piano's stones
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
+        if (stonesToDraw[i].life > ofGetFrameRate() * myGUI->stoneTime) {
+            stonesToDraw.erase(stonesToDraw.begin() + i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
+
     pianoEnergy *= gui->pianoDecay;
     if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
         pianoEnergy *= 0.8;
@@ -254,6 +265,19 @@ void XBScene2::drawPiano()
         ofPopMatrix();
     }
     ofPopStyle();
+    
+    // draw expanding stones from piano
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        expandingPolyLine &e = stonesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+        ofScale(1 + e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                1 + e.amplitude * sin(myGUI->stoneFrequency * e.life));
+        e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
 }
 
 void XBScene2::drawCello()
@@ -302,22 +326,32 @@ int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<Simple
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
 
     rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
-//    ofPushStyle();
-//    ofSetLineWidth(4);
-//    waves[currentWindow].update();
-//    ofPushMatrix();
-//    ofTranslate(0,y);
-//    waves[currentWindow].display();
-//    ofPopMatrix();
-//    ofPopStyle();
+
     return currentWindow;
 }
 
-
+void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    if (!active)
+        return;
+    XBBaseScene::onPianoNoteOn(noteOn);
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    
+    if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
+        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl;
+        return;
+    }
+    int wichLine = midiToRowMapping[noteOn.pitch];
+    expandingPolyLine e = stones[wichLine];
+    e.life = 1;
+    e.amplitude = myGUI->stoneGrowFactor;
+    stonesToDraw.push_back(e);
+}
 
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)
 {
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     switch (key) {
         case 'c':
         case 'C': {
@@ -333,6 +367,11 @@ void XBScene2::keyPressed(int key)
                 fakePianoEvent = true;
                 pianoNote = ofRandom(1);
             }
+            int index = midiToRowMapping[(int) ofRandom(127)];
+            expandingPolyLine e = stones[index];
+            e.life = 1;
+            e.amplitude = myGUI->stoneGrowFactor;
+            stonesToDraw.push_back(e);
             break;
         }
         case 'x':
@@ -496,6 +535,56 @@ void XBScene2::initWaves()
             ofPolyline l(lines[j].getResampledBySpacing(spacing));
             waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
+    }
+}
+
+void XBScene2::initStones()
+{
+    svg.load("resources/Esc1Pianov02.svg");
+    //cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline pl = lines[j].getResampledBySpacing(10);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k = 0; k < points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if (i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            stones.push_back(epl);
+        }
+    }
+    string filePath = "resources/mapping_35_rows_midi.txt";
+    //Load file placed in bin/data
+    ofFile file(filePath);
+    
+    if (!file.exists()) {
+        ofLogError("The file " + filePath + " is missing");
+    }
+    ofBuffer buffer(file);
+    
+    //Read file line by line
+    for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+        string line = *it;
+        midiToRowMapping.push_back(ofToInt(line));
     }
 }
 

@@ -24,6 +24,7 @@ public:
     virtual void drawIntoFBO();
     void keyReleased(int key);
     void keyPressed(int key);
+    void onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn);
   
 private:
     void updateViolin();
@@ -40,7 +41,7 @@ private:
     void initWindows(string name,  vector<ofRectangle>& vectorWindows, vector<SimpleWave>& vectorWaves,int starIndex, int floor);
     void arrangeWindows(int index, vector<ofRectangle>& elements);
     void initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows);
-
+    void initStones();
     
     int drawWindow(float note, vector<ofRectangle>& windows, vector<SimpleWave> &waves);
     
@@ -60,6 +61,10 @@ private:
     vector<expandingPolyLine> pianoOutlines;
     vector<expandingPolyLine> pianoOutlinesToDraw;
     
+    vector<expandingPolyLine> stones;
+    vector<expandingPolyLine> stonesToDraw;
+    vector<int> midiToRowMapping;
+
     ofImage windowMask;
     ofImage rectMask;
     

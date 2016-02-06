@@ -23,6 +23,14 @@ void XBScene2GUI::setup()
     directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
     sceneGui.add(&directorGroup);
     
+    pianoGroup.setup("Piano");
+    pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.01, 0.000, 1.));
+    pianoGroup.add(stoneDamping.setup("Damping", 1., 0.4, 1.00));
+    pianoGroup.add(stoneAlphaDecrease.setup("Alpha speed", 2.3, 1, 20));
+    pianoGroup.add(stoneTime.setup("Duration", 3.5, 0.0, 5.0));
+    pianoGroup.add(stoneFrequency.setup("Pulsation freq", .05, 0.0, .5));
+    sceneGui.add(&pianoGroup);
+    
     windowGroup.setup("Window");
     windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
     windowGroup.add(alphaStart.setup("Alpha attack", 0.8, 0.0f, 1.0f));
