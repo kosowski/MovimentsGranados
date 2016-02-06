@@ -123,14 +123,7 @@ void XBScene4::updatePiano()
             i--; // new code to keep i index valid
         }
     }
-    // update piano windows
-    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
-        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        if (violinOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
-            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
-            i--; // keep i index valid
-        }
-    }
+    
     pianoEnergy *= gui->pianoDecay;
     if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
         pianoEnergy *= 0.8;
@@ -142,7 +135,7 @@ void XBScene4::updateCello()
     // update cello windows
     for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
         celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        if (celloOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+        if (celloOutlinesToDraw[i].life * myGUI->growFactor > 1) {
             celloOutlinesToDraw.erase(celloOutlinesToDraw.begin() + i);
             i--; // keep i index valid
         }
@@ -158,6 +151,16 @@ void XBScene4::updateCello()
 void XBScene4::updateViolin()
 {
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;
+    
+    // update piano windows
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (violinOutlinesToDraw[i].life * myGUI->growFactor > 1) {
+            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+    
     // update reaction diffusion
     grayV.setK(myGUI->violinK);
     grayV.setF(myGUI->violinF);
