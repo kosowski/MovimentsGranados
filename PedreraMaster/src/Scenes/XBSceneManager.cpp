@@ -96,16 +96,14 @@ void XBSceneManager::goToScene(unsigned int sceneIndex, float fadeOutTime, float
 
     float tweenDelay = 0.0f;
 
-    cout << "fadeOut = " << fadeOutTime << " - fadeIn = " << fadeInTime << endl;
     fadingOut = true;
     Tweenzor::add(scenes[currentSceneIndex]->getFBOAlpha(), 255.0f, 0.0f, tweenDelay, fadeOutTime, EASE_OUT_SINE);
     Tween *srcTween = Tweenzor::getTween(scenes[currentSceneIndex]->getFBOAlpha());
-//    srcTween->setRepeat(1, false);
     Tweenzor::addCompleteListener(srcTween, this, &XBSceneManager::onFadeOutComplete);
 
+    fadingIn = true;
     Tweenzor::add(scenes[nextSceneIndex]->getFBOAlpha(), 0.0f, 255.0f, tweenDelay, fadeInTime, EASE_IN_SINE);
     Tween *dstTween = Tweenzor::getTween(scenes[nextSceneIndex]->getFBOAlpha());
-//    dstTween->setRepeat(1, false);
     Tweenzor::addCompleteListener(dstTween, this, &XBSceneManager::onFadeInComplete);
 }
 
@@ -144,7 +142,7 @@ string XBSceneManager::getCurrentSceneName()
             return getCurrentScene()->getName();
         case SCENESTATE_Transitioning:
         {
-            string sceneName = "Transitioning from " + scenes[currentSceneIndex]->getName() + " to " + scenes[nextSceneIndex]->getName();
+            string sceneName = scenes[currentSceneIndex]->getName() + " > " + scenes[nextSceneIndex]->getName();
             return sceneName;
         }
     }
