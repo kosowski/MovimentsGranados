@@ -15,9 +15,9 @@ static const string STR_FONTFILE_NORMAL = "NeutraTextTF-DemiAlt.otf";
 static const int MAX_FONT_SIZE = 75;
 
 static const string S1_TITLE    = "MOU LA PEDRERA!";
-static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat.";
+static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat";
 static const string S2_TITLE    = "DETECTAT!";
-static const string S2_SUBTITLE = "Mou les mans per a crear onades.";
+static const string S2_SUBTITLE = "Mou les mans per a crear onades";
 static const string S3_TITLE    = "PERSONA NO DETECTADA";
 static const string S3_SUBTITLE = S1_SUBTITLE;
 static const string S4_TITLE    = "Gràcies per participar!";
