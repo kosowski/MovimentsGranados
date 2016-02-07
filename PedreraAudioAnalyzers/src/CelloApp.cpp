@@ -16,6 +16,9 @@ void CelloApp::setup()
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(81, 88, 111);
 
+    /**/
+    ofSetFrameRate(60);
+
     guiAnalyzerCreated = false;
 
     float silenceThreshold = 0;
@@ -31,10 +34,39 @@ void CelloApp::setup()
     oscSender.setup(OSC_CELLO_SENDER_HOST, OSC_CELLO_SENDER_PORT);
 
     deviceAudioAnalyzer = nullptr;
+    /**/
+    analysisStarted = false;
+    currentPitch = currentEnergy = 0;
 }
 
 void CelloApp::update()
 {
+    /**/
+
+    if (!silenceOn && analysisStarted)
+    {
+        { // Send pitch
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
+            m.setAddress(address.str());
+            m.addFloatArg(currentPitch);
+            oscSender.sendMessage(m, false);
+
+//            cout << "[SEND] P: " << currentPitch << endl;
+        }
+
+        { // Send energy
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
+            m.setAddress(address.str());
+            m.addFloatArg(currentEnergy);
+            oscSender.sendMessage(m, false);
+
+//            cout << "[SEND] E: " << currentEnergy << endl;
+        }
+    }
 }
 
 void CelloApp::draw()
@@ -80,9 +112,9 @@ void CelloApp::buildDevicesPanel()
 
     ofFile file(DEVICE_SETTINGS_FILENAME);
     bool fileExists = file.exists();
-    cout << "File " << DEVICE_SETTINGS_FILENAME << " exists? " << fileExists << endl;
-    cout << "File hidden? " << file.isHidden() << endl;
-    cout << "File is file? " << file.isFile() << endl;
+//    cout << "File " << DEVICE_SETTINGS_FILENAME << " exists? " << fileExists << endl;
+//    cout << "File hidden? " << file.isHidden() << endl;
+//    cout << "File is file? " << file.isFile() << endl;
 
 
     guiDevices.loadFromFile(DEVICE_SETTINGS_FILENAME);
@@ -236,6 +268,8 @@ void CelloApp::startButtonPressed()
         }
 
         PMAudioAnalyzer::getInstance().start();
+        /**/
+        analysisStarted = true;
 
         lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_ON);
         lblStatus.setBackgroundColor(ofColor::darkGreen);
@@ -296,13 +330,16 @@ void CelloApp::analyzerPitchChanged(pitchParams &pitchParams)
 
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
+/**/
+    currentPitch = pitchParams.smoothedPitch;
+//    cout << "[RECEIVED] P: " << currentPitch << endl;
 
-    ofxOscMessage m;
-    stringstream address;
-    address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
-    m.setAddress(address.str());
-    m.addFloatArg(pitchParams.smoothedPitch);
-    oscSender.sendMessage(m, false);
+//    ofxOscMessage m;
+//    stringstream address;
+//    address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
+//    m.setAddress(address.str());
+//    m.addFloatArg(pitchParams.smoothedPitch);
+//    oscSender.sendMessage(m, false);
 }
 
 void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
@@ -313,12 +350,16 @@ void CelloApp::analyzerEnergyChanged(energyParams &energyParams)
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
 
-    ofxOscMessage m;
-    stringstream address;
-    address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
-    m.setAddress(address.str());
-    m.addFloatArg(energyParams.smoothedEnergy);
-    oscSender.sendMessage(m, false);
+    /**/
+    currentEnergy = energySmoothed;
+//    cout << "[RECEIVED] E: " << currentEnergy << endl;
+
+//    ofxOscMessage m;
+//    stringstream address;
+//    address << OSC_CELLO_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
+//    m.setAddress(address.str());
+//    m.addFloatArg(energyParams.smoothedEnergy);
+//    oscSender.sendMessage(m, false);
 }
 
 void CelloApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
