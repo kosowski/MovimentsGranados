@@ -9,8 +9,8 @@
 
 
 static const string STR_FONT_PATH       = "resources/fonts/";
-static const string STR_FONTFILE_BOLD   = "NeutraText-Demi.otf";
-static const string STR_FONTFILE_NORMAL = "NeutraText-Book.otf";
+static const string STR_FONTFILE_BOLD   = "NeutraTextTF-BoldAlt.otf";
+static const string STR_FONTFILE_NORMAL = "NeutraTextTF-DemiAlt.otf";
 
 static const int MAX_FONT_SIZE = 75;
 
@@ -134,7 +134,7 @@ void XBScene6::drawS6_2()
     drawText(S2_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
     drawText(S2_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-    drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
+    drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor(207, 87, 60, 255));
 
     drawFadeRectangle();
 }
