@@ -16,7 +16,7 @@ class XBScene1 : public XBBaseScene
 public:
     
     XBScene1(const string &name) : XBBaseScene(name) {}
-    
+
     virtual void setup(XBBaseGUI *gui);
     virtual void update();
     virtual void drawIntoFBO();

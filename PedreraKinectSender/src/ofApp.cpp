@@ -53,7 +53,7 @@ void ofApp::setup()
         XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
         string oscHost = XBSettingsManager::getInstance().getOSCHost();
         cout<<oscHost<<endl;
-        oscSender.setup(oscHost, OSC_PIANO_SENDER_PORT);
+        oscSender.setup(oscHost, OSC_KINECT_SENDER_PORT);
         oscSender_Max.setup(oscHost, OSC_KINECT_SENDER_PORT_MAX);
         //oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
         //oscSender_Max.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT_MAX);

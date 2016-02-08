@@ -89,6 +89,7 @@ void XBBaseScene::applyPostFX(){
         glowEffect << fbo.getTexture();
         glowEffect.update();
         fbo.begin();
+        ofSetColor(255,255,255, gui->glowAlpha);
         glowEffect.draw(0,0, fbo.getWidth(), fbo.getHeight());
         fbo.end();
     }
