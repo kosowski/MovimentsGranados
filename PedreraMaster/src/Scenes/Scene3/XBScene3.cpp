@@ -403,7 +403,7 @@ void XBScene3::initWaves()
 
 void XBScene3::initPhysics()
 {
-    ofLoadImage(pTex, "resources/particle.png");
+    ofLoadImage(pTex, "resources/img/particle_2.png");
     pTex.setAnchorPercent(0.5f, 0.5f);
     // Box2d
     box2d.init();

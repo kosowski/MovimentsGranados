@@ -624,10 +624,10 @@ void XBScene1::initParticles()
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
 
-    ofLoadImage(pTex, "resources/particle.png");
+    ofLoadImage(pTex, "resources/img/particle_2.png");
     pTex.setAnchorPercent(0.5, 0.5);
     
-    ofLoadImage(headTexture, "resources/img/particle head.png");
+    ofLoadImage(headTexture, "resources/img/particle_3_head.png");
     headTexture.setAnchorPercent(0.5, 0.5);
 }
 
