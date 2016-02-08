@@ -49,13 +49,12 @@ void PMMotionExtractor::update()
 			//--
 			//
 			{
-				auto bodies = kinect.getBodySource()->getBodies();
+				auto closestBody = findClosestBody();
+				//auto bodies = kinect.getBodySource()->getBodies();
 				for (auto body : bodies) {
-					auto position = body.joints[JointType_Head]->second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
-					//TODO: Implement body gesture detection
+					if (body.trackingId == closestBody->trackingId)
+						break;
 					//cout << body.trackingId << endl;
-					if (body.trackingId != 0)
-						//break
 					for (auto joint : body.joints) {
 						if (joint.first == JointType_HandLeft) {
 							handsInfo.leftHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
@@ -72,7 +71,7 @@ void PMMotionExtractor::update()
 						else if (joint.first == JointType_Head) {
 							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							headPos.y /= 424;
-							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05){
+							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05) {
 								positionDetectedCounter++;
 							}
 							else {
@@ -85,7 +84,7 @@ void PMMotionExtractor::update()
 								positionDetectedCounter = 0;
 							}
 						}
-					}	
+					}
 				}
 				computeVelocity(5);
 			}
@@ -174,7 +173,7 @@ KinectInfo PMMotionExtractor::getHandsInfo() {
 	return tempInfo;
 }
 
-ofxKFW2::Data::Body* PMMotionExtractor::FindClosestBody()
+ofxKFW2::Data::Body* PMMotionExtractor::findClosestBody()
 {
 	ofxKFW2::Data::Body* result = nullptr;
 
@@ -187,7 +186,7 @@ ofxKFW2::Data::Body* PMMotionExtractor::FindClosestBody()
 		}
 	}
 
-	for (auto& body : bodies)
+	for (auto body : bodies)
 	{
 		if (body.tracked)
 		{

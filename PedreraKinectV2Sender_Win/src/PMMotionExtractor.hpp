@@ -57,7 +57,7 @@ public:
 
 	KinectInfo getHandsInfo();
 
-	ofxKFW2::Data::Body* FindClosestBody();
+	ofxKFW2::Data::Body* findClosestBody();
     
     ofEvent<bool> eventUserDetection;
 	ofEvent<bool> eventUserPositioned;
