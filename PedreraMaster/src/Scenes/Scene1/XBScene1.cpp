@@ -705,7 +705,7 @@ void XBScene1::initWaves()
     // create vertical waves
     svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
-    for (int i = 0; i < svg.getNumPath(); i++) {
+    for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
