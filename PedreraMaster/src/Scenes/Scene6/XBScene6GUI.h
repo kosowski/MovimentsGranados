@@ -38,6 +38,8 @@ public:
     ofxFloatSlider maxPeriod;
     ofxFloatSlider lineWidth;
     ofxFloatSlider dampingWaves;
+    ofxFloatSlider maskRadius;
+    ofxFloatSlider maskAlpha;
     ofxFloatSlider blurAmount;
 };
 

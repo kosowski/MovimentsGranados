@@ -53,6 +53,11 @@ void XBScene6::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
     initWaves();
+    wavesMask.allocate(ofGetWidth(), ofGetHeight(), GL_RGB);
+    wavesMask.begin();
+    ofSetBackgroundAuto(false);
+    ofBackground(0, 0, 0);
+    wavesMask.end();
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
 
@@ -313,6 +318,17 @@ void XBScene6::updateDirector()
         waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
+    // update waves mask
+    wavesMask.begin();
+    ofSetColor(0, 0, 0, myGUI->maskAlpha);
+    ofDrawRectangle(0, 0, wavesMask.getWidth(), wavesMask.getHeight());
+    ofPushMatrix();
+    ofSetColor(255);
+    pTex.setAnchorPercent(0.5, 0.5);
+    pTex.draw(rightHand.pos.x * wavesMask.getWidth(), rightHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    pTex.draw(leftHand.pos.x * wavesMask.getWidth(), leftHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    ofPopMatrix();
+    wavesMask.end();
 }
 
 void XBScene6::drawDirector()
@@ -324,6 +340,11 @@ void XBScene6::drawDirector()
     ofSetLineWidth(myGUI->lineWidth);
     for (Wave w:waves)
         w.display();
+    ofPopStyle();
+    // apply director mask
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+    wavesMask.draw(0, 0, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
     ofPopStyle();
 }
 
@@ -363,4 +384,6 @@ void XBScene6::initWaves()
             waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
         }
     }
+    ofLoadImage(pTex, "resources/img/particle.png");
+    pTex.setAnchorPercent(0.5, 0.5);
 }
