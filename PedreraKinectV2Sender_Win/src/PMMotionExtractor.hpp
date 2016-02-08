@@ -56,6 +56,8 @@ public:
 	ofPixels getColorPixels();
 
 	KinectInfo getHandsInfo();
+
+	ofxKFW2::Data::Body* FindClosestBody();
     
     ofEvent<bool> eventUserDetection;
 	ofEvent<bool> eventUserPositioned;

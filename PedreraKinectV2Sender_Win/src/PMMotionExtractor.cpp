@@ -51,6 +51,7 @@ void PMMotionExtractor::update()
 			{
 				auto bodies = kinect.getBodySource()->getBodies();
 				for (auto body : bodies) {
+					auto position = body.joints[JointType_Head]->second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 					//TODO: Implement body gesture detection
 					//cout << body.trackingId << endl;
 					if (body.trackingId != 0)
@@ -171,6 +172,40 @@ KinectInfo PMMotionExtractor::getHandsInfo() {
 	tempInfo.rightHand.pos = rHandPosMean;
 
 	return tempInfo;
+}
+
+ofxKFW2::Data::Body* PMMotionExtractor::FindClosestBody()
+{
+	ofxKFW2::Data::Body* result = nullptr;
+
+	double closestBodyDistance = 10000000.0;
+
+	auto& bodies = kinect.getBodySource()->getBodies();
+	for (auto& body : bodies) {
+		if (body.tracked) {
+			
+		}
+	}
+
+	for (auto& body : bodies)
+	{
+		if (body.tracked)
+		{
+			auto joints = body.joints;
+
+			auto currentLocation = joints[JointType_SpineBase].getPosition();
+
+			auto currentDistance = sqrt(pow(currentLocation.x, 2) + pow(currentLocation.y, 2) + pow(currentLocation.z, 2));
+
+			if (result == nullptr || currentDistance < closestBodyDistance)
+			{
+				result = &body;
+				closestBodyDistance = currentDistance;
+			}
+		}
+	}
+
+	return result;
 }
 
 
