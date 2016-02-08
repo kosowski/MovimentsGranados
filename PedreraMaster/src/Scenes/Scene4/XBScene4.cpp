@@ -430,29 +430,29 @@ void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene4::initReactionDiffusion()
 {
-    grayX.allocate(ofGetWidth(), ofGetHeight());
-    grayV.allocate(ofGetWidth(), ofGetHeight());
+    grayX.allocate(ofGetWidth() * 0.8, ofGetHeight() * 0.8);
+    grayV.allocate(ofGetWidth() * 0.8, ofGetHeight() * 0.8);
 
     ofImage seed;
     seed.load("resources/img/Esc4Violin.png");
     grayV.begin();
-    seed.draw(0, 0, ofGetWidth(), ofGetHeight());
+    seed.draw(0, 0, grayV.getWidth(), grayV.getHeight());
     grayV.end();
 
     ofImage mask;
     mask.load("resources/img/Esc4Violin_mascara.png");
     grayV.begin(1);
-    mask.draw(0, 0, ofGetWidth(), ofGetHeight());
+    mask.draw(0, 0, grayV.getWidth(), grayV.getHeight());
     grayX.end(1);
 
     seed.load("resources/img/Esc4Cello.png");
     grayX.begin();
-    seed.draw(0, 0, ofGetWidth(), ofGetHeight());
+    seed.draw(0, 0, grayX.getWidth(), grayX.getHeight());
     grayX.end();
 
     mask.load("resources/img/Esc4Cello_mascara.png");
     grayX.begin(1);
-    mask.draw(0, 0, ofGetWidth(), ofGetHeight());
+    mask.draw(0, 0, grayX.getWidth(), grayX.getHeight());
     grayX.end(1);
 
     convertToBW.load("resources/shaders/convertToBW");
