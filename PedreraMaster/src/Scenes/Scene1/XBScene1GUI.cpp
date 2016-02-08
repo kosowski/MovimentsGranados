@@ -22,9 +22,8 @@ void XBScene1GUI::setup()
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
     directorGroup.add(maskRadius.setup("Mask radius", 300, 10, 600.));
-    directorGroup.add(maskAlpha.setup("Mask decay", 10, 0, 120));
+    directorGroup.add(maskAlpha.setup("Mask decay", 10, 0, 15));
     sceneGui.add(&directorGroup);
-
     
     pianoGroup.setup("Piano");
     pianoGroup.add(stoneGrowFactor.setup("Amplitude", 0.01, 0.000, 1.));
