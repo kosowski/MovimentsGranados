@@ -77,6 +77,9 @@ void GUIApp::draw()
 
     drawLegend();
     drawSceneName();
+
+    ofSetColor(ofColor::white);
+    ofDrawBitmapStringHighlight(ofToString(roundf(ofGetFrameRate())) + "fps", ofGetWidth()/2 - 15, ofGetHeight() - 15);
 }
 
 void GUIApp::drawLegend()
