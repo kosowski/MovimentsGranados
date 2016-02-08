@@ -15,12 +15,15 @@ void XBScene4GUI::setup()
     XBBaseGUI::setup();
 
     violinGroup.setup("Violin and Cello");
-    violinGroup.add(minViolinSpeed.setup("Min speed", 1, 0, 10));
-    violinGroup.add(maxViolinSpeed.setup("Max speed", 6, 0, 20));
+    violinGroup.add(minViolinSpeed.setup("Min v speed", 2, 0, 10));
+    violinGroup.add(maxViolinSpeed.setup("Max v speed", 6, 0, 30));
+    violinGroup.add(minCelloSpeed.setup("Min c speed", 2, 0, 10));
+    violinGroup.add(maxCelloSpeed.setup("Max c speed", 6, 0, 30));
     violinGroup.add(violinK.setup("K", 0.057, 0.005, 0.095));
-    violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.040));
+    violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.065));
+    violinGroup.add(presetIndex.setup("Presets", 0, 0, 13));
+    presetIndex.addListener(this, &XBScene4GUI::onPresetChange);
     sceneGui.add(&violinGroup);
-
     
     windowGroup.setup("Window");
     windowGroup.add(barHeight.setup("Audio bar height", 30., 20., 120.));
@@ -39,9 +42,10 @@ void XBScene4GUI::setup()
     sceneGui.add(&pianoGroup);
     
     directorGroup.setup("Director");
-    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 5.0f));
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
     
     directorGroup.add(attractorStrength.setup("attractorStrength",  5, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
@@ -50,4 +54,10 @@ void XBScene4GUI::setup()
     sceneGui.add(blurAmount.setup("Blur amount", 0, 0, 8));
     
     loadSettings();
+}
+
+void XBScene4GUI::onPresetChange(int &index)
+{
+    violinK = presets.get(presetIndex).kill;
+    violinF = presets.get(presetIndex).feed;
 }

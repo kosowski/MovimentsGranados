@@ -22,9 +22,11 @@ public:
     ofxFloatSlider lineWidth;
     ofxFloatSlider maskRadius;
     ofxFloatSlider maskAlpha;
+    ofxFloatSlider dampingWaves;
     
     ofxGuiGroup violinGroup;
     ofxToggle celloVertical;
+    ofxFloatSlider windowAttack;
     ofxFloatSlider windowFade;
     ofxToggle drawWindows;
     ofxFloatSlider timeIncrement;
@@ -36,7 +38,7 @@ public:
     ofxFloatSlider headSize;
 
     ofxVec2Slider particleVelocity;
-    ofxVec2Slider particleSpread;
+    ofxFloatSlider particleSpread;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;

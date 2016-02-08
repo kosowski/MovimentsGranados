@@ -4,19 +4,20 @@
 
 #include "XBScene6.h"
 #include "XBScene6GUI.h"
+#include "XBSettingsManager.h"
 #include "../../Shared/OSCSettings.h"
 
 
 static const string STR_FONT_PATH       = "resources/fonts/";
-static const string STR_FONTFILE_BOLD   = "NeutraText-Demi.otf";
-static const string STR_FONTFILE_NORMAL = "NeutraText-Book.otf";
+static const string STR_FONTFILE_BOLD   = "NeutraTextTF-BoldAlt.otf";
+static const string STR_FONTFILE_NORMAL = "NeutraTextTF-DemiAlt.otf";
 
 static const int MAX_FONT_SIZE = 75;
 
 static const string S1_TITLE    = "MOU LA PEDRERA!";
-static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat.";
+static const string S1_SUBTITLE = "Situa't sobre la marca i aixeca les mans per a ser detectat";
 static const string S2_TITLE    = "DETECTAT!";
-static const string S2_SUBTITLE = "Mou les mans per a crear onades.";
+static const string S2_SUBTITLE = "Mou les mans per a crear onades";
 static const string S3_TITLE    = "PERSONA NO DETECTADA";
 static const string S3_SUBTITLE = S1_SUBTITLE;
 static const string S4_TITLE    = "Gràcies per participar!";
@@ -51,6 +52,8 @@ XBScene6::~XBScene6()
 void XBScene6::setup(XBBaseGUI *_gui)
 {
     XBBaseScene::setup(_gui);
+    initWaves();
+    blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
 }
 
 void XBScene6::enteredScene()
@@ -63,8 +66,8 @@ void XBScene6::update()
 {
     XBBaseScene::update();
     switch (state) {
-        case S6_1_INITIAL:    updateS6_1(); break;
-        case S6_2_DETECTED:    updateS6_2(); break;
+        case S6_1_INITIAL:      updateS6_1(); break;
+        case S6_2_DETECTED:     updateS6_2(); break;
         case S6_3_LIVE:         updateS6_3(); break;
         case S6_4_THANKS:       updateS6_4(); break;
         default:                break;
@@ -73,11 +76,15 @@ void XBScene6::update()
 
 void XBScene6::drawIntoFBO()
 {
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     fbo.begin();
     {
         if (showFacadeImage) templateImage.draw(0, 0, ofGetWidth(), ofGetHeight());
         else ofBackground(0);
 
+        ofPushMatrix();
+        ofScale(windowScale, windowScale);
         switch (state) {
             case S6_1_INITIAL:      drawS6_1(); break;
             case S6_2_DETECTED:     drawS6_2(); break;
@@ -85,8 +92,13 @@ void XBScene6::drawIntoFBO()
             case S6_4_THANKS:       drawS6_4(); break;
             default:                break;
         }
+        ofPopMatrix();
     }
     fbo.end();
+    
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    blur.apply(&fbo, 1, myGUI->blurAmount);
+    applyPostFX();
 }
 
 #pragma mark - 1 DETECTING
@@ -122,7 +134,7 @@ void XBScene6::drawS6_2()
     drawText(S2_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
     drawText(S2_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-    drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor::green);
+    drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor(207, 87, 60, 255));
 
     drawFadeRectangle();
 }
@@ -139,11 +151,15 @@ void XBScene6::updateS6_3()
 
     if (state3ElapsedTime > myGUI->interactionMaxTime * 60)
         goToState(S6_4_THANKS);
+    
+    updateDirector();
 }
 
 void XBScene6::drawS6_3()
 {
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    
+    drawDirector();
     if (state3IsDetecting)
     {
         drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
@@ -261,14 +277,84 @@ void XBScene6::drawText(string message, ofTrueTypeFont *font, float x, float y, 
 {
     ofSetColor(color);
 
+    float windowScale = XBSettingsManager::getInstance().getWindowScale();
+
     ofPushMatrix();
     {
         float width = font->stringWidth(message) * scaleFactor;
         float height = font->stringHeight(message) * scaleFactor;
 
-        ofTranslate(ofPoint((ofGetWidth() * x) - width/2, (ofGetHeight() * y) - height/2));
+        ofTranslate(ofPoint((ofGetWidth() * x / windowScale) - width/2, (ofGetHeight() * y / windowScale) - height/2));
         ofScale(scaleFactor, scaleFactor);
         fontMsgBold->drawString(message, 0, 0);
     }
     ofPopMatrix();
+}
+
+void XBScene6::updateDirector()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    // update waves
+    if (myGUI->simulateHands) {
+        rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
+        rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
+        leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+    }
+    for (int i = 0; i < waves.size(); i++) {
+        // if simulate mode ON, use the mouse
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].update();
+    }
+}
+
+void XBScene6::drawDirector()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    // draw directors waves
+    ofPushStyle();
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetLineWidth(myGUI->lineWidth);
+    for (Wave w:waves)
+        w.display();
+    ofPopStyle();
+}
+
+void XBScene6::initWaves()
+{
+    XBScene6GUI *myGUI = (XBScene6GUI *) gui;
+    int spacing = 10;
+    
+    // create horzontal waves
+    svg.load("resources/horizontalesv04_pocas_01.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 0));
+        }
+    }
+    
+    // create vertical waves
+    svg.load("resources/verticalesv06_pocas_01.svg");
+    // start at index 1, as first path uses to be a rectangle with the full frame size
+    for (int i = 0; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline l(lines[j].getResampledBySpacing(spacing));
+            waves.push_back(Wave(l.getVertices(), 20, ofRandom(myGUI->minPeriod, myGUI->maxPeriod), spacing, 1));
+        }
+    }
 }

@@ -18,17 +18,13 @@ public:
 
     bool loadFile(string filename);
 
-    float getWindowScale()          { return windowScale; }
-    float getFadeOutTime()          { return fadeOutTime; }
-    float getFadeInTime()           { return fadeInTime; }
+    string getOSCHost() { return oscHost; }
 
 private:
 
     void createSettingsFile(string filename);
 
-    float windowScale;
-    float fadeOutTime;
-    float fadeInTime;
+    string oscHost;
 };
 
 

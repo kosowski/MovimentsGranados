@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "IPVideoGrabber.h"
 
 // listen on port 12345
 #define PORT 30304
@@ -35,4 +36,8 @@ class ofApp : public ofBaseApp {
         ofPoint handR, handL;
         string detectionStatus;
         bool userPositioned;
+    
+    
+    //Video Grabbing
+    ofx::Video::IPVideoGrabber videoGrabber;
 };

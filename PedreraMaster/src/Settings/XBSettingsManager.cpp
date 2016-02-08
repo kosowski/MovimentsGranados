@@ -7,7 +7,8 @@
 
 const static string STR_TAG_MAIN            = "AppSettings";
 const static string STR_TAG_WINDOWSCALE     = "WindowScale";
-const static string STR_TAG_TRANSITIONTIME  = "TransitionTime";
+const static string STR_TAG_FADEOUTTIME     = "FadeOutTime";
+const static string STR_TAG_FADEINTIME      = "FadeInTime";
 
 
 bool XBSettingsManager::loadFile(string filename)
@@ -22,7 +23,8 @@ bool XBSettingsManager::loadFile(string filename)
             loaded = settings.tagExists(STR_TAG_MAIN);
             loaded = loaded &&
                     settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE) &&
-                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME);
+                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_FADEOUTTIME) &&
+                    settings.tagExists(STR_TAG_MAIN + ":" + STR_TAG_FADEINTIME);
 
             if (!loaded)
             {
@@ -32,7 +34,8 @@ bool XBSettingsManager::loadFile(string filename)
         }
 
         windowScale = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.0));
-        transitionTime = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0));
+        fadeOutTime = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_FADEOUTTIME, 2.0));
+        fadeInTime = float(settings.getValue(STR_TAG_MAIN + ":" + STR_TAG_FADEINTIME, 2.0));
     }
     else
     {
@@ -47,6 +50,7 @@ void XBSettingsManager::createSettingsFile(string filename)
 {
     ofxXmlSettings settings;
     settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_WINDOWSCALE, 0.7);
-    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_TRANSITIONTIME, 2.0);
+    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_FADEOUTTIME, 2.0);
+    settings.setValue(STR_TAG_MAIN + ":" + STR_TAG_FADEINTIME, 2.0);
     settings.saveFile(filename);
 }

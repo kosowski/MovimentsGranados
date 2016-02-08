@@ -15,11 +15,12 @@ void XBScene1GUI::setup()
     XBBaseGUI::setup();
 
     directorGroup.setup("Director");
-    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 5.0f));
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
     directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
     directorGroup.add(maskRadius.setup("Mask radius", 300, 10, 600.));
     directorGroup.add(maskAlpha.setup("Mask decay", 10, 0, 120));
     sceneGui.add(&directorGroup);
@@ -39,12 +40,13 @@ void XBScene1GUI::setup()
     violinGroup.add(particleLife.setup("Particle life", 3, 1, 60));
     violinGroup.add(numParticles.setup("Particle  number", 10, 1, 20));
     violinGroup.add(headSize.setup("Head size", 20, 10, 80));
+    violinGroup.add(windowAttack.setup("Window attack", 0.01, 0.00, 0.05));
     violinGroup.add(windowFade.setup("Window fade speed", 10, 1, 20));
     violinGroup.add(drawWindows.setup("draw windows", false));
     violinGroup.add(timeIncrement.setup("Marker speed", 1, 1, 30));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
-    violinGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(30,30)));
+    violinGroup.add(particleSpread.setup("Particle spread", 5, 0, 30));
     
     sceneGui.add(&violinGroup);
     

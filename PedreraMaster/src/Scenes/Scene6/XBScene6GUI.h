@@ -30,6 +30,15 @@ public:
     ofxFloatSlider countdownX;
     ofxFloatSlider countdownY;
     ofxFloatSlider countdownScale;
+    
+    ofxGuiGroup directorGroup;
+    ofxFloatSlider attractorStrength;
+    ofxFloatSlider attractorRadius;
+    ofxFloatSlider minPeriod;
+    ofxFloatSlider maxPeriod;
+    ofxFloatSlider lineWidth;
+    ofxFloatSlider dampingWaves;
+    ofxFloatSlider blurAmount;
 };
 
 

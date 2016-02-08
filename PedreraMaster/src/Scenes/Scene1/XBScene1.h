@@ -45,7 +45,7 @@ private:
     void drawViolinCello();
     void drawWindows();
     
-    void addFadingWindow(int index, vector<expandingPolyLine> &vector);
+    void addFadingWindow(int index, vector<expandingPolyLine> &vector, float initValue, float instrumentAlpha);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
         
@@ -86,9 +86,6 @@ private:
     ofFbo wavesMask;
     
     BlurEffect blur;
-    
-    kinectHand leftHand;
-    kinectHand rightHand;
 };
 
 

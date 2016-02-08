@@ -6,6 +6,9 @@
 #define PEDRERAMASTER_XBSCENE6_H
 
 #include "XBBaseScene.h"
+#include "Wave.h"
+#include "SimpleWave.h"
+#include "BlurEffect.h"
 
 typedef enum
 {
@@ -55,6 +58,10 @@ private:
 
     float state4StartTime;
     float state4ElapsedTime;
+    
+    vector<Wave> waves;
+    ofxSVG svg;
+    BlurEffect blur;
 
     void onKinectStateChanged(string &kState);
 
@@ -62,6 +69,9 @@ private:
     void goToNextState();
 
     void drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color);
+    void initWaves();
+    void updateDirector();
+    void drawDirector();
 };
 
 

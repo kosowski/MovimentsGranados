@@ -57,20 +57,20 @@ public:
     
     void computeVelocity(int meanSize);
 
-    KinectInfo getKinectInfo();
-    KinectInfo gethandsInfo(){return handsInfo;};
+    KinectInfo getHandsInfo();
     
     ofEvent<bool> eventUserDetection;
 
 private:
     ofxOpenNI openNIDevice;
-    KinectInfo kinectOut;
     KinectInfo handsInfo;
     bool hasUser, hasKinect;
     
     //for computing velocity
     deque<ofPoint> rHandPosHist;
     deque<ofPoint> lHandPosHist;
+    
+    float handsZref;
 };
 
 #endif /* PMMotionExtractor_hpp */

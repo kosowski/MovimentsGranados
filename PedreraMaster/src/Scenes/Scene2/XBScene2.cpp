@@ -26,14 +26,19 @@ void XBScene2::setup(XBBaseGUI *_gui)
     celloPianoFbo.end();
 
     rectMask.load("resources/img/Esc2Barra_v01.png");
-    initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2, 2);
-    initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2, 2);
-    initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1, 10);
-
-    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines);
-    initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines);
+    initWindows("resources/Esc2Cello.svg", celloWindows, celloWaves, 2);
+    arrangeWindows(2, celloWindows);
+    initWindows("resources/Esc2Piano.svg", pianoWindows, pianoWaves, 2);
+    arrangeWindows(2, violinWindows);
+    initWindows("resources/Esc2Violinv02.svg", violinWindows, violinWaves, 1);
+    arrangeViolinWindows();
+    
+    initWindowsOutlines("resources/Esc2Cello.svg", celloOutlines, 2);
+    initWindowsOutlines("resources/Esc2Piano.svg", pianoOutlines, 2);
+    initWindowsOutlines("resources/Esc2Violin.svg", violinOutlines, 3);
 
     initWaves();
+    initStones();
     
     celloPianoMask.load("resources/img/Esc2CelloPiano.png");
     violinMask.load("resources/img/Esc2Violinv03_fade.png");
@@ -67,6 +72,7 @@ void XBScene2::drawIntoFBO()
         drawDirector();
         drawPiano();
         drawCello();
+        drawViolin();
 
         // apply mask to remove windows interiors
         ofPushStyle();
@@ -122,7 +128,7 @@ void XBScene2::updateCello()
         if (fakeCelloEvent || celloEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
-            int windowIndex = drawWindow(celloNote, celloWindows, celloWaves);
+            int windowIndex = drawWindow(celloNote, celloWindows, celloWaves, 4);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0) {
                 if (windowIndex == 2) { // if third floor, light up two windows
                     celloOutlinesToDraw.push_back(celloOutlines[windowIndex + 1]);
@@ -137,7 +143,7 @@ void XBScene2::updateCello()
         if (fakePianoEvent || pianoEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, myGUI->colorPianoA);
-            int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves);
+            int windowIndex = drawWindow(pianoNote, pianoWindows, pianoWaves, 4);
             if (ofGetFrameNum() % myGUI->windowFrequency == 0) {
                 if (windowIndex == 2) { // if third floor, light up two windows
                     pianoOutlinesToDraw.push_back(pianoOutlines[windowIndex + 1]);
@@ -164,6 +170,15 @@ void XBScene2::updateViolin()
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     float windowScale = XBSettingsManager::getInstance().getWindowScale();
 
+    // update violin windows
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (violinOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+
     // draw violin windows into its fbo
     violinFbo.begin();
     {
@@ -175,7 +190,9 @@ void XBScene2::updateViolin()
         if (fakeViolinEvent || violinEnergy > energyThreshold) {
             ofPushStyle();
             ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
-            drawWindow(violinNote, violinWindows, violinWaves);
+            int windowIndex = drawViolinWindow(violinNote, violinWindows, violinWaves, 4);
+            if (ofGetFrameNum() % myGUI->windowFrequency == 0)
+                violinOutlinesToDraw.push_back(violinOutlines[windowIndex]);
             ofPopStyle();
         }
 
@@ -200,6 +217,19 @@ void XBScene2::updatePiano()
             i--; // keep i index valid
         }
     }
+    // update piano's stones
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        stonesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        stonesToDraw[i].amplitude *= myGUI->stoneDamping;
+        if (stonesToDraw[i].life > ofGetFrameRate() * myGUI->stoneTime) {
+            stonesToDraw.erase(stonesToDraw.begin() + i); // fixed this erase call
+            i--; // new code to keep i index valid
+        }
+    }
+
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene2::updateDirector()
@@ -214,8 +244,8 @@ void XBScene2::updateDirector()
     }
     for (int i = 0; i < waves.size(); i++) {
         // if simulate mode ON, use the mouse
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
 }
@@ -224,8 +254,11 @@ void XBScene2::drawDirector()
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     // draw directors waves
+
+    float directorAlpha = (fboAlpha < 255.0) ? ofMap(fboAlpha, 0, 255, 0, myGUI->colorDirectorA, true) : myGUI->colorDirectorA;
+
     ofPushStyle();
-    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, myGUI->colorDirectorA);
+    ofSetColor(myGUI->rgbColorDirectorR, myGUI->rgbColorDirectorG, myGUI->rgbColorDirectorB, directorAlpha);
     ofSetLineWidth(myGUI->lineWidth);
     for (Wave w:waves)
         w.display();
@@ -248,6 +281,19 @@ void XBScene2::drawPiano()
         ofPopMatrix();
     }
     ofPopStyle();
+    
+    // draw expanding stones from piano
+    for (int i = 0; i < stonesToDraw.size(); i++) {
+        expandingPolyLine &e = stonesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
+        ofScale(1 + e.amplitude * sin(myGUI->stoneFrequency * e.life),
+                1 + e.amplitude * sin(myGUI->stoneFrequency * e.life));
+        e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
 }
 
 void XBScene2::drawCello()
@@ -269,49 +315,87 @@ void XBScene2::drawCello()
     ofPopStyle();
 }
 
-int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves)
+void XBScene2::drawViolin(){
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    // draw expanding violin windows
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        expandingPolyLine &e = violinOutlinesToDraw[i];
+        ofPushMatrix();
+        ofTranslate(e.centroid);
+        ofScale(1 + e.life * myGUI->growFactor, 1 + e.life * myGUI->growFactor);
+        e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
+        e.path.draw();
+        ofPopMatrix();
+    }
+    ofPopStyle();
+}
+
+int XBScene2::drawWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves, int floors)
 {
     XBScene2GUI *myGUI = (XBScene2GUI *) gui;
-
+    
     int currentWindow = 0;
     float mappedPitch;
-    if (note < 0.25) {
-        currentWindow = 0;
-        mappedPitch = ofMap(note, 0, 0.25, 0, 1);
-    }
-    else if (note >= 0.25 && note < 0.5) {
-        currentWindow = 1;
-        mappedPitch = ofMap(note, 0.25, 0.5, 0, 1);
-    }
-    else if (note >= 0.5 && note < 0.75) {
-        currentWindow = 2;
-        mappedPitch = ofMap(note, 0.5, 0.75, 0, 1);
-    }
-    else if (note >= 0.75) {
-        currentWindow = 3;
-        mappedPitch = ofMap(note, 0.75, 1, 0, 1);
-    }
+    
+    float divisionSize = 1./ floors;
+    currentWindow = (int) (note / divisionSize);
+    if(currentWindow >= floors) currentWindow = floors -1;
+    mappedPitch = ofMap(note, currentWindow * divisionSize, (currentWindow + 1)* divisionSize, 0, 1);
+    
     ofRectangle window = windows[currentWindow];
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
-
+    
     rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
-//    ofPushStyle();
-//    ofSetLineWidth(4);
-//    waves[currentWindow].update();
-//    ofPushMatrix();
-//    ofTranslate(0,y);
-//    waves[currentWindow].display();
-//    ofPopMatrix();
-//    ofPopStyle();
+    
     return currentWindow;
 }
 
+int XBScene2::drawViolinWindow(float note, vector<ofRectangle> &windows, vector<SimpleWave> &waves, int floors)
+{
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    
+    int currentWindow = 0;
+    float mappedPitch;
+    
+    float divisionSize = 1./ floors;
+    currentWindow = (int) (note / divisionSize);
+    if(currentWindow >= floors) currentWindow = floors -1;
+    mappedPitch = note;
+    
+    ofRectangle window = windows[0];
+    ofFill();
+    float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
+    
+    rectMask.draw(window.x, y - myGUI->barHeight / 2, window.width, myGUI->barHeight);
+    
+    return currentWindow;
+}
 
+void XBScene2::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
+{
+    if (!active)
+        return;
+    XBBaseScene::onPianoNoteOn(noteOn);
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
+    
+    if (noteOn.pitch < 0 || noteOn.pitch > MAX_MIDI_VALUE) {
+        cout << "Wrong MIDI note received " << ofToString(noteOn.pitch) << endl;
+        return;
+    }
+    int wichLine = midiToRowMapping[noteOn.pitch];
+    expandingPolyLine e = stones[wichLine];
+    e.life = 1;
+    e.amplitude = myGUI->stoneGrowFactor;
+    stonesToDraw.push_back(e);
+}
 
 //--------------------------------------------------------------
 void XBScene2::keyPressed(int key)
 {
+    XBScene2GUI *myGUI = (XBScene2GUI *) gui;
     switch (key) {
         case 'c':
         case 'C': {
@@ -327,6 +411,11 @@ void XBScene2::keyPressed(int key)
                 fakePianoEvent = true;
                 pianoNote = ofRandom(1);
             }
+            int index = midiToRowMapping[(int) ofRandom(127)];
+            expandingPolyLine e = stones[index];
+            e.life = 1;
+            e.amplitude = myGUI->stoneGrowFactor;
+            stonesToDraw.push_back(e);
             break;
         }
         case 'x':
@@ -371,7 +460,7 @@ void XBScene2::keyReleased(int key)
 }
 
 
-void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<SimpleWave> &vectorWaves, int startIndex, int arrangFloor)
+void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vector<SimpleWave> &vectorWaves, int startIndex)
 {
     svg.load(name);
 //    int startIndex = 2; //skip full frame and first balcony
@@ -387,15 +476,6 @@ void XBScene2::initWindows(string name, vector<ofRectangle> &vectorWindows, vect
             vectorWindows.push_back(pl.getBoundingBox());
         }
     }
-    arrangeWindows(arrangFloor, vectorWindows);
-    // crear wave para cada rectangulo
-//    for(int i=0; i< vectorWindows.size();i++){
-//        ofPoint o = vectorWindows[i].getTopLeft();
-//        o.y = 0;
-//        int w =vectorWindows[i].width;
-//        SimpleWave sw(o, w/2 + 10, 20.f, ofRandom(180, 220.));
-//        vectorWaves.push_back(sw);
-//    }
 }
 
 void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
@@ -420,10 +500,10 @@ void XBScene2::arrangeWindows(int indexToMerge, vector<ofRectangle> &elements)
     elements = arranged;
 }
 
-void XBScene2::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows)
+void XBScene2::initWindowsOutlines(string name, vector<expandingPolyLine> &vectorWindows, int startIndex)
 {
     svg.load(name);
-    for (int i = 2; i < svg.getNumPath(); i++) {
+    for (int i = startIndex; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -461,7 +541,7 @@ void XBScene2::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -477,7 +557,7 @@ void XBScene2::initWaves()
     }
 
     // create vertical waves
-    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -493,3 +573,69 @@ void XBScene2::initWaves()
     }
 }
 
+void XBScene2::initStones()
+{
+    svg.load("resources/Esc1Pianov02.svg");
+    //cout << "Scene 1 piano svg has " << ofToString(svg.getNumPath()) << endl;
+    for (int i = 1; i < svg.getNumPath(); i++) {
+        ofPath p = svg.getPathAt(i);
+        //        cout << "Path " << i << " ID: " << svg.getPathIdAt(i) << endl;
+        // svg defaults to non zero winding which doesn't look so good as contours
+        p.setPolyWindingMode(OF_POLY_WINDING_ODD);
+        vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
+        
+        // for every line create a shape centered at zero and store its centroid
+        for (int j = 0; j < (int) lines.size(); j++) {
+            ofPolyline pl = lines[j].getResampledBySpacing(10);
+            expandingPolyLine epl;
+            epl.life = 0;
+            epl.centroid = pl.getCentroid2D();
+            vector<ofPoint> points = pl.getVertices();
+            for (int k = 0; k < points.size(); k++) {
+                // store the polyline for now
+                epl.line.addVertex(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                // create a path out of the polyline so it can be drawn filled
+                if (i == 0) {
+                    epl.path.newSubPath();
+                    epl.path.moveTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                } else {
+                    epl.path.lineTo(points[k].x - epl.centroid.x, points[k].y - epl.centroid.y);
+                }
+            }
+            epl.path.close();
+            epl.line.close();
+            stones.push_back(epl);
+        }
+    }
+    string filePath = "resources/mapping_35_rows_midi.txt";
+    //Load file placed in bin/data
+    ofFile file(filePath);
+    
+    if (!file.exists()) {
+        ofLogError("The file " + filePath + " is missing");
+    }
+    ofBuffer buffer(file);
+    
+    //Read file line by line
+    for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+        string line = *it;
+        midiToRowMapping.push_back(ofToInt(line));
+    }
+}
+
+void XBScene2::arrangeViolinWindows(){
+    float xMin = violinWindows[0].getMinX();
+    float yMin = violinWindows[0].getMinY();
+    float xMax = violinWindows[0].getMaxX();
+    float yMax = violinWindows[0].getMaxY();
+    for (int i = 1; i < violinWindows.size(); i++) {
+        ofRectangle r3 = violinWindows[i];
+        if( r3.getMinX() < xMin) xMin = r3.getMinX();
+        if( r3.getMinY() < yMin) yMin = r3.getMinY();
+        if( r3.getMaxX() > xMax) xMax = r3.getMaxX();
+        if( r3.getMaxY() > yMax) yMax = r3.getMaxY();
+    }
+    violinWindows.clear();
+    ofRectangle combined(xMin, yMin, xMax - xMin, yMax - yMin);
+    violinWindows.push_back(combined);
+}

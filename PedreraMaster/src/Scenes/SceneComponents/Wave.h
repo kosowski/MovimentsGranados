@@ -13,6 +13,12 @@
 
 #include "ofMain.h"
 
+struct attractor{
+    ofPoint pos;
+    float strength;
+    float radius;
+};
+
 class Wave {
 public:
     
@@ -20,7 +26,8 @@ public:
     Wave(ofPoint o, int w_, float a, float p, float s, int ori);
     void update();
     void display();
-    void setAttractor(int index, float x, float y, float strength, float radius);
+    void setAttractor(int index, float x, float y, float strength, float radius,float decay);
+    void updateAttractor(int index,float decay);
     
     int orientation;
     int xspacing ; // How far apart should each horizontal location be spaced
@@ -34,7 +41,7 @@ public:
     vector <float> dx;       // Value for incrementing X, to be calculated as a function of period and xspacing
     
     vector <ofPoint> particles;
-    vector<ofPoint> attractors;
+    vector<attractor> attractors;
     float attractorStrength;
     float attractorRadius;
     float maxDist;

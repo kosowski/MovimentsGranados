@@ -76,6 +76,11 @@ private:
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
     PMDeviceAudioAnalyzer *deviceAudioAnalyzer;
 
+    /**/
+    bool analysisStarted;
+    float currentPitch;
+    float currentEnergy;
+
     void analyzerPitchChanged(pitchParams &pitchParams);
     void analyzerEnergyChanged(energyParams &energyParams);
     void analyzerSilenceStateChanged(silenceParams &silenceParams);

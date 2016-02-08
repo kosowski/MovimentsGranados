@@ -56,6 +56,8 @@ void PMMotionExtractor::update()
         // only processes if two hands are found, it means a user is found
         if (openNIDevice.getNumTrackedHands() == 2) {
             if (!hasUser) {
+                ofxOpenNIHand &hand = openNIDevice.getTrackedHand(0);
+                handsZref = hand.getPosition().z / 1000;
                 hasUser = true;
                 ofNotifyEvent(eventUserDetection, hasUser, this);
             }
@@ -67,7 +69,8 @@ void PMMotionExtractor::update()
                 ofPoint handPos = hand.getPosition();
                 handPos.x /= openNIDevice.getWidth(); //mapped to 0-1
                 handPos.y /= openNIDevice.getHeight(); //mapped to 0-1
-                handPos.z /= 1000; //mapped to give distance to kinect in meters
+                handPos.z /= -1000; //mapped to give distance to kinect in meters, neative for the comparation
+                handPos.z -= handsZref; //now it takes the first z position known and gets de relative distance.
                 //Random choser left and right hand
                 //TODO: implement right/left detection (IF NEED)
                 if (i)
@@ -125,9 +128,28 @@ void PMMotionExtractor::exit()
     openNIDevice.stop();
 }
 
-KinectInfo PMMotionExtractor::getKinectInfo()
+KinectInfo PMMotionExtractor::getHandsInfo()
 {
-    return kinectOut;
+    KinectInfo tempInfo = handsInfo;
+    
+    //Compute hand Mean value;
+    ofPoint lHandPosMean = ofPoint(0);
+    for (auto & tempPos : lHandPosHist) {
+        lHandPosMean += tempPos;
+    }
+    lHandPosMean /= lHandPosHist.size();
+    
+    ofPoint rHandPosMean = ofPoint(0);
+    for (auto & tempPos : rHandPosHist) {
+        rHandPosMean += tempPos;
+    }
+    rHandPosMean /= rHandPosHist.size();
+    
+    //Assign mean value to output value;
+    tempInfo.leftHand.pos = lHandPosMean;
+    tempInfo.rightHand.pos = rHandPosMean;
+    
+    return tempInfo;
 }
 
 void PMMotionExtractor::computeVelocity(int meanSize)

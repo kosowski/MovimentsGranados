@@ -46,11 +46,8 @@ private:
     void initStones();
     
     bool fakeCelloEvent = false;
-    float celloNote;
     bool fakePianoEvent = false;
-    float pianoNote;
     bool fakeViolinEvent = false;
-    float violinNote;
     
     ofFbo auxFbo;
     ofImage windowMask;
@@ -73,7 +70,6 @@ private:
     ofxMaskedGrayScott grayV;
     ofxMaskedGrayScott grayX;
     ofShader convertToBW;
-    
     BlurEffect blur;
 };
 

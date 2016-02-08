@@ -27,9 +27,9 @@ public:
 
     void exit();
 
-    void goToScene(unsigned int sceneIndex, float timeInSeconds = 0.0f);
-    void goToNextScene(float timeInSeconds = 0.0f);
-    void goToPrevScene(float timeInSeconds = 0.0f);
+    void goToScene(unsigned int sceneIndex, float fadeOutTime = 0.0f, float fadeInTime = 0.0f);
+    void goToNextScene(float fadeOutTime = 0.0f, float fadeInTime = 0.0f);
+    void goToPrevScene(float fadeOutTime = 0.0f, float fadeInTime = 0.0f);
     void keyReleased(int key);
     void keyPressed(int key);
     XBBaseScene *getCurrentScene();
@@ -40,7 +40,11 @@ public:
 private:
 
     void drawSceneAtIndex(int sceneIndex);
-    void onFadeComplete(float* arg);
+
+    void onFadeOutComplete(float *arg);
+    void onFadeInComplete(float *arg);
+
+    bool fadingOut, fadingIn;
 
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;

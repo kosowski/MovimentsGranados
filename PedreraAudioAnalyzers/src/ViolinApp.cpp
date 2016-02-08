@@ -16,6 +16,9 @@ void ViolinApp::setup()
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(81, 88, 111);
 
+    /**/
+    ofSetFrameRate(60);
+
     guiAnalyzerCreated = false;
 
     float silenceThreshold = 0;
@@ -31,10 +34,39 @@ void ViolinApp::setup()
     oscSender.setup(OSC_VIOLIN_SENDER_HOST, OSC_VIOLIN_SENDER_PORT);
 
     deviceAudioAnalyzer = nullptr;
+    /**/
+    analysisStarted = false;
+    currentPitch = currentEnergy = 0;
 }
 
 void ViolinApp::update()
 {
+    /**/
+
+    if (!silenceOn && analysisStarted)
+    {
+        { // Send pitch
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
+            m.setAddress(address.str());
+            m.addFloatArg(currentPitch);
+            oscSender.sendMessage(m, false);
+
+//            cout << "[SEND] P: " << currentPitch << endl;
+        }
+
+        { // Send energy
+            ofxOscMessage m;
+            stringstream address;
+            address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
+            m.setAddress(address.str());
+            m.addFloatArg(currentEnergy);
+            oscSender.sendMessage(m, false);
+
+//            cout << "[SEND] E: " << currentEnergy << endl;
+        }
+    }
 }
 
 void ViolinApp::draw()
@@ -229,6 +261,8 @@ void ViolinApp::startButtonPressed()
         }
 
         PMAudioAnalyzer::getInstance().start();
+        /**/
+        analysisStarted = true;
 
         lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_ON);
         lblStatus.setBackgroundColor(ofColor::darkGreen);
@@ -236,7 +270,7 @@ void ViolinApp::startButtonPressed()
 }
 
 void ViolinApp::guiPitchSmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaPitch(invertedSmoothAmount);
 }
 
@@ -249,7 +283,7 @@ void ViolinApp::getPitchMaxChanged(float &pitch) {
 }
 
 void ViolinApp::guiEnergySmoothAmountChanged(float &smoothAmount) {
-    float invertedSmoothAmount = ofMap(smoothAmount, PITCH_SMOOTH_MIN, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MAX, PITCH_SMOOTH_MIN);
+    float invertedSmoothAmount = ofMap(smoothAmount, ENERGY_SMOOTH_MIN, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MAX, ENERGY_SMOOTH_MIN, true);
     (*audioAnalyzers)[0]->setDeltaEnergy(invertedSmoothAmount);
 }
 
@@ -287,15 +321,16 @@ void ViolinApp::analyzerPitchChanged(pitchParams &pitchParams)
 
     pitchCurrentNote = truncateFloat(pitchParams.midiNote, 2);
     pitchSmoothedNote = truncateFloat(pitchParams.smoothedPitch, 2);
+    /**/
+    currentPitch = pitchParams.smoothedPitch;
+//    cout << "[RECEIVED] P: " << currentPitch << endl;
 
-    ofxOscMessage m;
-    stringstream address;
-    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
-    m.setAddress(address.str());
-    m.addFloatArg(pitchParams.smoothedPitch);
-    oscSender.sendMessage(m, false);
-
-    cout << "SEND pitch " << pitchParams.midiNote << endl;
+//    ofxOscMessage m;
+//    stringstream address;
+//    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_PITCHNOTE;
+//    m.setAddress(address.str());
+//    m.addFloatArg(pitchParams.smoothedPitch);
+//    oscSender.sendMessage(m, false);
 }
 
 void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
@@ -306,12 +341,16 @@ void ViolinApp::analyzerEnergyChanged(energyParams &energyParams)
     energyEnergy = truncateFloat(energyParams.energy, 2);
     energySmoothed = truncateFloat(energyParams.smoothedEnergy, 2);
 
-    ofxOscMessage m;
-    stringstream address;
-    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
-    m.setAddress(address.str());
-    m.addFloatArg(energyParams.smoothedEnergy);
-    oscSender.sendMessage(m, false);
+    /**/
+    currentEnergy = energySmoothed;
+//    cout << "[RECEIVED] E: " << currentEnergy << endl;
+
+//    ofxOscMessage m;
+//    stringstream address;
+//    address << OSC_VIOLIN_ADDR_BASE << OSC_ANALYZER_ADDR_ENERGY;
+//    m.setAddress(address.str());
+//    m.addFloatArg(energyParams.smoothedEnergy);
+//    oscSender.sendMessage(m, false);
 }
 
 void ViolinApp::analyzerSilenceStateChanged(silenceParams &silenceParams)
@@ -335,8 +374,6 @@ void ViolinApp::analyzerOnsetDetected(onsetParams &onsetParams)
     if (!guiAnalyzerCreated) return;
 
     onsetsOn = onsetParams.isOnset;
-
-//    cout << "onsetsOn = " << onsetsOn << endl;
 
     ofxOscMessage m;
     stringstream address;

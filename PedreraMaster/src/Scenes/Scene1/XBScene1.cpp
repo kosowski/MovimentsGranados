@@ -7,6 +7,8 @@
 #include "XBSettingsManager.h"
 
 bool maskWindows = true;
+float celloWindowAlpha = 0;
+float violinWindowAlpha = 0;
 
 void XBScene1::setup(XBBaseGUI *_gui)
 {
@@ -173,6 +175,9 @@ void XBScene1::updatePiano()
             i--; // new code to keep i index valid
         }
     }
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene1::updateDirector()
@@ -187,8 +192,8 @@ void XBScene1::updateDirector()
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
     }
     for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
     // update waves mask
@@ -279,9 +284,14 @@ void XBScene1::drawWindows()
     if (fakeCelloEvent || celloEnergy > energyThreshold) {
         for (int i = 0; i < windowsOutlines.size(); i++) {
             if (windowsOutlines[i].inside(xEmitter.positionStart)) {
+                if(celloInsideWindow != i)
+                    celloWindowAlpha = 0;
+                else
+                    celloWindowAlpha+= myGUI->windowAttack;
+                if(celloWindowAlpha > 1) celloWindowAlpha = 1;
                 ofPushStyle();
                 ofSetLineWidth(4);
-                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
+                ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
                 //                    if(celloInsideWindow != -1 && celloInsideWindow != i)
@@ -292,14 +302,14 @@ void XBScene1::drawWindows()
             // reached the end of the loop, wich means is not under any window
             if (i == windowsOutlines.size() - 1) {
                 if (celloInsideWindow > -1)
-                    addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+                    addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw, celloWindowAlpha, myGUI->colorCelloA);
                 celloInsideWindow = -1;
             }
         }
     }
     else {
         if (celloInsideWindow > -1)
-            addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw);
+            addFadingWindow(celloInsideWindow, fadingCelloWindowsToDraw, celloWindowAlpha, myGUI->colorCelloA);
         celloInsideWindow = -1;
     }
 
@@ -307,9 +317,14 @@ void XBScene1::drawWindows()
     if (fakeEvent || violinEnergy > energyThreshold) {
         for (int i = 0; i < windowsOutlines.size(); i++) {
             if (windowsOutlines[i].inside(vEmitter.positionStart)) {
+                if(violinInsideWindow != i)
+                    violinWindowAlpha = 0;
+                else
+                    violinWindowAlpha+= myGUI->windowAttack;
+                if(violinWindowAlpha > 1) violinWindowAlpha = 1;
                 ofPushStyle();
                 ofSetLineWidth(4);
-                ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
+                ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
                 violinInsideWindow = i;
@@ -318,7 +333,7 @@ void XBScene1::drawWindows()
             // reached the end of the loop, wich means is not under any window
             if (i == windowsOutlines.size() - 1) {
                 if (violinInsideWindow > -1) {
-                    addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+                    addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw, violinWindowAlpha, myGUI->colorViolinA);
                 }
                 violinInsideWindow = -1;
             }
@@ -326,7 +341,7 @@ void XBScene1::drawWindows()
     }
     else {
         if (violinInsideWindow > -1)
-            addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw);
+            addFadingWindow(violinInsideWindow, fadingViolinWindowsToDraw, violinWindowAlpha, myGUI->colorViolinA);
         violinInsideWindow = -1;
     }
 
@@ -347,10 +362,13 @@ void XBScene1::drawWindows()
     ofPopStyle();
 }
 
-void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector)
+void XBScene1::addFadingWindow(int index, vector<expandingPolyLine> &vector, float initValue, float instrumentAlpha)
 {
+    XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+    float init = instrumentAlpha *( 1 -  initValue) / myGUI->windowFade;
+    cout << init << endl;
     expandingPolyLine e;
-    e.life = 1;
+    e.life = init;
     e.line = windowsOutlines[index];
     vector.push_back(e);
 }
@@ -517,7 +535,7 @@ void XBScene1::keyReleased(int key)
 void XBScene1::initLines()
 {
     // LOAD HORIZINTAL LINES
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04.svg");
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
         // svg defaults to non zero winding which doesn't look so good as contours
@@ -548,7 +566,8 @@ void XBScene1::initLines()
         p.setPolyWindingMode(OF_POLY_WINDING_ODD);
         vector<ofPolyline> &lines = const_cast<vector<ofPolyline> &>(p.getOutline());
 
-        for (int j = 0; j < (int) lines.size(); j++) {
+//        for (int j = 0; j < (int) lines.size(); j++) {
+        int j = 0; // take only the first one and skip erroneous data
             ofPolyline pl = lines[j].getResampledBySpacing(1);
             vector<ofPoint> points = pl.getVertices();
             //check path direction
@@ -560,7 +579,7 @@ void XBScene1::initLines()
                 }
             }
             verticalLines.push_back(pl);
-        }
+//        }
     }
 }
 
@@ -589,7 +608,7 @@ void XBScene1::initParticles()
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = myGUI->numParticles;
@@ -598,17 +617,17 @@ void XBScene1::initParticles()
 
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 20;
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
 
-    ofLoadImage(pTex, "resources/particle.png");
+    ofLoadImage(pTex, "resources/img/particle_2.png");
     pTex.setAnchorPercent(0.5, 0.5);
     
-    ofLoadImage(headTexture, "resources/img/particle head.png");
+    ofLoadImage(headTexture, "resources/img/particle_3_head.png");
     headTexture.setAnchorPercent(0.5, 0.5);
 }
 
@@ -668,7 +687,7 @@ void XBScene1::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv03.svg");
+    svg.load("resources/horizontalesv04_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -684,7 +703,7 @@ void XBScene1::initWaves()
     }
 
     // create vertical waves
-    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -707,14 +726,14 @@ void XBScene1::updateEmitters()
     //GUI related
     vEmitter.size = myGUI->particleSize;
     vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.numPars = myGUI->numParticles;
     vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
 
     xEmitter.size = myGUI->particleSize;
     xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.numPars = myGUI->numParticles;
     xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));

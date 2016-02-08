@@ -26,7 +26,7 @@ void XBScene4::setup(XBBaseGUI *_gui)
     initWaves();
     initStones();
     initReactionDiffusion();
-
+    
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 1);
 }
 
@@ -59,13 +59,13 @@ void XBScene4::drawIntoFBO()
             ofSetColor(255);
             svg.draw();
         }
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-        drawViolin();
-        drawCello();
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         drawDirector();
         drawPiano();
-
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        drawViolin();
+        drawCello();
+        
         // mask for removing the windows
         ofPushStyle();
         ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
@@ -105,8 +105,8 @@ void XBScene4::updateDirector()
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
     }
     for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
 }
@@ -123,15 +123,10 @@ void XBScene4::updatePiano()
             i--; // new code to keep i index valid
         }
     }
-    // update piano windows
-    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
-        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        if (violinOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
-            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
-            i--; // keep i index valid
-        }
-    }
-
+    
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene4::updateCello()
@@ -140,23 +135,37 @@ void XBScene4::updateCello()
     // update cello windows
     for (int i = 0; i < celloOutlinesToDraw.size(); i++) {
         celloOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
-        if (celloOutlinesToDraw[i].life * myGUI->alphaFactor > 255) {
+        if (celloOutlinesToDraw[i].life * myGUI->growFactor > 1) {
             celloOutlinesToDraw.erase(celloOutlinesToDraw.begin() + i);
             i--; // keep i index valid
         }
     }
     grayX.setK(myGUI->violinK);
     grayX.setF(myGUI->violinF);
-    grayX.setPasses((int) ofMap(celloEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
+//    grayX.setK( presets.get(myGUI->presetIndex).kill);
+//    grayX.setF(presets.get(myGUI->presetIndex).feed);
+    grayX.setPasses((int) ofMap(celloEnergy, 0, 1, myGUI->minCelloSpeed, myGUI->maxCelloSpeed));
     grayX.update();
 }
 
 void XBScene4::updateViolin()
 {
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;
+    
+    // update piano windows
+    for (int i = 0; i < violinOutlinesToDraw.size(); i++) {
+        violinOutlinesToDraw[i].life += 1;//myGUI->stoneGrowFactor;
+        if (violinOutlinesToDraw[i].life * myGUI->growFactor > 1) {
+            violinOutlinesToDraw.erase(violinOutlinesToDraw.begin() + i);
+            i--; // keep i index valid
+        }
+    }
+    
     // update reaction diffusion
     grayV.setK(myGUI->violinK);
     grayV.setF(myGUI->violinF);
+//    grayV.setK( presets.get(myGUI->presetIndex).kill);
+//    grayV.setF(presets.get(myGUI->presetIndex).feed);
     grayV.setPasses((int) ofMap(violinEnergy, 0, 1, myGUI->minViolinSpeed, myGUI->maxViolinSpeed));
     grayV.update();
 }
@@ -266,6 +275,7 @@ void XBScene4::drawPiano()
         ofPopMatrix();
     }
     ofPopStyle();
+    pianoEnergy *= gui->pianoDecay;
 }
 
 void XBScene4::drawViolinWindow()
@@ -325,8 +335,6 @@ int XBScene4::drawWindow(float note, vector<ofRectangle> &windows)
         mappedPitch = ofMap(note, 0.75, 1, 0, 1);
     }
     ofRectangle window = windows[currentWindow];
-    //    ofNoFill();
-    //    ofDrawRectangle(window);
     ofFill();
     float y = ofMap(mappedPitch, 0, 1, window.getMaxY(), window.getMinY());
 //    ofDrawRectangle(window.x, y, window.width, 10);
@@ -367,8 +375,9 @@ void XBScene4::keyReleased(int key)
     switch (key) {
         case 'z':
         case 'Z': {
-            waves.clear();
-            initWaves();
+//            waves.clear();
+//            initWaves();
+            initReactionDiffusion();
             break;
         }
 
@@ -458,7 +467,7 @@ void XBScene4::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv02.svg");
+    svg.load("resources/horizontalesv04_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -474,7 +483,7 @@ void XBScene4::initWaves()
     }
 
     // create vertical waves
-    svg.load("resources/verticalesv06.svg");
+    svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);

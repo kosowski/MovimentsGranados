@@ -81,6 +81,14 @@ void XBScene3::drawIntoFBO()
         mask.draw(0, 0);
         ofPopStyle();
 
+        drawParticles();
+        
+        // mask top and bottom of the facade for the particles
+        ofPushStyle();
+        ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+        particlesMask.draw(0, 0);
+        ofPopStyle();
+        
         ofPopMatrix();
 
         drawMusiciansWindows();
@@ -108,6 +116,9 @@ void XBScene3::updatePiano()
             i--; // keep i index valid
         }
     }
+    pianoEnergy *= gui->pianoDecay;
+    if(ofGetElapsedTimeMillis() - lastPianoNoteTime > 300)
+        pianoEnergy *= 0.8;
 }
 
 void XBScene3::updateDirector()
@@ -121,8 +132,8 @@ void XBScene3::updateDirector()
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
     }
     for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
 }
@@ -130,16 +141,8 @@ void XBScene3::updateDirector()
 void XBScene3::drawViolinCello()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
-    //draw particles from violin and cello
-    ofPushStyle();
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
-    for (int i = 0; i < circles.size(); i++) {
-        ofFill();
-        circles[i].get()->draw(pTex);
-    }
-    ofPopStyle();
 
-    // draw violin and cello
+    // draw violin and cello avatars
     if (myGUI->showPath) {
         ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
         vPath.draw();
@@ -156,6 +159,18 @@ void XBScene3::drawViolinCello()
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     v.draw(pTex);
     x.draw(pTex);
+    ofPopStyle();
+}
+
+void XBScene3::drawParticles()
+{
+    //draw particles from violin and cello
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    for (int i = 0; i < circles.size(); i++) {
+        ofFill();
+        circles[i].get()->draw(pTex);
+    }
     ofPopStyle();
 }
 
@@ -181,7 +196,7 @@ void XBScene3::drawPiano()
         ofPushMatrix();
         ofTranslate(e.centroid);
         //             ofScale(e.life * myGUI->stoneGrowFactor, e.life * myGUI->stoneGrowFactor);
-        float scale = 0.5 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI / 2.f);
+        float scale = 0.8 + e.amplitude * sin(myGUI->stoneFrequency * e.life + myGUI->stonePhase * PI / 2.f);
         ofScale(scale, scale);
         e.path.setFillColor(ofColor(myGUI->rgbColorPianoR, myGUI->rgbColorPianoG, myGUI->rgbColorPianoB, ofClamp(myGUI->colorPianoA - e.life * myGUI->stoneAlphaDecrease, 0, 255)));
         e.path.draw();
@@ -325,6 +340,8 @@ void XBScene3::initParticles()
 {
     XBScene3GUI *myGUI = (XBScene3GUI *) gui;
 
+    ofLoadImage(particlesMask, "resources/img/Mask_Arriba_y_Abajo_invert.png");
+    
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     vEmitter.setVelocity(myGUI->particleVelocity);
     vEmitter.velSpread = myGUI->particleSpread;
@@ -354,7 +371,7 @@ void XBScene3::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv02.svg");
+    svg.load("resources/horizontalesv04_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -369,7 +386,7 @@ void XBScene3::initWaves()
     }
 
     // create vertical waves
-    svg.load("resources/verticalesv06.svg");
+    svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -386,7 +403,7 @@ void XBScene3::initWaves()
 
 void XBScene3::initPhysics()
 {
-    ofLoadImage(pTex, "resources/particle.png");
+    ofLoadImage(pTex, "resources/img/particle_2.png");
     pTex.setAnchorPercent(0.5f, 0.5f);
     // Box2d
     box2d.init();
@@ -469,14 +486,20 @@ void XBScene3::updateVioinCello()
             ofPoint vel = myGUI->particleVelocity;
             ofPoint spread = myGUI->particleSpread;
             c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinEnergy));
+            float alpha = myGUI->colorViolinA;
+            if (myGUI->linkAudio)
+                alpha *= violinEnergy;
+            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha));
             circles.push_back(c);
 
             shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
             c2.get()->setPhysics(0.2, 0.2, 0.002);
             c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
             c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloEnergy));
+            alpha = myGUI->colorCelloA;
+            if (myGUI->linkAudio)
+                alpha *= celloEnergy;
+            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  alpha));
             circles.push_back(c2);
         }
     }

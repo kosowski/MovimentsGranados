@@ -11,7 +11,7 @@ static const int DEFAULT_SAMPLERATE = 44100;
 static const int DEFAULT_BUFFERSIZE = 512;
 
 static const int GUI_DEV_WIDTH  = 300;
-static const int GUI_AN_WIDTH   = 200;
+static const int GUI_AN_WIDTH   = 350;
 static const int GUI_MARGIN     = 10;
 
 static const string STR_DEV_TITLE              = "DEVICE SELECTOR";
@@ -43,9 +43,9 @@ static const string STR_ONSETS_THRESHOLD       = "Threshold";
 static const string STR_ONSETS_STATUS          = "Current Status";
 
 static const float PITCH_MIN = 0, PITCH_MAX = 127;
-static const float PITCH_SMOOTH_MIN = 0.1, PITCH_SMOOTH_MAX = 1;
-static const float ENERGY_MIN = 0.01, ENERGY_MAX = 10;
-static const float ENERGY_SMOOTH_MIN = 0.1, ENERGY_SMOOTH_MAX = 1;
+static const float PITCH_SMOOTH_MIN = 0.0f, PITCH_SMOOTH_MAX = 1;
+static const float ENERGY_MIN = 0, ENERGY_MAX = 10;
+static const float ENERGY_SMOOTH_MIN = 0.0f, ENERGY_SMOOTH_MAX = 1;
 static const float GAIN_MIN = 1, GAIN_MAX = 10;
 static const float SILENCE_THRSHLD_MIN = 0.01, SILENCE_THRSHLD_MAX = 0.5;
 static const float SILENCE_LENGTH_MIN = 0, SILENCE_LENGTH_MAX = 1000;

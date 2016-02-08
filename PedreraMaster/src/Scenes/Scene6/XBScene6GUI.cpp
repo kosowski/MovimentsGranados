@@ -40,5 +40,16 @@ void XBScene6GUI::setup()
     countdownGroup.add(countdownScale.setup("Countdown Scale", 1.0f, 0.1f, 1.0f));
     sceneGui.add(&countdownGroup);
 
+    directorGroup.setup("Director");
+    directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 40.0f));
+    directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
+    directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
+    directorGroup.add(attractorStrength.setup("attractorStrength",  4, 0.0, 10.0));
+    directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
+    directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
+    sceneGui.add(&directorGroup);
+    
+    sceneGui.add(blurAmount.setup("Blur amount", 1., 0, 8.));
+    
     loadSettings();
 }
