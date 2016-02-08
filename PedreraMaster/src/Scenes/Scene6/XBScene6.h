@@ -59,7 +59,9 @@ private:
     float state4StartTime;
     float state4ElapsedTime;
     
+    ofTexture pTex;
     vector<Wave> waves;
+    ofFbo wavesMask;
     ofxSVG svg;
     BlurEffect blur;
 

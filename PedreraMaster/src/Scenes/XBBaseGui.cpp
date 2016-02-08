@@ -53,6 +53,7 @@ void XBBaseGUI::setup()
     sceneGui.add(useGlow.setup("Apply glow", false));
     sceneGui.add(glowAmount.setup("Glow amount", 1, 0, 5));
     sceneGui.add(glowradius.setup("Glow radius", 1, 1, 10));
+    sceneGui.add(glowAlpha.setup("Glow alpha", 180, 10, 255));
     
     sceneGui.add(minAlphaWindow.setup("Min musicians alpha", 1, 0, 255));
     sceneGui.add(maxAlphaWindow.setup("Max musicians alpha", 255, 0, 255));

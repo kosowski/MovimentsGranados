@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "XBSettingsManager.h"
 #include "../../Shared/OSCSettings.h"
 #include "Defaults.h"
 
@@ -6,7 +7,6 @@ static const string STR_APP_TITLE           = "KINECT DETECTOR";
 static const string STR_GUI_TITLE           = "Kinect Status";
 
 static const string STR_STATE               = "STATUS";
-static const string STR_STATE_SETUP         = "Initializing Kinect...";
 static const string STR_STATE_DETECTING     = "Detecting Person...";
 static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
@@ -15,6 +15,7 @@ static const string STR_TOGGLE_SHOW_KINECT  = "Draw Kinect Output";
 static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
 
 static const string SETTINGS_FILENAME       = "settings.xml";
+static const string STR_APPSETTINGS_FILENAME= "AppSettings.xml";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
@@ -37,7 +38,7 @@ void ofApp::setup()
 		gui.add(sendVideo.setup(STR_BUTTON_SENDVIDEO, true));
         gui.loadFromFile(SETTINGS_FILENAME);
 
-        gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));
+        gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_DETECTING));
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
@@ -51,8 +52,11 @@ void ofApp::setup()
 
     // OSC
     {
-        oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
-		oscSender_Max.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT_MAX);
+		XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+		string oscHost = XBSettingsManager::getInstance().getOSCHost();
+		cout << oscHost << endl;
+		oscSender.setup(oscHost, OSC_PIANO_SENDER_PORT);
+		oscSender_Max.setup(oscHost, OSC_KINECT_SENDER_PORT_MAX);
     }
 
     // KINECT / MOTION
@@ -141,20 +145,6 @@ void ofApp::handleStateChanges()
 
     string stateDescr;
     switch (currState) {
-        case STATE_SETUP: {
-            stateDescr = STR_STATE_SETUP;
-            guiStatusLbl.setBackgroundColor(ofColor::darkRed);
-
-            ofxOscMessage m;
-            stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
-            m.setAddress(address.str());
-            m.addStringArg(OSC_KINECT_STATE_SETUP);
-            oscSender.sendMessage(m, false);
-			oscSender_Max.sendMessage(m, false);
-
-            break;
-        }
         case STATE_DETECTING: {
             stateDescr = STR_STATE_DETECTING;
             guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
