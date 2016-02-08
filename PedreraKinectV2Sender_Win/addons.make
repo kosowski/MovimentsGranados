@@ -1,5 +1,6 @@
 ofxGui
 ofxOsc
+ofxXmlSettings
 ofxHTTP
 ofxIO
 ofxKinectForWindows2
