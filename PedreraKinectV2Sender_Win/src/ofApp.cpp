@@ -6,7 +6,6 @@ static const string STR_APP_TITLE           = "KINECT DETECTOR";
 static const string STR_GUI_TITLE           = "Kinect Status";
 
 static const string STR_STATE               = "STATUS";
-static const string STR_STATE_SETUP         = "Initializing Kinect...";
 static const string STR_STATE_DETECTING     = "Detecting Person...";
 static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
@@ -37,7 +36,7 @@ void ofApp::setup()
 		gui.add(sendVideo.setup(STR_BUTTON_SENDVIDEO, true));
         gui.loadFromFile(SETTINGS_FILENAME);
 
-        gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));
+        gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_DETECTING));
         guiStatusLbl.setBackgroundColor(ofColor::darkRed);
         guiStatusLbl.setDefaultWidth(GUI_WIDTH);
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
@@ -141,20 +140,6 @@ void ofApp::handleStateChanges()
 
     string stateDescr;
     switch (currState) {
-        case STATE_SETUP: {
-            stateDescr = STR_STATE_SETUP;
-            guiStatusLbl.setBackgroundColor(ofColor::darkRed);
-
-            ofxOscMessage m;
-            stringstream address;
-            address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_STATE;
-            m.setAddress(address.str());
-            m.addStringArg(OSC_KINECT_STATE_SETUP);
-            oscSender.sendMessage(m, false);
-			oscSender_Max.sendMessage(m, false);
-
-            break;
-        }
         case STATE_DETECTING: {
             stateDescr = STR_STATE_DETECTING;
             guiStatusLbl.setBackgroundColor(ofColor::darkBlue);
