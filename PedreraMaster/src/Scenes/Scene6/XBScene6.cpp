@@ -160,6 +160,12 @@ void XBScene6::drawS6_3()
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
     
     drawDirector();
+    // mask for removing the windows
+    ofPushStyle();
+    ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+    mask.draw(0, 0);
+    ofPopStyle();
+    
     if (state3IsDetecting)
     {
         drawText(S3_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
