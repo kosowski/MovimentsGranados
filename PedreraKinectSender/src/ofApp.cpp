@@ -48,6 +48,7 @@ void ofApp::setup()
     // OSC
     {
         oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
+        oscSender_Max.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT_MAX);
     }
 
     // KINECT / MOTION
@@ -103,6 +104,7 @@ void ofApp::handleStateChanges()
             m.setAddress(address.str());
             m.addStringArg(OSC_KINECT_STATE_DETECTING);
             oscSender.sendMessage(m, false);
+            oscSender_Max.sendMessage(m, false);
 
             break;
         }
@@ -116,6 +118,7 @@ void ofApp::handleStateChanges()
             m.setAddress(address.str());
             m.addStringArg(OSC_KINECT_STATE_CAPTURING);
             oscSender.sendMessage(m, false);
+            oscSender_Max.sendMessage(m, false);
 
             break;
         }
@@ -144,6 +147,7 @@ void ofApp::sendHandInfo()
     lhandpos.addFloatArg(handsInfo.leftHand.pos.y);
     lhandpos.addFloatArg(handsInfo.leftHand.pos.z);
     oscSender.sendMessage(lhandpos, false);
+    oscSender_Max.sendMessage(lhandpos, false);
 
     //RIGHT HAND POSITION
     ofxOscMessage rhandpos;
@@ -154,6 +158,7 @@ void ofApp::sendHandInfo()
     rhandpos.addFloatArg(handsInfo.rightHand.pos.y);
     rhandpos.addFloatArg(handsInfo.rightHand.pos.z);
     oscSender.sendMessage(rhandpos, false);
+    oscSender_Max.sendMessage(rhandpos, false);
 
     //LEFT HAND VELOCITY
     ofxOscMessage lhandvel;
@@ -164,6 +169,7 @@ void ofApp::sendHandInfo()
     lhandvel.addFloatArg(handsInfo.leftHand.v.y);
     lhandvel.addFloatArg(handsInfo.leftHand.v.z);
     oscSender.sendMessage(lhandvel, false);
+    oscSender_Max.sendMessage(lhandvel, false);
 
     //RIGHT HAND VELOCITY
     ofxOscMessage rhandvel;
@@ -174,6 +180,7 @@ void ofApp::sendHandInfo()
     rhandvel.addFloatArg(handsInfo.rightHand.v.y);
     rhandvel.addFloatArg(handsInfo.rightHand.v.z);
     oscSender.sendMessage(rhandvel, false);
+    oscSender_Max.sendMessage(rhandvel, false);
 }
 
 void ofApp::resetKinect(){
@@ -188,5 +195,6 @@ void ofApp::keyPressed(int key){
         positionDetected.setAddress(posDetect_address.str());
         positionDetected.addStringArg(OSC_KINECT_STATE_POSITIONED);
         oscSender.sendMessage(positionDetected, false);
+        oscSender_Max.sendMessage(positionDetected, false);
     }
 }
