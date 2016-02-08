@@ -168,7 +168,7 @@ void ofApp::sendHandInfo()
     //RIGHT HAND VELOCITY
     ofxOscMessage rhandvel;
     stringstream rhandvel_address;
-    rhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_LHAND << OSC_KINECT_ADDR_VELOCITY;
+    rhandvel_address << OSC_KINECT_ADDR_BASE << OSC_KINECT_ADDR_RHAND << OSC_KINECT_ADDR_VELOCITY;
     rhandvel.setAddress(rhandvel_address.str());
     rhandvel.addFloatArg(handsInfo.rightHand.v.x);
     rhandvel.addFloatArg(handsInfo.rightHand.v.y);
