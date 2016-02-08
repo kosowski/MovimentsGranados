@@ -407,7 +407,7 @@ void XBScene3::initPhysics()
     pTex.setAnchorPercent(0.5f, 0.5f);
     // Box2d
     box2d.init();
-    box2d.setGravity(0, 2);
+    box2d.setGravity(0, 0.5);
     box2d.setFPS(60.0);
 
     int spacing = 40;
