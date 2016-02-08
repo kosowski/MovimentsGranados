@@ -49,12 +49,12 @@ void PMMotionExtractor::update()
 			//--
 			//
 			{
-				auto bodies = kinect.getBodySource()->getBodies();
+				auto closestBody = findClosestBody();
+				//auto bodies = kinect.getBodySource()->getBodies();
 				for (auto body : bodies) {
-					//TODO: Implement body gesture detection
+					if (body.trackingId == closestBody->trackingId)
+						break;
 					//cout << body.trackingId << endl;
-					if (body.trackingId != 0)
-						//break
 					for (auto joint : body.joints) {
 						if (joint.first == JointType_HandLeft) {
 							handsInfo.leftHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
@@ -71,7 +71,7 @@ void PMMotionExtractor::update()
 						else if (joint.first == JointType_Head) {
 							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							headPos.y /= 424;
-							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05){
+							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05) {
 								positionDetectedCounter++;
 							}
 							else {
@@ -84,7 +84,7 @@ void PMMotionExtractor::update()
 								positionDetectedCounter = 0;
 							}
 						}
-					}	
+					}
 				}
 				computeVelocity(5);
 			}
@@ -171,6 +171,40 @@ KinectInfo PMMotionExtractor::getHandsInfo() {
 	tempInfo.rightHand.pos = rHandPosMean;
 
 	return tempInfo;
+}
+
+ofxKFW2::Data::Body* PMMotionExtractor::findClosestBody()
+{
+	ofxKFW2::Data::Body* result = nullptr;
+
+	double closestBodyDistance = 10000000.0;
+
+	auto& bodies = kinect.getBodySource()->getBodies();
+	for (auto& body : bodies) {
+		if (body.tracked) {
+			
+		}
+	}
+
+	for (auto body : bodies)
+	{
+		if (body.tracked)
+		{
+			auto joints = body.joints;
+
+			auto currentLocation = joints[JointType_SpineBase].getPosition();
+
+			auto currentDistance = sqrt(pow(currentLocation.x, 2) + pow(currentLocation.y, 2) + pow(currentLocation.z, 2));
+
+			if (result == nullptr || currentDistance < closestBodyDistance)
+			{
+				result = &body;
+				closestBodyDistance = currentDistance;
+			}
+		}
+	}
+
+	return result;
 }
 
 
