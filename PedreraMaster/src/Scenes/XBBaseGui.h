@@ -45,6 +45,7 @@ public:
     ofxToggle useGlow;
     ofxIntSlider glowAmount;
     ofxIntSlider glowradius;
+    ofxIntSlider glowAlpha;
     
     ofxIntSlider maxAlphaWindow;
     ofxIntSlider minAlphaWindow;
