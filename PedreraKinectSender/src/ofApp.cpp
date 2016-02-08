@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "XBSettingsManager.h"
 #include "../../Shared/OSCSettings.h"
 #include "Defaults.h"
 
@@ -14,6 +15,7 @@ static const string STR_TOGGLE_SHOW_KINECT  = "Draw Kinect Output";
 static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
 
 static const string SETTINGS_FILENAME       = "settings.xml";
+static const string STR_APPSETTINGS_FILENAME    = "AppSettings.xml";
 
 static const int GUI_POSX = 10;
 static const int GUI_POSY = 10;
@@ -23,6 +25,7 @@ void ofApp::setup()
 {
     ofSetWindowTitle(STR_APP_TITLE);
     ofBackground(ofColor::black);
+    ofSetFrameRate(60);
 
     currState = prevState = STATE_SETUP;
 
@@ -47,8 +50,13 @@ void ofApp::setup()
 
     // OSC
     {
-        oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
-        oscSender_Max.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT_MAX);
+        XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+        string oscHost = XBSettingsManager::getInstance().getOSCHost();
+        cout<<oscHost<<endl;
+        oscSender.setup(oscHost, OSC_PIANO_SENDER_PORT);
+        oscSender_Max.setup(oscHost, OSC_KINECT_SENDER_PORT_MAX);
+        //oscSender.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT);
+        //oscSender_Max.setup(OSC_KINECT_SENDER_HOST, OSC_KINECT_SENDER_PORT_MAX);
     }
 
     // KINECT / MOTION
