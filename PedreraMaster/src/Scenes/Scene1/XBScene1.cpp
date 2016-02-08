@@ -608,7 +608,7 @@ void XBScene1::initParticles()
     emitParticles = false;
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = myGUI->numParticles;
@@ -617,7 +617,7 @@ void XBScene1::initParticles()
 
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
     xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 20;
@@ -726,14 +726,14 @@ void XBScene1::updateEmitters()
     //GUI related
     vEmitter.size = myGUI->particleSize;
     vEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    vEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    vEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.numPars = myGUI->numParticles;
     vEmitter.color.set(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
 
     xEmitter.size = myGUI->particleSize;
     xEmitter.setVelocity( ofVec3f(myGUI->particleVelocity->x, myGUI->particleVelocity->y, 0));
-    xEmitter.velSpread = ofVec3f(myGUI->particleSpread->x, myGUI->particleSpread->y,0);
+    xEmitter.velSpread = ofVec3f(myGUI->particleSpread, myGUI->particleSpread,0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.numPars = myGUI->numParticles;
     xEmitter.color.set(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));

@@ -46,7 +46,7 @@ void XBScene1GUI::setup()
     violinGroup.add(timeIncrement.setup("Marker speed", 1, 1, 30));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
-    violinGroup.add(particleSpread.setup("Particle spread", ofVec2f(5,5), ofVec2f(0,0), ofVec2f(30,30)));
+    violinGroup.add(particleSpread.setup("Particle spread", 5, 0, 30));
     
     sceneGui.add(&violinGroup);
     
