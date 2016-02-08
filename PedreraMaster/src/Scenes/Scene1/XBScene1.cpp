@@ -290,7 +290,7 @@ void XBScene1::drawWindows()
                     celloWindowAlpha+= myGUI->windowAttack;
                 if(celloWindowAlpha > 1) celloWindowAlpha = 1;
                 ofPushStyle();
-                ofSetLineWidth(4);
+                ofSetLineWidth(8);
                 ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
