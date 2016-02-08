@@ -69,6 +69,8 @@ private:
     //for computing velocity
     deque<ofPoint> rHandPosHist;
     deque<ofPoint> lHandPosHist;
+    
+    float handsZref;
 };
 
 #endif /* PMMotionExtractor_hpp */
