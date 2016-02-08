@@ -624,10 +624,10 @@ void XBScene1::initParticles()
     xEmitter.color = ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
     xEmitter.size = myGUI->particleSize;
 
-    ofLoadImage(pTex, "resources/particle.png");
+    ofLoadImage(pTex, "resources/img/particle_2.png");
     pTex.setAnchorPercent(0.5, 0.5);
     
-    ofLoadImage(headTexture, "resources/img/particle head.png");
+    ofLoadImage(headTexture, "resources/img/particle_3_head.png");
     headTexture.setAnchorPercent(0.5, 0.5);
 }
 
@@ -687,7 +687,7 @@ void XBScene1::initWaves()
     int spacing = 10;
 
     // create horzontal waves
-    svg.load("resources/horizontalesv04.svg");
+    svg.load("resources/horizontalesv04_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 1; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
@@ -703,7 +703,7 @@ void XBScene1::initWaves()
     }
 
     // create vertical waves
-    svg.load("resources/verticales_v03_pocas_lineas.svg");
+    svg.load("resources/verticalesv06_pocas_01.svg");
     // start at index 1, as first path uses to be a rectangle with the full frame size
     for (int i = 0; i < svg.getNumPath(); i++) {
         ofPath p = svg.getPathAt(i);
