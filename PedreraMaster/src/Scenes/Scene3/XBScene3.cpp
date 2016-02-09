@@ -343,8 +343,10 @@ void XBScene3::initParticles()
     ofLoadImage(particlesMask, "resources/img/Mask_Arriba_y_Abajo_invert.png");
     
     vEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    vEmitter.setVelocity(myGUI->particleVelocity);
-    vEmitter.velSpread = myGUI->particleSpread;
+    ofVec2f velocity(myGUI->particleVelocity);
+    vEmitter.setVelocity(ofVec3f(velocity.x, velocity.y, 0));
+    ofVec2f spread(myGUI->particleSpread);
+    vEmitter.velSpread = ofVec3f(spread.x, spread.y, 0);
     vEmitter.life = myGUI->particleLife;
     vEmitter.lifeSpread = 5.0;
     vEmitter.numPars = 1;
@@ -352,8 +354,8 @@ void XBScene3::initParticles()
     vEmitter.size = myGUI->particleSize;
 
     xEmitter.setPosition(ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2));
-    xEmitter.setVelocity(myGUI->particleVelocity);
-    xEmitter.velSpread = myGUI->particleSpread;
+    xEmitter.setVelocity(ofVec3f(velocity.x, velocity.y, 0));
+    xEmitter.velSpread = ofVec3f(spread.x, spread.y, 0);
     xEmitter.life = myGUI->particleLife;
     xEmitter.lifeSpread = 5.0;
     xEmitter.numPars = 1;
@@ -471,38 +473,53 @@ void XBScene3::updateVioinCello()
         x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
     }
 
-    //update particles emitters
-    float dist = x.getLocation().distance(v.getLocation());
-
-    if (dist < myGUI->maxDistance) {
-        float numParticles = ofMap(dist, 0, myGUI->maxDistance, myGUI->maxParticles, 0);
-        if (numParticles < 1.f && numParticles > 0.f)
-            numParticles = ofGetFrameNum() % 2;
-        numParticles = floor(numParticles);
-        for (int i = 0; i < numParticles; i++) {
-            shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
-            c.get()->setPhysics(0.2, 0.2, 0.002);
-            c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
-            ofPoint vel = myGUI->particleVelocity;
-            ofPoint spread = myGUI->particleSpread;
-            c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            float alpha = myGUI->colorViolinA;
-            if (myGUI->linkAudio)
-                alpha *= violinEnergy;
-            c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha));
-            circles.push_back(c);
-
-            shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
-            c2.get()->setPhysics(0.2, 0.2, 0.002);
-            c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
-            c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
-            alpha = myGUI->colorCelloA;
-            if (myGUI->linkAudio)
-                alpha *= celloEnergy;
-            c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  alpha));
-            circles.push_back(c2);
-        }
+    // add violin particles
+    ofVec2f vel = myGUI->particleVelocity;
+    ofVec2f spread = myGUI->particleSpread;
+    float numVParticles;
+    if(myGUI->linkAudio){
+        numVParticles= ofMap(violinEnergy, 0, 1, 0, myGUI->maxParticles);
+        if (numVParticles < 1.f && numVParticles > 0.f)
+            numVParticles = ofGetFrameNum() % 2;
+        numVParticles = floor(numVParticles);
     }
+    else
+        numVParticles =myGUI->maxParticles;
+    for (int i = 0; i < numVParticles; i++) {
+        shared_ptr<CustomBox2dParticle> c = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
+        c.get()->setPhysics(0.2, 0.2, 0.002);
+        c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
+        
+        c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        float alpha = myGUI->colorViolinA;
+        if (myGUI->linkAudio)
+            alpha *= violinEnergy;
+        c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha));
+        circles.push_back(c);
+    }
+    
+    // add cello particles
+    float numXParticles;
+    if(myGUI->linkAudio){
+        numXParticles = ofMap(celloEnergy, 0, 1, 0, myGUI->maxParticles);
+        if (numXParticles < 1.f && numXParticles > 0.f)
+            numXParticles = ofGetFrameNum() % 2;
+        numXParticles = floor(numXParticles);
+    }
+    else
+        numXParticles =myGUI->maxParticles;
+    for (int i = 0; i < numXParticles; i++) {
+        shared_ptr<CustomBox2dParticle> c2 = shared_ptr<CustomBox2dParticle>(new CustomBox2dParticle);
+        c2.get()->setPhysics(0.2, 0.2, 0.002);
+        c2.get()->setup(box2d.getWorld(), x.getLocation().x, x.getLocation().y, myGUI->particleSize, myGUI->particleLife);
+        c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        float alpha = myGUI->colorCelloA;
+        if (myGUI->linkAudio)
+            alpha *= celloEnergy;
+        c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  alpha));
+        circles.push_back(c2);
+    }
+    
     // update particles
     ofRemove(circles, CustomBox2dParticle::shouldRemove);
     for (int i = 0; i < circles.size(); i++)

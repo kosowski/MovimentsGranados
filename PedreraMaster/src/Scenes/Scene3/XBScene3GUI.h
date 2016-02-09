@@ -24,7 +24,7 @@ public:
     ofxFloatSlider mass;
     ofxFloatSlider glowAmount;
     ofxFloatSlider glowRadius;
-    ofxInttSlider minAlpha;
+    ofxIntSlider minAlpha;
     ofxToggle linkAudio;
     ofxToggle showPath;
     
@@ -32,7 +32,6 @@ public:
     ofxFloatSlider particleSize;
     ofxFloatSlider particleLife;
     ofxFloatSlider maxParticles;
-    ofxFloatSlider maxDistance;
     ofxToggle collisionOn;
     ofxVec2Slider particleVelocity;
     ofxVec2Slider particleSpread;
