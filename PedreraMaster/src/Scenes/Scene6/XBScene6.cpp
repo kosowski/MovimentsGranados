@@ -118,7 +118,7 @@ void XBScene6::drawS6_1()
     drawText(S1_TITLE, fontMsgBold, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
     drawText(S1_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
 
-    drawFadeRectangle();
+//    drawFadeRectangle();
 }
 
 #pragma mark - 2 COUNTDOWN
@@ -141,7 +141,7 @@ void XBScene6::drawS6_2()
 
     drawText(ofToString(countdownNumber), fontCountdown, myGUI->countdownX, myGUI->countdownY, myGUI->countdownScale, ofColor(207, 87, 60, 255));
 
-    drawFadeRectangle();
+//    drawFadeRectangle();
 }
 
 #pragma mark - 3 LIVE
@@ -177,7 +177,7 @@ void XBScene6::drawS6_3()
         drawText(S3_SUBTITLE, fontMsgNormal, myGUI->subtitleX, myGUI->subtitleY, myGUI->subtitleScale, ofColor::white);
     }
 
-    drawFadeRectangle();
+//    drawFadeRectangle();
 }
 
 #pragma mark - 4 THANKS
@@ -195,7 +195,7 @@ void XBScene6::drawS6_4()
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
     drawText(S4_TITLE, fontMsgNormal, myGUI->titleX, myGUI->titleY, myGUI->titleScale, ofColor::white);
 
-    drawFadeRectangle();
+//    drawFadeRectangle();
 }
 
 #pragma mark - Kinect / key events

@@ -86,7 +86,7 @@ void XBScene4::drawIntoFBO()
         drawMusiciansWindows();
 
         drawGUI();
-        drawFadeRectangle();
+//        drawFadeRectangle();
     }
     fbo.end();
     blur.apply(&fbo, 1, myGUI->blurAmount);

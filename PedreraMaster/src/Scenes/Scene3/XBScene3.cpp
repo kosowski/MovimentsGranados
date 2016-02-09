@@ -96,7 +96,7 @@ void XBScene3::drawIntoFBO()
         //draw GUI
         drawGUI();
 
-        drawFadeRectangle();
+//        drawFadeRectangle();
     }
     fbo.end();
     blur.apply(&fbo, 1, myGUI->blurAmount);

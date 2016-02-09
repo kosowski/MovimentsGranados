@@ -26,6 +26,7 @@ void XBSceneManager::setup(int initialScene)
 
     scenes[currentSceneIndex]->enteredScene();
     ofNotifyEvent(eventSceneChanged, currentSceneIndex);
+    composite.load("resources/shaders/composite");
 }
 
 void XBSceneManager::update()
@@ -64,12 +65,31 @@ void XBSceneManager::draw()
         case SCENESTATE_OnScene:
         {
             drawSceneAtIndex(currentSceneIndex);
+            const ofFbo &sceneFBO = scenes[currentSceneIndex]->getMainFBO();
+            sceneFBO.draw(0, 0);
             break;
         }
         case SCENESTATE_Transitioning:
         {
             drawSceneAtIndex(currentSceneIndex);
             drawSceneAtIndex(nextSceneIndex);
+            const ofFbo &sceneFBO1 = scenes[currentSceneIndex]->getMainFBO();
+            const ofFbo &sceneFBO2 = scenes[nextSceneIndex]->getMainFBO();
+            composite.begin();
+            composite.setUniformTexture("srcTex", sceneFBO1.getTexture(), 0 );
+            composite.setUniformTexture("dstTex", sceneFBO2.getTexture(), 1 );
+            float mix = 1.0 - (float) (*scenes[currentSceneIndex]->getFBOAlpha()/255.0f);
+//            cout << "MIx " << mix << endl;
+            composite.setUniform1f( "alpha", mix );
+            int _width = ofGetWidth();
+            int _height = ofGetHeight();
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0); glVertex3f(0, 0, 0);
+            glTexCoord2f(_width, 0); glVertex3f(_width, 0, 0);
+            glTexCoord2f(_width, _height); glVertex3f(_width, _height, 0);
+            glTexCoord2f(0,_height);  glVertex3f(0,_height, 0);
+            glEnd();
+            composite.end();
             break;
         }
         default: break;
@@ -124,8 +144,8 @@ void XBSceneManager::drawSceneAtIndex(int sceneIndex)
     if (sceneIndex >= scenes.size()) return;
 
     scenes[sceneIndex]->drawIntoFBO();
-    const ofFbo &sceneFBO = scenes[sceneIndex]->getMainFBO();
-    sceneFBO.draw(0, 0);
+//    const ofFbo &sceneFBO = scenes[sceneIndex]->getMainFBO();
+//    sceneFBO.draw(0, 0);
 }
 
 XBBaseScene *XBSceneManager::getCurrentScene()
@@ -190,4 +210,6 @@ void XBSceneManager::keyReleased(int key)
 void XBSceneManager::keyPressed(int key)
 {
     scenes[currentSceneIndex]->keyPressed(key);
+    if(key == 'n')
+        composite.load("resources/shaders/composite");
 }

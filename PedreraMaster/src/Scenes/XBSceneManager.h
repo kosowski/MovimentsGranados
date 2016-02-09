@@ -49,6 +49,8 @@ private:
     vector<XBBaseScene *> scenes;
     int currentSceneIndex, nextSceneIndex;
     SceneTransitionState state;
+    
+    ofShader composite;
 };
 
 
