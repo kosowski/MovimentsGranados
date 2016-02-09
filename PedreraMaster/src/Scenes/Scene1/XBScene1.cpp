@@ -192,9 +192,15 @@ void XBScene1::updateDirector()
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
     }
     for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
-        waves[i].update();
+        if(myGUI->enableDirector){
+            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].update();
+        }else{
+            waves[i].setAttractor(0, 0, 0,0, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].setAttractor(1, 0, 0, 0, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].update();
+        }
     }
     // update waves mask
     wavesMask.begin();

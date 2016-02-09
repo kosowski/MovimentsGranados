@@ -15,6 +15,7 @@ void XBScene1GUI::setup()
     XBBaseGUI::setup();
 
     directorGroup.setup("Director");
+    directorGroup.add(enableDirector.setup("Enable director", true));
     directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 5.0f));
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
@@ -47,12 +48,8 @@ void XBScene1GUI::setup()
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));
     violinGroup.add(particleSpread.setup("Particle spread", 5, 0, 30));
-    
     sceneGui.add(&violinGroup);
     
-//    particlesGroup.setup("Particles");
-//       sceneGui.add(&particlesGroup);
-
     sceneGui.add(blurAmount.setup("Blur amount", 1., 0, 8.));
     
     loadSettings();

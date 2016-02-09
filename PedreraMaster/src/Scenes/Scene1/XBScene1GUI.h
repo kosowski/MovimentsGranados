@@ -15,6 +15,7 @@ public:
     virtual void setup();
 
     ofxGuiGroup directorGroup;
+    ofxToggle enableDirector;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;
