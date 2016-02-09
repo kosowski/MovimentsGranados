@@ -241,7 +241,10 @@ void XBScene4::drawViolin()
     // draw reaction diffusion with shader to convert it to B&W with transparency
     ofPushStyle();
     convertToBW.begin();
-    ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA);
+    float alpha = myGUI->colorViolinA;
+    if(myGUI->linkAudio)
+        alpha *= (violinEnergy + celloEnergy) / 2.0;
+    ofSetColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha);
     grayV.draw(0, 0, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
     convertToBW.end();
     ofPopStyle();
@@ -253,7 +256,10 @@ void XBScene4::drawCello()
     XBScene4GUI *myGUI = (XBScene4GUI *) gui;
     ofPushStyle();
     convertToBW.begin();
-    ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA);
+    float alpha = myGUI->colorCelloA;
+    if(myGUI->linkAudio)
+        alpha *= (violinEnergy + celloEnergy) / 2.0;
+    ofSetColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, alpha);
     grayX.draw(0, 0, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
     convertToBW.end();
     ofPopStyle();

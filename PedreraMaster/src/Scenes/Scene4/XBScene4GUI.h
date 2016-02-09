@@ -23,6 +23,7 @@ public:
     ofxIntSlider maxCelloSpeed;
     ofxFloatSlider violinK;
     ofxFloatSlider violinF;
+    ofxToggle linkAudio;
     ofxIntSlider presetIndex;
     
     ofxGuiGroup pianoGroup;
