@@ -23,6 +23,7 @@ void XBScene1GUI::setup()
     directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
     directorGroup.add(maskRadius.setup("Mask radius", 300, 10, 600.));
     directorGroup.add(maskAlpha.setup("Mask decay", 10, 0, 15));
+    directorGroup.add(maskLevel.setup("Mask level", 10, 0, 255));
     sceneGui.add(&directorGroup);
     
     pianoGroup.setup("Piano");

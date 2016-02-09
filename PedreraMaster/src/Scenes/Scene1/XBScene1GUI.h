@@ -22,6 +22,7 @@ public:
     ofxFloatSlider lineWidth;
     ofxFloatSlider maskRadius;
     ofxFloatSlider maskAlpha;
+    ofxIntSlider maskLevel;
     ofxFloatSlider dampingWaves;
     
     ofxGuiGroup violinGroup;
