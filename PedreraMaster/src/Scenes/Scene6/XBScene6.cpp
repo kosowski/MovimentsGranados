@@ -59,6 +59,9 @@ void XBScene6::setup(XBBaseGUI *_gui)
     ofBackground(0, 0, 0);
     wavesMask.end();
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
+    
+    //OSC to max configuration.
+    to_Max_Active_Sender.setup("localhost", OSC_KINECT_SENDER_PORT_MAX);
 }
 
 void XBScene6::enteredScene()
@@ -234,11 +237,15 @@ void XBScene6::onKinectStateChanged(string &kState)
         case S6_3_LIVE:
         {
             if (kState == OSC_KINECT_STATE_DETECTING)
+            {
                 state3IsDetecting = true;
+                sendToMaxToSound(false);
+            }
             else if (kState == OSC_KINECT_STATE_CAPTURING)
             {
                 state3IsDetecting = false;
                 state3StartTime = ofGetElapsedTimef();
+                sendToMaxToSound(true);
             }
             break;
         }
@@ -265,11 +272,13 @@ void XBScene6::goToState(S6State newState)
         {
             state3IsDetecting = false;
             state3StartTime = ofGetElapsedTimef();
+            sendToMaxToSound(true);
             break;
         }
         case S6_4_THANKS:
         {
             state4StartTime = ofGetElapsedTimef();
+            sendToMaxToSound(false);
             break;
         }
         default: break;
@@ -280,6 +289,14 @@ void XBScene6::goToNextState()
 {
     S6State newState = S6State((state + 1) % S6_NUM_STATES);
     goToState(newState);
+}
+
+void XBScene6::sendToMaxToSound(bool sound)
+{
+    ofxOscMessage m;
+    m.setAddress("/audio");
+    m.addBoolArg(sound);
+    to_Max_Active_Sender.sendMessage(m, false);
 }
 
 #pragma mark - Convenience methods
