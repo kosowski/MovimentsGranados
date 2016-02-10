@@ -22,7 +22,6 @@ private:
     // MIDI
 
     ofxMidiIn       midiIn;
-    ofxMidiMessage  midiMessage;
 
     void newMidiMessage(ofxMidiMessage& midiMessage);
 
