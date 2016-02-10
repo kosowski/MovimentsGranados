@@ -45,6 +45,7 @@ public:
     
     ofxGuiGroup windowGroup;
     ofxFloatSlider barHeight;
+    ofxFloatSlider alphaStart;
     ofxFloatSlider alphaFactor;
     ofxFloatSlider growFactor;
     ofxIntSlider windowFrequency;
