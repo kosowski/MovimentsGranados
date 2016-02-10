@@ -143,8 +143,8 @@ void PMMotionExtractor::draw(bool drawImage, bool drawHands)
         ofSetColor(ofColor::red);
         ofDrawEllipse(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20+20*(handsInfo.rightHand.v.x), 20+20*(handsInfo.rightHand.v.y));
         ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
-		ofDrawBitmapString(handsInfo.rightHand.pos.z, handsInfo.rightHand.pos.x * ofGetWidth() + 10, handsInfo.rightHand.pos.y * ofGetHeight() + 10);
-		ofDrawBitmapString(handsInfo.leftHand.pos.z, handsInfo.leftHand.pos.x * ofGetWidth() + 10, handsInfo.leftHand.pos.y * ofGetHeight() + 10);
+		//ofDrawBitmapString(handsInfo.rightHand.pos.z, handsInfo.rightHand.pos.x * ofGetWidth() + 10, handsInfo.rightHand.pos.y * ofGetHeight() + 10);
+		//ofDrawBitmapString(handsInfo.leftHand.pos.z, handsInfo.leftHand.pos.x * ofGetWidth() + 10, handsInfo.leftHand.pos.y * ofGetHeight() + 10);
         ofPopStyle();
     }
 	ofDrawBitmapString(positionDetectedCounter, 0, 0);

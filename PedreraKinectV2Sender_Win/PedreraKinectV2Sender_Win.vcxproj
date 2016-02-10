@@ -442,6 +442,7 @@ C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\in
     <ClInclude Include="..\..\..\addons\ofxTaskQueue\src\ofxTaskQueue.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="..\Shared\OSCSettings.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Defaults.h" />
     <ClInclude Include="src\PMMotionExtractor.hpp" />

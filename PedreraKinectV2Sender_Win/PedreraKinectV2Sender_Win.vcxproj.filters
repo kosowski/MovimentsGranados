@@ -528,6 +528,9 @@
     <Filter Include="addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx">
       <UniqueIdentifier>{344106d7-5f79-4aa8-ae7a-ee3c18b9f383}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{d9f5791b-9211-487d-9ddb-8bc6b4586b3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -976,6 +979,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx\TaskQueueEvents.h">
       <Filter>addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\OSCSettings.h">
+      <Filter>Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
