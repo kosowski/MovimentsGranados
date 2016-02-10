@@ -32,6 +32,7 @@ public:
     ofxFloatSlider countdownScale;
     
     ofxGuiGroup directorGroup;
+    ofxFloatSlider minAttractorStrength;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;

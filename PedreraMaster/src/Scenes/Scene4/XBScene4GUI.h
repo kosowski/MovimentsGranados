@@ -35,6 +35,7 @@ public:
     ofxIntSlider stonePhase;
     
     ofxGuiGroup directorGroup;
+    ofxFloatSlider minAttractorStrength;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;

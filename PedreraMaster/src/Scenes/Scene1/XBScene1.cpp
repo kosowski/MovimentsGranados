@@ -189,15 +189,29 @@ void XBScene1::updateDirector()
 
     // update waves
     if (myGUI->simulateHands) {
+        rightHand.velocity.x = rightHand.pos.x;
+        rightHand.velocity.y = rightHand.pos.x;
         rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
         rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        rightHand.velocity.x -= rightHand.pos.x;
+        rightHand.velocity.y -= rightHand.pos.x;
+
+        leftHand.velocity.x = leftHand.pos.x;
+        leftHand.velocity.y = leftHand.pos.x;
         leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+        leftHand.velocity.x -= leftHand.pos.x;
+        leftHand.velocity.y -= leftHand.pos.x;
     }
     for (int i = 0; i < waves.size(); i++) {
         if(myGUI->enableDirector){
-            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
-            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+            float rightVelocity = rightHand.velocity.length();
+            float strength = ofMap(rightVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+            waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT,strength , myGUI->attractorRadius, myGUI->dampingWaves);
+            
+            float leftVelocity = leftHand.velocity.length();
+            strength = ofMap(leftVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+            waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, strength, myGUI->attractorRadius, myGUI->dampingWaves);
             waves[i].update();
         }else{
             waves[i].setAttractor(0, 10000, 0,0, myGUI->attractorRadius, myGUI->dampingWaves);
@@ -212,8 +226,10 @@ void XBScene1::updateDirector()
     ofPushMatrix();
     ofSetColor(255);
     pTex.setAnchorPercent(0.5, 0.5);
-    pTex.draw(rightHand.pos.x * wavesMask.getWidth(), rightHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
-    pTex.draw(leftHand.pos.x * wavesMask.getWidth(), leftHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    if(myGUI->enableDirector){
+        pTex.draw(rightHand.pos.x * wavesMask.getWidth(), rightHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+        pTex.draw(leftHand.pos.x * wavesMask.getWidth(), leftHand.pos.y * wavesMask.getHeight(), myGUI->maskRadius, myGUI->maskRadius);
+    }
     ofPopMatrix();
     wavesMask.end();
 }
