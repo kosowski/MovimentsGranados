@@ -57,6 +57,7 @@ void ofApp::setup()
 		cout << oscHost << endl;
 		oscSender.setup(oscHost, OSC_KINECT_SENDER_PORT);
 		oscSender_Max.setup(oscHost, OSC_KINECT_SENDER_PORT_MAX);
+		oscSender_Receiver.setup(oscHost, OSC_KINECT_SENDER_PORT_RECEIVER);
     }
 
     // KINECT / MOTION
@@ -156,6 +157,7 @@ void ofApp::handleStateChanges()
             m.addStringArg(OSC_KINECT_STATE_DETECTING);
             oscSender.sendMessage(m, false);
 			oscSender_Max.sendMessage(m, false);
+			oscSender_Receiver.sendMessage(m, false);
 
             break;
         }
@@ -170,6 +172,7 @@ void ofApp::handleStateChanges()
             m.addStringArg(OSC_KINECT_STATE_CAPTURING);
             oscSender.sendMessage(m, false);
 			oscSender_Max.sendMessage(m, false);
+			oscSender_Receiver.sendMessage(m, false);
 
             break;
         }
@@ -199,7 +202,7 @@ void ofApp::userPositioned(bool &hasPositioned)
 	userPositioned.addStringArg(OSC_KINECT_STATE_POSITIONED);
 	oscSender.sendMessage(userPositioned, false);
 	oscSender_Max.sendMessage(userPositioned, false);
-	cout << "userDetected" + ofGetTimestampString() << endl;
+	oscSender_Receiver.sendMessage(userPositioned, false);
 }
 
 void ofApp::sendHandInfo()
@@ -214,6 +217,7 @@ void ofApp::sendHandInfo()
     lhandpos.addFloatArg(handsInfo.leftHand.pos.z);
     oscSender.sendMessage(lhandpos, false);
 	oscSender_Max.sendMessage(lhandpos, false);
+	oscSender_Receiver.sendMessage(lhandpos, false);
 
     //RIGHT HAND POSITION
     ofxOscMessage rhandpos;
@@ -225,6 +229,7 @@ void ofApp::sendHandInfo()
     rhandpos.addFloatArg(handsInfo.rightHand.pos.z);
     oscSender.sendMessage(rhandpos, false);
 	oscSender_Max.sendMessage(rhandpos, false);
+	oscSender_Receiver.sendMessage(rhandpos, false);
 
     //LEFT HAND VELOCITY
     ofxOscMessage lhandvel;
@@ -236,6 +241,7 @@ void ofApp::sendHandInfo()
     lhandvel.addFloatArg(handsInfo.leftHand.v.z);
     oscSender.sendMessage(lhandvel, false);
 	oscSender_Max.sendMessage(lhandvel, false);
+	oscSender_Receiver.sendMessage(lhandvel, false);
 
     //RIGHT HAND VELOCITY
     ofxOscMessage rhandvel;
@@ -247,6 +253,7 @@ void ofApp::sendHandInfo()
     rhandvel.addFloatArg(handsInfo.rightHand.v.z);
     oscSender.sendMessage(rhandvel, false);
 	oscSender_Max.sendMessage(rhandvel, false);
+	oscSender_Receiver.sendMessage(rhandvel, false);
 }
 
 void ofApp::resetKinect(){
