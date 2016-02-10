@@ -49,24 +49,28 @@ void PMMotionExtractor::update()
 			//--
 			//
 			{
-				auto closestBody = findClosestBody();
-				//auto bodies = kinect.getBodySource()->getBodies();
-				for (auto body : bodies) {
-					if (body.trackingId == closestBody->trackingId)
+				auto body = findClosestBody();
+				auto referenceBodyZ = body.joints[JointType_SpineBase].getPosition().z;
+
+
+				/*for (auto body : bodies) {
+					if (body.trackingId != closestBody.trackingId) {
+						cout << body.trackingId << "  " << closestBody.trackingId << endl;
 						break;
-					//cout << body.trackingId << endl;
+					}*/
+
 					for (auto joint : body.joints) {
 						if (joint.first == JointType_HandLeft) {
 							handsInfo.leftHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							handsInfo.leftHand.pos.x /= 512;
 							handsInfo.leftHand.pos.y /= 424;
-							handsInfo.leftHand.pos.z = joint.second.getPosition().z;
+							handsInfo.leftHand.pos.z = referenceBodyZ - joint.second.getPosition().z;
 						}
 						else if (joint.first == JointType_HandRight) {
 							handsInfo.rightHand.pos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							handsInfo.rightHand.pos.x /= 512;
 							handsInfo.rightHand.pos.y /= 424;
-							handsInfo.rightHand.pos.z = joint.second.getPosition().z;
+							handsInfo.rightHand.pos.z = referenceBodyZ - joint.second.getPosition().z;
 						}
 						else if (joint.first == JointType_Head) {
 							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
@@ -85,7 +89,7 @@ void PMMotionExtractor::update()
 							}
 						}
 					}
-				}
+				//}
 				computeVelocity(5);
 			}
 		}
@@ -139,6 +143,8 @@ void PMMotionExtractor::draw(bool drawImage, bool drawHands)
         ofSetColor(ofColor::red);
         ofDrawEllipse(handsInfo.rightHand.pos.x * ofGetWidth(), handsInfo.rightHand.pos.y * ofGetHeight(), 20+20*(handsInfo.rightHand.v.x), 20+20*(handsInfo.rightHand.v.y));
         ofDrawEllipse(handsInfo.leftHand.pos.x * ofGetWidth(), handsInfo.leftHand.pos.y * ofGetHeight(), 20+20*(handsInfo.leftHand.v.x),20+20*(handsInfo.leftHand.v.y));
+		//ofDrawBitmapString(handsInfo.rightHand.pos.z, handsInfo.rightHand.pos.x * ofGetWidth() + 10, handsInfo.rightHand.pos.y * ofGetHeight() + 10);
+		//ofDrawBitmapString(handsInfo.leftHand.pos.z, handsInfo.leftHand.pos.x * ofGetWidth() + 10, handsInfo.leftHand.pos.y * ofGetHeight() + 10);
         ofPopStyle();
     }
 	ofDrawBitmapString(positionDetectedCounter, 0, 0);
@@ -173,18 +179,12 @@ KinectInfo PMMotionExtractor::getHandsInfo() {
 	return tempInfo;
 }
 
-ofxKFW2::Data::Body* PMMotionExtractor::findClosestBody()
+ofxKFW2::Data::Body PMMotionExtractor::findClosestBody()
 {
-	ofxKFW2::Data::Body* result = nullptr;
-
 	double closestBodyDistance = 10000000.0;
 
 	auto& bodies = kinect.getBodySource()->getBodies();
-	for (auto& body : bodies) {
-		if (body.tracked) {
-			
-		}
-	}
+	auto result = bodies[0];
 
 	for (auto body : bodies)
 	{
@@ -196,9 +196,9 @@ ofxKFW2::Data::Body* PMMotionExtractor::findClosestBody()
 
 			auto currentDistance = sqrt(pow(currentLocation.x, 2) + pow(currentLocation.y, 2) + pow(currentLocation.z, 2));
 
-			if (result == nullptr || currentDistance < closestBodyDistance)
+			if (currentDistance < closestBodyDistance)
 			{
-				result = &body;
+				result = body;
 				closestBodyDistance = currentDistance;
 			}
 		}

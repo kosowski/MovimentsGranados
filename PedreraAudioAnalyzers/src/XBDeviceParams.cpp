@@ -9,6 +9,8 @@ XBDeviceParams::XBDeviceParams(unsigned int _deviceID, string name, unsigned int
     deviceID = _deviceID;
 
     ofStringReplace(name, ":", "-");
+    ofStringReplace(name, ",", "-");
+    ofStringReplace(name, ".", "-");
     params.setName(name);
 
     params.add(enabled.set("Enabled", false));
@@ -17,7 +19,7 @@ XBDeviceParams::XBDeviceParams(unsigned int _deviceID, string name, unsigned int
     {
         ofParameter<bool> channelEnabled;
         inputChannels.push_back(channelEnabled);
-        params.add(inputChannels[i].set("Channel " + ofToString(i), false));
+        params.add(inputChannels[i].set("Channel" + ofToString(i), false));
     }
 }
 
