@@ -18,8 +18,6 @@ public:
     vector<unsigned int> getEnabledChannels();
     bool getIsEnabled()                         { return enabled; }
 
-private:
-
     ofParameterGroup params;
 
     ofParameter<bool> enabled;
