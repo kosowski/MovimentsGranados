@@ -409,7 +409,7 @@ void XBScene3::initPhysics()
     pTex.setAnchorPercent(0.5f, 0.5f);
     // Box2d
     box2d.init();
-    box2d.setGravity(0, 0.5);
+    box2d.setGravity(0, 1);
     box2d.setFPS(60.0);
 
     int spacing = 40;
@@ -465,8 +465,10 @@ void XBScene3::updateVioinCello()
     x.update();
 
     if (myGUI->linkAudio) {
-        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA * violinEnergy, myGUI->minAlpha, 255)));
-        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * celloEnergy, myGUI->minAlpha, 255)));
+        float alpha = myGUI->colorViolinA * ofMap(violinEnergy, 0, 0.6, 0, 1, true); // compress energy range
+        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(alpha, myGUI->minAlpha, 255)));
+        alpha = myGUI->colorCelloA * ofMap(celloEnergy, 0, 0.6, 0, 1, true); // compress energy range
+        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(alpha, myGUI->minAlpha, 255)));
     }
     else {
         v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
@@ -524,6 +526,7 @@ void XBScene3::updateVioinCello()
     ofRemove(circles, CustomBox2dParticle::shouldRemove);
     for (int i = 0; i < circles.size(); i++)
         circles[i].get()->update();
+    box2d.setGravity(0, myGUI->gravity);
     box2d.update();
 }
 

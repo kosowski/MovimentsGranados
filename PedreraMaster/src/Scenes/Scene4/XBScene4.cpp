@@ -61,10 +61,11 @@ void XBScene4::drawIntoFBO()
         }
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         drawDirector();
-        drawPiano();
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        
+//        ofEnableBlendMode(OF_BLENDMODE_ADD);
         drawViolin();
         drawCello();
+        drawPiano();
         
         // mask for removing the windows
         ofPushStyle();
