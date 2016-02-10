@@ -3,7 +3,6 @@ ofxOsc
 ofxXmlSettings
 ofxHTTP
 ofxIO
-ofxKinectForWindows2
 ofxMediaType
 ofxNetworkUtils
 ofxSSLManager

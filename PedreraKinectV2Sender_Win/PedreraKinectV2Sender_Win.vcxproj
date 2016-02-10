@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PedreraKinectV2Sender_Win</RootNamespace>
+    <WindowsTargetPlatformVersion>10</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+    <Import Project="..\..\..\addons\ofxKinectForWindows2\ofxKinectForWindows2.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+    <Import Project="..\..\..\addons\ofxKinectForWindows2\ofxKinectForWindows2.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+    <Import Project="..\..\..\addons\ofxKinectForWindows2\ofxKinectForWindows2.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+    <Import Project="..\..\..\addons\ofxKinectForWindows2\ofxKinectForWindows2.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxHTTP\libs;..\..\..\addons\ofxHTTP\libs\ofxHTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\addons\ofxHTTP\src;..\..\..\addons\ofxIO\libs;..\..\..\addons\ofxIO\libs\alphanum;..\..\..\addons\ofxIO\libs\alphanum\include;..\..\..\addons\ofxIO\libs\lz4;..\..\..\addons\ofxIO\libs\lz4\src;..\..\..\addons\ofxIO\libs\ofxIO;..\..\..\addons\ofxIO\libs\ofxIO\include;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\addons\ofxIO\libs\ofxIO\src;..\..\..\addons\ofxIO\libs\snappy;..\..\..\addons\ofxIO\libs\snappy\src;..\..\..\addons\ofxIO\src;..\..\..\addons\ofxKinectForWindows2\src;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Data;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Source;..\..\..\addons\ofxMediaType\libs;..\..\..\addons\ofxMediaType\libs\ofxMediaType;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\addons\ofxMediaType\src;..\..\..\addons\ofxNetworkUtils\libs;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\addons\ofxNetworkUtils\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSSLManager\src;..\..\..\addons\ofxTaskQueue\libs;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx;..\..\..\addons\ofxTaskQueue\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxGui\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\libs;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\src;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;C:\Users\block\Documents\openFrameworks\addons\ofxIO\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\alphanum\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\lz4\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\snappy\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\src;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;C:\Users\block\Documents\openFrameworks\addons\ofxSSLManager\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>C:\Users\block\Documents\openFrameworks\addons\ofxGui\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\libs;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\src;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;C:\Users\block\Documents\openFrameworks\addons\ofxIO\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\alphanum\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\lz4\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\snappy\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\src;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;C:\Users\block\Documents\openFrameworks\addons\ofxSSLManager\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxHTTP\libs;..\..\..\addons\ofxHTTP\libs\ofxHTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\addons\ofxHTTP\src;..\..\..\addons\ofxIO\libs;..\..\..\addons\ofxIO\libs\alphanum;..\..\..\addons\ofxIO\libs\alphanum\include;..\..\..\addons\ofxIO\libs\lz4;..\..\..\addons\ofxIO\libs\lz4\src;..\..\..\addons\ofxIO\libs\ofxIO;..\..\..\addons\ofxIO\libs\ofxIO\include;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\addons\ofxIO\libs\ofxIO\src;..\..\..\addons\ofxIO\libs\snappy;..\..\..\addons\ofxIO\libs\snappy\src;..\..\..\addons\ofxIO\src;..\..\..\addons\ofxKinectForWindows2\src;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Data;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Source;..\..\..\addons\ofxMediaType\libs;..\..\..\addons\ofxMediaType\libs\ofxMediaType;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\addons\ofxMediaType\src;..\..\..\addons\ofxNetworkUtils\libs;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\addons\ofxNetworkUtils\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSSLManager\src;..\..\..\addons\ofxTaskQueue\libs;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx;..\..\..\addons\ofxTaskQueue\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxGui\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\libs;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\src;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;C:\Users\block\Documents\openFrameworks\addons\ofxIO\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\alphanum\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\lz4\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\snappy\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\src;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;C:\Users\block\Documents\openFrameworks\addons\ofxSSLManager\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxHTTP\libs;..\..\..\addons\ofxHTTP\libs\ofxHTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx;..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;..\..\..\addons\ofxHTTP\libs\ofxHTTP\src;..\..\..\addons\ofxHTTP\src;..\..\..\addons\ofxIO\libs;..\..\..\addons\ofxIO\libs\alphanum;..\..\..\addons\ofxIO\libs\alphanum\include;..\..\..\addons\ofxIO\libs\lz4;..\..\..\addons\ofxIO\libs\lz4\src;..\..\..\addons\ofxIO\libs\ofxIO;..\..\..\addons\ofxIO\libs\ofxIO\include;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx;..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO;..\..\..\addons\ofxIO\libs\ofxIO\src;..\..\..\addons\ofxIO\libs\snappy;..\..\..\addons\ofxIO\libs\snappy\src;..\..\..\addons\ofxIO\src;..\..\..\addons\ofxKinectForWindows2\src;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Data;..\..\..\addons\ofxKinectForWindows2\src\ofxKinectForWindows2\Source;..\..\..\addons\ofxMediaType\libs;..\..\..\addons\ofxMediaType\libs\ofxMediaType;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include;..\..\..\addons\ofxMediaType\libs\ofxMediaType\include\ofx;..\..\..\addons\ofxMediaType\libs\ofxMediaType\src;..\..\..\addons\ofxMediaType\src;..\..\..\addons\ofxNetworkUtils\libs;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src;..\..\..\addons\ofxNetworkUtils\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxSSLManager\src;..\..\..\addons\ofxTaskQueue\libs;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include;..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx;..\..\..\addons\ofxTaskQueue\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxGui\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;C:\Users\block\Documents\openFrameworks\addons\ofxOsc\libs\oscpack\src\osc;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\src;C:\Users\block\Documents\openFrameworks\addons\ofxXmlSettings\libs;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\src;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP;C:\Users\block\Documents\openFrameworks\addons\ofxIO\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\alphanum\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\lz4\src;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\ofxIO\include\ofx\IO;C:\Users\block\Documents\openFrameworks\addons\ofxIO\libs\snappy\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\src;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include;C:\Users\block\Documents\openFrameworks\addons\ofxMediaType\libs\ofxMediaType\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\src;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx;C:\Users\block\Documents\openFrameworks\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net;C:\Users\block\Documents\openFrameworks\addons\ofxSSLManager\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\src;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include;
+C:\Users\block\Documents\openFrameworks\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxGuiGroup.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxLabel.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxPanel.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSlider.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\AuthScope.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\BaseClient.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\BaseRequest.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\BaseResponse.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\BaseRoute.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\BaseServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ClientEvents.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ClientProgressStream.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ClientSessionSettings.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\Context.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\Cookie.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\CookieStore.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\CookieUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\Credentials.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\CredentialStore.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClient.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClientHeaders.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClientSessionProvider.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClientTask.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultClientTaskQueue.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultCookieProcessor.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultProxyProcessor.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultRedirectProcessor.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\DefaultResponseStreamFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\FileSystemRoute.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\GetRequest.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\HTTPUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\IPVideoFrame.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\IPVideoRoute.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\OAuth10Credentials.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\OAuth10RequestFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\OAuth20Credentials.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\PostRequest.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\PostRoute.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ProgressMonitor.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ProxySettings.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\PutRequest.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\RequestHandlerAdapter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\Session.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\SessionStore.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\SimpleFileServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\SimpleIPVideoServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\SimplePostServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\SimpleWebSocketServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\ThreadSettings.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\URIBuilder.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketConnection.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketExtensions.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketFrame.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\src\WebSocketRoute.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\lz4\src\lz4.c" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\Base64Encoding.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\ByteBuffer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\ByteBufferReader.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\ByteBufferStream.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\ByteBufferUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\ByteBufferWriter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\COBSEncoding.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\Compression.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\DeviceFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\DirectoryFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\DirectoryUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\DirectoryWatcher.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\DirectoryWatcherManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\FileExtensionFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\HexBinaryEncoding.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\HiddenFileFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\LinkFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\PathFilterCollection.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\RecursiveDirectoryIterator.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\RecursiveDirectoryIteratorStategies.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\RegexPathFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\SearchPath.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\ofxIO\src\SLIPEncoding.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-sinksource.cc" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-stubs-internal.cc" />
+    <ClCompile Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy.cc" />
+    <ClCompile Include="..\..\..\addons\ofxMediaType\libs\ofxMediaType\src\MediaTypeMap.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\IPAddressRange.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\NetworkInterfaceListener.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\src\NetworkUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\NetworkingUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\UdpSocket.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxSSLManager\src\ofSSLManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\PMMotionExtractor.cpp" />
+    <ClCompile Include="src\XBSettingsManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxGuiGroup.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxLabel.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxPanel.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSlider.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h" />
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AbstractClientTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AbstractServerTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Authentication.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\AuthScope.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseClient.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseRequest.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseResponse.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseRoute.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\BaseServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientEvents.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientProgressStream.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ClientSessionSettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Context.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Cookie.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CookieStore.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CookieUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Credentials.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\CredentialStore.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClient.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClientHeaders.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClientSessionProvider.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClientTask.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultClientTaskQueue.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultCookieProcessor.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultProxyProcessor.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultRedirectProcessor.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\DefaultResponseStreamFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\FileSystemRoute.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\GetRequest.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTP.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\HTTPUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\IPVideoFrame.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\IPVideoRoute.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth10Credentials.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth10RequestFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\OAuth20Credentials.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRequest.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRoute.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PostRouteEvents.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ProgressMonitor.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ProxySettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\PutRequest.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\RequestHandlerAdapter.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ServerEvents.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\Session.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SessionStore.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleFileServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleIPVideoServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimplePostServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\SimpleWebSocketServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ThreadErrorHandler.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\ThreadSettings.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\URIBuilder.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketConnection.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketEvents.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketExtensions.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketFrame.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\libs\ofxHTTP\include\ofx\HTTP\WebSocketRoute.h" />
+    <ClInclude Include="..\..\..\addons\ofxHTTP\src\ofxHTTP.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\alphanum\include\alphanum.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\lz4\src\lz4.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\AbstractCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\AccessExpireCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\AccessExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\DirectoryWatcher.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\ExpireCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\ExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\AbstractTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\Base64Encoding.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBuffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferReader.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferStream.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\ByteBufferWriter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\COBSEncoding.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\Compression.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\DeviceFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\DirectoryWatcherManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\FileExtensionFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\HexBinaryEncoding.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\HiddenFileFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\LinkFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\PathFilterCollection.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\RegexPathFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\SearchPath.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\IO\SLIPEncoding.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\LRUCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIterator.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIteratorImpl.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\RecursiveDirectoryIteratorStategies.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\UniqueAccessExpireCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\UniqueAccessExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\UniqueExpireCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\ofxIO\include\ofx\UniqueExpireLRUCache.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-internal.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-sinksource.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-stubs-internal.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy-stubs-public.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\libs\snappy\src\snappy.h" />
+    <ClInclude Include="..\..\..\addons\ofxIO\src\ofxIO.h" />
+    <ClInclude Include="..\..\..\addons\ofxMediaType\libs\ofxMediaType\include\ofx\AbstractMediaTypeProvider.h" />
+    <ClInclude Include="..\..\..\addons\ofxMediaType\libs\ofxMediaType\include\ofx\MediaTypeMap.h" />
+    <ClInclude Include="..\..\..\addons\ofxMediaType\src\ofxMediaType.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\IPAddressRange.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\NetworkInterfaceListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetworkUtils\libs\ofxNetworkUtils\include\ofx\Net\NetworkUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetworkUtils\src\ofxNetworkUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
+    <ClInclude Include="..\..\..\addons\ofxSSLManager\src\ofSSLManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx\TaskQueue.h" />
+    <ClInclude Include="..\..\..\addons\ofxTaskQueue\libs\ofxTaskQueue\include\ofx\TaskQueueEvents.h" />
+    <ClInclude Include="..\..\..\addons\ofxTaskQueue\src\ofxTaskQueue.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\Defaults.h" />
+    <ClInclude Include="src\PMMotionExtractor.hpp" />
+    <ClInclude Include="src\XBSettingsManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\addons\ofxKinectForWindows2\ofxKinectForWindows2Lib\ofxKinectForWindows2Lib.vcxproj">
+      <Project>{f6008d6a-6d39-4b68-840e-e7ac8ed855da}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="icon.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
