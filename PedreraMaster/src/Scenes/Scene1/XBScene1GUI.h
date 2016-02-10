@@ -15,7 +15,10 @@ public:
     virtual void setup();
 
     ofxGuiGroup directorGroup;
+    ofxButton flashDirector;
+    ofxFloatSlider flashTime;
     ofxToggle enableDirector;
+    ofxFloatSlider minAttractorStrength;
     ofxFloatSlider attractorStrength;
     ofxFloatSlider attractorRadius;
     ofxFloatSlider minPeriod;

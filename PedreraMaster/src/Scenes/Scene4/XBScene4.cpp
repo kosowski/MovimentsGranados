@@ -100,14 +100,28 @@ void XBScene4::updateDirector()
 
     // update waves
     if (myGUI->simulateHands) {
+        rightHand.velocity.x = rightHand.pos.x;
+        rightHand.velocity.y = rightHand.pos.x;
         rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
         rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        rightHand.velocity.x -= rightHand.pos.x;
+        rightHand.velocity.y -= rightHand.pos.x;
+        
+        leftHand.velocity.x = leftHand.pos.x;
+        leftHand.velocity.y = leftHand.pos.x;
         leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+        leftHand.velocity.x -= leftHand.pos.x;
+        leftHand.velocity.y -= leftHand.pos.x;
     }
     for (int i = 0; i < waves.size(); i++) {
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        float rightVelocity = rightHand.velocity.length();
+        float strength = ofMap(rightVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT,strength , myGUI->attractorRadius, myGUI->dampingWaves);
+        
+        float leftVelocity = leftHand.velocity.length();
+        strength = ofMap(leftVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, strength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
 }
@@ -295,7 +309,7 @@ void XBScene4::drawViolinWindow()
         ofPushMatrix();
         ofTranslate(e.centroid);
         ofScale(1 - e.life * myGUI->growFactor, 1 - e.life * myGUI->growFactor);
-        e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->alphaFactor, 0, 255)));
+        e.path.setFillColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA * myGUI->alphaStart- e.life * myGUI->alphaFactor, 0, 255)));
         e.path.draw();
         ofPopMatrix();
     }
@@ -312,7 +326,7 @@ void XBScene4::drawCelloWindow()
         ofPushMatrix();
         ofTranslate(e.centroid);
         ofScale(1 - e.life * myGUI->growFactor, 1 - e.life * myGUI->growFactor);
-        e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA - e.life * myGUI->alphaFactor, 0, 255)));
+        e.path.setFillColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(myGUI->colorCelloA * myGUI->alphaStart - e.life * myGUI->alphaFactor, 0, 255)));
         e.path.draw();
         ofPopMatrix();
     }
