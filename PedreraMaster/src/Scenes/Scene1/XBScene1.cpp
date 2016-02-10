@@ -5,6 +5,7 @@
 #include "XBScene1.h"
 #include "XBScene1GUI.h"
 #include "XBSettingsManager.h"
+#include "ofxTweenzor.h"
 
 bool maskWindows = true;
 float celloWindowAlpha = 0;
@@ -27,8 +28,9 @@ void XBScene1::setup(XBBaseGUI *_gui)
     initLines();
 
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
+    XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+    myGUI->flashDirector.getParameter().cast<bool>().addListener(this, &XBScene1::flashDirector);
 }
-
 
 void XBScene1::update()
 {
@@ -87,10 +89,11 @@ void XBScene1::drawIntoFBO()
         drawMusiciansWindows();
 
         drawGUI();
-//        drawFadeRectangle();
     }
     fbo.end();
     blur.apply(&fbo, 1, myGUI->blurAmount);
+    if(animating)
+        myGUI->glowAmount.getParameter().cast<int>() = animtedGlowAmount;
     applyPostFX();
 }
 
@@ -197,8 +200,8 @@ void XBScene1::updateDirector()
             waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
             waves[i].update();
         }else{
-            waves[i].setAttractor(0, 0, 0,0, myGUI->attractorRadius, myGUI->dampingWaves);
-            waves[i].setAttractor(1, 0, 0, 0, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].setAttractor(0, 10000, 0,0, myGUI->attractorRadius, myGUI->dampingWaves);
+            waves[i].setAttractor(1, 10000, 0, 0, myGUI->attractorRadius, myGUI->dampingWaves);
             waves[i].update();
         }
     }
@@ -749,4 +752,26 @@ void XBScene1::updateEmitters()
     particleSystem.update(dt, 1.);
 
 
+}
+
+void XBScene1::flashDirector(bool &value){
+    if(value && !animating){
+        animating = true;
+        
+        XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+        prevMaskLevel = myGUI->maskLevel;
+        Tweenzor::add( &animtedGlowAmount, myGUI->glowAmount, 10.0f, 0.4f, myGUI->flashTime);
+        Tweenzor::getTween( &animtedGlowAmount )->setRepeat( 1, true );
+        myGUI->glowradius.getParameter().cast<int>() = 10;
+        myGUI->maskLevel.getParameter().cast<int>() = 255;
+        myGUI->glowAmount.getParameter().cast<int>() = animtedGlowAmount;
+        myGUI->useGlow.getParameter().cast<bool>() = true;
+        Tweenzor::addCompleteListener( Tweenzor::getTween( &animtedGlowAmount ), this, &XBScene1::onFlashEnd);
+    }
+}
+
+void XBScene1::onFlashEnd(float * arg){
+    animating = false;
+    XBScene1GUI *myGUI = (XBScene1GUI *) gui;
+    myGUI->maskLevel.getParameter().cast<int>() = prevMaskLevel;
 }
