@@ -1,18 +1,26 @@
 #include "ofApp.h"
 #include "../../Shared/OSCSettings.h"
+#include "XBSettingsManager.h"
+
+
+static const string STR_APPSETTINGS_FILENAME    = "AppSettings.xml";
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	// listen on the given port
-	cout << "listening for osc messages on port " << PORT << "\n";
-	receiver.setup(PORT);
+	cout << "listening for osc messages on port " << OSC_KINECT_SENDER_PORT_RECEIVER << "\n";
+	receiver.setup(OSC_KINECT_SENDER_PORT_RECEIVER);
 
 	ofBackground(30, 30, 130);
     detectionStatus = "Waiting for Sender";
     
+    XBSettingsManager::getInstance().loadFile(STR_APPSETTINGS_FILENAME);
+    string oscHost = XBSettingsManager::getInstance().getOSCHost();
+    
     //Video grabber
     videoGrabber.setCameraName("Kinect");
-    videoGrabber.setURI("http://192.168.1.112:7890/ipvideo");
+    string videograbURI = "http://" + oscHost + ":" + to_string(OSC_KINECT_SENDER_PORT_VIDEO) + "/ipvideo";
+    videoGrabber.setURI(videograbURI);
     videoGrabber.connect();
 }
 
