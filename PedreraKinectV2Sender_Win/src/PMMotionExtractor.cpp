@@ -75,7 +75,7 @@ void PMMotionExtractor::update()
 						else if (joint.first == JointType_Head) {
 							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							headPos.y /= 424;
-							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.05) {
+							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.1) {
 								positionDetectedCounter++;
 							}
 							else {
