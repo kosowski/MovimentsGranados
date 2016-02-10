@@ -18,6 +18,7 @@ void XBScene5::drawIntoFBO()
 {
     fbo.begin();
     {
+        ofClear(0, 0, 0, 255);
 //        drawFadeRectangle();
     }
     fbo.end();
