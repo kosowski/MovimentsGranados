@@ -33,6 +33,7 @@ public:
     ofxFloatSlider particleLife;
     ofxFloatSlider maxParticles;
     ofxToggle collisionOn;
+    ofxFloatSlider gravity;
     ofxVec2Slider particleVelocity;
     ofxVec2Slider particleSpread;
     ofxFloatSlider blurAmount;
