@@ -125,3 +125,7 @@ PedreraKinectV2Sender_Win/kinect2HandsSender.VC.opendb
 PedreraKinectV2Sender_Win/bin/kinect2HandsSender_debug.exp
 PedreraKinectV2Sender_Win/bin/kinect2HandsSender_debug.lib
 PedreraKinectV2Sender_Win/PedreraKinectV2Sender_Win.VC.opendb
+PedreraKinectV2Sender_Win/bin/PedreraKinectV2Sender_Win.exp
+PedreraKinectV2Sender_Win/bin/PedreraKinectV2Sender_Win.iobj
+PedreraKinectV2Sender_Win/bin/PedreraKinectV2Sender_Win.ipdb
+PedreraKinectV2Sender_Win/bin/PedreraKinectV2Sender_Win.lib
