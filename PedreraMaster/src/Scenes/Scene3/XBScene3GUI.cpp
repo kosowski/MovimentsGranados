@@ -26,6 +26,7 @@ void XBScene3GUI::setup()
     creaturesGroup.add(glowRadius.setup("Glow radius", 10, 0, 20));
     creaturesGroup.add(minAlpha.setup("Min alpha", 100, 0, 255));
     creaturesGroup.add(linkAudio.setup("Alpha audio", false));
+    creaturesGroup.add(maxAlphaRange.setup("Max range", 0.5f, 0.30, 1.00));
     creaturesGroup.add(showPath.setup("Show path", false));
     sceneGui.add(&creaturesGroup);
     

@@ -479,16 +479,17 @@ void XBScene3::updateVioinCello()
     x.seek(xTarget);
     x.update();
 
-    if (myGUI->linkAudio) {
-        float alpha = myGUI->colorViolinA * ofMap(violinEnergy, 0, 0.6, 0, 1, true); // compress energy range
-        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(alpha, myGUI->minAlpha, 255)));
-        alpha = myGUI->colorCelloA * ofMap(celloEnergy, 0, 0.6, 0, 1, true); // compress energy range
-        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(alpha, myGUI->minAlpha, 255)));
-    }
-    else {
-        v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA));
-        x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA));
-    }
+    float alpha = myGUI->colorViolinA;
+    if (myGUI->linkAudio)
+        alpha *= ofMap(violinEnergy, 0.f, myGUI->maxAlphaRange, 0, 1, true); // compress energy range
+    cout << "Violin alpha " << alpha << endl;
+    v.setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(alpha, myGUI->minAlpha, 255)));
+   
+    alpha = myGUI->colorCelloA;
+    if (myGUI->linkAudio)
+        alpha *= ofMap(celloEnergy, 0.f, myGUI->maxAlphaRange, 0, 1, true); // compress energy range
+    cout << "Cello alpha " << alpha << endl;
+    x.setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, ofClamp(alpha, myGUI->minAlpha, 255)));
 
     // add violin particles
     ofVec2f vel = myGUI->particleVelocity;
@@ -508,10 +509,11 @@ void XBScene3::updateVioinCello()
         c.get()->setup(box2d.getWorld(), v.getLocation().x, v.getLocation().y, myGUI->particleSize, myGUI->particleLife);
         
         c.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
+        
         float alpha = myGUI->colorViolinA;
         if (myGUI->linkAudio)
-            alpha *= violinEnergy;
-        c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, alpha));
+            alpha *= ofMap(violinEnergy, 0.f, myGUI->maxAlphaRange, 0, 1, true); // compress energy range
+        c.get()->setColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(alpha, myGUI->minAlpha, 255)));
         circles.push_back(c);
     }
     
@@ -532,8 +534,8 @@ void XBScene3::updateVioinCello()
         c2.get()->setVelocity(vel.x + ofRandom(-spread.x, spread.x), vel.y + ofRandom(-spread.y, spread.y));
         float alpha = myGUI->colorCelloA;
         if (myGUI->linkAudio)
-            alpha *= celloEnergy;
-        c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  alpha));
+            alpha *= ofMap(celloEnergy, 0.f, myGUI->maxAlphaRange, 0, 1, true); // compress energy range
+        c2.get()->setColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB,  ofClamp(alpha, myGUI->minAlpha, 255)));
         circles.push_back(c2);
     }
     

@@ -26,6 +26,7 @@ public:
     ofxFloatSlider glowRadius;
     ofxIntSlider minAlpha;
     ofxToggle linkAudio;
+    ofxFloatSlider maxAlphaRange;
     ofxToggle showPath;
     
     ofxGuiGroup particlesGroup;
