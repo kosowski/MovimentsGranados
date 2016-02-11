@@ -44,6 +44,8 @@ private:
     ofxOscSender oscSender;
 	ofxOscSender oscSender_Max;
 	ofxOscSender oscSender_Receiver;
+
+	ofxOscReceiver oscReceiver;
     
     PMMotionExtractor* motionExtractor;
     

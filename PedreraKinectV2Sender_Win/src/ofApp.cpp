@@ -58,6 +58,8 @@ void ofApp::setup()
 		oscSender.setup(oscHost, OSC_KINECT_SENDER_PORT);
 		oscSender_Max.setup(oscHost, OSC_KINECT_SENDER_PORT_MAX);
 		oscSender_Receiver.setup(oscHost, OSC_KINECT_SENDER_PORT_RECEIVER);
+
+		oscReceiver.setup(OSC_KINECT_SENDER_PORT_RECEIVER);
     }
 
     // KINECT / MOTION
@@ -125,6 +127,16 @@ void ofApp::update()
         handsInfo = motionExtractor->getHandsInfo();
         sendHandInfo();
     }
+
+	//OSC
+	while (oscReceiver.hasWaitingMessages()) {
+		ofxOscMessage m;
+		oscReceiver.getNextMessage(&m);
+		if (m.getAddress() == "/receiver/reset")
+			resetKinect();
+		else if (m.getAddress() == "/receiver/ipvideo")
+			sendVideo = m.getArgAsBool(0);
+	}
 }
 
 void ofApp::draw()
