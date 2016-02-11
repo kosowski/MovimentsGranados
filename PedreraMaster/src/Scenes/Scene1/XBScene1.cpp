@@ -778,7 +778,7 @@ void XBScene1::flashDirector(bool &value){
         prevMaskLevel = myGUI->maskLevel;
         Tweenzor::add( &animtedGlowAmount, myGUI->glowAmount, 10.0f, 0.4f, myGUI->flashTime);
         Tweenzor::getTween( &animtedGlowAmount )->setRepeat( 1, true );
-        myGUI->glowradius.getParameter().cast<int>() = 10;
+//        myGUI->glowradius.getParameter().cast<int>() = 10;
         myGUI->maskLevel.getParameter().cast<int>() = 255;
         myGUI->glowAmount.getParameter().cast<int>() = animtedGlowAmount;
         myGUI->useGlow.getParameter().cast<bool>() = true;
