@@ -58,6 +58,9 @@ public:
 	KinectInfo getHandsInfo();
 
 	ofxKFW2::Data::Body findClosestBody();
+
+	void setPositionedThreshold(float threshold) { positionThreshold = threshold; };
+	void setMeanSize(int meanSize) { handsMeanSize = meanSize; };
     
     ofEvent<bool> eventUserDetection;
 	ofEvent<bool> eventUserPositioned;
@@ -71,9 +74,11 @@ private:
     //for computing velocity
     deque<ofPoint> rHandPosHist;
     deque<ofPoint> lHandPosHist;
+	int handsMeanSize;
 
 	//positioning variable
 	int positionDetectedCounter;
+	float positionThreshold;
 };
 
 #endif /* PMMotionExtractor_hpp */

@@ -12,6 +12,8 @@
 bool PMMotionExtractor::setup()
 {
 	positionDetectedCounter = 0;
+	positionThreshold = 0.1;
+	handsMeanSize = 5;
 
 	kinect.open();
 	kinect.initDepthSource();
@@ -24,6 +26,8 @@ bool PMMotionExtractor::setup()
     //hasKinect = kinect.isOpen();
 	hasKinect = true;
     return hasKinect;
+
+	
 }
 
 ///--------------------------------------------------------------
@@ -75,7 +79,7 @@ void PMMotionExtractor::update()
 						else if (joint.first == JointType_Head) {
 							auto headPos = joint.second.getProjected(kinect.getBodySource()->getCoordinateMapper(), ofxKFW2::ProjectionCoordinates::DepthCamera);
 							headPos.y /= 424;
-							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < 0.1) {
+							if (abs(headPos.y - handsInfo.leftHand.pos.y) < 0.05 && abs(headPos.y - handsInfo.rightHand.pos.y) < positionThreshold) {
 								positionDetectedCounter++;
 							}
 							else {
@@ -90,7 +94,7 @@ void PMMotionExtractor::update()
 						}
 					}
 				//}
-				computeVelocity(5);
+				computeVelocity(handsMeanSize);
 			}
 		}
 		else {
@@ -111,7 +115,7 @@ void PMMotionExtractor::update()
         handsInfo.rightHand.pos.x = ofMap(handsInfo.leftHand.pos.x, 0, 1, 1, 0);
         handsInfo.rightHand.pos.y = handsInfo.leftHand.pos.y;
         handsInfo.leftHand.pos.z = 1;
-        computeVelocity(5);
+        computeVelocity(handsMeanSize);
 		//cout << ofGetMouseX() << endl;
     }else{
         hasUser = false;

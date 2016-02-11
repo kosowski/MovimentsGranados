@@ -136,6 +136,10 @@ void ofApp::update()
 			resetKinect();
 		else if (m.getAddress() == "/receiver/ipvideo")
 			sendVideo = m.getArgAsBool(0);
+		else if (m.getAddress() == "/receiver/positionedThreshold")
+			motionExtractor->setPositionedThreshold(m.getArgAsFloat(0));
+		else if (m.getAddress() == "/receiver/meanSize")
+			motionExtractor->setMeanSize(m.getArgAsInt32(0));
 	}
 }
 
@@ -151,6 +155,7 @@ void ofApp::exit()
     motionExtractor->exit();
     gui.saveToFile(SETTINGS_FILENAME);
 }
+
 
 void ofApp::handleStateChanges()
 {
