@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "ofxGui.h"
 #include "IPVideoGrabber.h"
 
 // listen on port 12345
@@ -14,8 +15,11 @@ class ofApp : public ofBaseApp {
 		void setup();
 		void update();
 		void draw();
+    void exit();
     
         void triggerUserPositioned();
+        void stateChanged(string state);
+    void activeIPVideoChanged();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -28,6 +32,8 @@ class ofApp : public ofBaseApp {
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    void resetKinect();
 
 		ofTrueTypeFont font;
 		ofxOscReceiver receiver;
@@ -36,6 +42,18 @@ class ofApp : public ofBaseApp {
         ofPoint handR, handL;
         string detectionStatus;
         bool userPositioned;
+    
+    //GUI
+    ofxPanel gui;
+    ofxLabel guiStatusLbl;
+    ofxButton guiRestartBtn;
+    ofxToggle activateIPVideo;
+    
+    bool prevActiveIpVideo;
+    
+    
+    //OSC
+    ofxOscSender oscSender;
     
     
     //Video Grabbing
