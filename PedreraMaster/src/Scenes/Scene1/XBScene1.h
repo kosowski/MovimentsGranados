@@ -48,7 +48,9 @@ private:
     void addFadingWindow(int index, vector<expandingPolyLine> &vector, float initValue, float instrumentAlpha);
     int findIntersectionVertical(ofPolyline &line, int posY);
     int findIntersectionHorizontal(ofPolyline &line, int posX);
-        
+    void flashDirector(bool& value);
+    void onFlashEnd(float * arg);
+    
     ofxSVG svg;
     vector<ofPolyline> verticalLines;
     vector<ofPolyline> horizontalLines;
@@ -84,6 +86,9 @@ private:
     
     vector<Wave> waves;
     ofFbo wavesMask;
+    bool animating = false;
+    float animtedGlowAmount;
+    int prevMaskLevel;
     
     BlurEffect blur;
 };

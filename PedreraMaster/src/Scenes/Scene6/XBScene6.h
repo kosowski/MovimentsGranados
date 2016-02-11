@@ -69,11 +69,14 @@ private:
 
     void goToState(S6State newState);
     void goToNextState();
+    void sendToMaxToSound(bool sound);
 
     void drawText(string message, ofTrueTypeFont *font, float x, float y, float scaleFactor, ofColor color);
     void initWaves();
     void updateDirector();
     void drawDirector();
+    
+    ofxOscSender to_Max_Active_Sender;
 };
 
 

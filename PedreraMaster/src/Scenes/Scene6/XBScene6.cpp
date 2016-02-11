@@ -59,6 +59,9 @@ void XBScene6::setup(XBBaseGUI *_gui)
     ofBackground(0, 0, 0);
     wavesMask.end();
     blur.setup(getMainFBO().getWidth(), getMainFBO().getHeight(), 0);
+    
+    //OSC to max configuration.
+    to_Max_Active_Sender.setup("localhost", OSC_KINECT_SENDER_PORT_MAX);
 }
 
 void XBScene6::enteredScene()
@@ -234,11 +237,15 @@ void XBScene6::onKinectStateChanged(string &kState)
         case S6_3_LIVE:
         {
             if (kState == OSC_KINECT_STATE_DETECTING)
+            {
                 state3IsDetecting = true;
+                sendToMaxToSound(false);
+            }
             else if (kState == OSC_KINECT_STATE_CAPTURING)
             {
                 state3IsDetecting = false;
                 state3StartTime = ofGetElapsedTimef();
+                sendToMaxToSound(true);
             }
             break;
         }
@@ -265,11 +272,13 @@ void XBScene6::goToState(S6State newState)
         {
             state3IsDetecting = false;
             state3StartTime = ofGetElapsedTimef();
+            sendToMaxToSound(true);
             break;
         }
         case S6_4_THANKS:
         {
             state4StartTime = ofGetElapsedTimef();
+            sendToMaxToSound(false);
             break;
         }
         default: break;
@@ -280,6 +289,14 @@ void XBScene6::goToNextState()
 {
     S6State newState = S6State((state + 1) % S6_NUM_STATES);
     goToState(newState);
+}
+
+void XBScene6::sendToMaxToSound(bool sound)
+{
+    ofxOscMessage m;
+    m.setAddress("/audio");
+    m.addBoolArg(sound);
+    to_Max_Active_Sender.sendMessage(m, false);
 }
 
 #pragma mark - Convenience methods
@@ -307,15 +324,28 @@ void XBScene6::updateDirector()
     XBScene6GUI *myGUI = (XBScene6GUI *) gui;
     // update waves
     if (myGUI->simulateHands) {
+        rightHand.velocity.x = rightHand.pos.x;
+        rightHand.velocity.y = rightHand.pos.x;
         rightHand.pos.x = ofGetMouseX() / (float) ofGetWidth();
         rightHand.pos.y = ofGetMouseY() / (float) ofGetHeight();
+        rightHand.velocity.x -= rightHand.pos.x;
+        rightHand.velocity.y -= rightHand.pos.x;
+        
+        leftHand.velocity.x = leftHand.pos.x;
+        leftHand.velocity.y = leftHand.pos.x;
         leftHand.pos.x = (rightHand.pos.x - 0.5) + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005) - 0.5);
         leftHand.pos.y = rightHand.pos.y + 0.5 * (ofNoise(ofGetElapsedTimeMillis() * 0.0005 + 1000) - 0.5);
+        leftHand.velocity.x -= leftHand.pos.x;
+        leftHand.velocity.y -= leftHand.pos.x;
     }
     for (int i = 0; i < waves.size(); i++) {
-        // if simulate mode ON, use the mouse
-        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
-        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, myGUI->attractorStrength, myGUI->attractorRadius, myGUI->dampingWaves);
+        float rightVelocity = rightHand.velocity.length();
+        float strength = ofMap(rightVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+        waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT,strength , myGUI->attractorRadius, myGUI->dampingWaves);
+        
+        float leftVelocity = leftHand.velocity.length();
+        strength = ofMap(leftVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+        waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, strength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
     // update waves mask

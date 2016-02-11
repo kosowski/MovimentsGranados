@@ -110,6 +110,8 @@ void CelloApp::buildDevicesPanel()
         deviceParams.push_back(devParams);
     }
 
+    guiDevices.loadFromFile(DEVICE_SETTINGS_FILENAME);
+
     guiDevices.add(lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF));
     lblStatus.setBackgroundColor(ofColor::darkRed);
     guiDevices.add(btnStartAnalysis.setup(STR_DEV_START));
@@ -120,8 +122,6 @@ void CelloApp::buildDevicesPanel()
 
     guiDevices.setSize(GUI_DEV_WIDTH, GUI_DEV_WIDTH);
     guiDevices.setWidthElements(GUI_DEV_WIDTH);
-
-    guiDevices.loadFromFile(DEVICE_SETTINGS_FILENAME);
 }
 
 void CelloApp::buildCelloAnalysisPanel()

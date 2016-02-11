@@ -53,8 +53,8 @@ void XBScene3GUI::setup()
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
     directorGroup.add(maxPeriod.setup("Max wave period",  1600, 200.0, 3000.0));
     directorGroup.add(dampingWaves.setup("Damping",  0.80, 0.00, 1.00));
-    
-    directorGroup.add(attractorStrength.setup("attractorStrength",  5, 0.0, 10.0));
+    directorGroup.add(minAttractorStrength.setup("Min strength",  0.5, 0.0, 10.0));
+    directorGroup.add(attractorStrength.setup("Max strength",  4, 0.0, 10.0));
     directorGroup.add(attractorRadius.setup("attractorRadius", 10.0f, 0.00, 14.00));
     sceneGui.add(&directorGroup);
 
