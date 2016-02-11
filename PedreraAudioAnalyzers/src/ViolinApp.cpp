@@ -110,6 +110,9 @@ void ViolinApp::buildDevicesPanel()
         deviceParams.push_back(devParams);
     }
 
+    ofFile file(DEVICE_SETTINGS_FILENAME);
+    if (file.exists()) file.remove();
+
     guiDevices.loadFromFile(DEVICE_SETTINGS_FILENAME);
 
     guiDevices.add(lblStatus.setup(STR_DEV_STATUS, STR_DEV_STATUS_OFF));
