@@ -451,8 +451,10 @@ void XBScene4::onPianoNoteOn(XBOSCManager::PianoNoteOnArgs &noteOn)
 
 void XBScene4::initReactionDiffusion()
 {
-    grayX.allocate(ofGetWidth() * 0.8, ofGetHeight() * 0.8);
-    grayV.allocate(ofGetWidth() * 0.8, ofGetHeight() * 0.8);
+    XBScene4GUI *myGUI = (XBScene4GUI *) gui;
+    float scaleFactor = myGUI->scaleFactor;
+    grayX.allocate(ofGetWidth() * scaleFactor, ofGetHeight() * scaleFactor);
+    grayV.allocate(ofGetWidth() * scaleFactor, ofGetHeight() * scaleFactor);
 
     ofImage seed;
     seed.load("resources/img/Esc4Violin.png");

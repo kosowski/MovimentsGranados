@@ -25,6 +25,7 @@ public:
     ofxFloatSlider violinF;
     ofxToggle linkAudio;
     ofxIntSlider presetIndex;
+    ofxFloatSlider scaleFactor;
     
     ofxGuiGroup pianoGroup;
     ofxFloatSlider stoneGrowFactor;

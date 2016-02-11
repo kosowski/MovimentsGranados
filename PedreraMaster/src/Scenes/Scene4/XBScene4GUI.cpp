@@ -24,6 +24,7 @@ void XBScene4GUI::setup()
     violinGroup.add(violinF.setup("F", 0.028, 0.010, 0.065));
     violinGroup.add(presetIndex.setup("Presets", 0, 0, 13));
     presetIndex.addListener(this, &XBScene4GUI::onPresetChange);
+    violinGroup.add(scaleFactor.setup("Scale factor", 0.7, 0.5, 1.));
     sceneGui.add(&violinGroup);
     
     windowGroup.setup("Window");
