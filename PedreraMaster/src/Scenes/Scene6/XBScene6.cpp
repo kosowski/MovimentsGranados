@@ -339,12 +339,14 @@ void XBScene6::updateDirector()
         leftHand.velocity.y -= leftHand.pos.x;
     }
     for (int i = 0; i < waves.size(); i++) {
-        float rightVelocity = rightHand.velocity.length();
-        float strength = ofMap(rightVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+        //            float rightVelocity = rightHand.velocity.length();
+        float rightVelocity = (rightHand.velocity.x + rightHand.velocity.y + rightHand.velocity.z) / 4.f;
+        float strength = ofMap(rightVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength, true);
         waves[i].setAttractor(0, rightHand.pos.x * MAIN_WINDOW_WIDTH, rightHand.pos.y * MAIN_WINDOW_HEIGHT,strength , myGUI->attractorRadius, myGUI->dampingWaves);
-        
-        float leftVelocity = leftHand.velocity.length();
-        strength = ofMap(leftVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength);
+
+        //            float leftVelocity = leftHand.velocity.length();
+        float leftVelocity = (leftHand.velocity.x + leftHand.velocity.y + leftHand.velocity.z) / 4.f;
+        strength = ofMap(leftVelocity, 0, 1, myGUI->minAttractorStrength, myGUI->attractorStrength, true);
         waves[i].setAttractor(1, leftHand.pos.x * MAIN_WINDOW_WIDTH, leftHand.pos.y * MAIN_WINDOW_HEIGHT, strength, myGUI->attractorRadius, myGUI->dampingWaves);
         waves[i].update();
     }
