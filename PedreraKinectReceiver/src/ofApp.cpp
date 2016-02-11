@@ -12,6 +12,8 @@ static const string STR_STATE_CAPTURING     = "Capturing";
 static const string STR_BUTTON_RESTART      = "RESTART";
 static const string STR_TOGGLE_ACTIVATE_IP  = "Activate Kinect View (Lower FPS)";
 static const string STR_TOGGLE_SHOW_HANDS   = "Draw Hand Detection";
+static const string STR_SLIDER_POS_THRES    = "Positioned Threshold";
+static const string STR_SLIDER_HANDS_MEAN   = "Hands Mean Size";
 
 static const string SETTINGS_FILENAME       = "settings.xml";
 static const string STR_APPSETTINGS_FILENAME    = "AppSettings.xml";
@@ -28,7 +30,9 @@ void ofApp::setup(){
     {
         gui.setup(STR_GUI_TITLE, SETTINGS_FILENAME);
         gui.setPosition(GUI_POSX, GUI_POSY);
-        gui.add(activateIPVideo.setup(STR_TOGGLE_ACTIVATE_IP, true));
+        gui.add(activateIPVideo.setup(STR_TOGGLE_ACTIVATE_IP, false));
+        gui.add(positionedThreshold.setup(STR_SLIDER_POS_THRES, 0.1, 0.01, 1));
+        gui.add(handsMeanSize.setup(STR_SLIDER_HANDS_MEAN, 5, 1, 20));
         gui.loadFromFile(SETTINGS_FILENAME);
         
         gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));
@@ -37,6 +41,8 @@ void ofApp::setup(){
         gui.add(guiRestartBtn.setup(STR_BUTTON_RESTART));
         
         guiRestartBtn.addListener(this, &ofApp::resetKinect);
+        positionedThreshold.addListener(this, &ofApp::positionedThresholdChanged);
+        handsMeanSize.addListener(this, &ofApp::handsMeanChanged);
         
         gui.setSize(GUI_WIDTH, GUI_WIDTH);
         gui.setWidthElements(GUI_WIDTH);
@@ -153,6 +159,20 @@ void ofApp::activeIPVideoChanged(){
     m.addBoolArg(activateIPVideo);
     oscSender.sendMessage(m, false);
 
+}
+
+void ofApp::positionedThresholdChanged(float &threshold){
+    ofxOscMessage m;
+    m.setAddress("/receiver/positionedThreshold");
+    m.addFloatArg(threshold);
+    oscSender.sendMessage(m, false);
+}
+
+void ofApp::handsMeanChanged(int &meanSize){
+    ofxOscMessage m;
+    m.setAddress("/receiver/meanSize");
+    m.addInt32Arg(meanSize);
+    oscSender.sendMessage(m, false);
 }
 
 //-------------------------------------------------------------
