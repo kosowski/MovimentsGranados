@@ -35,6 +35,7 @@ void ofApp::setup()
         gui.setPosition(GUI_POSX, GUI_POSY);
         gui.add(showImage.setup(STR_TOGGLE_SHOW_KINECT, true));
         gui.add(showHands.setup(STR_TOGGLE_SHOW_HANDS, true));
+        gui.add(positionedThreshold.setup()
         gui.loadFromFile(SETTINGS_FILENAME);
 
         gui.add(guiStatusLbl.setup(STR_STATE, STR_STATE_SETUP));

@@ -20,6 +20,8 @@ class ofApp : public ofBaseApp {
         void triggerUserPositioned();
         void stateChanged(string state);
     void activeIPVideoChanged();
+    void positionedThresholdChanged(float &threshold);
+    void handsMeanChanged(int &meanSize);
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -48,6 +50,8 @@ class ofApp : public ofBaseApp {
     ofxLabel guiStatusLbl;
     ofxButton guiRestartBtn;
     ofxToggle activateIPVideo;
+    ofxFloatSlider positionedThreshold;
+    ofxIntSlider handsMeanSize;
     
     bool prevActiveIpVideo;
     

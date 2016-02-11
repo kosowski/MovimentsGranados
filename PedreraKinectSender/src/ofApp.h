@@ -37,6 +37,8 @@ private:
     ofxButton guiRestartBtn;
     ofxToggle showImage;
     ofxToggle showHands;
+    ofxSlider positionedThreshold;
+    ofxIntSlider handsMeanSize;
 
     ofxOscSender oscSender, oscSender_Max;
     
