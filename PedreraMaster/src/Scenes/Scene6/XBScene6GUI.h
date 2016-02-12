@@ -41,6 +41,8 @@ public:
     ofxFloatSlider dampingWaves;
     ofxFloatSlider maskRadius;
     ofxFloatSlider maskAlpha;
+    ofxIntSlider maskLevel;
+    
     ofxFloatSlider blurAmount;
 };
 
