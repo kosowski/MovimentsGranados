@@ -101,7 +101,7 @@ void GUIApp::drawSceneName()
 {
     string sceneName = sceneManager->getCurrentSceneName();
     int strLength = int(sceneName.size() * 8.0f);
-    ofDrawBitmapStringHighlight(sceneManager->getCurrentSceneName(), ofGetWidth() - strLength - 10, ofGetHeight() - 10);
+    ofDrawBitmapStringHighlight(sceneManager->getCurrentSceneName(), ofGetWidth() - strLength - 14, ofGetHeight()/2 - 40);
 }
 
 void GUIApp::exit()
