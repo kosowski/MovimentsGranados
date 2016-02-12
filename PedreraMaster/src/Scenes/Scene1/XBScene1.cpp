@@ -317,7 +317,7 @@ void XBScene1::drawWindows()
                     celloWindowAlpha+= myGUI->windowAttack;
                 if(celloWindowAlpha > 1) celloWindowAlpha = 1;
                 ofPushStyle();
-                ofSetLineWidth(8);
+                ofSetLineWidth(myGUI->windowOutlineWidth);
                 ofSetColor(ofColor(myGUI->rgbColorCelloR, myGUI->rgbColorCelloG, myGUI->rgbColorCelloB, myGUI->colorCelloA * celloWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
@@ -350,7 +350,7 @@ void XBScene1::drawWindows()
                     violinWindowAlpha+= myGUI->windowAttack;
                 if(violinWindowAlpha > 1) violinWindowAlpha = 1;
                 ofPushStyle();
-                ofSetLineWidth(4);
+                ofSetLineWidth(myGUI->windowOutlineWidth);
                 ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, myGUI->colorViolinA * violinWindowAlpha));
                 windowsOutlines[i].draw();
                 ofPopStyle();
@@ -374,7 +374,7 @@ void XBScene1::drawWindows()
 
 //    draw fading window outlines
     ofPushStyle();
-    ofSetLineWidth(4);
+    ofSetLineWidth(myGUI->windowOutlineWidth);
     for (int i = 0; i < fadingViolinWindowsToDraw.size(); i++) {
         expandingPolyLine &e = fadingViolinWindowsToDraw[i];
         ofSetColor(ofColor(myGUI->rgbColorViolinR, myGUI->rgbColorViolinG, myGUI->rgbColorViolinB, ofClamp(myGUI->colorViolinA - e.life * myGUI->windowFade, 0, 255)));

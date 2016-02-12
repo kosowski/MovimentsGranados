@@ -47,6 +47,7 @@ void XBScene1GUI::setup()
     violinGroup.add(windowAttack.setup("Window attack", 0.01, 0.00, 0.05));
     violinGroup.add(windowFade.setup("Window fade speed", 10, 1, 20));
     violinGroup.add(drawWindows.setup("draw windows", false));
+     violinGroup.add(windowOutlineWidth.setup("Window width", 12, 4, 20));
     violinGroup.add(timeIncrement.setup("Marker speed", 1, 1, 30));
     violinGroup.add(showTimeMarker.setup("Show time line", false));
     violinGroup.add(particleVelocity.setup("Particle velocity", ofVec2f(0,0), ofVec2f(0,0), ofVec2f(150,150)));

@@ -34,6 +34,7 @@ public:
     ofxFloatSlider windowAttack;
     ofxFloatSlider windowFade;
     ofxToggle drawWindows;
+    ofxIntSlider windowOutlineWidth;
     ofxFloatSlider timeIncrement;
     ofxToggle showTimeMarker;
     
