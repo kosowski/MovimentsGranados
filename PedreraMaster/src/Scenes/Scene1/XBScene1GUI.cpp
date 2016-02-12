@@ -16,7 +16,7 @@ void XBScene1GUI::setup()
 
     directorGroup.setup("Director");
     directorGroup.add(flashDirector.setup("Flash director", false));
-    directorGroup.add(flashTime.setup("Flash time", .5f, .4f, 1.0f));
+    directorGroup.add(flashTime.setup("Flash time", .4f, .2f, 1.0f));
     directorGroup.add(enableDirector.setup("Enable director", true));
     directorGroup.add(lineWidth.setup("Line width", 1.0f, 1.0f, 5.0f));
     directorGroup.add(minPeriod.setup("Min wave period", 800.0f, 200.0f, 2000.0f));
