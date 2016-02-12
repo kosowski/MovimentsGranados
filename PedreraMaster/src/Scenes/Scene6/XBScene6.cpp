@@ -353,6 +353,7 @@ void XBScene6::updateDirector()
     // update waves mask
     wavesMask.begin();
     ofSetColor(myGUI->maskLevel, myGUI->maskLevel, myGUI->maskLevel, myGUI->maskAlpha);
+
     ofDrawRectangle(0, 0, wavesMask.getWidth(), wavesMask.getHeight());
     ofPushMatrix();
     ofSetColor(255);
